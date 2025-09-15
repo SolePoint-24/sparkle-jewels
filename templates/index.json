@@ -1488,6 +1488,50 @@
         "padding-block-end": 48
       }
     },
+    "custom_latest_blogs_cDPKTt": {
+      "type": "custom-latest-blogs",
+      "blocks": {
+        "article_FN8Gkb": {
+          "type": "article",
+          "settings": {
+            "article": "news/the-most-stunning-gold-earrings-for-any-occasion"
+          }
+        },
+        "article_z4e3H7": {
+          "type": "article",
+          "settings": {
+            "article": "news/why-gold-chains-are-the-ultimate-accessory"
+          }
+        },
+        "article_aUYpgR": {
+          "type": "article",
+          "settings": {
+            "article": "news/the-most-stunning-gold-earrings-for-any-occasion"
+          }
+        },
+        "article_7ijyRb": {
+          "type": "article",
+          "settings": {
+            "article": "news/why-gold-chains-are-the-ultimate-accessory"
+          }
+        }
+      },
+      "block_order": [
+        "article_FN8Gkb",
+        "article_z4e3H7",
+        "article_aUYpgR",
+        "article_7ijyRb"
+      ],
+      "name": "Latest Thought Blogs",
+      "settings": {
+        "subheading": "Fresh Reads",
+        "heading": "The Latest Thought",
+        "show_view_all": true,
+        "button_link": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "collection_showcase_section_CM9XwH": {
       "type": "collection-showcase-section",
       "name": "Custom Collection Showcase",
@@ -1515,6 +1559,7 @@
     "section_HAz3WV",
     "collection_list_3ejxRy",
     "section_Vtakah",
+    "custom_latest_blogs_cDPKTt",
     "collection_showcase_section_CM9XwH"
   ]
 }
