@@ -294,7 +294,7 @@
           <h4 class="promo-subtitle">{{ section.settings.promo_subtitle | escape }}</h4>
         {% endif %}
         {% if section.settings.promo_title != blank %}
-          <h3 class="promo-title">{{ section.settings.promo_title | replace: '|', '<br>' }}</h3>
+          <h3 class="promo-title">{{ section.settings.promo_title  }}</h3>
         {% endif %}
         {% if section.settings.promo_button_text != blank and section.settings.promo_button_link != blank %}
           <a href="{{ section.settings.promo_button_link }}" class="promo-link">
