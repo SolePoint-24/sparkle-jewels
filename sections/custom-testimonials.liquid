@@ -141,64 +141,57 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const sectionId = 'shopify-section-{{ section.id }}';
-    const section = document.getElementById(sectionId);
-    if (!section) return;
+  const sectionId = 'shopify-section-{{ section.id }}';
+  const section = document.getElementById(sectionId);
+  if (!section) return;
 
-    const container = section.querySelector('.testimonials-grid');
-    const prevButton = section.querySelector('.testimonial-slider-arrow.prev');
-    const nextButton = section.querySelector('.testimonial-slider-arrow.next');
+  const container = section.querySelector('.testimonials-grid');
+  const prevButton = section.querySelector('.testimonial-slider-arrow.prev');
+  const nextButton = section.querySelector('.testimonial-slider-arrow.next');
+  const cards = container.querySelectorAll('.testimonial-card');
 
-    if (!container || !prevButton || !nextButton) return;
+  if (!container || !prevButton || !nextButton || !cards.length) return;
 
-    // A single, robust function to check and set the button states
-    const updateArrowState = () => {
-      // Use Math.round to handle potential sub-pixel values
-      const scrollLeft = Math.round(container.scrollLeft);
-      const scrollWidth = Math.round(container.scrollWidth);
-      const clientWidth = Math.round(container.clientWidth);
+  let currentIndex = 0; // track which card we’re on
 
-      // Disable 'prev' if scroll position is at the very beginning (0)
-      prevButton.disabled = scrollLeft <= 0;
-      
-      // Disable 'next' if the scroll position is at the very end
-      nextButton.disabled = scrollLeft + clientWidth >= scrollWidth;
-    };
+  const updateArrowState = () => {
+    prevButton.disabled = currentIndex === 0;
+    nextButton.disabled = currentIndex === cards.length - 1;
+  };
 
-    const handleButtonClick = (scrollOffset) => {
-      container.scrollLeft += scrollOffset;
-      // IMPORTANT: After a click, browsers are inconsistent with scroll events.
-      // We will manually disable the button immediately and re-check after the animation.
-      // This provides instant feedback and final accuracy.
-      if (scrollOffset > 0) {
-        nextButton.disabled = true;
-      } else {
-        prevButton.disabled = true;
+  const scrollToCard = (index) => {
+    if (index < 0 || index >= cards.length) return;
+    currentIndex = index;
+    cards[index].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+    updateArrowState();
+  };
+
+  nextButton.addEventListener('click', () => {
+    scrollToCard(currentIndex + 1);
+  });
+
+  prevButton.addEventListener('click', () => {
+    scrollToCard(currentIndex - 1);
+  });
+
+  // Also update index on manual scroll (touch/drag)
+  container.addEventListener('scroll', () => {
+    let closestIndex = 0;
+    let minOffset = Infinity;
+    cards.forEach((card, idx) => {
+      const offset = Math.abs(card.offsetLeft - container.scrollLeft);
+      if (offset < minOffset) {
+        minOffset = offset;
+        closestIndex = idx;
       }
-      // Wait for the smooth scroll animation to likely finish, then re-evaluate.
-      setTimeout(updateArrowState, 500);
-    };
-    
-    nextButton.addEventListener('click', () => {
-      const card = container.querySelector('.testimonial-card');
-      if (!card) return;
-      const scrollAmount = card.offsetWidth + parseFloat(getComputedStyle(container).gap);
-      handleButtonClick(scrollAmount);
     });
-
-    prevButton.addEventListener('click', () => {
-      const card = container.querySelector('.testimonial-card');
-      if (!card) return;
-      const scrollAmount = card.offsetWidth + parseFloat(getComputedStyle(container).gap);
-      handleButtonClick(-scrollAmount); // Use a negative value to scroll left
-    });
-
-    // This handles manual scrolling (like dragging on a touch device)
-    container.addEventListener('scroll', updateArrowState);
-
-    // Set the initial state correctly on page load
+    currentIndex = closestIndex;
     updateArrowState();
   });
+
+  // Initialize
+  updateArrowState();
+});
 </script>
 
 {% schema %}
