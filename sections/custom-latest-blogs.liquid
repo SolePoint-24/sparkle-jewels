@@ -1,8 +1,8 @@
 {% comment %}
-  V5: Restored the full schema which was missing in the previous version.
-  - Contains the padding fix to make the image flush with borders.
-  - Contains the responsive styles for tablet (2 columns) and mobile (1 column).
-  - Contains the full, working schema with all settings.
+  V6: Updated styles to match the new reference image and theme CSS.
+  - Uses CSS variables from the theme for consistent borders and radiuses.
+  - Date overlay is now a pill/capsule shape.
+  - Image corners and button are now rounded.
 {% endcomment %}
 
 {%- style -%}
@@ -53,11 +53,16 @@
     gap: 30px;
   }
 
+  /* --- NEW STYLES START HERE --- */
   .custom-blog-card {
     display: flex;
     flex-direction: column;
     text-align: left;
-    border: 1px solid #e0e0e0;
+    /* Using theme variables for border and radius for consistency */
+    border: var(--border-width, 1px) solid rgba(var(--color-foreground), var(--border-opacity, 0.1));
+    border-radius: var(--border-radius, 8px);
+    overflow: hidden; /* Ensures child elements respect the rounded corners */
+    background-color: rgb(var(--color-background));
   }
 
   .custom-blog-card__image-wrapper {
@@ -72,7 +77,7 @@
   .custom-blog-card__image {
     width: 100%;
     height: auto;
-    aspect-ratio: 1/1;
+    aspect-ratio: 1.25/1; /* Adjusted aspect ratio to better match image */
     object-fit: cover;
     transition: transform 0.4s ease;
     display: block;
@@ -84,20 +89,22 @@
 
   .custom-blog-card__date {
     position: absolute;
-    bottom: 12px;
-    left: 12px;
+    bottom: 15px;
+    left: 15px;
     background-color: rgba(255, 255, 255, 0.9);
-    padding: 5px 10px;
+    padding: 6px 14px;
     font-size: 0.8rem;
-    border-radius: 4px;
+    /* Making it a pill shape */
+    border-radius: 50px;
     color: #333;
+    line-height: 1;
   }
 
   .custom-blog-card__content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 25px;
+    padding: 20px;
   }
   
   .custom-blog-card__title {
@@ -113,7 +120,7 @@
   }
   
   .custom-blog-card__title a:hover {
-    text-decoration: underline;
+    color: rgb(var(--color-link-hover));
   }
 
   .custom-blog-card__excerpt {
@@ -126,10 +133,12 @@
   .custom-blog-card__read-more {
     display: inline-block;
     border: 1px solid #ccc;
-    padding: 8px 18px;
+    padding: 10px 20px;
     text-decoration: none;
     color: #333;
     align-self: flex-start;
+    /* Adding rounded corners to the button */
+    border-radius: var(--buttons-radius-outset, 5px);
   }
 
   .custom-blog-card__read-more:hover {
@@ -195,7 +204,7 @@
                       alt="{{ article.image.alt | escape }}"
                       class="custom-blog-card__image"
                       width="500"
-                      height="500"
+                      height="400"
                       loading="lazy"
                     >
                   {%- else -%}
