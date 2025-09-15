@@ -4279,8 +4279,8 @@ text-component {
   height: 100%; /* Added for layout consistency */
 }
 .product-card-wrapper .card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
+box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* strong shadow */
+  transform: translateY(-2px); /* slight lift */}
 
 /* Ensure grid/flex children stretch to same height */
 .grid .product-card-wrapper,
