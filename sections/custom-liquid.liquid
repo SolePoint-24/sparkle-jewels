@@ -1,319 +1,74 @@
-{% comment %}
-  This is a custom section for displaying the latest blog posts.
-  - It allows selecting a blog.
-  - It allows customizing titles and the number of posts.
-  - The styling is self-contained within this file.
-{% endcomment %}
 
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top }}px;
-    padding-bottom: {{ section.settings.padding_bottom }}px;
-  }
-
-  .custom-blog__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-  }
-
-  .custom-blog__subheading {
-    font-size: 0.9rem;
-    color: #555;
-    margin: 0;
-    font-family: var(--font-body-family);
-  }
-
-  .custom-blog__heading {
-    font-size: 2.5rem;
-    margin: 0;
-    font-family: var(--font-heading-family);
-    font-weight: var(--font-heading-weight);
-  }
-
-  .custom-blog__view-all {
-    border: 1px solid #ccc;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #333;
-    transition: background-color 0.3s, color 0.3s;
-    white-space: nowrap;
-  }
-
-  .custom-blog__view-all:hover {
-    background-color: #333;
-    color: #fff;
-    border-color: #333;
-  }
-
-  .custom-blog__grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-  }
-
-  .custom-blog-card {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-  }
-
-  .custom-blog-card__image-wrapper {
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 20px;
-  }
-
-  .custom-blog-card__image-wrapper a {
-    display: block;
-  }
-
-  .custom-blog-card__image {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1/1; /* Makes the image container square */
-    object-fit: cover;
-    transition: transform 0.4s ease;
-  }
-  
-  .custom-blog-card:hover .custom-blog-card__image {
-    transform: scale(1.05);
-  }
-
-  .custom-blog-card__date {
-    position: absolute;
-    bottom: 12px;
-    left: 12px;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 5px 10px;
-    font-size: 0.8rem;
-    border-radius: 4px;
-    color: #333;
-  }
-
-  .custom-blog-card__content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .custom-blog-card__title {
-    font-size: 1.1rem;
-    margin: 0 0 10px 0;
-    font-weight: bold;
-    font-family: var(--font-heading-family);
-  }
-
-  .custom-blog-card__title a {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .custom-blog-card__title a:hover {
-    text-decoration: underline;
-  }
-
-  .custom-blog-card__excerpt {
-    font-size: 0.9rem;
-    color: #555;
-    margin: 0 0 20px 0;
-    flex-grow: 1;
-  }
-  
-  .custom-blog-card__read-more {
-    display: inline-block;
-    border: 1px solid #ccc;
-    padding: 8px 18px;
-    text-decoration: none;
-    color: #333;
-    transition: background-color 0.3s, color 0.3s;
-    align-self: flex-start;
-  }
-
-  .custom-blog-card__read-more:hover {
-    background-color: #333;
-    color: #fff;
-    border-color: #333;
-  }
-
-  /* Responsive Adjustments */
-  @media screen and (max-width: 990px) {
-    .custom-blog__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media screen and (max-width: 749px) {
-    .custom-blog__header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 15px;
-    }
-
-    .custom-blog__heading {
-      font-size: 2rem;
-    }
-  }
-
-  @media screen and (max-width: 550px) {
-    .custom-blog__grid {
-      grid-template-columns: 1fr;
-    }
-  }
-{%- endstyle -%}
-
-<div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="section-{{ section.id }}-padding">
-    <div class="page-width">
-      <div class="custom-blog__header">
-        <div>
-          {%- if section.settings.subheading != blank -%}
-            <p class="custom-blog__subheading">{{ section.settings.subheading }}</p>
-          {%- endif -%}
-          {%- if section.settings.heading != blank -%}
-            <h2 class="custom-blog__heading">{{ section.settings.heading }}</h2>
-          {%- endif -%}
-        </div>
-        {%- if section.settings.show_view_all and section.settings.blog != blank -%}
-          <a href="{{ blogs[section.settings.blog].url }}" class="custom-blog__view-all">
-            View All Blogs
-          </a>
-        {%- endif -%}
-      </div>
-
-      <div class="custom-blog__grid">
-        {%- liquid
-          assign blog = blogs[section.settings.blog]
-          assign limit = section.settings.posts_to_show
-        -%}
-
-        {%- for article in blog.articles limit: limit -%}
-          <div class="custom-blog-card">
-            <div class="custom-blog-card__image-wrapper">
-              <a href="{{ article.url }}">
-                {%- if article.image -%}
-                  <img
-                    src="{{ article.image | image_url: width: 500, height: 500, crop: 'center' }}"
-                    alt="{{ article.image.alt | escape }}"
-                    class="custom-blog-card__image"
-                    width="500"
-                    height="500"
-                    loading="lazy"
-                  >
-                {%- else -%}
-                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                {%- endif -%}
-              </a>
-              <div class="custom-blog-card__date">
-                {{ article.published_at | date: "%d %b - %Y" }}
-              </div>
-            </div>
-            <div class="custom-blog-card__content">
-              <h3 class="custom-blog-card__title">
-                <a href="{{ article.url }}">{{ article.title | truncate: 50, "..." }}</a>
-              </h3>
-              {%- if article.excerpt.size > 0 or article.content.size > 0 -%}
-                <p class="custom-blog-card__excerpt">
-                  {{ article.excerpt_or_content | strip_html | truncate: 120, "..." }}
-                </p>
-              {%- endif -%}
-              <a href="{{ article.url }}" class="custom-blog-card__read-more">Read More</a>
-            </div>
-          </div>
-        {%- else -%}
-          {%- for i in (1..limit) -%}
-            <div class="custom-blog-card">
-              <div class="custom-blog-card__image-wrapper">
-                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                 <div class="custom-blog-card__date">
-                  01 Jan - 2025
-                </div>
-              </div>
-              <div class="custom-blog-card__content">
-                <h3 class="custom-blog-card__title">Blog Post Title</h3>
-                <p class="custom-blog-card__excerpt">
-                  This is a placeholder for your blog post excerpt. Select a blog in the theme editor to show your posts.
-                </p>
-                <a href="#" class="custom-blog-card__read-more">Read More</a>
-              </div>
-            </div>
-          {%- endfor -%}
-        {%- endfor -%}
-      </div>
-    </div>
-  </div>
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section section--{{ section.settings.section_width }} spacing-style {% if section.settings.color_scheme != blank %}color-{{ section.settings.color_scheme }}{% endif %}"
+  style="{% render 'spacing-padding', settings: section.settings %}"
+>
+  {{ section.settings.custom_liquid }}
 </div>
 
 {% schema %}
 {
-  "name": "Latest Thought Blogs",
-  "tag": "section",
-  "class": "section",
+  "name": "t:names.custom_liquid",
   "settings": [
     {
-      "type": "text",
-      "id": "subheading",
-      "default": "Fresh Reads",
-      "label": "Subheading"
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "t:settings.custom_liquid",
+      "info": "t:info.custom_liquid"
     },
     {
-      "type": "text",
-      "id": "heading",
-      "default": "The Latest Thought",
-      "label": "Heading"
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
     },
     {
-      "id": "blog",
-      "type": "blog",
-      "label": "Select Blog"
-    },
-    {
-      "type": "range",
-      "id": "posts_to_show",
-      "min": 1,
-      "max": 8,
-      "step": 1,
-      "default": 4,
-      "label": "Number of Posts to Show"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_view_all",
-      "default": true,
-      "label": "Show 'View All Blogs' button"
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
     },
     {
       "type": "header",
-      "content": "Section Padding"
+      "content": "t:content.padding"
     },
     {
       "type": "range",
-      "id": "padding_top",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 1,
       "unit": "px",
-      "label": "Top padding",
-      "default": 36
+      "default": 0
     },
     {
       "type": "range",
-      "id": "padding_bottom",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
       "min": 0,
       "max": 100,
-      "step": 4,
+      "step": 1,
       "unit": "px",
-      "label": "Bottom padding",
-      "default": 36
+      "default": 0
     }
   ],
   "presets": [
     {
-      "name": "Latest Thought Blogs"
+      "name": "t:names.custom_liquid",
+      "category": "t:categories.layout"
     }
   ]
 }
