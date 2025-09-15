@@ -151,40 +151,52 @@
 
     if (!container || !prevButton || !nextButton) return;
 
+    // A single, robust function to check and set the button states
     const updateArrowState = () => {
-      // Use a small buffer (1px) for calculations to avoid rounding errors
-      const atStart = container.scrollLeft <= 1; /* --- FIXED --- Changed < to <= */
-      const atEnd = container.scrollLeft + container.clientWidth >= container.scrollWidth - 1;
+      // Use Math.round to handle potential sub-pixel values
+      const scrollLeft = Math.round(container.scrollLeft);
+      const scrollWidth = Math.round(container.scrollWidth);
+      const clientWidth = Math.round(container.clientWidth);
 
-      prevButton.disabled = atStart;
-      nextButton.disabled = atEnd;
+      // Disable 'prev' if scroll position is at the very beginning (0)
+      prevButton.disabled = scrollLeft <= 0;
+      
+      // Disable 'next' if the scroll position is at the very end
+      nextButton.disabled = scrollLeft + clientWidth >= scrollWidth;
     };
 
+    const handleButtonClick = (scrollOffset) => {
+      container.scrollLeft += scrollOffset;
+      // IMPORTANT: After a click, browsers are inconsistent with scroll events.
+      // We will manually disable the button immediately and re-check after the animation.
+      // This provides instant feedback and final accuracy.
+      if (scrollOffset > 0) {
+        nextButton.disabled = true;
+      } else {
+        prevButton.disabled = true;
+      }
+      // Wait for the smooth scroll animation to likely finish, then re-evaluate.
+      setTimeout(updateArrowState, 500);
+    };
+    
     nextButton.addEventListener('click', () => {
       const card = container.querySelector('.testimonial-card');
       if (!card) return;
       const scrollAmount = card.offsetWidth + parseFloat(getComputedStyle(container).gap);
-      container.scrollLeft += scrollAmount;
+      handleButtonClick(scrollAmount);
     });
 
     prevButton.addEventListener('click', () => {
       const card = container.querySelector('.testimonial-card');
       if (!card) return;
       const scrollAmount = card.offsetWidth + parseFloat(getComputedStyle(container).gap);
-      container.scrollLeft -= scrollAmount;
+      handleButtonClick(-scrollAmount); // Use a negative value to scroll left
     });
 
-    // We need a slight delay after a click to allow the smooth scroll to finish
-    // before updating the button state.
-    const debouncedUpdate = () => {
-      setTimeout(updateArrowState, 300); // 300ms is the typical smooth scroll duration
-    };
-
+    // This handles manual scrolling (like dragging on a touch device)
     container.addEventListener('scroll', updateArrowState);
-    prevButton.addEventListener('click', debouncedUpdate);
-    nextButton.addEventListener('click', debouncedUpdate);
 
-    // Set the initial state when the page loads
+    // Set the initial state correctly on page load
     updateArrowState();
   });
 </script>
