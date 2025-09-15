@@ -4270,6 +4270,7 @@ text-component {
 
 /* --- Card General --- */
 .product-card-wrapper .card {
+  border: 1px solid black;
   transition: box-shadow 0.3s ease-in-out;
   position: relative;
   overflow: hidden;
