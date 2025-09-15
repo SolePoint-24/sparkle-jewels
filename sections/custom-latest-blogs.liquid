@@ -1,9 +1,14 @@
 {% comment %}
-  V8: Added a single setting to control the number of posts to show.
-  - All styling is untouched as requested.
-  - A new 'range' slider is added to the schema.
-  - The for loop is updated with a 'limit' filter to use the new setting.
+  V9: Re-added the setting to control columns on mobile view.
+  - All styling is untouched.
+  - Added a 'select' dropdown for "Columns on mobile".
+  - Updated the CSS and Liquid to use this new setting.
 {% endcomment %}
+
+{%- liquid
+  %}{%- comment %}Injecting settings as CSS variables for dynamic control{%- endcomment %}{%
+  assign columns_mobile = section.settings.columns_mobile
+-%}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -135,14 +140,19 @@
       font-size: 2rem;
     }
   }
+
+  /* --- CHANGE: Using CSS variable for dynamic mobile columns --- */
   @media screen and (max-width: 550px) {
     .custom-blog__grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(var(--columns-mobile, 1), 1fr);
     }
   }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.color_scheme }} gradient">
+<div
+  class="color-{{ section.settings.color_scheme }} gradient"
+  style="--columns-mobile: {{ columns_mobile }};"
+>
   <div class="section-{{ section.id }}-padding">
     <div class="page-width">
       <div class="custom-blog__header">
@@ -162,7 +172,6 @@
       </div>
 
       <div class="custom-blog__grid">
-        {% comment %} --- CHANGE: Added 'limit' filter to respect the new setting --- {% endcomment %}
         {%- for block in section.blocks limit: section.settings.posts_to_show -%}
           {%- assign article = block.settings.article -%}
           <div class="custom-blog-card" {{ block.shopify_attributes }}>
@@ -208,7 +217,7 @@
             {%- endif -%}
           </div>
         {%- endfor -%}
-        
+
         {%- if section.blocks.size == 0 -%}
           <div style="text-align: center; grid-column: 1 / -1;">
             <p>Click "Add blog post" in the sidebar to select which articles to show here.</p>
@@ -271,6 +280,16 @@
       "step": 1,
       "default": 4,
       "label": "Number of posts to show"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile (under 550px)",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "1"
     },
     {
       "type": "header",
