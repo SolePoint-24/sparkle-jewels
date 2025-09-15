@@ -13,7 +13,7 @@
             {%- if section.settings.image.width >= 1500 -%}{{ section.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
             {{ section.settings.image | image_url }} {{ section.settings.image.width }}w"
           src="{{ section.settings.image | image_url: width: 1500 }}"
-          sizes="(min-width: 768px) 50vw,"
+          sizes="(min-width: 768px) 50vw, 100vw"
           alt="{{ section.settings.image.alt | escape }}"
           loading="lazy"
           width="{{ section.settings.image.width }}"
