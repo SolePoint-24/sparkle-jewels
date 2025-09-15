@@ -298,10 +298,7 @@
         "promo_button_text": "Discover Now",
         "promo_button_link": "shopify://collections/earrings",
         "collection": "chains",
-        "products_to_show": 8,
-        "show_discount": true,
-        "show_quick_look": true,
-        "show_swatches": true
+        "products_to_show": 8
       }
     },
     "section_HAz3WV": {
@@ -1257,10 +1254,7 @@
         "promo_button_text": "Discover Now",
         "promo_button_link": "shopify://collections/rings",
         "collection": "rings",
-        "products_to_show": 8,
-        "show_discount": true,
-        "show_quick_look": true,
-        "show_swatches": true
+        "products_to_show": 4
       }
     }
   },
