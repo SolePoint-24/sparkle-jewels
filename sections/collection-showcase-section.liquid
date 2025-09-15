@@ -115,7 +115,19 @@
     flex: 0 0 calc(25% - 15px);
     margin-right: 20px;
     scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
+  #shopify-section-{{ section.id }} .slider-product-card-wrapper .card-wrapper {
+  flex: 1; /* Forces all product cards to stretch to equal height */
+  display: flex;
+  flex-direction: column;
+}
+
+#shopify-section-{{ section.id }} .slider-product-card-wrapper .card {
+  height: 100%; /* Ensures card fills the wrapper */
+}
   
   #shopify-section-{{ section.id }} .slider-product-card-wrapper:last-child {
     margin-right: 0;
