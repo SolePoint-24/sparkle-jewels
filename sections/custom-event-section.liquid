@@ -191,13 +191,19 @@
   @media screen and (max-width: 767px) {
     .event-countdown__flex-container {
       flex-direction: column; /* Stacks image on top of text */
+      width: 100%;
+
     }
 
     .event-countdown__content {
-      padding: 2rem;
+      padding: 1.5rem;
       align-items: center; /* Center-aligns content on mobile */
       text-align: center;
     }
+    .event-countdown__media img {
+    max-width: 100%;
+    height: auto; /* prevent stretching */
+  }
   }
 </style>
 
