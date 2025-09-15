@@ -11,6 +11,19 @@
   "type": "footer",
   "name": "Footer",
   "sections": {
+    "custom_footer_MRp3LF": {
+      "type": "custom-footer",
+      "name": "Custom Footer",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "footer_menu": "footer",
+        "description": "<p>Share beauty, elegance, and sparkle through timeless designs. stay connected with us for updates, promotions, and exclusive releases.<br/><br/></p>",
+        "facebook_url": "",
+        "instagram_url": "",
+        "padding_top": 36,
+        "padding_bottom": 4
+      }
+    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -571,6 +584,7 @@
         "group_NEzhmq",
         "group_Q3CmBH"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -592,6 +606,7 @@
     }
   },
   "order": [
+    "custom_footer_MRp3LF",
     "footer"
   ]
 }
