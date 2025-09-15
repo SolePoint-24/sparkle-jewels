@@ -9,6 +9,14 @@
  */
 {
   "sections": {
+    "collection_hero_p9nebH": {
+      "type": "collection-hero",
+      "name": "Collection Hero",
+      "settings": {
+        "default_image": "{{ collection.metafields.custom.collection_banner_image.value }}",
+        "overlay_opacity": 30
+      }
+    },
     "collection_list_E8kJPz": {
       "type": "collection-list",
       "blocks": {
@@ -51,37 +59,7 @@
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
-          "blocks": {
-            "text_N9eXYr": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<h3>Shop by collection</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 16,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_N9eXYr"
-          ]
+          "blocks": {}
         },
         "static-collection-card": {
           "type": "_collection-card",
@@ -177,60 +155,6 @@
         "color_scheme": "",
         "padding-block-start": 48,
         "padding-block-end": 48
-      }
-    },
-    "hero_tQw4Dd": {
-      "type": "hero",
-      "blocks": {
-        "collection_slide_3XR6TE": {
-          "type": "collection_slide",
-          "settings": {
-            "collection": "earrings",
-            "image_desktop": "{{ block.settings.collection.metafields.custom.collection_banner_image.value }}",
-            "image_tablet": "{{ block.settings.collection.metafields.custom.collection_banner_image.value }}",
-            "image_mobile": "{{ block.settings.collection.metafields.custom.collection_banner_image.value }}",
-            "subheading": "Shine Brighter",
-            "heading": "Where Grace Meets Glamour",
-            "text": "Timeless gold pieces designed to elevate every occasion.",
-            "button_label": "Explore Gold Collection",
-            "button_link": ""
-          }
-        },
-        "collection_slide_hM8VA3": {
-          "type": "collection_slide",
-          "settings": {
-            "collection": "",
-            "subheading": "Shine Brighter",
-            "heading": "Where Grace Meets Glamour",
-            "text": "Timeless gold pieces designed to elevate every occasion.",
-            "button_label": "Explore Gold Collection",
-            "button_link": ""
-          }
-        },
-        "collection_slide_VL7FeX": {
-          "type": "collection_slide",
-          "settings": {
-            "collection": "",
-            "subheading": "Shine Brighter",
-            "heading": "Where Grace Meets Glamour",
-            "text": "Timeless gold pieces designed to elevate every occasion.",
-            "button_label": "Explore Gold Collection",
-            "button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "collection_slide_3XR6TE",
-        "collection_slide_hM8VA3",
-        "collection_slide_VL7FeX"
-      ],
-      "name": "Hero Carousel",
-      "settings": {
-        "color_scheme": "",
-        "section_height_desktop": 90,
-        "section_height_mobile": 85,
-        "autoplay": true,
-        "autoplay_speed": 5000
       }
     },
     "main": {
@@ -421,8 +345,8 @@
     }
   },
   "order": [
+    "collection_hero_p9nebH",
     "collection_list_E8kJPz",
-    "hero_tQw4Dd",
     "main"
   ]
 }
