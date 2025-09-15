@@ -39,19 +39,19 @@
     <div class="event-countdown-timer" data-countdown-date="{{ section.settings.event_date }}">
       <div class="time">
         <span class="count" data-days>00</span>
-        <span class="label">{{ 'sections.event_countdown.days' | t }}</span>
+        <span class="label">Days</span>
       </div>
       <div class="time">
         <span class="count" data-hours>00</span>
-        <span class="label">{{ 'sections.event_countdown.hours' | t }}</span>
+        <span class="label">Hours</span>
       </div>
       <div class="time">
         <span class="count" data-minutes>00</span>
-        <span class="label">{{ 'sections.event_countdown.mins' | t }}</span>
+        <span class="label">Minutes</span>
       </div>
       <div class="time">
         <span class="count" data-seconds>00</span>
-        <span class="label">{{ 'sections.event_countdown.sec' | t }}</span>
+        <span class="label">Seconds</span>
       </div>
     </div>
 
@@ -86,81 +86,110 @@
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
-  .event-countdown-section .image-with-text__grid {
-    align-items: center;
+
+  /* Flexbox Layout */
+  .event-countdown__flex-container {
+    display: flex;
+    flex-direction: row; /* Image on left, text on right */
+    align-items: center;  /* Vertically centers content */
+    gap: 2rem; /* Adds space between image and text */
   }
-  .event-countdown-section .image-with-text__content {
+
+  .event-countdown__media,
+  .event-countdown__content {
+    flex: 1 1 50%; /* Each takes up 50% of the width */
+    min-width: 0; /* Prevents flex items from overflowing */
+  }
+
+  .event-countdown__content {
     padding: 2rem 4rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-start; /* Aligns content to the left */
     justify-content: center;
     height: 100%;
   }
-  .event-countdown-section .event-subheading {
+
+  .event-countdown__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers the area nicely */
+  }
+  
+  /* General Styling (mostly unchanged) */
+  .event-subheading {
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
     color: rgba(var(--color-foreground), 0.75);
   }
-  .event-countdown-section .image-with-text__heading {
+
+  .image-with-text__heading {
     margin-top: 0;
     margin-bottom: 1.5rem;
   }
+
   .event-countdown-timer {
     display: flex;
     gap: 15px;
     margin: 2rem 0;
   }
+
   .event-countdown-timer .time {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
   .event-countdown-timer .count {
     font-size: 2.8rem;
     font-weight: 600;
     line-height: 1.2;
     color: rgb(var(--color-base-text));
   }
+
   .event-countdown-timer .label {
     font-size: 1.2rem;
     text-transform: uppercase;
     color: rgba(var(--color-foreground), 0.75);
   }
-  .event-countdown-section .author-info {
+
+  .author-info {
     display: flex;
     align-items: center;
     gap: 15px;
     margin-bottom: 2rem;
   }
-  .event-countdown-section .author-image {
+
+  .author-image {
     border-radius: 50%;
     width: 50px;
     height: 50px;
     object-fit: cover;
   }
-  .event-countdown-section .author-text h3,
-  .event-countdown-section .author-text p {
+
+  .author-text h3,
+  .author-text p {
     margin: 0;
     line-height: 1.4;
   }
-   .event-countdown-section .author-text h3 {
+
+   .author-text h3 {
     font-weight: 500;
    }
-  .event-countdown-section .button {
+
+  .button {
     margin-top: 1rem;
   }
 
+  /* Responsive Styling for Mobile */
   @media screen and (max-width: 767px) {
-    .event-countdown-section .image-with-text__grid {
-      margin: 0;
+    .event-countdown__flex-container {
+      flex-direction: column; /* Stacks image on top of text */
     }
-    .event-countdown-section .image-with-text__media-item {
-      padding: 0;
-    }
-    .event-countdown-section .image-with-text__content {
+
+    .event-countdown__content {
       padding: 2rem;
-      align-items: center;
+      align-items: center; /* Center-aligns content on mobile */
       text-align: center;
     }
   }
