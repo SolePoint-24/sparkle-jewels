@@ -4363,7 +4363,7 @@ text-component {
 .product-card-wrapper .color-swatch {
   width: 24px;
   height: 24px;
-  border-radius: 50%;
+  border-radius: 5px;
   border: 1px solid #ddd;
   cursor: pointer;
   position: relative;
