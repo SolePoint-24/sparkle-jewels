@@ -122,7 +122,7 @@
           <div class="price price--on-sale">
             <div class="price__container">
               <span class="price-item price-item--regular">
-                {{ product.price | money }}
+                {{ product.price_min| money }}
               </span>
               {% if product.compare_at_price > product.price %}
                 <s class="price-item price-item--compare">
