@@ -774,6 +774,17 @@
         "main_heading": "Voices Of Elegance",
         "color_scheme": ""
       }
+    },
+    "newsletter_3Qcw8V": {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "background_image": "shopify://shop_images/NK-027_1.png",
+        "heading": "Join Our Newsletter",
+        "subheading": "<p>FIRST AND FOREMOST, AN EMAIL NEWSLETTER SIGNUP SHOULD INCENTIVIZE PEOPLE TO SIGN UP</p>",
+        "overlay_opacity": 30,
+        "color_scheme": ""
+      }
     }
   },
   "order": [
@@ -784,6 +795,7 @@
     "collection_list_3ejxRy",
     "custom_latest_blogs_cDPKTt",
     "collection_showcase_section_CM9XwH",
-    "custom_testimonials_bCxDEA"
+    "custom_testimonials_bCxDEA",
+    "newsletter_3Qcw8V"
   ]
 }
