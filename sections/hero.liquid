@@ -143,8 +143,13 @@
 
       this.prevButton.addEventListener('click', this.prev.bind(this));
       this.nextButton.addEventListener('click', this.next.bind(this));
+      
+      // UPDATED LINE: Changed 'mouseover' to 'click' and added event.preventDefault()
       this.links.forEach((link, index) => {
-        link.addEventListener('mouseover', () => this.goTo(index));
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          this.goTo(index);
+        });
       });
       
       if (this.autoplay) {
