@@ -783,6 +783,7 @@
         "heading": "Join Our Newsletter",
         "subheading": "<p>FIRST AND FOREMOST, AN EMAIL NEWSLETTER SIGNUP SHOULD INCENTIVIZE PEOPLE TO SIGN UP</p>",
         "overlay_opacity": 30,
+        "success_message": "Thank you for subscribing!",
         "color_scheme": ""
       }
     }
