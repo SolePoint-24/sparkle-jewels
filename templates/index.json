@@ -325,6 +325,7 @@
           ]
         }
       },
+      "disabled": true,
       "name": "Featured collection",
       "settings": {
         "collection": "all",
@@ -1527,6 +1528,7 @@
         "subheading": "Fresh Reads",
         "heading": "The Latest Thought",
         "show_view_all": true,
+        "button_text": "View All Blogs",
         "button_link": "",
         "padding_top": 36,
         "padding_bottom": 36
