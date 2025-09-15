@@ -1,84 +1,83 @@
 <div class="event-countdown-section isolate color-{{ section.settings.color_scheme }} gradient">
   <div class="page-width">
-    <div class="image-with-text__grid grid grid--gapless grid--1-col grid--2-col-tablet">
-      <div class="image-with-text__media-item grid__item">
-        <div class="image-with-text__media media">
-          {%- if section.settings.image != blank -%}
-            <img
-              srcset="{%- if section.settings.image.width >= 165 -%}{{ section.settings.image | image_url: width: 165 }} 165w,{%- endif -%}
-                {%- if section.settings.image.width >= 360 -%}{{ section.settings.image | image_url: width: 360 }} 360w,{%- endif -%}
-                {%- if section.settings.image.width >= 535 -%}{{ section.settings.image | image_url: width: 535 }} 535w,{%- endif -%}
-                {%- if section.settings.image.width >= 750 -%}{{ section.settings.image | image_url: width: 750 }} 750w,{%- endif -%}
-                {%- if section.settings.image.width >= 1070 -%}{{ section.settings.image | image_url: width: 1070 }} 1070w,{%- endif -%}
-                {%- if section.settings.image.width >= 1500 -%}{{ section.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
-                {{ section.settings.image | image_url }} {{ section.settings.image.width }}w"
-              src="{{ section.settings.image | image_url: width: 1500 }}"
-              sizes="(min-width: 1600px) 750px, (min-width: 768px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)"
-              alt="{{ section.settings.image.alt | escape }}"
-              loading="lazy"
-              width="{{ section.settings.image.width }}"
-              height="{{ section.settings.image.height }}"
-            >
-          {%- else -%}
-            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-          {%- endif -%}
-        </div>
-      </div>
-      <div class="image-with-text__text-item grid__item">
-        <div class="image-with-text__content">
-          {%- if section.settings.subheading != blank -%}
-            <p class="event-subheading">{{ section.settings.subheading | escape }}</p>
-          {%- endif -%}
-          {%- if section.settings.heading != blank -%}
-            <h2 class="image-with-text__heading h2">{{ section.settings.heading | escape }}</h2>
-          {%- endif -%}
-          {%- if section.settings.description != blank -%}
-            <div class="image-with-text__text rte body">{{ section.settings.description }}</div>
-          {%- endif -%}
-          
-          <div class="event-countdown-timer" data-countdown-date="{{ section.settings.event_date }}">
-            <div class="time">
-              <span class="count" data-days>00</span>
-              <span class="label">Days</span>
-            </div>
-            <div class="time">
-              <span class="count" data-hours>00</span>
-              <span class="label">Hours</span>
-            </div>
-            <div class="time">
-              <span class="count" data-minutes>00</span>
-              <span class="label">Minutes</span>
-            </div>
-            <div class="time">
-              <span class="count" data-seconds>00</span>
-              <span class="label">Seconds</span>
-            </div>
-          </div>
+   <div class="event-countdown__flex-container">
+  <div class="event-countdown__media">
+    <div class="image-with-text__media media">
+      {%- if section.settings.image != blank -%}
+        <img
+          srcset="{%- if section.settings.image.width >= 165 -%}{{ section.settings.image | image_url: width: 165 }} 165w,{%- endif -%}
+            {%- if section.settings.image.width >= 360 -%}{{ section.settings.image | image_url: width: 360 }} 360w,{%- endif -%}
+            {%- if section.settings.image.width >= 535 -%}{{ section.settings.image | image_url: width: 535 }} 535w,{%- endif -%}
+            {%- if section.settings.image.width >= 750 -%}{{ section.settings.image | image_url: width: 750 }} 750w,{%- endif -%}
+            {%- if section.settings.image.width >= 1070 -%}{{ section.settings.image | image_url: width: 1070 }} 1070w,{%- endif -%}
+            {%- if section.settings.image.width >= 1500 -%}{{ section.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
+            {{ section.settings.image | image_url }} {{ section.settings.image.width }}w"
+          src="{{ section.settings.image | image_url: width: 1500 }}"
+          sizes="(min-width: 768px) 50vw, 100vw"
+          alt="{{ section.settings.image.alt | escape }}"
+          loading="lazy"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+        >
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+  </div>
 
-          {%- if section.settings.enable_author -%}
-            <div class="author-info">
-              {%- if section.settings.author_image != blank -%}
-                <img class="author-image" src="{{ section.settings.author_image | image_url: width: 70 }}" alt="{{ section.settings.author_image.alt | default: 'Author' | escape }}" loading="lazy" width="70" height="70">
-              {%- endif -%}
-              <div class="author-text">
-                {%- if section.settings.author_line_1 != blank -%}
-                  <h3 class="h4">{{ section.settings.author_line_1 }}</h3>
-                {%- endif -%}
-                {%- if section.settings.author_line_2 != blank -%}
-                  <p>{{ section.settings.author_line_2 }}</p>
-                {%- endif -%}
-              </div>
-            </div>
-          {%- endif -%}
-          
-          {%- if section.settings.button_label != blank -%}
-            <a href="{{ section.settings.button_link }}" class="button button--secondary">
-              {{ section.settings.button_label | escape }}
-            </a>
-          {%- endif -%}
-        </div>
+  <div class="event-countdown__content">
+    {%- if section.settings.subheading != blank -%}
+      <p class="event-subheading">{{ section.settings.subheading | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="image-with-text__heading h2">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.description != blank -%}
+      <div class="image-with-text__text rte body">{{ section.settings.description }}</div>
+    {%- endif -%}
+    
+    <div class="event-countdown-timer" data-countdown-date="{{ section.settings.event_date }}">
+      <div class="time">
+        <span class="count" data-days>00</span>
+        <span class="label">{{ 'sections.event_countdown.days' | t }}</span>
+      </div>
+      <div class="time">
+        <span class="count" data-hours>00</span>
+        <span class="label">{{ 'sections.event_countdown.hours' | t }}</span>
+      </div>
+      <div class="time">
+        <span class="count" data-minutes>00</span>
+        <span class="label">{{ 'sections.event_countdown.mins' | t }}</span>
+      </div>
+      <div class="time">
+        <span class="count" data-seconds>00</span>
+        <span class="label">{{ 'sections.event_countdown.sec' | t }}</span>
       </div>
     </div>
+
+    {%- if section.settings.enable_author -%}
+      <div class="author-info">
+        {%- if section.settings.author_image != blank -%}
+          <img class="author-image" src="{{ section.settings.author_image | image_url: width: 70 }}" alt="{{ section.settings.author_image.alt | default: 'Author' | escape }}" loading="lazy" width="70" height="70">
+        {%- endif -%}
+        <div class="author-text">
+          {%- if section.settings.author_line_1 != blank -%}
+            <h3 class="h4">{{ section.settings.author_line_1 }}</h3>
+          {%- endif -%}
+          {%- if section.settings.author_line_2 != blank -%}
+            <p>{{ section.settings.author_line_2 }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+    
+    {%- if section.settings.button_label != blank -%}
+      <a href="{{ section.settings.button_link }}" class="button button--secondary">
+        {{ section.settings.button_label | escape }}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
   </div>
 </div>
 
