@@ -15,13 +15,23 @@
         "collection_slide_F9LexX": {
           "type": "collection_slide",
           "settings": {
-            "collection": ""
+            "collection": "rings",
+            "subheading": "Shine Brighter",
+            "heading": "Where Grace Meets Glamour",
+            "text": "Timeless gold pieces designed to elevate every occasion.",
+            "button_label": "Explore Gold Collection",
+            "button_link": ""
           }
         },
         "collection_slide_nhxfbn": {
           "type": "collection_slide",
           "settings": {
-            "collection": ""
+            "collection": "",
+            "subheading": "Shine Brighter",
+            "heading": "Where Grace Meets Glamour",
+            "text": "Timeless gold pieces designed to elevate every occasion.",
+            "button_label": "Explore Gold Collection",
+            "button_link": ""
           }
         }
       },
@@ -31,7 +41,9 @@
       ],
       "name": "t:names.hero",
       "settings": {
-        "color_scheme": "scheme-6"
+        "color_scheme": "scheme-6",
+        "autoplay": true,
+        "autoplay_speed": 5000
       }
     },
     "section": {
