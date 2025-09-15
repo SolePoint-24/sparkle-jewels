@@ -1,12 +1,8 @@
 {% comment %}
-  This is a custom section for displaying the latest blog posts.
-  - It allows selecting a blog.
-  - It allows customizing titles and the number of posts.
-  - The styling is self-contained within this file.
+  V2: Updated to use blocks for hand-picking articles.
+  - Fixes CSS file errors by being fully self-contained.
+  - Allows user to select individual articles for full control.
 {% endcomment %}
-
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -130,7 +126,6 @@
     padding: 8px 18px;
     text-decoration: none;
     color: #333;
-    transition: background-color 0.3s, color 0.3s;
     align-self: flex-start;
   }
 
@@ -178,71 +173,66 @@
             <h2 class="custom-blog__heading">{{ section.settings.heading }}</h2>
           {%- endif -%}
         </div>
-        {%- if section.settings.show_view_all and section.settings.blog != blank -%}
-          <a href="{{ blogs[section.settings.blog].url }}" class="custom-blog__view-all">
+        {%- if section.settings.show_view_all and section.settings.button_link != blank -%}
+          <a href="{{ section.settings.button_link }}" class="custom-blog__view-all">
             View All Blogs
           </a>
         {%- endif -%}
       </div>
 
       <div class="custom-blog__grid">
-        {%- liquid
-          assign blog = blogs[section.settings.blog]
-          assign limit = section.settings.posts_to_show
-        -%}
-
-        {%- for article in blog.articles limit: limit -%}
-          <div class="custom-blog-card">
-            <div class="custom-blog-card__image-wrapper">
-              <a href="{{ article.url }}">
-                {%- if article.image -%}
-                  <img
-                    src="{{ article.image | image_url: width: 500, height: 500, crop: 'center' }}"
-                    alt="{{ article.image.alt | escape }}"
-                    class="custom-blog-card__image"
-                    width="500"
-                    height="500"
-                    loading="lazy"
-                  >
-                {%- else -%}
-                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                {%- endif -%}
-              </a>
-              <div class="custom-blog-card__date">
-                {{ article.published_at | date: "%d %b - %Y" }}
-              </div>
-            </div>
-            <div class="custom-blog-card__content">
-              <h3 class="custom-blog-card__title">
-                <a href="{{ article.url }}">{{ article.title | truncate: 50, "..." }}</a>
-              </h3>
-              {%- if article.excerpt.size > 0 or article.content.size > 0 -%}
-                <p class="custom-blog-card__excerpt">
-                  {{ article.excerpt_or_content | strip_html | truncate: 120, "..." }}
-                </p>
-              {%- endif -%}
-              <a href="{{ article.url }}" class="custom-blog-card__read-more">Read More</a>
-            </div>
-          </div>
-        {%- else -%}
-          {%- for i in (1..limit) -%}
-            <div class="custom-blog-card">
+        {%- for block in section.blocks -%}
+          {%- assign article = block.settings.article -%}
+          <div class="custom-blog-card" {{ block.shopify_attributes }}>
+            {%- if article != blank -%}
               <div class="custom-blog-card__image-wrapper">
-                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                 <div class="custom-blog-card__date">
-                  01 Jan - 2025
+                <a href="{{ article.url }}">
+                  {%- if article.image -%}
+                    <img
+                      src="{{ article.image | image_url: width: 500, height: 500, crop: 'center' }}"
+                      alt="{{ article.image.alt | escape }}"
+                      class="custom-blog-card__image"
+                      width="500"
+                      height="500"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {%- endif -%}
+                </a>
+                <div class="custom-blog-card__date">
+                  {{ article.published_at | date: "%d %b - %Y" }}
                 </div>
               </div>
               <div class="custom-blog-card__content">
-                <h3 class="custom-blog-card__title">Blog Post Title</h3>
-                <p class="custom-blog-card__excerpt">
-                  This is a placeholder for your blog post excerpt. Select a blog in the theme editor to show your posts.
-                </p>
-                <a href="#" class="custom-blog-card__read-more">Read More</a>
+                <h3 class="custom-blog-card__title">
+                  <a href="{{ article.url }}">{{ article.title | truncate: 50, "..." }}</a>
+                </h3>
+                {%- if article.excerpt.size > 0 or article.content.size > 0 -%}
+                  <p class="custom-blog-card__excerpt">
+                    {{ article.excerpt_or_content | strip_html | truncate: 120, "..." }}
+                  </p>
+                {%- endif -%}
+                <a href="{{ article.url }}" class="custom-blog-card__read-more">Read More</a>
               </div>
-            </div>
-          {%- endfor -%}
+            {%- else -%}
+              {% comment %} Onboarding state for when no article is selected {% endcomment %}
+              <div class="custom-blog-card__image-wrapper">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+              <div class="custom-blog-card__content">
+                  <h3 class="custom-blog-card__title">Blog post</h3>
+                  <p class="custom-blog-card__excerpt">Select a blog post to display here.</p>
+              </div>
+            {%- endif -%}
+          </div>
         {%- endfor -%}
+        
+        {%- if section.blocks.size == 0 -%}
+           <div style="text-align: center; grid-column: 1 / -1;">
+             <p>Click "Add blog post" in the sidebar to select which articles to show here.</p>
+           </div>
+        {%- endif -%}
       </div>
     </div>
   </div>
@@ -253,6 +243,7 @@
   "name": "Latest Thought Blogs",
   "tag": "section",
   "class": "section",
+  "max_blocks": 8,
   "settings": [
     {
       "type": "text",
@@ -267,24 +258,16 @@
       "label": "Heading"
     },
     {
-      "id": "blog",
-      "type": "blog",
-      "label": "Select Blog"
-    },
-    {
-      "type": "range",
-      "id": "posts_to_show",
-      "min": 1,
-      "max": 8,
-      "step": 1,
-      "default": 4,
-      "label": "Number of Posts to Show"
-    },
-    {
       "type": "checkbox",
       "id": "show_view_all",
       "default": true,
       "label": "Show 'View All Blogs' button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "info": "Link for the 'View All Blogs' button. Leave empty to hide."
     },
     {
       "type": "header",
@@ -311,9 +294,28 @@
       "default": 36
     }
   ],
+  "blocks": [
+    {
+      "type": "article",
+      "name": "Blog Post",
+      "settings": [
+        {
+          "type": "article",
+          "id": "article",
+          "label": "Select Article"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Latest Thought Blogs"
+      "name": "Latest Thought Blogs",
+      "blocks": [
+        { "type": "article" },
+        { "type": "article" },
+        { "type": "article" },
+        { "type": "article" }
+      ]
     }
   ]
 }
