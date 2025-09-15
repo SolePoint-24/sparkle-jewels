@@ -1,8 +1,8 @@
 {% comment %}
-  V5: Restored the full schema which was missing in the previous version.
-  - Contains the padding fix to make the image flush with borders.
-  - Contains the responsive styles for tablet (2 columns) and mobile (1 column).
-  - Contains the full, working schema with all settings.
+  V8: Added a single setting to control the number of posts to show.
+  - All styling is untouched as requested.
+  - A new 'range' slider is added to the schema.
+  - The for loop is updated with a 'limit' filter to use the new setting.
 {% endcomment %}
 
 {%- style -%}
@@ -10,28 +10,24 @@
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
-
   .custom-blog__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
   }
-
   .custom-blog__subheading {
     font-size: 0.9rem;
     color: #555;
     margin: 0;
     font-family: var(--font-body-family);
   }
-
   .custom-blog__heading {
     font-size: 2.5rem;
     margin: 0;
     font-family: var(--font-heading-family);
     font-weight: var(--font-heading-weight);
   }
-
   .custom-blog__view-all {
     border: 1px solid #ccc;
     padding: 10px 20px;
@@ -40,36 +36,30 @@
     transition: background-color 0.3s, color 0.3s;
     white-space: nowrap;
   }
-
   .custom-blog__view-all:hover {
     background-color: #333;
     color: #fff;
     border-color: #333;
   }
-
   .custom-blog__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
   }
-
   .custom-blog-card {
     display: flex;
     flex-direction: column;
     text-align: left;
     border: 1px solid #e0e0e0;
   }
-
   .custom-blog-card__image-wrapper {
     position: relative;
     overflow: hidden;
   }
-
   .custom-blog-card__image-wrapper a {
     padding:15px;
     display: block;
   }
-
   .custom-blog-card__image {
     width: 100%;
     height: auto;
@@ -78,11 +68,9 @@
     transition: transform 0.4s ease;
     display: block;
   }
-  
   .custom-blog-card:hover .custom-blog-card__image {
     transform: scale(1.05);
   }
-
   .custom-blog-card__date {
     position: absolute;
     bottom: 24px;
@@ -93,37 +81,31 @@
     border-radius: 16px;
     color: #333;
   }
-
   .custom-blog-card__content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     padding: 15px;
   }
-  
   .custom-blog-card__title {
     font-size: 1.1rem;
     margin: 0 0 10px 0;
     font-weight: bold;
     font-family: var(--font-heading-family);
   }
-
   .custom-blog-card__title a {
     text-decoration: none;
     color: inherit;
   }
-  
   .custom-blog-card__title a:hover {
     text-decoration: underline;
   }
-
   .custom-blog-card__excerpt {
     font-size: 0.9rem;
     color: #555;
     margin: 0 0 20px 0;
     flex-grow: 1;
   }
-  
   .custom-blog-card__read-more {
     display: inline-block;
     border: 1px solid #ccc;
@@ -132,20 +114,17 @@
     color: #333;
     align-self: flex-start;
   }
-
   .custom-blog-card__read-more:hover {
     background-color: #333;
     color: #fff;
     border-color: #333;
   }
-
   /* Responsive Adjustments */
   @media screen and (max-width: 990px) {
     .custom-blog__grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
-
   @media screen and (max-width: 749px) {
     .custom-blog__header {
       flex-direction: column;
@@ -156,7 +135,6 @@
       font-size: 2rem;
     }
   }
-
   @media screen and (max-width: 550px) {
     .custom-blog__grid {
       grid-template-columns: 1fr;
@@ -184,7 +162,8 @@
       </div>
 
       <div class="custom-blog__grid">
-        {%- for block in section.blocks -%}
+        {% comment %} --- CHANGE: Added 'limit' filter to respect the new setting --- {% endcomment %}
+        {%- for block in section.blocks limit: section.settings.posts_to_show -%}
           {%- assign article = block.settings.article -%}
           <div class="custom-blog-card" {{ block.shopify_attributes }}>
             {%- if article != blank -%}
@@ -220,20 +199,20 @@
               </div>
             {%- else -%}
               <div class="custom-blog-card__image-wrapper">
-                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
               </div>
               <div class="custom-blog-card__content">
-                  <h3 class="custom-blog-card__title">Blog post</h3>
-                  <p class="custom-blog-card__excerpt">Select a blog post to display here.</p>
+                <h3 class="custom-blog-card__title">Blog post</h3>
+                <p class="custom-blog-card__excerpt">Select a blog post to display here.</p>
               </div>
             {%- endif -%}
           </div>
         {%- endfor -%}
         
         {%- if section.blocks.size == 0 -%}
-           <div style="text-align: center; grid-column: 1 / -1;">
-             <p>Click "Add blog post" in the sidebar to select which articles to show here.</p>
-           </div>
+          <div style="text-align: center; grid-column: 1 / -1;">
+            <p>Click "Add blog post" in the sidebar to select which articles to show here.</p>
+          </div>
         {%- endif -%}
       </div>
     </div>
@@ -245,7 +224,7 @@
   "name": "Latest Thought Blogs",
   "tag": "section",
   "class": "section",
-  "max_blocks": 8,
+  "max_blocks": 12,
   "settings": [
     {
       "type": "text",
@@ -279,6 +258,19 @@
       "type": "url",
       "id": "button_link",
       "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Grid Settings"
+    },
+    {
+      "type": "range",
+      "id": "posts_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "label": "Number of posts to show"
     },
     {
       "type": "header",
