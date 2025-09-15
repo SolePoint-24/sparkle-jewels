@@ -6,7 +6,7 @@
 {% endcomment %}
 
 {%- liquid
-  #Use the specific collection's image if available, otherwise use the default.
+  # Use the specific collection's image if available, otherwise use the default.
   assign hero_image = collection.image | default: section.settings.default_image
  -%}
 
@@ -127,6 +127,11 @@
       "unit": "%",
       "label": "Image overlay opacity",
       "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Hero"
     }
   ]
 }
