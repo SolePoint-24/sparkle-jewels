@@ -1,0 +1,493 @@
+{% comment %}
+  This section is designed to be a self-contained showcase,
+  featuring a promotional block and a product slider.
+  It's inspired by the provided image and is fully customizable
+  through the Shopify Theme Editor.
+{% endcomment %}
+
+{%- liquid
+  assign collection = collections[section.settings.collection]
+  assign products_to_show = section.settings.products_to_show
+-%}
+
+<style>
+  .custom-showcase-section {
+    padding: 50px 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  }
+
+  .custom-showcase-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .custom-showcase-header {
+    text-align: left;
+    margin-bottom: 30px;
+  }
+
+  .custom-showcase-header .subtitle {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .custom-showcase-header .title {
+    font-size: 32px;
+    font-weight: 500;
+    color: #121212;
+    margin: 0;
+  }
+
+  .custom-showcase-content {
+    display: grid;
+    grid-template-columns: 1fr 2.5fr;
+    gap: 25px;
+  }
+
+  .custom-showcase-promo-block {
+    background-color: #f5f5f5;
+    background-size: cover;
+    background-position: center;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+
+  .custom-showcase-promo-block .promo-subtitle {
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #333;
+    margin: 0 0 10px 0;
+  }
+  
+  .custom-showcase-promo-block .promo-title {
+    font-size: 28px;
+    font-weight: 500;
+    color: #121212;
+    line-height: 1.2;
+    margin: 0 0 20px 0;
+  }
+
+  .custom-showcase-promo-block .promo-link {
+    font-size: 14px;
+    color: #121212;
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #121212;
+    align-self: flex-start;
+    transition: opacity 0.3s ease;
+  }
+
+  .custom-showcase-promo-block .promo-link:hover {
+    opacity: 0.7;
+  }
+
+  .custom-showcase-slider-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .custom-showcase-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 20px; /* Space for scrollbar */
+    margin-bottom: -20px; /* Hide scrollbar visually */
+  }
+
+  /* Hide scrollbar */
+  .custom-showcase-slider::-webkit-scrollbar {
+    display: none;
+  }
+  .custom-showcase-slider {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .custom-product-card {
+    flex: 0 0 calc(25% - 15px);
+    margin-right: 20px;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .custom-product-card-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    background-color: #f9f8f6;
+  }
+
+  .custom-product-card-image-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .custom-product-card:hover .custom-product-card-image-wrapper img {
+    transform: scale(1.05);
+  }
+
+  .custom-product-card-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #121212;
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 3px;
+  }
+
+  .custom-product-card-quick-look {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #e5e5e5;
+    font-size: 12px;
+    padding: 5px 10px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .custom-product-card:hover .custom-product-card-quick-look {
+    opacity: 1;
+  }
+
+  .custom-product-card-info {
+    padding: 15px 5px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .custom-product-card-swatches {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    justify-content: center;
+  }
+
+  .swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+  }
+
+  .custom-product-card-type {
+    font-size: 12px;
+    color: #666;
+    text-transform: capitalize;
+    margin-bottom: 6px;
+  }
+
+  .custom-product-card-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #121212;
+    text-decoration: none;
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .custom-product-card-price {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
+  .custom-product-card-price .final-price {
+    color: #121212;
+    font-weight: 500;
+  }
+
+  .custom-product-card-price .compare-at-price {
+    color: #777;
+    text-decoration: line-through;
+    margin-left: 8px;
+  }
+
+  .slider-nav {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+  }
+  .slider-nav:hover {
+    background-color: #f5f5f5;
+  }
+
+  .slider-nav.prev {
+    right: 45px;
+  }
+  
+  .slider-nav.next {
+    right: 5px;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 990px) {
+    .custom-showcase-content {
+      grid-template-columns: 1fr;
+    }
+    .custom-product-card {
+      flex: 0 0 calc(50% - 10px);
+      margin-right: 20px;
+    }
+    .slider-nav {
+      display: none; /* Hide nav on smaller screens, rely on touch scroll */
+    }
+  }
+
+  @media (max-width: 500px) {
+    .custom-showcase-header .title {
+      font-size: 26px;
+    }
+    .custom-product-card {
+      flex: 0 0 calc(80% - 10px);
+      margin-right: 20px;
+    }
+  }
+</style>
+
+<div class="custom-showcase-section">
+  <div class="custom-showcase-container">
+    <div class="custom-showcase-header">
+      {% if section.settings.subtitle != blank %}
+        <p class="subtitle">{{ section.settings.subtitle | escape }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="title">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+    </div>
+
+    <div class="custom-showcase-content">
+      <div 
+        class="custom-showcase-promo-block"
+        {% if section.settings.promo_image %}
+          style="background-image: url('{{ section.settings.promo_image | image_url: width: 800 }}');"
+        {% endif %}
+      >
+        {% if section.settings.promo_subtitle != blank %}
+          <h4 class="promo-subtitle">{{ section.settings.promo_subtitle | escape }}</h4>
+        {% endif %}
+        {% if section.settings.promo_title != blank %}
+          <h3 class="promo-title">{{ section.settings.promo_title | replace: '|', '<br>' }}</h3>
+        {% endif %}
+        {% if section.settings.promo_button_text != blank and section.settings.promo_button_link != blank %}
+          <a href="{{ section.settings.promo_button_link }}" class="promo-link">
+            {{ section.settings.promo_button_text | escape }}
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="custom-showcase-slider-wrapper">
+        <div class="custom-showcase-slider" id="slider-{{ section.id }}">
+          {% if collection != blank %}
+            {% for product in collection.products limit: products_to_show %}
+              <div class="custom-product-card">
+                <div class="custom-product-card-image-wrapper">
+                  <a href="{{ product.url }}">
+                    {% if product.featured_image %}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 400 }}"
+                        alt="{{ product.featured_image.alt | escape }}"
+                        loading="lazy"
+                        width="400"
+                        height="{{ 400 | divided_by: product.featured_image.aspect_ratio | round }}"
+                      >
+                    {% else %}
+                      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {% endif %}
+                  </a>
+
+                  {% if product.compare_at_price > product.price and section.settings.show_discount %}
+                    <div class="custom-product-card-badge">
+                      {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}% off
+                    </div>
+                  {% endif %}
+
+                  {% if section.settings.show_quick_look %}
+                     <button type="button" class="custom-product-card-quick-look" aria-haspopup="dialog" data-product-handle="{{ product.handle }}">
+                       Quick Look
+                     </button>
+                  {% endif %}
+                </div>
+
+                <div class="custom-product-card-info">
+                  {% if section.settings.show_swatches %}
+                    {%- for option in product.options_with_values -%}
+                      {%- if option.name == 'Color' or option.name == 'Colour' -%}
+                        <div class="custom-product-card-swatches">
+                          {%- for value in option.values -%}
+                             <div 
+                               class="swatch" 
+                               style="background-color: {{ value | downcase | replace: ' ', '' }}; 
+                                      background-image: url({{ value | handle | append: '.png' | file_url }});"
+                               title="{{ value }}"
+                             ></div>
+                          {%- endfor -%}
+                        </div>
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {% endif %}
+
+                  <div class="custom-product-card-type">{{ product.type }}</div>
+                  <a href="{{ product.url }}" class="custom-product-card-title">{{ product.title }}</a>
+                  <div class="custom-product-card-price">
+                    <span class="final-price">{{ product.price | money }}</span>
+                    {% if product.compare_at_price > product.price %}
+                      <span class="compare-at-price">{{ product.compare_at_price | money }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+             {% for i in (1..4) %}
+              <div class="custom-product-card">
+                 <div class="custom-product-card-image-wrapper">
+                   {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+                 </div>
+                 <div class="custom-product-card-info">
+                   <div class="custom-product-card-type">Product Type</div>
+                   <h3 class="custom-product-card-title">Example Product Title</h3>
+                   <div class="custom-product-card-price">$99.00</div>
+                 </div>
+               </div>
+             {% endfor %}
+          {% endif %}
+        </div>
+        <button class="slider-nav prev" aria-label="Previous slide" onclick="document.getElementById('slider-{{ section.id }}').scrollLeft -= 300;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>
+        </button>
+        <button class="slider-nav next" aria-label="Next slide" onclick="document.getElementById('slider-{{ section.id }}').scrollLeft += 300;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Showcase",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Latest Treasures"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Unveil The New Era Of Glamour"
+    },
+    {
+      "type": "header",
+      "content": "Promotional Block"
+    },
+    {
+      "type": "image_picker",
+      "id": "promo_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "promo_subtitle",
+      "label": "Promo Subtitle",
+      "default": "TIMELESS RADIANCE"
+    },
+    {
+      "type": "text",
+      "id": "promo_title",
+      "label": "Promo Title",
+      "info": "Use '|' to create a line break.",
+      "default": "Meets|Brilliance"
+    },
+    {
+      "type": "text",
+      "id": "promo_button_text",
+      "label": "Button Text",
+      "default": "Discover Now"
+    },
+    {
+      "type": "url",
+      "id": "promo_button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Product Slider"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "label": "Number of products to show",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_discount",
+      "label": "Show discount badge",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_look",
+      "label": "Show 'Quick Look' button",
+      "info": "Requires additional theme code for a modal to function.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_swatches",
+      "label": "Show color swatches",
+      "info": "Displays swatches for a product option named 'Color' or 'Colour'.",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Collection Showcase"
+    }
+  ]
+}
+{% endschema %}

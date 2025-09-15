@@ -1,0 +1,391 @@
+{%- comment -%}
+  ** Custom Announcement Bar **
+  - Shows rotating announcements and social media links.
+  - Fully customizable through the Shopify Theme Editor.
+  - Includes settings for colors, autoplay, and content blocks.
+{%- endcomment -%}
+
+{%- liquid
+  assign section_settings = section.settings
+  assign background_color = section_settings.background_color
+  assign text_color = section_settings.text_color
+  assign arrow_color = section_settings.arrow_color
+  assign autoplay = section_settings.autoplay
+  assign autoplay_speed = section_settings.autoplay_speed | times: 1000
+
+  assign announcements = section.blocks | where: "type", "announcement"
+  assign social_links = section.blocks | where: "type", "social_links"
+-%}
+
+<style>
+  :root {
+    --announcement-bar-bg: {{ background_color }};
+    --announcement-bar-text: {{ text_color }};
+    --announcement-bar-arrow: {{ arrow_color }};
+  }
+
+  .custom-announcement-bar {
+    background-color: var(--announcement-bar-bg);
+    color: var(--announcement-bar-text);
+    padding: 10px 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 20px;
+  }
+
+  .announcement-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    position: relative;
+    padding: 0 40px; /* Space for arrows */
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  .announcement-carousel {
+    position: relative;
+    width: 100%;
+    text-align: center;
+  }
+
+  .announcement-slide {
+    display: none;
+    width: 100%;
+    animation: fadeEffect 0.5s ease-in-out;
+  }
+
+  .announcement-slide.active {
+    display: block;
+  }
+
+  .announcement-slide a,
+  .announcement-slide span {
+    color: inherit;
+    text-decoration: none;
+    font-size: 14px;
+    transition: opacity 0.3s ease;
+  }
+  
+  .announcement-slide a:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+  }
+
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 10;
+  }
+  
+  .carousel-arrow svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--announcement-bar-arrow);
+    transition: opacity 0.3s ease;
+  }
+  
+  .carousel-arrow:hover svg {
+    opacity: 0.7;
+  }
+
+  .prev-arrow {
+    left: 5px;
+  }
+
+  .next-arrow {
+    right: 5px;
+  }
+
+  .social-links-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0; /* Prevent shrinking */
+  }
+
+  .social-link a {
+    display: block;
+    color: var(--announcement-bar-text);
+    transition: opacity 0.3s ease;
+  }
+  
+  .social-link a:hover {
+    opacity: 0.7;
+  }
+
+  .social-link svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  @keyframes fadeEffect {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+  }
+  
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .custom-announcement-bar {
+      padding: 8px 10px;
+      gap: 10px;
+    }
+    
+    .announcement-carousel-wrapper {
+      padding: 0 35px;
+    }
+
+    .social-links-wrapper {
+      padding-left: 0;
+    }
+    
+    .announcement-slide a,
+    .announcement-slide span {
+      font-size: 12px;
+    }
+  }
+
+</style>
+
+<div class="custom-announcement-bar" data-section-id="{{ section.id }}" data-autoplay="{{ autoplay }}" data-autoplay-speed="{{ autoplay_speed }}">
+  {%- if social_links.size > 0 -%}
+    <div class="social-links-wrapper">
+      {%- for block in social_links -%}
+        <div class="social-link" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.link | escape }}" target="_blank" rel="noopener" aria-label="Follow us on {{ block.settings.icon | capitalize }}">
+            {{- block.settings.icon_svg -}}
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <div class="announcement-carousel-wrapper">
+    {%- if announcements.size > 1 -%}
+      <button class="carousel-arrow prev-arrow" aria-label="Previous Announcement">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.45 15.55a.75.75 0 0 1-1.06 0L6.44 10.5a.747.747 0 0 1 0-1.06l4.95-5.05a.75.75 0 0 1 1.06 1.06L8.06 10l4.39 4.49a.75.75 0 0 1 0 1.06Z"/></svg>
+      </button>
+    {%- endif -%}
+
+    <div class="announcement-carousel">
+      {%- for block in announcements -%}
+        <div class="announcement-slide" {{ block.shopify_attributes }} data-slide-index="{{ forloop.index0 }}">
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}">
+              {{ block.settings.text | escape }}
+            </a>
+          {%- else -%}
+            <span>{{ block.settings.text | escape }}</span>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if announcements.size > 1 -%}
+      <button class="carousel-arrow next-arrow" aria-label="Next Announcement">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M7.55 4.45a.75.75 0 0 1 1.06 0l4.95 5.05c.293.293.293.767 0 1.06l-4.95 5.05a.75.75 0 0 1-1.06-1.06L11.94 10 7.55 5.51a.75.75 0 0 1 0-1.06Z"/></svg>
+      </button>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document.querySelector('.custom-announcement-bar[data-section-id="{{ section.id }}"]');
+    if (!section) return;
+
+    const slides = section.querySelectorAll('.announcement-slide');
+    if (slides.length <= 1) {
+      if(slides.length === 1) slides[0].classList.add('active');
+      return;
+    }
+
+    const prevButton = section.querySelector('.prev-arrow');
+    const nextButton = section.querySelector('.next-arrow');
+    const isAutoplay = section.dataset.autoplay === 'true';
+    const autoplaySpeed = parseInt(section.dataset.autoplaySpeed, 10);
+
+    let currentSlide = 0;
+    let autoplayInterval = null;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) {
+          slide.classList.add('active');
+        }
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+    
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function startAutoplay() {
+      if (isAutoplay && !autoplayInterval) {
+        autoplayInterval = setInterval(nextSlide, autoplaySpeed);
+      }
+    }
+
+    function stopAutoplay() {
+      clearInterval(autoplayInterval);
+      autoplayInterval = null;
+    }
+    
+    prevButton.addEventListener('click', () => {
+        prevSlide();
+        stopAutoplay();
+        startAutoplay(); // Restart timer on manual navigation
+    });
+
+    nextButton.addEventListener('click', () => {
+        nextSlide();
+        stopAutoplay();
+        startAutoplay(); // Restart timer on manual navigation
+    });
+    
+    section.addEventListener('mouseenter', stopAutoplay);
+    section.addEventListener('mouseleave', startAutoplay);
+
+    showSlide(currentSlide);
+    startAutoplay();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom Announcement Bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Carousel Arrow Color",
+      "default": "#121212"
+    },
+    {
+      "type": "header",
+      "content": "Carousel Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-rotate announcements",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Change slides every",
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Announce something here"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional"
+        }
+      ]
+    },
+    {
+      "type": "social_links",
+      "name": "Social Link",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Link to your social media profile."
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Icon SVG",
+          "info": "Paste SVG code for the icon. e.g., from an icon library."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Announcement Bar",
+      "blocks": [
+        {
+          "type": "announcement",
+          "settings": {
+            "text": "Free shipping on orders over $50"
+          }
+        },
+        {
+          "type": "announcement",
+          "settings": {
+            "text": "Shop our new fall collection!"
+          }
+        },
+        {
+          "type": "social_links",
+          "settings": {
+            "icon_svg": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z'/></svg>"
+          }
+        },
+        {
+          "type": "social_links",
+          "settings": {
+            "icon_svg": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.119 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616v.064c0 2.298 1.634 4.216 3.793 4.649-.65.177-1.353.23-2.064.083.604 1.956 2.343 3.377 4.418 3.417-1.717 1.34-3.882 2.05-6.233 1.734 2.229 1.423 4.881 2.25 7.748 2.25 9.284 0 14.368-7.689 14.0-14.368.98-.71 1.82-1.603 2.49-2.585z'/></svg>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
