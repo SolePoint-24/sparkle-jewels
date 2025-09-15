@@ -23,6 +23,17 @@
             "button_link": ""
           }
         },
+        "collection_slide_nRNLNY": {
+          "type": "collection_slide",
+          "settings": {
+            "collection": "",
+            "subheading": "Shine Brighter",
+            "heading": "Where Grace Meets Glamour",
+            "text": "Timeless gold pieces designed to elevate every occasion.",
+            "button_label": "Explore Gold Collection",
+            "button_link": ""
+          }
+        },
         "collection_slide_nhxfbn": {
           "type": "collection_slide",
           "settings": {
@@ -37,6 +48,7 @@
       },
       "block_order": [
         "collection_slide_F9LexX",
+        "collection_slide_nRNLNY",
         "collection_slide_nhxfbn"
       ],
       "name": "t:names.hero",
