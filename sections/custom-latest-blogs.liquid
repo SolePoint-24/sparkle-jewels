@@ -1,7 +1,8 @@
 {% comment %}
-  V2: Updated to use blocks for hand-picking articles.
-  - Fixes CSS file errors by being fully self-contained.
-  - Allows user to select individual articles for full control.
+  V3: Added border to cards and enhanced the 'View All Blogs' button.
+  - Adds a 1px border around each blog card.
+  - Adds padding to the content area inside the card.
+  - Adds a setting to customize the text of the 'View All Blogs' button.
 {% endcomment %}
 
 {%- style -%}
@@ -52,16 +53,18 @@
     gap: 30px;
   }
 
+  /* --- CHANGE: Added border to the card --- */
   .custom-blog-card {
     display: flex;
     flex-direction: column;
     text-align: left;
+    border: 1px solid #e0e0e0; /* This adds the border */
   }
 
   .custom-blog-card__image-wrapper {
     position: relative;
     overflow: hidden;
-    margin-bottom: 20px;
+    /* The bottom margin is removed as padding will handle spacing */
   }
 
   .custom-blog-card__image-wrapper a {
@@ -74,6 +77,7 @@
     aspect-ratio: 1/1; /* Makes the image container square */
     object-fit: cover;
     transition: transform 0.4s ease;
+    display: block; /* Removes any small gaps under the image */
   }
   
   .custom-blog-card:hover .custom-blog-card__image {
@@ -91,10 +95,12 @@
     color: #333;
   }
 
+  /* --- CHANGE: Added padding to the content area --- */
   .custom-blog-card__content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    padding: 25px; /* This adds space between the border and the text */
   }
   
   .custom-blog-card__title {
@@ -175,7 +181,7 @@
         </div>
         {%- if section.settings.show_view_all and section.settings.button_link != blank -%}
           <a href="{{ section.settings.button_link }}" class="custom-blog__view-all">
-            View All Blogs
+            {{ section.settings.button_text | escape }}
           </a>
         {%- endif -%}
       </div>
@@ -216,7 +222,6 @@
                 <a href="{{ article.url }}" class="custom-blog-card__read-more">Read More</a>
               </div>
             {%- else -%}
-              {% comment %} Onboarding state for when no article is selected {% endcomment %}
               <div class="custom-blog-card__image-wrapper">
                   {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
               </div>
@@ -258,16 +263,25 @@
       "label": "Heading"
     },
     {
+      "type": "header",
+      "content": "View All Button"
+    },
+    {
       "type": "checkbox",
       "id": "show_view_all",
       "default": true,
       "label": "Show 'View All Blogs' button"
     },
     {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "View All Blogs"
+    },
+    {
       "type": "url",
       "id": "button_link",
-      "label": "Button Link",
-      "info": "Link for the 'View All Blogs' button. Leave empty to hide."
+      "label": "Button Link"
     },
     {
       "type": "header",
