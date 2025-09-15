@@ -18,9 +18,22 @@
     --products-gap: 20px;
   }
 
+  /* Responsive overrides */
+  @media (max-width: 990px) {
+    #shopify-section-{{ section.id }} {
+      --products-per-view: 2;
+    }
+  }
+
+  @media (max-width: 500px) {
+    #shopify-section-{{ section.id }} {
+      --products-per-view: 1;
+    }
+  }
+
   #shopify-section-{{ section.id }} .custom-showcase-section {
     padding: 50px 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
 
   #shopify-section-{{ section.id }} .custom-showcase-container {
@@ -122,16 +135,7 @@
   #shopify-section-{{ section.id }} .slider-product-card-wrapper {
     flex: 0 0 calc((100% - (var(--products-per-view) - 1) * var(--products-gap)) / var(--products-per-view));
     scroll-snap-align: start;
-  }
-  
-  #shopify-section-{{ section.id }} .slider {
     display: flex;
-    align-items: stretch;
-  }
-
-  #shopify-section-{{ section.id }} .slider-product-card-wrapper {
-    display: flex;
-    flex: 1;
   }
 
   #shopify-section-{{ section.id }} .slider-product-card-wrapper .card-wrapper,
@@ -173,23 +177,15 @@
     #shopify-section-{{ section.id }} .custom-showcase-content {
       grid-template-columns: 1fr;
     }
-    #shopify-section-{{ section.id }} .slider-product-card-wrapper {
-      flex-basis: calc(50% - 10px);
-    }
-    #shopify-section-{{ section.id }} .slider-nav {
-      display: none;
-    }
   }
 
   @media (max-width: 500px) {
     #shopify-section-{{ section.id }} .custom-showcase-header .title {
       font-size: 26px;
     }
-    #shopify-section-{{ section.id }} .slider-product-card-wrapper {
-      flex-basis: 80%;
-    }
   }
 </style>
+
 
 <div class="custom-showcase-section">
   <div class="custom-showcase-container">
@@ -274,18 +270,15 @@
     if (!slider) return;
 
     const productsToSlide = parseInt(slider.dataset.productsToSlide, 10) || 1;
-    const firstCard = slider.querySelector('.slider-product-card-wrapper');
-    if (!firstCard) return;
-
-    const sliderGap = parseFloat(getComputedStyle(slider).gap) || 0;
-    const scrollAmount = (firstCard.offsetWidth + sliderGap) * productsToSlide;
+    const sliderWidth = slider.clientWidth;
 
     slider.scrollBy({
-      left: scrollAmount * direction,
+      left: (sliderWidth / productsToSlide) * direction,
       behavior: 'smooth'
     });
   }
 </script>
+
 
 {% schema %}
 {
