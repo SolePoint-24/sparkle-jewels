@@ -714,6 +714,33 @@
             "author_title": "Attorney"
           }
         },
+        "testimonial_497Nzn": {
+          "type": "testimonial",
+          "settings": {
+            "author_image": "shopify://shop_images/blog-1.webp",
+            "quote": "<p>Share a glowing review from one of your customers to build trust and social proof.</p>",
+            "author_name": "Jennifer Nguyen",
+            "author_title": "Attorney"
+          }
+        },
+        "testimonial_qR6Pk6": {
+          "type": "testimonial",
+          "settings": {
+            "author_image": "shopify://shop_images/blog-1.webp",
+            "quote": "<p>Share a glowing review from one of your customers to build trust and social proof.</p>",
+            "author_name": "Jennifer Nguyen",
+            "author_title": "Attorney"
+          }
+        },
+        "testimonial_6VVqMP": {
+          "type": "testimonial",
+          "settings": {
+            "author_image": "shopify://shop_images/blog-1.webp",
+            "quote": "<p>Share a glowing review from one of your customers to build trust and social proof.</p>",
+            "author_name": "Jennifer Nguyen",
+            "author_title": "Attorney"
+          }
+        },
         "testimonial_LU3k3C": {
           "type": "testimonial",
           "settings": {
@@ -735,6 +762,9 @@
       },
       "block_order": [
         "testimonial_kbLVUX",
+        "testimonial_497Nzn",
+        "testimonial_qR6Pk6",
+        "testimonial_6VVqMP",
         "testimonial_LU3k3C",
         "testimonial_yey88W"
       ],
