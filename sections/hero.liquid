@@ -3,7 +3,6 @@
   - Each slide has its own unique content (heading, text, button) and background image.
   - Supports different images for desktop, tablet, and mobile.
   - The carousel supports autoplay with play/pause controls.
-  - Features a sliding animation for transitions.
 {% endcomment %}
 
 <div
@@ -136,7 +135,6 @@
       this.autoplaySpeed = parseInt(this.section.dataset.autoplaySpeed, 10);
       this.interval = null;
       this.currentIndex = 0;
-      this.isAnimating = false;
 
       this.prevButton.addEventListener('click', this.prev.bind(this));
       this.nextButton.addEventListener('click', this.next.bind(this));
@@ -159,61 +157,28 @@
     }
 
     goTo(index) {
-      if (index === this.currentIndex || this.isAnimating) return;
-      
+      if (index === this.currentIndex || index < 0 || index >= this.links.length) return;
       this.restartInterval();
-      this.isAnimating = true;
+      
+      this.links[this.currentIndex].classList.remove('is-active');
+      this.images[this.currentIndex].classList.remove('is-active');
+      this.contents[this.currentIndex].classList.remove('is-active');
 
-      const direction = index > this.currentIndex ? 'next' : 'prev';
-      const outgoingIndex = this.currentIndex;
-
-      this.links[outgoingIndex].classList.remove('is-active');
       this.links[index].classList.add('is-active');
-      
-      const outgoingImage = this.images[outgoingIndex];
-      const incomingImage = this.images[index];
-      const outgoingContent = this.contents[outgoingIndex];
-      const incomingContent = this.contents[index];
-
-      // Prepare incoming slide
-      incomingImage.classList.add(direction === 'next' ? 'is-next' : 'is-prev');
-      incomingContent.classList.add(direction === 'next' ? 'is-next' : 'is-prev');
-
-      // Force reflow to apply start position before transition
-      void incomingImage.offsetWidth;
-      void incomingContent.offsetWidth;
-
-      // Start transition
-      if (direction === 'next') {
-        outgoingImage.classList.add('is-prev');
-        outgoingContent.classList.add('is-prev');
-      } else {
-        outgoingImage.classList.add('is-next');
-        outgoingContent.classList.add('is-next');
-      }
-      
-      incomingImage.classList.remove('is-next', 'is-prev');
-      incomingContent.classList.remove('is-next', 'is-prev');
-      incomingImage.classList.add('is-active');
-      incomingContent.classList.add('is-active');
-      outgoingImage.classList.remove('is-active');
-      outgoingContent.classList.remove('is-active');
-      
-      setTimeout(() => {
-        outgoingImage.classList.remove('is-prev', 'is-next');
-        outgoingContent.classList.remove('is-prev', 'is-next');
-        this.isAnimating = false;
-      }, 500); // Must match CSS transition duration
+      this.images[index].classList.add('is-active');
+      this.contents[index].classList.add('is-active');
 
       this.currentIndex = index;
     }
 
     next() {
-      this.goTo((this.currentIndex + 1) % this.links.length);
+      const newIndex = (this.currentIndex + 1) % this.links.length;
+      this.goTo(newIndex);
     }
 
     prev() {
-      this.goTo((this.currentIndex - 1 + this.links.length) % this.links.length);
+      const newIndex = (this.currentIndex - 1 + this.links.length) % this.links.length;
+      this.goTo(newIndex);
     }
     
     start() {
@@ -224,11 +189,14 @@
     }
     
     pause() {
-      clearInterval(this.interval);
+      if (this.interval) {
+        clearInterval(this.interval);
+        this.interval = null;
+      }
     }
 
     play() {
-      if (!this.isPaused) {
+      if (!this.isPaused && !this.interval) {
         this.start();
       }
     }
@@ -245,7 +213,7 @@
     }
     
     restartInterval() {
-      if (this.autoplay) {
+      if (this.autoplay && !this.isPaused) {
         this.pause();
         this.play();
       }
@@ -292,59 +260,52 @@
     z-index: 2;
   }
 
-  .hero-carousel__media-item,
-  .hero-carousel__content-inner {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-  }
-
-  .hero-carousel__media-item:not(.is-active),
-  .hero-carousel__content-inner:not(.is-active) {
-    transform: translateX(100%);
-  }
-
-  .hero-carousel__media-item.is-active,
-  .hero-carousel__content-inner.is-active {
-    transform: translateX(0);
-    z-index: 2;
+  .hero-carousel__media-item {
+    width: 100%; height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    position: absolute; inset: 0; z-index: 1;
   }
   
-  .hero-carousel__media-item.is-prev,
-  .hero-carousel__content-inner.is-prev {
-    transform: translateX(-100%);
-    z-index: 1;
+  .hero-carousel__media-item.is-active {
+    opacity: 1; z-index: 2;
   }
   
-  .hero-carousel__media-item.is-next,
-  .hero-carousel__content-inner.is-next {
-    transform: translateX(100%);
-    z-index: 1;
-  }
-
   .hero-carousel__media-item img,
   .hero-carousel__media-item .placeholder-svg {
-    width: 100%; height: 100%;
-    object-fit: cover; object-position: center;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .hero-carousel__media-item .placeholder-wrapper {
+    height: 100%;
+    display: flex; align-items: center; justify-content: center;
   }
 
   .hero-carousel__content-container {
     position: relative; z-index: 3;
     width: 100%; padding: 0 5vw;
     display: flex; align-items: center; height: 100%;
-    pointer-events: none; /* Let clicks pass through to nav */
   }
 
   .hero-carousel__content-inner {
     max-width: 550px; text-align: left;
     display: flex; flex-direction: column; align-items: flex-start;
-    justify-content: center;
-    gap: 1rem;
-    pointer-events: auto;
+    gap: 1rem; position: absolute; opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+    pointer-events: none;
   }
   
+  .hero-carousel__content-inner.is-active {
+    opacity: 1; transform: translateY(0); pointer-events: auto;
+  }
+  .hero-carousel__content-inner .button {
+    pointer-events: auto;
+  }
+
   .hero-carousel__subheading { font-size: 1rem; margin: 0; letter-spacing: 0.05em; }
   .hero-carousel__heading { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 500; line-height: 1.1; margin: 0; }
   .hero-carousel__text { margin: 0; font-size: 1rem; max-width: 450px; line-height: 1.6; }
@@ -361,12 +322,12 @@
     position: absolute; bottom: 3rem; left: 0;
     width: 100%; z-index: 4;
     display: flex; justify-content: flex-end;
-    padding: 0 5vw;
+    padding: 0 5vw; pointer-events: none;
   }
 
   .hero-carousel__nav {
     display: flex; align-items: center;
-    gap: 1rem;
+    gap: 1rem; pointer-events: auto;
   }
 
   .hero-carousel__titles { display: flex; gap: 1.5rem; }
@@ -399,25 +360,32 @@
   @media screen and (max-width: 768px) {
     .hero-carousel-section { color: #fff; }
     .hero-carousel__content-container {
-      padding: 0;
+      justify-content: center;
     }
     .hero-carousel__media-container::after { background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%); }
     .hero-carousel__content-inner {
       text-align: center;
       align-items: center;
-      margin: 0 auto;
-      padding: 0 1rem;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) translateY(20px);
+      width: 90%;
+      max-width: 400px;
+    }
+    .hero-carousel__content-inner.is-active {
+      transform: translate(-50%, -50%) translateY(0);
     }
     .hero-carousel__button, .hero-carousel__button:hover { border-color: #fff; color: #fff; }
     .hero-carousel__button:hover { background-color: #fff; color: #000; }
     .hero-carousel__nav-wrapper {
-      bottom: 1rem;
+      bottom: 1rem; /* Reduced space at the bottom */
       left: 50%; transform: translateX(-50%);
       width: 100%; justify-content: center; padding: 0 1rem;
     }
     .hero-carousel__nav {
       max-width: 400px; justify-content: center;
-      background: none;
+      background: none; backdrop-filter: none;
+      padding: 0; border-radius: 0;
     }
     .hero-carousel__arrow, .hero-carousel__title-link, .hero-carousel__play-pause { color: #fff; }
     .hero-carousel__title-link.is-active::after { background-color: #fff; }
@@ -454,7 +422,7 @@
       "type": "range",
       "id": "section_height_mobile",
       "label": "Mobile Height",
-      "min": 70,
+      "min": 40,
       "max": 100,
       "step": 5,
       "unit": "vh",
