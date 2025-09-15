@@ -4282,6 +4282,19 @@ text-component {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Ensure grid/flex children stretch to same height */
+.grid .product-card-wrapper,
+.flex .product-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-card-wrapper .card {
+  flex-grow: 1; /* stretch all cards equally */
+}
+
+
 /* --- 1. Image Fade Transition & Container Fix --- */
 .product-card-wrapper .custom-card__image-wrapper {
   display: block !important; /* CRITICAL FIX: Overrides theme's grid display */
