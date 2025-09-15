@@ -6,8 +6,19 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
+    "custom_breadcrumbs_GregAq": {
+      "type": "custom-breadcrumbs",
+      "name": "Custom Breadcrumbs",
+      "settings": {
+        "font_size": 15,
+        "alignment": "left",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
     "collection_list_KreTXe": {
       "type": "main-collection-list",
       "blocks": {
@@ -15,6 +26,7 @@
           "type": "group",
           "name": "t:names.header",
           "settings": {
+            "link": "",
             "open_in_new_tab": false,
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -39,6 +51,7 @@
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 0,
+            "placeholder": "",
             "toggle_overlay": false,
             "overlay_color": "#00000026",
             "overlay_style": "solid",
@@ -53,11 +66,11 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>Collections</h3>",
+                "text": "<h1><strong>Collections</strong></h1>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "rte",
+                "type_preset": "h1",
                 "font": "var(--font-body--family)",
                 "font_size": "",
                 "line_height": "normal",
@@ -85,10 +98,10 @@
           "name": "t:names.collection_card",
           "static": true,
           "settings": {
-            "placement": "on_image",
-            "horizontal_alignment": "flex-start",
+            "placement": "below_image",
+            "horizontal_alignment": "center",
             "vertical_alignment": "flex-end",
-            "collection_card_gap": 8,
+            "collection_card_gap": 7,
             "inherit_color_scheme": false,
             "color_scheme": "scheme-942023e3-eb4a-4b40-ab69-dc5332cced64",
             "border": "none",
@@ -104,7 +117,7 @@
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "h6",
+                "type_preset": "h4",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
@@ -151,7 +164,7 @@
       "settings": {
         "layout_type": "grid",
         "carousel_on_mobile": false,
-        "columns": 3,
+        "columns": 5,
         "mobile_columns": "2",
         "columns_gap": 12,
         "bento_gap": 16,
@@ -162,12 +175,13 @@
         "section_width": "page-width",
         "gap": 12,
         "color_scheme": "",
-        "padding-block-start": 48,
+        "padding-block-start": 0,
         "padding-block-end": 48
       }
     }
   },
   "order": [
+    "custom_breadcrumbs_GregAq",
     "collection_list_KreTXe"
   ]
 }

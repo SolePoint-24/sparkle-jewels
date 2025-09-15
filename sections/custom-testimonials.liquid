@@ -1,0 +1,265 @@
+{% comment %}
+  Shopify Section: Testimonials
+  - Uses specific class names to avoid theme style conflicts.
+  - Fixes left button disable logic and increases card size.
+{% endcomment %}
+
+<div class="testimonials-section color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    <div class="section-header">
+      {% if section.settings.sub_heading != blank %}
+        <p class="sub-heading">{{ section.settings.sub_heading | escape }}</p>
+      {% endif %}
+
+      {% if section.settings.main_heading != blank %}
+        <h2 class="main-heading h2">{{ section.settings.main_heading | escape }}</h2>
+      {% endif %}
+    </div>
+
+    {% if section.blocks.size > 0 %}
+      <div class="testimonials-container">
+        <button class="testimonial-slider-arrow prev" aria-label="Previous testimonial">&#8249;</button>
+
+        <div class="testimonials-grid">
+          {% for block in section.blocks %}
+            <div class="testimonial-card" {{ block.shopify_attributes }}>
+              <div class="card-body">
+                {% if block.settings.quote != blank %}
+                  <blockquote class="rte">
+                    {{ block.settings.quote }}
+                  </blockquote>
+                {% endif %}
+              </div>
+              <div class="card-footer">
+                {% if block.settings.author_image != blank %}
+                  {{ block.settings.author_image | image_url: width: 100 | image_tag: class: 'author-image', loading: 'lazy', widths: '50, 100', alt: block.settings.author_name | escape }}
+                {% else %}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg author-image' }}
+                {% endif %}
+
+                <div class="author-details">
+                  {% if block.settings.author_name != blank %}
+                    <p class="author-name">{{ block.settings.author_name | escape }}</p>
+                  {% endif %}
+                  {% if block.settings.author_title != blank %}
+                    <p class="author-title">{{ block.settings.author_title | escape }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        
+        <button class="testimonial-slider-arrow next" aria-label="Next testimonial">&#8250;</button>
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size == 0 %}
+        <div class="shopify-section-placeholder">
+            <p>Add testimonial blocks to this section.</p>
+        </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  #shopify-section-{{ section.id }} .testimonials-section { padding: 50px 0; }
+  #shopify-section-{{ section.id }} .page-width { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  #shopify-section-{{ section.id }} .section-header { text-align: left; margin-bottom: 50px; }
+  #shopify-section-{{ section.id }} .sub-heading { font-size: 0.9rem; color: #888; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  #shopify-section-{{ section.id }} .main-heading { font-family: var(--font-heading-family, serif); font-size: 2.5rem; font-weight: 400; margin: 0; }
+  #shopify-section-{{ section.id }} .testimonials-container { position: relative; }
+  #shopify-section-{{ section.id }} .testimonials-grid { display: flex; gap: 30px; padding: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; }
+  #shopify-section-{{ section.id }} .testimonials-grid::-webkit-scrollbar { display: none; }
+
+  /* --- CHANGED --- Card size adjustments */
+  #shopify-section-{{ section.id }} .testimonial-card {
+    flex: 0 0 calc(33.333% - 20px);
+    min-width: 350px; /* Increased min-width */
+    min-height: 280px; /* Added min-height */
+    border: 1px solid #e0e0e0;
+    border-radius: var(--card-corner-radius, 8px);
+    background-color: var(--color-background);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    scroll-snap-align: start;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  #shopify-section-{{ section.id }} .testimonial-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07); }
+  #shopify-section-{{ section.id }} .card-body { padding: 30px; flex-grow: 1; }
+  #shopify-section-{{ section.id }} .card-body blockquote { margin: 0; font-style: italic; line-height: 1.6; font-size: 1rem; color: rgba(var(--color-foreground), 0.75); }
+  #shopify-section-{{ section.id }} .card-footer { display: flex; align-items: center; gap: 15px; background-color: #f2f2f2; padding: 20px 30px; border-bottom-left-radius: var(--card-corner-radius, 8px); border-bottom-right-radius: var(--card-corner-radius, 8px); border-top: 1px solid #e0e0e0; }
+  #shopify-section-{{ section.id }} .author-image { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+  #shopify-section-{{ section.id }} .author-details p { margin: 0; line-height: 1.4; }
+  #shopify-section-{{ section.id }} .author-name { font-weight: 500; }
+  #shopify-section-{{ section.id }} .author-title { font-size: 0.85rem; color: rgba(var(--color-foreground), 0.7); }
+
+  #shopify-section-{{ section.id }} .testimonial-slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--color-background);
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+  }
+  #shopify-section-{{ section.id }} .testimonial-slider-arrow:hover {
+    background-color: #333;
+    color: #fff;
+  }
+  #shopify-section-{{ section.id }} .testimonial-slider-arrow:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: #f0f0f0;
+    color: #aaa;
+    border-color: #ddd;
+  }
+  #shopify-section-{{ section.id }} .testimonial-slider-arrow:disabled:hover {
+    background-color: #f0f0f0;
+    color: #aaa;
+  }
+  #shopify-section-{{ section.id }} .testimonial-slider-arrow.prev {
+    left: -20px;
+  }
+  #shopify-section-{{ section.id }} .testimonial-slider-arrow.next {
+    right: 0px;
+  }
+  
+  @media (max-width: 992px) { #shopify-section-{{ section.id }} .testimonial-card { flex-basis: calc(50% - 15px); } }
+  @media (max-width: 768px) { #shopify-section-{{ section.id }} .main-heading { font-size: 2rem; } #shopify-section-{{ section.id }} .testimonial-card { flex-basis: 80%; min-width: 80%; } #shopify-section-{{ section.id }} .testimonial-slider-arrow { display: none; } #shopify-section-{{ section.id }} .testimonials-grid { padding-left: 5%; padding-right: 5%; } }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  const sectionId = 'shopify-section-{{ section.id }}';
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+
+  const container = section.querySelector('.testimonials-grid');
+  const prevButton = section.querySelector('.testimonial-slider-arrow.prev');
+  const nextButton = section.querySelector('.testimonial-slider-arrow.next');
+  const cards = container.querySelectorAll('.testimonial-card');
+
+  if (!container || !prevButton || !nextButton || !cards.length) return;
+
+  let currentIndex = 0; // track which card we’re on
+
+  const updateArrowState = () => {
+    prevButton.disabled = currentIndex === 0;
+    nextButton.disabled = currentIndex === cards.length - 1;
+  };
+
+  const scrollToCard = (index) => {
+    if (index < 0 || index >= cards.length) return;
+    currentIndex = index;
+    cards[index].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+    updateArrowState();
+  };
+
+  nextButton.addEventListener('click', () => {
+    scrollToCard(currentIndex + 1);
+  });
+
+  prevButton.addEventListener('click', () => {
+    scrollToCard(currentIndex - 1);
+  });
+
+  // Also update index on manual scroll (touch/drag)
+  container.addEventListener('scroll', () => {
+    let closestIndex = 0;
+    let minOffset = Infinity;
+    cards.forEach((card, idx) => {
+      const offset = Math.abs(card.offsetLeft - container.scrollLeft);
+      if (offset < minOffset) {
+        minOffset = offset;
+        closestIndex = idx;
+      }
+    });
+    currentIndex = closestIndex;
+    updateArrowState();
+  });
+
+  // Initialize
+  updateArrowState();
+});
+</script>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "spaced-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "sub_heading",
+      "label": "Sub-heading",
+      "default": "Our Customers"
+    },
+    {
+      "type": "text",
+      "id": "main_heading",
+      "label": "Main Heading",
+      "default": "Voices Of Elegance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "background-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial Card",
+      "limit": 9,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "author_image",
+          "label": "Author Image"
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Quote",
+          "default": "<p>Share a glowing review from one of your customers to build trust and social proof.</p>"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author Name",
+          "default": "Jennifer Nguyen"
+        },
+        {
+          "type": "text",
+          "id": "author_title",
+          "label": "Author Title / Profession",
+          "default": "Attorney"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}
