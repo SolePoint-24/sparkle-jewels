@@ -1529,7 +1529,7 @@
         "heading": "The Latest Thought",
         "show_view_all": true,
         "button_text": "View All Blogs",
-        "button_link": "",
+        "button_link": "shopify://blogs/news",
         "padding_top": 36,
         "padding_bottom": 36
       }
