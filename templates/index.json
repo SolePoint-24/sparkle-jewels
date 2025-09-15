@@ -43,7 +43,7 @@
       "settings": {
         "color_scheme": "scheme-6",
         "section_height_desktop": 75,
-        "section_height_mobile": 85,
+        "section_height_mobile": 70,
         "autoplay": true,
         "autoplay_speed": 5000
       }
