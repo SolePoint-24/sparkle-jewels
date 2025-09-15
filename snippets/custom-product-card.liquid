@@ -138,48 +138,41 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.product-card-wrapper');
-    cards.forEach(card => {
-      const swatches = card.querySelectorAll('.color-swatch');
-      if (swatches.length === 0) return;
+ document.addEventListener('DOMContentLoaded', function() {
+  const cards = document.querySelectorAll('.product-card-wrapper');
+  cards.forEach(card => {
+    const swatches = card.querySelectorAll('.color-swatch');
+    if (swatches.length === 0) return;
 
-      const mainImage = card.querySelector('.main-product-image');
-      if (!mainImage) return;
+    const mainImage = card.querySelector('.main-product-image');
+    const hoverImage = card.querySelector('.hover-product-image');
+    if (!mainImage || !hoverImage) return;
 
-      const initialSrc = mainImage.src;
-      const swatchContainer = card.querySelector('.wbswatchclr');
+    // Set first swatch active
+    swatches[0].classList.add('active');
+    const firstSrc = swatches[0].getAttribute('data-image-src');
+    if (firstSrc) {
+      hoverImage.src = firstSrc;
+      hoverImage.srcset = firstSrc;
+    }
 
-      // Set the first swatch as active by default
-      swatches[0].classList.add('active');
+    swatches.forEach(swatch => {
+      swatch.addEventListener('click', function(e) {
+        e.preventDefault();
 
-      swatches.forEach(swatch => {
-        // --- HOVER to change image ---
-        swatch.addEventListener('mouseover', function() {
-          const newImageSrc = this.getAttribute('data-image-src');
-          if (newImageSrc && mainImage.src !== newImageSrc) {
-            mainImage.src = newImageSrc;
-            mainImage.srcset = newImageSrc;
-          }
-        });
+        // Reset active states
+        swatches.forEach(s => s.classList.remove('active'));
+        this.classList.add('active');
 
-        // --- CLICK to set active state ---
-        swatch.addEventListener('click', function(event) {
-          event.preventDefault(); // Prevent any default label behavior
-          // Remove active class from all swatches in this card
-          swatches.forEach(s => s.classList.remove('active'));
-          // Add active class to the clicked one
-          this.classList.add('active');
-        });
+        // Update hover image to selected variant
+        const newImageSrc = this.getAttribute('data-image-src');
+        if (newImageSrc) {
+          hoverImage.src = newImageSrc;
+          hoverImage.srcset = newImageSrc;
+        }
       });
-
-      // --- MOUSELEAVE to reset image ---
-      if (swatchContainer) {
-        swatchContainer.addEventListener('mouseleave', function() {
-          mainImage.src = initialSrc;
-          mainImage.srcset = initialSrc;
-        });
-      }
     });
   });
+});
+
 </script>
