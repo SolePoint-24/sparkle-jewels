@@ -1,6 +1,7 @@
 {% comment %}
   This section creates a full-screen hero banner with an interactive collection carousel.
   - Each slide has its own unique content (heading, text, button) and background image.
+  - Supports different images for desktop, tablet, and mobile.
   - The carousel supports autoplay with play/pause controls.
 {% endcomment %}
 
@@ -17,41 +18,42 @@
       {%- if block.type == 'collection_slide' -%}
         {%- assign collection = block.settings.collection -%}
 
-        {%- assign slide_image = '' -%}
-        {%- if block.settings.image != blank -%}
-          {%- assign slide_image = block.settings.image -%}
-        {%- elsif collection.image != blank -%}
-          {%- assign slide_image = collection.image -%}
-        {%- elsif collection.products.first.featured_image != blank -%}
-          {%- assign slide_image = collection.products.first.featured_image -%}
-        {%- endif -%}
+        {%- assign fallback_image = collection.image | default: collection.products.first.featured_image -%}
+        {%- assign image_desktop = block.settings.image_desktop | default: fallback_image -%}
+        {%- assign image_tablet = block.settings.image_tablet | default: image_desktop -%}
+        {%- assign image_mobile = block.settings.image_mobile | default: image_tablet -%}
 
-        {% if slide_image != blank %}
-          {%- assign loading_attr = 'lazy' -%}
-          {%- assign fetch_priority_attr = 'auto' -%}
-          {%- assign image_class = 'hero-carousel__media-image' -%}
-          {%- if forloop.first -%}
-            {%- assign loading_attr = 'eager' -%}
-            {%- assign fetch_priority_attr = 'high' -%}
-            {%- assign image_class = 'hero-carousel__media-image is-active' -%}
-          {%- endif -%}
+        <div class="hero-carousel__media-item{% if forloop.first %} is-active{% endif %}" data-collection-handle="{{ collection.handle | default: block.id }}">
+          {% if image_desktop != blank %}
+            {%- assign loading_attr = 'lazy' -%}
+            {%- assign fetch_priority_attr = 'auto' -%}
+            {%- if forloop.first -%}
+              {%- assign loading_attr = 'eager' -%}
+              {%- assign fetch_priority_attr = 'high' -%}
+            {%- endif -%}
 
-          {%- assign handle_attr = collection.handle | default: block.id -%}
-
-          {{
-            slide_image
-            | image_url: width: 3840
-            | image_tag:
-              loading: loading_attr,
-              fetchpriority: fetch_priority_attr,
-              class: image_class,
-              data-collection-handle: handle_attr
-          }}
-        {% else %}
-          <div class="hero-carousel__media-image placeholder-wrapper{% if forloop.first %} is-active{% endif %}" data-collection-handle="{{ collection.handle | default: block.id }}">
-            {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
-          </div>
-        {% endif %}
+            <picture>
+              <source
+                media="(min-width: 1024px)"
+                srcset="{{ image_desktop | image_url: width: 3840 }}"
+              >
+              <source
+                media="(min-width: 768px)"
+                srcset="{{ image_tablet | image_url: width: 2048 }}"
+              >
+              <img
+                src="{{ image_mobile | image_url: width: 1534 }}"
+                alt="{{ image_desktop.alt | default: collection.title | escape }}"
+                loading="{{ loading_attr }}"
+                fetchpriority="{{ fetch_priority_attr }}"
+                width="{{ image_desktop.width }}"
+                height="{{ image_desktop.height }}"
+              >
+            </picture>
+          {% else %}
+            <div class="placeholder-wrapper">{{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+          {% endif %}
+        </div>
       {%- endif -%}
     {%- endfor -%}
   </div>
@@ -85,7 +87,6 @@
   </div>
 
   {%- assign collection_slides = section.blocks | where: 'type', 'collection_slide' -%}
-
   {%- if request.design_mode -%}
     <div class="hero-carousel-debug">
       <p><strong>Admin Debug:</strong><br>Slides detected: {{ collection_slides.size }}.<br>Nav controls appear when slides > 1.</p>
@@ -130,7 +131,7 @@
       if (!this.nav) return;
 
       this.links = this.section.querySelectorAll('.hero-carousel__title-link');
-      this.images = this.section.querySelectorAll('.hero-carousel__media-image');
+      this.images = this.section.querySelectorAll('.hero-carousel__media-item');
       this.contents = this.section.querySelectorAll('.hero-carousel__content-inner');
       this.prevButton = this.nav.querySelector('.hero-carousel__arrow--prev');
       this.nextButton = this.nav.querySelector('.hero-carousel__arrow--next');
@@ -144,7 +145,6 @@
       this.prevButton.addEventListener('click', this.prev.bind(this));
       this.nextButton.addEventListener('click', this.next.bind(this));
       
-      // UPDATED LINE: Changed 'mouseover' to 'click' and added event.preventDefault()
       this.links.forEach((link, index) => {
         link.addEventListener('click', (event) => {
           event.preventDefault();
@@ -266,20 +266,28 @@
     z-index: 2;
   }
 
-  .hero-carousel__media-image {
+  .hero-carousel__media-item {
     width: 100%; height: 100%;
-    object-fit: cover; object-position: center;
     opacity: 0;
     transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     position: absolute; inset: 0; z-index: 1;
   }
   
-  .hero-carousel__media-image.placeholder-wrapper {
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .hero-carousel__media-image.is-active {
+  .hero-carousel__media-item.is-active {
     opacity: 1; z-index: 2;
+  }
+  
+  .hero-carousel__media-item img,
+  .hero-carousel__media-item .placeholder-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .hero-carousel__media-item .placeholder-wrapper {
+    height: 100%;
+    display: flex; align-items: center; justify-content: center;
   }
 
   .hero-carousel__content-container {
@@ -346,8 +354,7 @@
     flex-shrink: 0;
   }
   .hero-carousel__arrow svg, .hero-carousel__play-pause svg {
-    width: 20px;
-    height: 20px;
+    width: 20px; height: 20px;
   }
   .hero-carousel__arrow:hover, .hero-carousel__play-pause:hover { opacity: 1; }
   
@@ -366,11 +373,11 @@
 
   @media screen and (max-width: 768px) {
     .hero-carousel-section { color: #fff; }
-    .hero-carousel__content-container { align-items: flex-end; }
+    .hero-carousel__content-container { align-items: center; justify-content: center; }
     .hero-carousel__media-container::after { background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%); }
     .hero-carousel__content-inner {
-      text-align: center; margin: 0 auto; align-items: center;
-      position: relative; padding: 0 1rem 8rem 1rem;
+      text-align: center; align-items: center;
+      position: relative; padding: 0 1rem;
     }
     .hero-carousel__button, .hero-carousel__button:hover { border-color: #fff; color: #fff; }
     .hero-carousel__button:hover { background-color: #fff; color: #000; }
@@ -379,9 +386,9 @@
       width: 100%; justify-content: center; padding: 0 1rem;
     }
     .hero-carousel__nav {
-      width: 100%; max-width: 400px; justify-content: space-between;
-      background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(5px);
-      padding: 0.5rem 1rem; border-radius: 50px;
+      max-width: 400px; justify-content: center;
+      background: none; backdrop-filter: none;
+      padding: 0; border-radius: 0;
     }
     .hero-carousel__arrow, .hero-carousel__title-link, .hero-carousel__play-pause { color: #fff; }
     .hero-carousel__title-link.is-active::after { background-color: #fff; }
@@ -458,9 +465,18 @@
         },
         {
           "type": "image_picker",
-          "id": "image",
-          "label": "Override Image",
-          "info": "Optional. Overrides the collection's featured image."
+          "id": "image_desktop",
+          "label": "Desktop Background Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_tablet",
+          "label": "Tablet Background Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile Background Image"
         },
         {
           "type": "text",
