@@ -1,6 +1,6 @@
 {% comment %}
   Section: Collection Hero
-  - Updated to use the 'custom.collection_banner_image' metafield.
+  - Aligns text to the top-left of the hero banner.
 {% endcomment %}
 
 {%- liquid
@@ -22,7 +22,7 @@
   }
 </style>
 
-<section class="section" id="shopify-section-{{ section.id }}">
+<section class="collection-hero" id="shopify-section-{{ section.id }}">
   <div class="collection-hero__wrapper">
     <div class="collection-hero__overlay"></div>
     <div class="collection-hero__content page-width">
@@ -54,8 +54,8 @@
     background-position: center;
     min-height: 280px;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: flex-start; /* Aligns content horizontally to the left */
+    align-items: flex-start;    /* --- CHANGED --- Aligns content vertically to the top */
     color: #ffffff;
   }
   .collection-hero__overlay {
@@ -73,6 +73,7 @@
     padding-bottom: 40px;
   }
   
+  /* Breadcrumb styles within the hero */
   .collection-hero .breadcrumbs {
     font-size: 0.9em;
     margin-bottom: 15px;
@@ -91,6 +92,7 @@
     opacity: 0.7;
   }
 
+  /* Title styles */
   .collection-hero__title {
     font-family: 'Times New Roman', Times, serif;
     font-size: 2.8rem;
