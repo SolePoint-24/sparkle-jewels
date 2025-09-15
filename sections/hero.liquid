@@ -7,6 +7,7 @@
 <div
   id="Hero-{{ section.id }}"
   class="hero-carousel-section color-{{ section.settings.color_scheme }}"
+  style="--section-height-desktop: {{ section.settings.section_height_desktop }}vh; --section-height-mobile: {{ section.settings.section_height_mobile }}vh;"
   data-section-id="{{ section.id }}"
   data-autoplay="{{ section.settings.autoplay }}"
   data-autoplay-speed="{{ section.settings.autoplay_speed }}"
@@ -83,6 +84,9 @@
     {%- endfor -%}
   </div>
 
+  {% comment %}
+    Navigation controls will only appear if there are 2 or more slides.
+  {% endcomment %}
   {%- assign collection_slides = section.blocks | where: 'type', 'collection_slide' -%}
   {%- if collection_slides.size > 1 -%}
     <div class="hero-carousel__nav-wrapper">
@@ -224,15 +228,19 @@
 
 {% stylesheet %}
   .hero-carousel-section {
+    --section-width: 100vw;
+    width: var(--section-width);
+    margin-left: calc(50% - 50vw);
     position: relative;
-    height: 100vh;
-    min-height: 700px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    height: var(--section-height-mobile);
     color: #000;
     overflow: hidden;
+  }
+
+  @media screen and (min-width: 768px) {
+    .hero-carousel-section {
+      height: var(--section-height-desktop);
+    }
   }
 
   .hero-carousel__media-container {
@@ -278,6 +286,9 @@
     z-index: 3;
     width: 100%;
     padding: 0 5vw;
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
 
   .hero-carousel__content-inner {
@@ -356,9 +367,9 @@
   .hero-carousel__play-pause.is-paused .icon-pause { display: none; }
 
   @media screen and (max-width: 768px) {
-    .hero-carousel-section { min-height: 600px; height: 85vh; color: #fff; }
+    .hero-carousel__content-container { padding: 0 1.5rem; align-items: flex-end; }
+    .hero-carousel-section { color: #fff; }
     .hero-carousel__media-container::after { background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%); }
-    .hero-carousel__content-container { padding: 0 1.5rem; display: flex; align-items: flex-end; }
     .hero-carousel__content-inner {
       text-align: center; margin: 0 auto; align-items: center;
       position: relative; padding-bottom: 8rem; /* Make space for nav */
@@ -391,13 +402,37 @@
 {
   "name": "Hero Carousel",
   "tag": "section",
-  "class": "section",
+  "class": "section--full-width",
   "settings": [
     {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "Color Scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section Height"
+    },
+    {
+      "type": "range",
+      "id": "section_height_desktop",
+      "label": "Desktop Height",
+      "min": 70,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "section_height_mobile",
+      "label": "Mobile Height",
+      "min": 70,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 85
     },
     {
       "type": "header",
@@ -414,7 +449,7 @@
       "id": "autoplay_speed",
       "label": "Slide Duration",
       "min": 3000,
-      "max": 7000,
+      "max": 9000,
       "step": 500,
       "unit": "ms",
       "default": 5000
