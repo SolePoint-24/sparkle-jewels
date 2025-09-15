@@ -7,9 +7,17 @@
 {%- liquid
   assign collection = collections[section.settings.collection]
   assign products_to_show = section.settings.products_to_show
+  
+  assign products_per_view = section.settings.products_per_view
+  assign products_to_slide = section.settings.products_to_slide
 -%}
 
 <style>
+  #shopify-section-{{ section.id }} {
+    --products-per-view: {{ products_per_view }};
+    --products-gap: 20px;
+  }
+
   #shopify-section-{{ section.id }} .custom-showcase-section {
     padding: 50px 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
@@ -98,11 +106,11 @@
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
-    padding-bottom: 20px; /* Space for scrollbar */
-    margin-bottom: -20px; /* Hide scrollbar visually */
+    padding-bottom: 20px;
+    margin-bottom: -20px;
+    gap: var(--products-gap);
   }
 
-  /* Hide scrollbar */
   #shopify-section-{{ section.id }} .custom-showcase-slider::-webkit-scrollbar {
     display: none;
   }
@@ -112,35 +120,26 @@
   }
 
   #shopify-section-{{ section.id }} .slider-product-card-wrapper {
-    flex: 0 0 calc(25% - 15px);
-    margin-right: 20px;
+    flex: 0 0 calc((100% - (var(--products-per-view) - 1) * var(--products-gap)) / var(--products-per-view));
     scroll-snap-align: start;
-    
   }
-  /* Target the slider container */
-#shopify-section-{{ section.id }} .slider {
-  display: flex;
-  align-items: stretch; /* Make all children stretch to the same height */
-}
-
-/* Ensure each card wrapper fills available height */
-#shopify-section-{{ section.id }} .slider-product-card-wrapper {
-  display: flex;
-  flex: 1;
-}
-
-/* Force card to fill wrapper */
-#shopify-section-{{ section.id }} .slider-product-card-wrapper .card-wrapper,
-#shopify-section-{{ section.id }} .slider-product-card-wrapper .card {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  height: 100%;
-}
-
   
-  #shopify-section-{{ section.id }} .slider-product-card-wrapper:last-child {
-    margin-right: 0;
+  #shopify-section-{{ section.id }} .slider {
+    display: flex;
+    align-items: stretch;
+  }
+
+  #shopify-section-{{ section.id }} .slider-product-card-wrapper {
+    display: flex;
+    flex: 1;
+  }
+
+  #shopify-section-{{ section.id }} .slider-product-card-wrapper .card-wrapper,
+  #shopify-section-{{ section.id }} .slider-product-card-wrapper .card {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
   }
 
   #shopify-section-{{ section.id }} .slider-nav {
@@ -170,13 +169,12 @@
     right: 5px;
   }
 
-  /* Responsive Adjustments */
   @media (max-width: 990px) {
     #shopify-section-{{ section.id }} .custom-showcase-content {
       grid-template-columns: 1fr;
     }
     #shopify-section-{{ section.id }} .slider-product-card-wrapper {
-      flex: 0 0 calc(50% - 10px);
+      flex-basis: calc(50% - 10px);
     }
     #shopify-section-{{ section.id }} .slider-nav {
       display: none;
@@ -188,7 +186,7 @@
       font-size: 26px;
     }
     #shopify-section-{{ section.id }} .slider-product-card-wrapper {
-      flex: 0 0 80%;
+      flex-basis: 80%;
     }
   }
 </style>
@@ -225,7 +223,7 @@
       </div>
 
       <div class="custom-showcase-slider-wrapper">
-        <div class="custom-showcase-slider" id="slider-{{ section.id }}">
+        <div class="custom-showcase-slider" id="slider-{{ section.id }}" data-products-to-slide="{{ products_to_slide }}">
           {%- if collection.products.size > 0 -%}
             {%- for product in collection.products limit: products_to_show -%}
               <div class="slider-product-card-wrapper">
@@ -233,34 +231,35 @@
               </div>
             {%- endfor -%}
           {%- else -%}
-             {%- for i in (1..4) -%}
+            {%- for i in (1..products_per_view) -%}
               <div class="slider-product-card-wrapper">
-                 <div class="card-wrapper placeholder">
-                   <div class="card card--card">
-                     <div class="card__inner ratio" style="--ratio-percent: 125%;">
-                        {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
-                     </div>
-                     <div class="card__content">
-                       <div class="card__information">
-                         <h3 class="card__heading">
-                           Example Product Title
-                         </h3>
-                         <div class="card_price_bottom">
-                            <span class="price-item">{{ 9900 | money }}</span>
-                         </div>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-               </div>
-             {%- endfor -%}
+                <div class="card-wrapper placeholder">
+                  <div class="card card--card">
+                    <div class="card__inner ratio" style="--ratio-percent: 125%;">
+                      {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                    <div class="card__content">
+                      <div class="card__information">
+                        <h3 class="card__heading">
+                          Example Product Title
+                        </h3>
+                        <div class="card_price_bottom">
+                          <span class="price-item">{{ 9900 | money }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
           {%- endif -%}
         </div>
-        {% if collection.products.size > 4 %}
-        <button class="slider-nav prev" aria-label="Previous slide" onclick="document.getElementById('slider-{{ section.id }}').scrollBy({ left: -300, behavior: 'smooth' });">
+
+        {% if collection.products.size > products_per_view %}
+        <button class="slider-nav prev" aria-label="Previous slide" onclick="showcaseSliderScroll('slider-{{ section.id }}', -1)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>
         </button>
-        <button class="slider-nav next" aria-label="Next slide" onclick="document.getElementById('slider-{{ section.id }}').scrollBy({ left: 300, behavior: 'smooth' });">
+        <button class="slider-nav next" aria-label="Next slide" onclick="showcaseSliderScroll('slider-{{ section.id }}', 1)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
         </button>
         {% endif %}
@@ -268,6 +267,25 @@
     </div>
   </div>
 </div>
+
+<script>
+  function showcaseSliderScroll(sliderId, direction) {
+    const slider = document.getElementById(sliderId);
+    if (!slider) return;
+
+    const productsToSlide = parseInt(slider.dataset.productsToSlide, 10) || 1;
+    const firstCard = slider.querySelector('.slider-product-card-wrapper');
+    if (!firstCard) return;
+
+    const sliderGap = parseFloat(getComputedStyle(slider).gap) || 0;
+    const scrollAmount = (firstCard.offsetWidth + sliderGap) * productsToSlide;
+
+    slider.scrollBy({
+      left: scrollAmount * direction,
+      behavior: 'smooth'
+    });
+  }
+</script>
 
 {% schema %}
 {
@@ -333,11 +351,30 @@
     },
     {
       "type": "range",
+      "id": "products_per_view",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Products per view (Desktop)",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "products_to_slide",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Products to slide",
+      "info": "The number of products to scroll when navigation is clicked.",
+      "default": 1
+    },
+    {
+      "type": "range",
       "id": "products_to_show",
       "min": 4,
       "max": 12,
       "step": 1,
-      "label": "Number of products to show",
+      "label": "Total number of products to show",
       "default": 8
     }
   ],
