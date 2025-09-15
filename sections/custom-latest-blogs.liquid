@@ -1,8 +1,8 @@
 {% comment %}
-  V3: Added border to cards and enhanced the 'View All Blogs' button.
-  - Adds a 1px border around each blog card.
-  - Adds padding to the content area inside the card.
-  - Adds a setting to customize the text of the 'View All Blogs' button.
+  V5: Restored the full schema which was missing in the previous version.
+  - Contains the padding fix to make the image flush with borders.
+  - Contains the responsive styles for tablet (2 columns) and mobile (1 column).
+  - Contains the full, working schema with all settings.
 {% endcomment %}
 
 {%- style -%}
@@ -53,19 +53,16 @@
     gap: 30px;
   }
 
-  /* --- CHANGE: Added border to the card --- */
   .custom-blog-card {
     display: flex;
     flex-direction: column;
     text-align: left;
-    border: 1px solid #e0e0e0; 
-    padding:10px
+    border: 1px solid #e0e0e0;
   }
 
   .custom-blog-card__image-wrapper {
     position: relative;
     overflow: hidden;
-    /* The bottom margin is removed as padding will handle spacing */
   }
 
   .custom-blog-card__image-wrapper a {
@@ -75,10 +72,10 @@
   .custom-blog-card__image {
     width: 100%;
     height: auto;
-    aspect-ratio: 1/1; /* Makes the image container square */
+    aspect-ratio: 1/1;
     object-fit: cover;
     transition: transform 0.4s ease;
-    display: block; /* Removes any small gaps under the image */
+    display: block;
   }
   
   .custom-blog-card:hover .custom-blog-card__image {
@@ -96,12 +93,11 @@
     color: #333;
   }
 
-  /* --- CHANGE: Added padding to the content area --- */
   .custom-blog-card__content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 25px; /* This adds space between the border and the text */
+    padding: 25px;
   }
   
   .custom-blog-card__title {
@@ -155,7 +151,6 @@
       align-items: flex-start;
       gap: 15px;
     }
-
     .custom-blog__heading {
       font-size: 2rem;
     }
