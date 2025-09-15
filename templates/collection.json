@@ -179,6 +179,60 @@
         "padding-block-end": 48
       }
     },
+    "hero_tQw4Dd": {
+      "type": "hero",
+      "blocks": {
+        "collection_slide_3XR6TE": {
+          "type": "collection_slide",
+          "settings": {
+            "collection": "earrings",
+            "image_desktop": "{{ block.settings.collection.metafields.custom.collection_banner_image.value }}",
+            "image_tablet": "{{ block.settings.collection.metafields.custom.collection_banner_image.value }}",
+            "image_mobile": "{{ block.settings.collection.metafields.custom.collection_banner_image.value }}",
+            "subheading": "Shine Brighter",
+            "heading": "Where Grace Meets Glamour",
+            "text": "Timeless gold pieces designed to elevate every occasion.",
+            "button_label": "Explore Gold Collection",
+            "button_link": ""
+          }
+        },
+        "collection_slide_hM8VA3": {
+          "type": "collection_slide",
+          "settings": {
+            "collection": "",
+            "subheading": "Shine Brighter",
+            "heading": "Where Grace Meets Glamour",
+            "text": "Timeless gold pieces designed to elevate every occasion.",
+            "button_label": "Explore Gold Collection",
+            "button_link": ""
+          }
+        },
+        "collection_slide_VL7FeX": {
+          "type": "collection_slide",
+          "settings": {
+            "collection": "",
+            "subheading": "Shine Brighter",
+            "heading": "Where Grace Meets Glamour",
+            "text": "Timeless gold pieces designed to elevate every occasion.",
+            "button_label": "Explore Gold Collection",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_slide_3XR6TE",
+        "collection_slide_hM8VA3",
+        "collection_slide_VL7FeX"
+      ],
+      "name": "Hero Carousel",
+      "settings": {
+        "color_scheme": "",
+        "section_height_desktop": 90,
+        "section_height_mobile": 85,
+        "autoplay": true,
+        "autoplay_speed": 5000
+      }
+    },
     "main": {
       "type": "main-collection",
       "blocks": {
@@ -368,6 +422,7 @@
   },
   "order": [
     "collection_list_E8kJPz",
+    "hero_tQw4Dd",
     "main"
   ]
 }
