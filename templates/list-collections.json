@@ -13,7 +13,7 @@
       "type": "custom-breadcrumbs",
       "name": "Custom Breadcrumbs",
       "settings": {
-        "font_size": 14,
+        "font_size": 15,
         "alignment": "left",
         "padding_top": 20,
         "padding_bottom": 20
