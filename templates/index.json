@@ -779,7 +779,7 @@
       "type": "newsletter",
       "name": "Newsletter",
       "settings": {
-        "background_image": "shopify://shop_images/NK-027_1.png",
+        "background_image": "shopify://shop_images/news-letter-image.webp",
         "heading": "Join Our Newsletter",
         "subheading": "<p>FIRST AND FOREMOST, AN EMAIL NEWSLETTER SIGNUP SHOULD INCENTIVIZE PEOPLE TO SIGN UP</p>",
         "overlay_opacity": 30,
