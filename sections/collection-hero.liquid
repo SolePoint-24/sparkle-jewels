@@ -1,11 +1,11 @@
 {% comment %}
   Section: Collection Hero
-  - Updated to use a 'custom.hero_image' metafield for the background.
+  - Updated to use the 'custom.collection_banner_image' metafield.
 {% endcomment %}
 
 {%- liquid
   # 1. Prioritize the custom hero image metafield.
-  assign custom_hero_image = collection.metafields.custom.hero_image
+  assign custom_hero_image = collection.metafields.custom.collection_banner_image
 
   # 2. Fallback to the standard collection image, then to the section's default image.
   assign hero_image = custom_hero_image | default: collection.image | default: section.settings.default_image
