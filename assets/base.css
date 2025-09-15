@@ -4264,3 +4264,156 @@ text-component {
     font-size: max(1rem, 100%);
   }
 }
+
+
+/* Custom Product Card Styles */
+.product-card-wrapper .card {
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card-wrapper .card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.product-card-wrapper .card__media .media--hover-effect .hover-product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.product-card-wrapper .card:hover .media--hover-effect .hover-product-image {
+  opacity: 1;
+}
+
+.product-card-wrapper .top_atc {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  z-index: 2;
+}
+
+.product-card-wrapper .card:hover .top_atc {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-card-wrapper .add-to-cart__submit {
+  width: 100%;
+  text-align: center;
+  background-color: #333; /* Customize button color */
+  color: #fff; /* Customize button text color */
+  border: none;
+  padding: 12px 15px;
+  cursor: pointer;
+}
+
+.product-card-wrapper .card__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}
+
+.product-card-wrapper .percent__badge-sale {
+  background-color: #000; /* Customize badge color */
+  color: #fff; /* Customize badge text color */
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+
+.product-card-wrapper .wbproductdes {
+  padding: 15px;
+  text-align: left;
+}
+
+.product-card-wrapper .product__vendor {
+  font-size: 12px;
+  color: #777;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.product-card-wrapper .card__heading {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.product-card-wrapper .card__heading a {
+  text-decoration: none;
+  color: #333;
+}
+
+.product-card-wrapper .price__container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.product-card-wrapper .price-item--regular {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.product-card-wrapper .price__sale s {
+  color: #999;
+  font-weight: normal;
+  text-decoration: line-through;
+}
+
+/* Color Swatches */
+.product-card-wrapper .wbswatchclr {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.product-card-wrapper .color-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  position: relative;
+  display: block;
+}
+
+.product-card-wrapper .color-swatch input {
+  display: none;
+}
+
+.product-card-wrapper .color-swatch .tooltip {
+  visibility: hidden;
+  width: 80px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -40px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.product-card-wrapper .color-swatch:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.product-card-wrapper .color-swatch:hover,
+.product-card-wrapper .color-swatch input:checked + span {
+  border: 2px solid #000; /* Highlight for active/hovered swatch */
+}
