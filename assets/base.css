@@ -4281,18 +4281,17 @@ text-component {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* --- 1. Image and Container Fix --- */
+/* --- 1. Image Fade Transition & Container Fix --- */
 .product-card-wrapper .custom-card__image-wrapper {
   display: block !important; /* CRITICAL FIX: Overrides theme's grid display */
   position: relative;
   overflow: hidden;
   width: 100%;
 }
-/* This uses padding to create an aspect ratio box. Adjust 125% for taller/shorter images. */
 .product-card-wrapper .custom-card__image-wrapper::before {
   content: '';
   display: block;
-  padding-bottom: 125%;
+  padding-bottom: 125%; /* Creates the aspect ratio box */
 }
 .product-card-wrapper .card__media {
   position: absolute;
@@ -4320,6 +4319,11 @@ text-component {
 }
 .product-card-wrapper .card:hover .media--hover-effect .hover-product-image {
   opacity: 1;
+}
+
+/* THIS IS THE NEW RULE THAT FIXES THE OVERLAP */
+.product-card-wrapper .card:hover .media--hover-effect:has(.hover-product-image) .main-product-image {
+  opacity: 0;
 }
 
 /* --- 2. Button Placement --- */
