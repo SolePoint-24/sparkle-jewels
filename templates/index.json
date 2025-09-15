@@ -298,6 +298,8 @@
         "promo_button_text": "Discover Now",
         "promo_button_link": "shopify://collections/earrings",
         "collection": "chains",
+        "products_per_view": 4,
+        "products_to_slide": 1,
         "products_to_show": 8
       }
     },
@@ -1254,7 +1256,9 @@
         "promo_button_text": "Discover Now",
         "promo_button_link": "shopify://collections/rings",
         "collection": "rings",
-        "products_to_show": 4
+        "products_per_view": 3,
+        "products_to_slide": 1,
+        "products_to_show": 8
       }
     }
   },
