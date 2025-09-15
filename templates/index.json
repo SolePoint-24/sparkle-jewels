@@ -11,6 +11,24 @@
   "sections": {
     "hero_G7CAX9": {
       "type": "hero",
+      "blocks": {
+        "collection_slide_F9LexX": {
+          "type": "collection_slide",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "collection_slide_nhxfbn": {
+          "type": "collection_slide",
+          "settings": {
+            "collection": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_slide_F9LexX",
+        "collection_slide_nhxfbn"
+      ],
       "name": "t:names.hero",
       "settings": {
         "color_scheme": "scheme-6"
