@@ -1,6 +1,6 @@
 {% comment %}
   This section renders a full-width newsletter signup form
-  over a background image.
+  over a background image with success/error handling.
 {% endcomment %}
 
 {%- liquid
@@ -41,33 +41,44 @@
       {%- endif -%}
 
       {%- form 'customer', class: 'newsletter__form' -%}
-        <input type="hidden" name="contact[tags]" value="newsletter">
-        <div class="newsletter__form-field">
-          <label for="NewsletterForm--{{ section.id }}" class="visually-hidden">
-            Email
-          </label>
-          <input
-            id="NewsletterForm--{{ section.id }}"
-            type="email"
-            name="contact[email]"
-            class="newsletter__input"
-            value=""
-            aria-required="true"
-            autocorrect="off"
-            autocapitalize="off"
-            autocomplete="email"
-            placeholder="Email"
-            required
-          >
-          <button type="submit" class="newsletter__submit" name="commit" aria-label="Email">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M5 12l14 0"></path>
-              <path d="M13 18l6 -6"></path>
-              <path d="M13 6l6 6"></path>
-            </svg>
-          </button>
-        </div>
+        {%- if form.posted_successfully? -%}
+          <div class="newsletter__success-message">
+            {{ section.settings.success_message }}
+          </div>
+        {%- else -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="newsletter__form-field">
+            <label for="NewsletterForm--{{ section.id }}" class="visually-hidden">
+              Email
+            </label>
+            <input
+              id="NewsletterForm--{{ section.id }}"
+              type="email"
+              name="contact[email]"
+              class="newsletter__input"
+              value=""
+              aria-required="true"
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              placeholder="Email"
+              required
+            >
+            <button type="submit" class="newsletter__submit" name="commit" aria-label="Subscribe">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M5 12l14 0"></path>
+                <path d="M13 18l6 -6"></path>
+                <path d="M13 6l6 6"></path>
+              </svg>
+            </button>
+          </div>
+          {%- if form.errors -%}
+            <div class="newsletter__error-message">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
       {%- endform -%}
     </div>
   </div>
@@ -84,7 +95,6 @@
     align-items: center;
     padding: 50px 20px;
   }
-  
   .newsletter__overlay {
     position: absolute;
     top: 0;
@@ -93,7 +103,6 @@
     height: 100%;
     z-index: 1;
   }
-  
   .newsletter__content {
     position: relative;
     z-index: 2;
@@ -102,44 +111,38 @@
     width: 100%;
     max-width: 550px;
   }
-  
   .newsletter__heading {
-    font-family: 'Times New Roman', Times, serif; /* Serif font like the image */
+    font-family: 'Times New Roman', Times, serif;
     font-size: 2.8rem;
     font-weight: 400;
     margin-top: 0;
     margin-bottom: 15px;
   }
-  
   .newsletter__subheading {
     font-size: 0.9rem;
     letter-spacing: 0.5px;
     opacity: 0.8;
     margin-bottom: 30px;
   }
-  
   .newsletter__form-field {
     position: relative;
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
   }
-  
   .newsletter__input {
     width: 100%;
-    padding: 14px 50px 14px 20px; /* Space on the right for the arrow */
+    padding: 14px 50px 14px 20px;
     background-color: rgba(0, 0, 0, 0.5);
     color: #ffffff;
     border: 1px solid #ffffff;
     font-size: 1rem;
     line-height: 1.5;
   }
-  
   .newsletter__input::placeholder {
     color: #cccccc;
     opacity: 1;
   }
-  
   .newsletter__submit {
     position: absolute;
     top: 0;
@@ -156,9 +159,18 @@
     padding: 0;
     transition: opacity 0.3s ease;
   }
-
   .newsletter__submit:hover {
     opacity: 0.7;
+  }
+
+  /* Added styles for success/error messages */
+  .newsletter__success-message,
+  .newsletter__error-message {
+    margin-top: 15px;
+    font-size: 1rem;
+  }
+  .newsletter__error-message {
+    color: #ff5c5c; /* A typical error color */
   }
 
   @media (max-width: 768px) {
@@ -200,6 +212,12 @@
       "unit": "%",
       "label": "Image overlay opacity",
       "default": 30
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Thank you for subscribing!"
     },
     {
       "type": "color_scheme",
