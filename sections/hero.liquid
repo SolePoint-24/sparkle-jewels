@@ -3,7 +3,6 @@
   - Each slide has its own unique content (heading, text, button) and background image.
   - Supports different images for desktop, tablet, and mobile.
   - The carousel supports autoplay with play/pause controls.
-  - Features a sliding animation for transitions.
 {% endcomment %}
 
 <div
@@ -24,7 +23,7 @@
         {%- assign image_tablet = block.settings.image_tablet | default: image_desktop -%}
         {%- assign image_mobile = block.settings.image_mobile | default: image_tablet -%}
 
-        <div class="hero-carousel__media-item carousel-slide{% if forloop.first %} is-active{% endif %}" data-collection-handle="{{ collection.handle | default: block.id }}">
+        <div class="hero-carousel__media-item{% if forloop.first %} is-active{% endif %}" data-collection-handle="{{ collection.handle | default: block.id }}">
           {% if image_desktop != blank %}
             {%- assign loading_attr = 'lazy' -%}
             {%- assign fetch_priority_attr = 'auto' -%}
@@ -64,7 +63,7 @@
       {%- if block.type == 'collection_slide' -%}
         {%- assign collection = block.settings.collection -%}
         <div
-          class="hero-carousel__content-inner carousel-slide{% if forloop.first %} is-active{% endif %}"
+          class="hero-carousel__content-inner{% if forloop.first %} is-active{% endif %}"
           data-collection-handle="{{ collection.handle | default: block.id }}"
           {{ block.shopify_attributes }}
         >
@@ -126,8 +125,8 @@
       if (!this.nav) return;
 
       this.links = this.section.querySelectorAll('.hero-carousel__title-link');
-      this.slides = this.section.querySelectorAll('.carousel-slide');
-      
+      this.images = this.section.querySelectorAll('.hero-carousel__media-item');
+      this.contents = this.section.querySelectorAll('.hero-carousel__content-inner');
       this.prevButton = this.nav.querySelector('.hero-carousel__arrow--prev');
       this.nextButton = this.nav.querySelector('.hero-carousel__arrow--next');
       this.playPauseButton = this.nav.querySelector('.hero-carousel__play-pause');
@@ -136,7 +135,6 @@
       this.autoplaySpeed = parseInt(this.section.dataset.autoplaySpeed, 10);
       this.interval = null;
       this.currentIndex = 0;
-      this.isAnimating = false;
 
       this.prevButton.addEventListener('click', this.prev.bind(this));
       this.nextButton.addEventListener('click', this.next.bind(this));
@@ -159,47 +157,29 @@
     }
 
     goTo(index) {
-      if (index === this.currentIndex || this.isAnimating || index < 0 || index >= this.links.length) return;
+      if (index === this.currentIndex || index < 0 || index >= this.links.length) return;
       this.restartInterval();
-      this.isAnimating = true;
+      
+      this.links[this.currentIndex].classList.remove('is-active');
+      this.images[this.currentIndex].classList.remove('is-active');
+      this.contents[this.currentIndex].classList.remove('is-active');
 
-      const direction = index > this.currentIndex ? 'next' : 'prev';
-      const outgoingIndex = this.currentIndex;
-
-      this.links[outgoingIndex].classList.remove('is-active');
       this.links[index].classList.add('is-active');
-      
-      this.slides.forEach((slide, i) => {
-        const slideIndex = Math.floor(i / 2); // Group image and content slides
-        if (slideIndex === outgoingIndex) {
-          slide.classList.add(direction === 'next' ? 'is-leaving-prev' : 'is-leaving-next');
-          slide.classList.remove('is-active');
-        }
-        if (slideIndex === index) {
-          slide.classList.add(direction === 'next' ? 'is-coming-next' : 'is-coming-prev');
-          
-          // Force reflow
-          void slide.offsetWidth;
+      this.images[index].classList.add('is-active');
+      this.contents[index].classList.add('is-active');
 
-          slide.classList.add('is-active');
-          slide.classList.remove('is-coming-next', 'is-coming-prev');
-        }
-      });
-      
-      setTimeout(() => {
-        this.slides.forEach((slide, i) => {
-            const slideIndex = Math.floor(i / 2);
-            if (slideIndex === outgoingIndex) {
-              slide.classList.remove('is-leaving-prev', 'is-leaving-next');
-            }
-        });
-        this.currentIndex = index;
-        this.isAnimating = false;
-      }, 600); // Must match CSS transition duration
+      this.currentIndex = index;
     }
 
-    next() { this.goTo((this.currentIndex + 1) % this.links.length); }
-    prev() { this.goTo((this.currentIndex - 1 + this.links.length) % this.links.length); }
+    next() {
+      const newIndex = (this.currentIndex + 1) % this.links.length;
+      this.goTo(newIndex);
+    }
+
+    prev() {
+      const newIndex = (this.currentIndex - 1 + this.links.length) % this.links.length;
+      this.goTo(newIndex);
+    }
     
     start() {
       this.isPaused = false;
@@ -265,14 +245,10 @@
     }
   }
 
-  .hero-carousel__media-container,
-  .hero-carousel__content-container {
+  .hero-carousel__media-container {
     position: absolute;
     inset: 0;
     z-index: 1;
-  }
-  
-  .hero-carousel__media-container {
     background-color: #f0f0f0;
   }
   
@@ -284,45 +260,50 @@
     z-index: 2;
   }
 
-  .carousel-slide {
+  .hero-carousel__media-item {
     width: 100%; height: 100%;
-    position: absolute; inset: 0;
-    transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
-  }
-
-  /* Initial state for all slides except the first one */
-  .hero-carousel__media-item:not(.is-active) { transform: translateX(100%); }
-  .hero-carousel__content-inner:not(.is-active) { transform: translateX(100%); opacity: 0; }
-
-  /* Active state */
-  .carousel-slide.is-active { transform: translateX(0); opacity: 1; z-index: 2; }
-
-  /* States for animation */
-  .carousel-slide.is-coming-next { transform: translateX(100%); }
-  .carousel-slide.is-coming-prev { transform: translateX(-100%); }
-  .carousel-slide.is-leaving-next { transform: translateX(100%); z-index: 1; }
-  .carousel-slide.is-leaving-prev { transform: translateX(-100%); z-index: 1; }
-  .hero-carousel__content-inner.is-leaving-next,
-  .hero-carousel__content-inner.is-leaving-prev {
     opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    position: absolute; inset: 0; z-index: 1;
+  }
+  
+  .hero-carousel__media-item.is-active {
+    opacity: 1; z-index: 2;
   }
   
   .hero-carousel__media-item img,
   .hero-carousel__media-item .placeholder-svg {
-    width: 100%; height: 100%;
-    object-fit: cover; object-position: center;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
   
+  .hero-carousel__media-item .placeholder-wrapper {
+    height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
   .hero-carousel__content-container {
-    padding: 0 5vw; display: flex; align-items: center;
-    z-index: 3;
+    position: relative; z-index: 3;
+    width: 100%; padding: 0 5vw;
+    display: flex; align-items: center; height: 100%;
   }
 
   .hero-carousel__content-inner {
     max-width: 550px; text-align: left;
     display: flex; flex-direction: column; align-items: flex-start;
-    gap: 1rem;
-    transition-delay: 0.1s; /* Add slight delay for content */
+    gap: 1rem; position: absolute; opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+    pointer-events: none;
+  }
+  
+  .hero-carousel__content-inner.is-active {
+    opacity: 1; transform: translateY(0); pointer-events: auto;
+  }
+  .hero-carousel__content-inner .button {
+    pointer-events: auto;
   }
 
   .hero-carousel__subheading { font-size: 1rem; margin: 0; letter-spacing: 0.05em; }
@@ -341,11 +322,12 @@
     position: absolute; bottom: 3rem; left: 0;
     width: 100%; z-index: 4;
     display: flex; justify-content: flex-end;
-    padding: 0 5vw;
+    padding: 0 5vw; pointer-events: none;
   }
 
   .hero-carousel__nav {
-    display: flex; align-items: center; gap: 1rem;
+    display: flex; align-items: center;
+    gap: 1rem; pointer-events: auto;
   }
 
   .hero-carousel__titles { display: flex; gap: 1.5rem; }
@@ -365,7 +347,9 @@
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
-  .hero-carousel__arrow svg, .hero-carousel__play-pause svg { width: 20px; height: 20px; }
+  .hero-carousel__arrow svg, .hero-carousel__play-pause svg {
+    width: 20px; height: 20px;
+  }
   .hero-carousel__arrow:hover, .hero-carousel__play-pause:hover { opacity: 1; }
   
   .hero-carousel__play-pause .icon-play { display: none; }
@@ -376,25 +360,26 @@
   @media screen and (max-width: 768px) {
     .hero-carousel-section { color: #fff; }
     .hero-carousel__content-container {
-      align-items: center; justify-content: center;
+      justify-content: center;
     }
     .hero-carousel__media-container::after { background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%); }
     .hero-carousel__content-inner {
-      text-align: center; align-items: center;
-      width: 90%; max-width: 400px;
+      text-align: center;
+      align-items: center;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) translateY(20px);
+      width: 90%;
+      max-width: 400px;
     }
-    /* Mobile slide animation positions */
-    .hero-carousel__content-inner:not(.is-active) { transform: translate(100%, 0); }
-    .hero-carousel__content-inner.is-active { transform: translate(0, 0); }
-    .hero-carousel__content-inner.is-leaving-prev { transform: translate(-100%, 0); }
-    .hero-carousel__content-inner.is-leaving-next { transform: translate(100%, 0); }
-    .hero-carousel__content-inner.is-coming-prev { transform: translate(-100%, 0); }
-    .hero-carousel__content-inner.is-coming-next { transform: translate(100%, 0); }
-
+    .hero-carousel__content-inner.is-active {
+      transform: translate(-50%, -50%) translateY(0);
+    }
     .hero-carousel__button, .hero-carousel__button:hover { border-color: #fff; color: #fff; }
     .hero-carousel__button:hover { background-color: #fff; color: #000; }
     .hero-carousel__nav-wrapper {
-      bottom: 1rem; left: 50%; transform: translateX(-50%);
+      bottom: 1rem; /* Reduced space at the bottom */
+      left: 50%; transform: translateX(-50%);
       width: 100%; justify-content: center; padding: 0 1rem;
     }
     .hero-carousel__nav {
@@ -437,7 +422,7 @@
       "type": "range",
       "id": "section_height_mobile",
       "label": "Mobile Height",
-      "min": 70,
+      "min": 40,
       "max": 100,
       "step": 5,
       "unit": "vh",
