@@ -87,12 +87,6 @@
   </div>
 
   {%- assign collection_slides = section.blocks | where: 'type', 'collection_slide' -%}
-  {%- if request.design_mode -%}
-    <div class="hero-carousel-debug">
-      <p><strong>Admin Debug:</strong><br>Slides detected: {{ collection_slides.size }}.<br>Nav controls appear when slides > 1.</p>
-    </div>
-  {%- endif -%}
-
   {%- if collection_slides.size > 1 -%}
     <div class="hero-carousel__nav-wrapper">
       <div class="hero-carousel__nav">
@@ -354,7 +348,8 @@
     flex-shrink: 0;
   }
   .hero-carousel__arrow svg, .hero-carousel__play-pause svg {
-    width: 20px; height: 20px;
+    width: 20px;
+    height: 20px;
   }
   .hero-carousel__arrow:hover, .hero-carousel__play-pause:hover { opacity: 1; }
   
@@ -363,21 +358,18 @@
   .hero-carousel__play-pause.is-paused .icon-play { display: block; }
   .hero-carousel__play-pause.is-paused .icon-pause { display: none; }
   
-  .hero-carousel-debug {
-    position: absolute; bottom: 10px; left: 10px; z-index: 1000;
-    background: #c51717; color: white;
-    padding: 8px 12px; font-size: 12px;
-    line-height: 1.4; border-radius: 4px;
-    pointer-events: none;
-  }
-
   @media screen and (max-width: 768px) {
     .hero-carousel-section { color: #fff; }
-    .hero-carousel__content-container { align-items: center; justify-content: center; }
+    .hero-carousel__content-container {
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+    }
     .hero-carousel__media-container::after { background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%); }
     .hero-carousel__content-inner {
-      text-align: center; align-items: center;
-      position: relative; padding: 0 1rem;
+      text-align: center;
+      align-items: center;
+      position: relative;
     }
     .hero-carousel__button, .hero-carousel__button:hover { border-color: #fff; color: #fff; }
     .hero-carousel__button:hover { background-color: #fff; color: #000; }
