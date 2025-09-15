@@ -7,30 +7,24 @@
 {%- liquid
   assign product_url = product.url
   assign first_variant = product.first_available_variant | default: product.variants.first
-  if first_variant.image
-    assign featured_image = first_variant.image
-  else
-    assign featured_image = product.featured_image
-  endif
+  assign featured_image = first_variant.image | default: product.featured_image
 -%}
 
 <div class="card-wrapper wbproduct-container product-card-wrapper">
-  <div class="card card--card color-background-1 gradient on_img_on_hover_quicklook badge-top-left" style="--ratio-percent: 125.0%;">
-    <div class="card__inner wbimgblock ratio" style="--ratio-percent: 125.0%;">
+  <div class="card card--card color-background-1 gradient on_img_on_hover_quicklook badge-top-left">
+    <div class="card__inner wbimgblock ratio">
       <div class="card__media">
         <a href="{{ product_url }}" title="{{ product.title | escape }}" class="media media--hover-effect">
           {%- if featured_image -%}
             <img
               srcset="
-                {%- if featured_image.width >= 165 -%}{{ featured_image | image_url: width: 165 }} 165w,{%- endif -%}
                 {%- if featured_image.width >= 360 -%}{{ featured_image | image_url: width: 360 }} 360w,{%- endif -%}
                 {%- if featured_image.width >= 533 -%}{{ featured_image | image_url: width: 533 }} 533w,{%- endif -%}
                 {%- if featured_image.width >= 720 -%}{{ featured_image | image_url: width: 720 }} 720w,{%- endif -%}
-                {%- if featured_image.width >= 940 -%}{{ featured_image | image_url: width: 940 }} 940w,{%- endif -%}
                 {{ featured_image | image_url }} {{ featured_image.width }}w
               "
               src="{{ featured_image | image_url: width: 533 }}"
-              sizes="(min-width: 1600px) 367px, (min-width: 992px) calc((100vw - 130px) / 4), (min-width: 768px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+              sizes="(min-width: 992px) calc((100vw - 130px) / 4), (min-width: 768px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
               alt="{{ featured_image.alt | escape }}"
               class="motion-reduce main-product-image"
               loading="lazy"
@@ -41,15 +35,13 @@
           {%- if product.images[1] -%}
             <img
               srcset="
-                {%- if product.images[1].width >= 165 -%}{{ product.images[1] | image_url: width: 165 }} 165w,{%- endif -%}
                 {%- if product.images[1].width >= 360 -%}{{ product.images[1] | image_url: width: 360 }} 360w,{%- endif -%}
                 {%- if product.images[1].width >= 533 -%}{{ product.images[1] | image_url: width: 533 }} 533w,{%- endif -%}
                 {%- if product.images[1].width >= 720 -%}{{ product.images[1] | image_url: width: 720 }} 720w,{%- endif -%}
-                {%- if product.images[1].width >= 940 -%}{{ product.images[1] | image_url: width: 940 }} 940w,{%- endif -%}
                 {{ product.images[1] | image_url }} {{ product.images[1].width }}w
               "
               src="{{ product.images[1] | image_url: width: 533 }}"
-              sizes="(min-width: 1600px) 367px, (min-width: 992px) calc((100vw - 130px) / 4), (min-width: 768px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+              sizes="(min-width: 992px) calc((100vw - 130px) / 4), (min-width: 768px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
               alt="{{ product.images[1].alt | escape }}"
               class="motion-reduce hover-product-image"
               loading="lazy"
@@ -69,7 +61,7 @@
       <div class="card__badge">
         {%- if product.compare_at_price > product.price and product.available -%}
           <span class="badge percent__badge-sale">
-            {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0' }}% off
+            {{- product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0' }}% off -}}
           </span>
         {%- endif -%}
       </div>
@@ -78,25 +70,36 @@
     <div class="wbproductdes card__content">
       <div class="card__information">
         {%- liquid
+          assign color_option_index = 0
           assign has_color_option = false
           for option in product.options_with_values
-            if option.name == 'Color'
+            if option.name == 'Color' or option.name == 'Colour'
               assign has_color_option = true
+              assign color_option_index = forloop.index0
               assign color_option_values = option.values
+              break
             endif
           endfor
         -%}
-        {%- if has_color_option -%}
+
+        {%- if has_color_option and color_option_values.size > 1 -%}
           <fieldset class="js product-form__input swatchComponent inner-class parent-display">
             <div class="wbswatchclr">
               {%- for value in color_option_values -%}
                 {%- for variant in product.variants -%}
-                  {%- if variant.option1 == value -%}
-                    {%- assign variant_image = variant.image | default: product.featured_image -%}
+                  {%- if variant.options[color_option_index] == value -%}
+                    {%- liquid
+                      assign variant_image = variant.image | default: product.featured_image
+                      assign swatch_file_name = value | handle | append: '.png'
+                      assign swatch_image = images[swatch_file_name]
+                    -%}
                     <label
                       class="color-swatch"
                       data-image-src="{{ variant_image | image_url: width: 533 }}"
-                      style="background-color: {{ value | downcase | replace: ' ', '' }};"
+                      style="
+                        background-color: {{ value | downcase | replace: ' ', '' }};
+                        {% if swatch_image != blank %}background-image: url({{ swatch_image | image_url: width: 50 }});{% endif %}
+                      "
                     >
                       <input type="radio" name="color-swatch-{{ section.id }}-{{ product.id }}" value="{{ value | escape }}" {% if forloop.first %}checked{% endif %}>
                       <span class="tooltip">{{ value }}</span>
@@ -118,18 +121,14 @@
         <div class="card-information card_price_bottom">
           <div class="price price--on-sale">
             <div class="price__container">
-              <div class="price__regular">
-                <span class="price-item price-item--regular">
-                  {{ product.price | money }}
-                </span>
-              </div>
-              <div class="price__sale">
-                {% if product.compare_at_price > product.price %}
-                  <s class="price-item price-item--regular">
-                    {{ product.compare_at_price | money }}
-                  </s>
-                {% endif %}
-              </div>
+              <span class="price-item price-item--regular">
+                {{ product.price | money }}
+              </span>
+              {% if product.compare_at_price > product.price %}
+                <s class="price-item price-item--compare">
+                  {{ product.compare_at_price | money }}
+                </s>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -139,21 +138,34 @@
 </div>
 
 <script>
+  // This script remains the same, no changes needed here.
   document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.product-card-wrapper');
     cards.forEach(card => {
       const swatches = card.querySelectorAll('.color-swatch');
       const mainImage = card.querySelector('.main-product-image');
+      if (!mainImage) return;
+
+      const initialSrc = mainImage.src; // Store initial image
 
       swatches.forEach(swatch => {
         swatch.addEventListener('mouseover', function() {
           const newImageSrc = this.getAttribute('data-image-src');
-          if (newImageSrc) {
+          if (newImageSrc && mainImage.src !== newImageSrc) {
             mainImage.src = newImageSrc;
             mainImage.srcset = newImageSrc;
           }
         });
       });
+
+      // Optional: Reset image when mouse leaves the swatch area
+      const swatchContainer = card.querySelector('.wbswatchclr');
+      if (swatchContainer) {
+        swatchContainer.addEventListener('mouseleave', function() {
+          mainImage.src = initialSrc;
+          mainImage.srcset = initialSrc;
+        });
+      }
     });
   });
 </script>
