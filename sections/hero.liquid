@@ -3,7 +3,6 @@
   - Each slide has its own unique content (heading, text, button) and background image.
   - Supports different images for desktop, tablet, and mobile.
   - The carousel supports autoplay with play/pause controls.
-  - Features a fade animation for transitions.
 {% endcomment %}
 
 <div
@@ -361,26 +360,25 @@
   @media screen and (max-width: 768px) {
     .hero-carousel-section { color: #fff; }
     .hero-carousel__content-container {
-      align-items: flex-start; /* Aligns content block to the top */
       justify-content: center;
-      padding-top: 6rem; /* Adds space from the top of the screen */
     }
     .hero-carousel__media-container::after { background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%); }
     .hero-carousel__content-inner {
       text-align: center;
       align-items: center;
-      position: relative;
-      transform: translateY(20px);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) translateY(20px);
       width: 90%;
       max-width: 400px;
     }
     .hero-carousel__content-inner.is-active {
-      transform: translateY(0);
+      transform: translate(-50%, -50%) translateY(0);
     }
     .hero-carousel__button, .hero-carousel__button:hover { border-color: #fff; color: #fff; }
     .hero-carousel__button:hover { background-color: #fff; color: #000; }
     .hero-carousel__nav-wrapper {
-      bottom: 1rem;
+      bottom: 1rem; /* Reduced space at the bottom */
       left: 50%; transform: translateX(-50%);
       width: 100%; justify-content: center; padding: 0 1rem;
     }
@@ -424,7 +422,7 @@
       "type": "range",
       "id": "section_height_mobile",
       "label": "Mobile Height",
-      "min": 70,
+      "min": 40,
       "max": 100,
       "step": 5,
       "unit": "vh",
