@@ -111,7 +111,7 @@
       ],
       "name": "t:names.collections_carousel",
       "settings": {
-        "title": "Collections",
+        "title": "",
         "image_aspect_ratio": "1 / 1",
         "columns_desktop": 5,
         "padding_top": 40,
