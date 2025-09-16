@@ -331,7 +331,7 @@
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
-        "equal_columns": false,
+        "equal_columns": true,
         "limit_details_width": true,
         "gap": 24,
         "color_scheme": "",
