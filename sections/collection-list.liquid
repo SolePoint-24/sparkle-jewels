@@ -148,6 +148,21 @@
     margin-top: 15px;
     padding: 0 10px;
   }
+  @media (max-width: 1023px) {
+  .collection-arrow.prev {
+    left: 10px;  /* inside image */
+  }
+  .collection-arrow.next {
+    right: 10px; /* inside image */
+  }
+}
+
+/* Tablet (750px–1023px): hide arrows completely */
+@media (min-width: 750px) and (max-width: 1023px) {
+  .collection-arrow {
+    display: none !important;
+  }
+}
   @media (min-width: 990px) {
     .collection-list__slide {
       flex-basis: calc(100% / {{ section.settings.columns_desktop }});
