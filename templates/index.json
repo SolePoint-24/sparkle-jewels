@@ -265,7 +265,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>Explore Jewelry by types</h3>",
+                "text": "<h2>Explore Jewelry by types</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -362,7 +362,14 @@
       ],
       "name": "t:names.collections_carousel",
       "settings": {
-        "collection_list": [],
+        "collection_list": [
+          "chains",
+          "earrings",
+          "engagement-rings",
+          "frontpage",
+          "neklaces",
+          "rings"
+        ],
         "layout_type": "carousel",
         "carousel_on_mobile": false,
         "columns": 3,
