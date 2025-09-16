@@ -197,7 +197,13 @@
     inset: 0;
     z-index: 1;
     border: #f0f0f0 1px solid;
+    transition: box-shadow 0.3s ease-in-out
   }
+
+  .resource-card__link:hover {
+  /* This adds the shadow on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
   .resource-card__content {
     display: flex;
