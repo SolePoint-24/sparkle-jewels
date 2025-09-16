@@ -94,16 +94,10 @@
             "collection": "rings"
           }
         },
-        "collection_VwKLN3": {
-          "type": "collection",
-          "settings": {
-            "collection": "frontpage"
-          }
-        },
         "collection_Lh8GKE": {
           "type": "collection",
           "settings": {
-            "collection": ""
+            "collection": "frontpage"
           }
         }
       },
@@ -113,7 +107,6 @@
         "collection_RrhfYc",
         "collection_6igG8m",
         "collection_hYR4hR",
-        "collection_VwKLN3",
         "collection_Lh8GKE"
       ],
       "name": "t:names.collections_carousel",
