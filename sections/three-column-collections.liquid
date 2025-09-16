@@ -14,8 +14,8 @@
           {%- if collection != blank -%}
             {%- liquid
               assign custom_image = collection.metafields.custom.custom_image.value
-              assign custom_title = collection.metafields.custom.custom_title.value | default: collection.title
-              assign custom_description = collection.metafields.custom.custom_description.value | default: collection.description | strip_html | truncatewords: 20
+              assign custom_title = collection.metafields.custom.col | default: collection.title
+              assign custom_description = collection.metafields.custom.product_page_collection_description | default: collection.description | strip_html | truncatewords: 20
               assign image = custom_image | default: collection.featured_image | default: collection.products.first.featured_image
             -%}
 
