@@ -231,90 +231,10 @@
                   "block_order": [
                     "product_description_TH8Net"
                   ]
-                },
-                "accordion_row_HUWbDi": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Materials + Care",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "text_wMFRAi": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>We prioritize quality in selecting the materials for our items, choosing premium fabrics and finishings that ensure durability, comfort, and timeless appeal.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "rte",
-                        "font": "var(--font-primary--family)",
-                        "font_size": "",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_wMFRAi"
-                  ]
-                },
-                "accordion_row_GTWFgP": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Shipping + Returns",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "text_Nrxfg8": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>We strive to process and ship all orders in a timely manner, working diligently to ensure that your items are on their way to you as soon as possible.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "rte",
-                        "font": "var(--font-primary--family)",
-                        "font_size": "",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_Nrxfg8"
-                  ]
                 }
               },
               "block_order": [
-                "accordion_row_P46NdC",
-                "accordion_row_HUWbDi",
-                "accordion_row_GTWFgP"
+                "accordion_row_P46NdC"
               ]
             }
           },
@@ -346,7 +266,7 @@
           "type": "text",
           "name": "t:names.header",
           "settings": {
-            "text": "<h3><em>You might also like...</em></h3>",
+            "text": "<h3>You might also like...</h3>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
