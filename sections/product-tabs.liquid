@@ -1,0 +1,170 @@
+{% comment %}
+  Section: Product Tabs
+  - Displays product information from metafields in animated tabs.
+{% endcomment %}
+
+{%- liquid
+  assign specifications = product.metafields.custom.specifications
+  assign shipping_info = product.metafileds.custom.shipping_and_return
+-%}
+
+<div class="product-tabs-wrapper color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <div class="product-tabs">
+      <ul class="product-tabs__nav" role="tablist">
+        {%- if specifications != blank -%}
+          <li class="product-tabs__item">
+            <button class="product-tabs__button active" data-tab-target="#tab-specifications" role="tab" aria-selected="true">
+              Specifications
+            </button>
+          </li>
+        {%- endif -%}
+        {%- if shipping_info != blank -%}
+          <li class="product-tabs__item">
+            <button class="product-tabs__button" data-tab-target="#tab-shipping" role="tab" aria-selected="false">
+              Shipping and Return
+            </button>
+          </li>
+        {%- endif -%}
+      </ul>
+
+      <div class="product-tabs__content-container">
+        {%- if specifications != blank -%}
+          <div id="tab-specifications" class="product-tabs__content active rte">
+            {{ specifications }}
+          </div>
+        {%- endif -%}
+        {%- if shipping_info != blank -%}
+          <div id="tab-shipping" class="product-tabs__content rte">
+            {{ shipping_info }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .product-tabs-wrapper {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .product-tabs__nav {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .product-tabs__button {
+    background: none;
+    border: none;
+    padding: 10px 0;
+    margin-bottom: -1px; /* To make the bottom border overlap */
+    font-size: 1rem;
+    cursor: pointer;
+    color: #888;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  .product-tabs__button:hover {
+    color: #111;
+  }
+  .product-tabs__button.active {
+    color: #111;
+    font-weight: 500;
+    border-bottom-color: #111;
+  }
+
+  /* Animation Styles */
+  .product-tabs__content-container {
+    position: relative;
+    padding-top: 30px;
+    min-height: 150px; /* Adjust as needed */
+  }
+  .product-tabs__content {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+    position: absolute;
+    width: 100%;
+  }
+  .product-tabs__content.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    position: relative;
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const tabsContainer = document.querySelector('#shopify-section-{{ section.id }} .product-tabs');
+  if (!tabsContainer) return;
+
+  const tabButtons = tabsContainer.querySelectorAll('.product-tabs__button');
+  const tabContents = tabsContainer.querySelectorAll('.product-tabs__content');
+
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const targetId = button.dataset.tabTarget;
+      const targetContent = tabsContainer.querySelector(targetId);
+
+      // Update button states
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      // Update content visibility and animation
+      tabContents.forEach(content => content.classList.remove('active'));
+      if (targetContent) {
+        targetContent.classList.add('active');
+      }
+    });
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Product Tabs",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 40
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Tabs"
+    }
+  ]
+}
+{% endschema %}
