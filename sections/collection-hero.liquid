@@ -1,0 +1,141 @@
+{% comment %}
+  Section: Collection Hero
+  - Aligns text to the top-left of the hero banner.
+{% endcomment %}
+
+{%- liquid
+  # 1. Prioritize the custom hero image metafield.
+  assign custom_hero_image = collection.metafields.custom.collection_banner_image
+
+  # 2. Fallback to the standard collection image, then to the section's default image.
+  assign hero_image = custom_hero_image | default: collection.image | default: section.settings.default_image
+ -%}
+
+<style>
+  #shopify-section-{{ section.id }} .collection-hero__wrapper {
+    background-image: url('{{ hero_image | image_url: width: 1920 }}');
+  }
+
+  #shopify-section-{{ section.id }} .collection-hero__overlay {
+    background-color: #000;
+    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+  }
+</style>
+
+<section class="section" id="shopify-section-{{ section.id }}">
+  <div class="collection-hero__wrapper">
+    <div class="collection-hero__overlay"></div>
+    <div class="collection-hero__content page-width">
+      
+      <nav class="breadcrumbs" aria-label="breadcrumbs">
+        <a href="/" title="Home" style="color:#ffffff;">Home</a>
+        <span class="separator">&gt;</span>
+        {%- if collection.handle -%}
+          <a href="{{ routes.collections_url }} "style="color:#ffffff;"> Collections</a>
+          <span class="separator">&gt;</span>
+          <strong>{{ collection.title }}</strong>
+        {%- else -%}
+           <strong>{{ page_title }}</strong>
+        {%- endif -%}
+      </nav>
+
+      <h1 class="collection-hero__title">
+        {{ collection.title | default: page_title }}
+      </h1>
+      
+    </div>
+  </div>
+</section>
+
+<style>
+  .collection-hero__wrapper {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    min-height: 280px;
+    display: flex;
+    justify-content: flex-start; /* Aligns content horizontally to the left */
+    align-items: flex-start;    /* --- CHANGED --- Aligns content vertically to the top */
+    color: #ffffff;
+  }
+  .collection-hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  .collection-hero__content {
+    position: relative;
+    z-index: 2;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    left:40px
+  }
+  
+  /* Breadcrumb styles within the hero */
+  .collection-hero .breadcrumbs {
+    font-size: 0.9em;
+    margin-bottom: 15px;
+  }
+  .collection-hero .breadcrumbs a,
+  .collection-hero .breadcrumbs span,
+  .collection-hero .breadcrumbs strong {
+    color: #ffffff !important;
+    text-decoration: none;
+    
+  }
+  .collection-hero .breadcrumbs a:hover {
+    text-decoration: underline;
+  }
+  .collection-hero .breadcrumbs .separator {
+    margin: 0 8px;
+    opacity: 0.7;
+  }
+
+  /* Title styles */
+  .collection-hero__title {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2.8rem;
+    font-weight: 400;
+    margin: 0;
+    color: #ffffff;
+  }
+  @media (max-width: 768px) {
+    .collection-hero__title {
+      font-size: 2.2rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collection Hero",
+  "tag": "section",
+  "class": "collection-hero-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "default_image",
+      "label": "Default Background Image",
+      "info": "Used as a fallback for collections that don't have a featured image or a custom hero image."
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "Image overlay opacity",
+      "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Hero"
+    }
+  ]
+}
+{% endschema %}
