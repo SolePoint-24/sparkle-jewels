@@ -1,42 +1,47 @@
 {% comment %}
   Section: Collection List Carousel
-  - Updated with stacked navigation arrows on the right.
+  - Title is now a block, which can be added or removed.
 {% endcomment %}
 
 <div class="section color-{{ section.settings.color_scheme }}">
   <div class="page-width">
-    {%- if section.settings.title != blank -%}
-      <div class="collection-list__header">
-        <h2 class="collection-list__title">{{ section.settings.title | escape }}</h2>
-        <div class="collection-list__arrows">
-          <button type="button" class="collection-arrow prev" aria-label="Previous slide">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-          </button>
-          <button type="button" class="collection-arrow next" aria-label="Next slide">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-        </div>
-      </div>
-    {%- endif -%}
+    <div class="collection-list__header">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'title' -%}
+          <h2 class="collection-list__title" {{ block.shopify_attributes }}>
+            {{ block.settings.title | escape }}
+          </h2>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
 
     <div class="collection-list__container">
       <div class="collection-list__grid">
         {%- for block in section.blocks -%}
-          <div class="collection-list__slide" {{ block.shopify_attributes }}>
-            <a href="{{ block.settings.collection.url }}" class="collection-list__card">
-              <div class="collection-list__card-image">
-                {%- assign collection_image = block.settings.collection.image | default: block.settings.collection.products.first.featured_image -%}
-                {%- if collection_image != blank -%}
-                  {{ collection_image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '200, 300, 400, 500' }}
-                {%- else -%}
-                  {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                {%- endif -%}
-              </div>
-              <p class="collection-list__card-title">{{ block.settings.collection.title | default: "Collection" }}</p>
-            </a>
-          </div>
+          {%- if block.type == 'collection' -%}
+            <div class="collection-list__slide" {{ block.shopify_attributes }}>
+              <a href="{{ block.settings.collection.url }}" class="collection-list__card">
+                <div class="collection-list__card-image">
+                  {%- assign collection_image = block.settings.collection.image | default: block.settings.collection.products.first.featured_image -%}
+                  {%- if collection_image != blank -%}
+                    {{ collection_image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '200, 300, 400, 500' }}
+                  {%- else -%}
+                    {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {%- endif -%}
+                </div>
+                <p class="collection-list__card-title">{{ block.settings.collection.title | default: "Collection" }}</p>
+              </a>
+            </div>
+          {%- endif -%}
         {%- endfor -%}
       </div>
+
+      <button type="button" class="collection-arrow prev" aria-label="Previous slide">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <button type="button" class="collection-arrow next" aria-label="Next slide">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
     </div>
   </div>
 </div>
@@ -47,49 +52,51 @@
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
   .collection-list__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 30px;
   }
   .collection-list__title {
     margin: 0;
-    font-size: 1.8rem; /* Adjusted title size */
+    font-size: 1.8rem;
     font-weight: 400;
   }
-
-  /* --- NEW STYLES for Arrows --- */
-  .collection-list__arrows {
-    display: flex;
-    flex-direction: column; /* Stacks buttons vertically */
-    gap: 8px; /* Adds space between buttons */
+  .collection-list__container {
+    position: relative;
+    padding: 0 40px;
   }
-  .collection-list__arrows button {
-    background: none;
+  .collection-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
     border: 1px solid #e0e0e0;
-    width: 32px;
-    height: 32px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
     color: #555;
+    z-index: 1;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
-  .collection-list__arrows button:hover {
-    background-color: #f5f5f5;
+  .collection-arrow.prev {
+    left: 10px;
   }
-  .collection-list__arrows button:disabled {
-    opacity: 0.5;
+  .collection-arrow.next {
+    right: 10px;
+  }
+  .collection-arrow:hover {
+    background-color: #f0f0f0;
+    border-color: #ccc;
+  }
+  .collection-arrow:disabled {
+    opacity: 0.3;
     cursor: not-allowed;
-    background-color: transparent;
-  }
-  /* --- END NEW STYLES --- */
-
-  .collection-list__container {
-    position: relative;
-    overflow: hidden;
+    background-color: white;
+    border-color: #e0e0e0;
   }
   .collection-list__grid {
     display: flex;
@@ -149,27 +156,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = section.querySelector('.collection-list__grid');
   const prevButton = section.querySelector('.collection-arrow.prev');
   const nextButton = section.querySelector('.collection-arrow.next');
-
   if (!container || !prevButton || !nextButton) return;
-
   const updateArrowState = () => {
     const scrollLeft = Math.round(container.scrollLeft);
     const scrollWidth = container.scrollWidth;
     const clientWidth = container.clientWidth;
     prevButton.disabled = scrollLeft <= 0;
-    nextButton.disabled = scrollLeft + clientWidth >= scrollWidth;
+    nextButton.disabled = scrollLeft + clientWidth >= scrollWidth - 1;
   };
-
   const handleScroll = (direction) => {
-    const slideWidth = container.querySelector('.collection-list__slide').clientWidth;
-    container.scrollLeft += slideWidth * direction;
+    const slideWidth = container.querySelector('.collection-list__slide').offsetWidth;
+    container.scrollTo({ left: container.scrollLeft + (slideWidth * direction), behavior: 'smooth' });
     setTimeout(updateArrowState, 400);
   };
-
   nextButton.addEventListener('click', () => handleScroll(1));
   prevButton.addEventListener('click', () => handleScroll(-1));
   container.addEventListener('scroll', updateArrowState);
-
+  new ResizeObserver(updateArrowState).observe(container);
   updateArrowState();
 });
 </script>
@@ -179,12 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
   "name": "Collection Carousel",
   "class": "collection-list-section",
   "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Heading",
-      "default": "Collections"
-    },
     {
       "type": "select",
       "id": "image_aspect_ratio",
@@ -237,6 +234,19 @@ document.addEventListener('DOMContentLoaded', () => {
   ],
   "blocks": [
     {
+      "type": "title",
+      "name": "Title",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Collections"
+        }
+      ]
+    },
+    {
       "type": "collection",
       "name": "Collection",
       "settings": [
@@ -252,6 +262,9 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       "name": "Collection Carousel",
       "blocks": [
+        {
+          "type": "title"
+        },
         { "type": "collection" },
         { "type": "collection" },
         { "type": "collection" },
