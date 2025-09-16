@@ -2,6 +2,7 @@
   Section: Collection List Carousel
   - Aligned title with carousel by matching padding.
   - Updated title font style.
+  - Navigation buttons now have no background, border, or box-shadow.
 {% endcomment %}
 
 <div class="section collection-list-wrapper color-{{ section.settings.color_scheme }}">
@@ -53,12 +54,10 @@
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
 
-  /* --- CHANGED --- Added padding to align with carousel */
   .collection-list__header {
     margin-bottom: 30px;
   }
 
-  /* --- CHANGED --- Updated font style to match reference image */
   .collection-list__title {
     margin: 0;
     font-size: 2.2rem;
@@ -69,41 +68,46 @@
   .collection-list__container {
     position: relative;
   }
+
+  /* --- MODIFIED STYLES FOR ARROWS --- */
   .collection-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    background: transparent; /* Changed to transparent */
+    border: none; /* Changed to no border */
+    border-radius: 0; /* Changed to no border-radius */
+    width: 24px; /* Adjusted width to fit icon */
+    height: 24px; /* Adjusted height to fit icon */
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-    color: #555;
+    transition: opacity 0.2s ease; /* Only opacity transition */
+    color: #555; /* Icon color */
     z-index: 1;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: none; /* Removed box-shadow */
   }
   .collection-arrow.prev {
-    left: -40px; /* Adjusted position */
+    left: -20px; /* Adjusted position, considering button size change */
   }
   .collection-arrow.next {
-    right: -40px; /* Adjusted position */
+    right: -20px; /* Adjusted position, considering button size change */
   }
   .collection-arrow:hover {
-    background-color: #f0f0f0;
-    border-color: #ccc;
+    opacity: 0.7; /* Only opacity change on hover */
+    background-color: transparent; /* Ensure no background on hover */
+    border-color: transparent; /* Ensure no border on hover */
   }
   .collection-arrow:disabled {
     opacity: 0.3;
     cursor: not-allowed;
-    background-color: white;
-    border-color: #e0e0e0;
+    background-color: transparent;
+    border-color: transparent;
   }
+  /* --- END MODIFIED STYLES --- */
+
   .collection-list__grid {
     display: flex;
     overflow-x: auto;
