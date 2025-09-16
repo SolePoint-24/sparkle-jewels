@@ -261,6 +261,26 @@
     },
     "product_tabs_mq6BCd": {
       "type": "product-tabs",
+      "blocks": {
+        "tab_wJQBqL": {
+          "type": "tab",
+          "settings": {
+            "title": "Tab Title",
+            "content": "<p>Use this area to explain a product feature, shipping policy, or anything else you wish to show here.</p>"
+          }
+        },
+        "tab_wCf6Gt": {
+          "type": "tab",
+          "settings": {
+            "title": "Tab Title",
+            "content": "<p>Use this area to explain a product feature, shipping policy, or anything else you wish to show here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "tab_wJQBqL",
+        "tab_wCf6Gt"
+      ],
       "name": "Product Tabs",
       "settings": {
         "padding_top": 40,
