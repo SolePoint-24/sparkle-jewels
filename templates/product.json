@@ -475,29 +475,15 @@
     "three_column_collections_JqbWjr": {
       "type": "three-column-collections",
       "blocks": {
-        "collection_item_BwDhKM": {
-          "type": "collection_item",
-          "settings": {
-            "collection": "earrings"
-          }
-        },
-        "collection_item_Hk9pGN": {
+        "collection_item_NYDjYH": {
           "type": "collection_item",
           "settings": {
             "collection": "rings"
           }
-        },
-        "collection_item_n4yjTX": {
-          "type": "collection_item",
-          "settings": {
-            "collection": "engagement-rings"
-          }
         }
       },
       "block_order": [
-        "collection_item_BwDhKM",
-        "collection_item_Hk9pGN",
-        "collection_item_n4yjTX"
+        "collection_item_NYDjYH"
       ],
       "name": "Three Column Collections",
       "settings": {
