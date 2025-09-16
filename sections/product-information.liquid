@@ -47,7 +47,6 @@
   class="product-information section section--{{ content_width }} spacing-style color-{{ section.settings.color_scheme }} relative"
   style="{% render 'spacing-style', settings: section.settings %} --gap: {{ section.settings.gap }}px;"
 >
-  <div class="page-width-wrapper">
   {% if section.settings.desktop_media_position == 'left' and product_has_media %}
     {% assign product_href = '#ProductInformation-' | append: section.id %}
     {% render 'skip-to-content-link', href: product_href, text: 'accessibility.skip_to_product_info' %}
@@ -88,22 +87,13 @@
   </div>
 
   {% content_for 'blocks' %}
-  </div>
 </div>
 
 {% stylesheet %}
   .product-information {
     gap: var(--gap) 0;
   }
-.page-width-wrapper {
-  /* Uses your theme's page width variable */
-  margin: 0 auto;
-  padding: 0 2rem; /* Optional: Adds some side padding */
-  background-color: #f5f5f5;
-}
-.section--content-center-aligned .page-width-wrapper {
-  padding: 0;
-}
+
   /* Base grid layout */
   .product-information__grid {
     display: grid;
