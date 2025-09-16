@@ -332,8 +332,8 @@
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
         "equal_columns": true,
-        "limit_details_width": true,
-        "gap": 12,
+        "limit_details_width": false,
+        "gap": 20,
         "color_scheme": "",
         "padding-block-start": 30,
         "padding-block-end": 0
