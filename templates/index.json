@@ -126,6 +126,7 @@
     },
     "custom_event_section_E9KnPD": {
       "type": "custom-event-section",
+      "disabled": true,
       "name": "Event Countdown",
       "settings": {
         "color_scheme": "",
