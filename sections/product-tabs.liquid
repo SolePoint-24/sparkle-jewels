@@ -1,46 +1,39 @@
 {% comment %}
   Section: Product Tabs
-  - Displays product information from metafields in animated tabs.
+  - Content is now managed by repeatable blocks for maximum flexibility.
 {% endcomment %}
-
-{%- liquid
-  assign specifications = product.metafields.custom.specifications
-  assign shipping_info = product.metafileds.custom.shipping_and_return
--%}
 
 <div class=" section product-tabs-wrapper color-{{ section.settings.color_scheme }}">
   <div class="page-width">
-    <div class="product-tabs">
-      <ul class="product-tabs__nav" role="tablist">
-        {%- if specifications != blank -%}
-          <li class="product-tabs__item">
-            <button class="product-tabs__button active" data-tab-target="#tab-specifications" role="tab" aria-selected="true">
-              Specifications
-            </button>
-          </li>
-        {%- endif -%}
-        {%- if shipping_info != blank -%}
-          <li class="product-tabs__item">
-            <button class="product-tabs__button" data-tab-target="#tab-shipping" role="tab" aria-selected="false">
-              Shipping and Return
-            </button>
-          </li>
-        {%- endif -%}
-      </ul>
+    {%- if section.blocks.size > 0 -%}
+      <div class="product-tabs">
+        <ul class="product-tabs__nav" role="tablist">
+          {%- for block in section.blocks -%}
+            <li class="product-tabs__item" {{ block.shopify_attributes }}>
+              <button
+                class="product-tabs__button{% if forloop.first %} active{% endif %}"
+                data-tab-target="#tab-{{ block.id }}"
+                role="tab"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              >
+                {{ block.settings.title | default: "Tab Title" }}
+              </button>
+            </li>
+          {%- endfor -%}
+        </ul>
 
-      <div class="product-tabs__content-container">
-        {%- if specifications != blank -%}
-          <div id="tab-specifications" class="product-tabs__content active rte">
-            {{ specifications }}
-          </div>
-        {%- endif -%}
-        {%- if shipping_info != blank -%}
-          <div id="tab-shipping" class="product-tabs__content rte">
-            {{ shipping_info }}
-          </div>
-        {%- endif -%}
+        <div class="product-tabs__content-container">
+          {%- for block in section.blocks -%}
+            <div
+              id="tab-{{ block.id }}"
+              class="product-tabs__content rte{% if forloop.first %} active{% endif %}"
+            >
+              {{ block.settings.content }}
+            </div>
+          {%- endfor -%}
+        </div>
       </div>
-    </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -90,6 +83,8 @@
     transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
     position: absolute;
     width: 100%;
+    top: 0;
+    left: 0;
   }
   .product-tabs__content.active {
     opacity: 1;
@@ -101,23 +96,22 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const tabsContainer = document.querySelector('#shopify-section-{{ section.id }} .product-tabs');
-  if (!tabsContainer) return;
+  const sectionEl = document.querySelector('#shopify-section-{{ section.id }}');
+  if (!sectionEl) return;
 
-  const tabButtons = tabsContainer.querySelectorAll('.product-tabs__button');
-  const tabContents = tabsContainer.querySelectorAll('.product-tabs__content');
+  const tabButtons = sectionEl.querySelectorAll('.product-tabs__button');
 
   tabButtons.forEach(button => {
     button.addEventListener('click', () => {
       const targetId = button.dataset.tabTarget;
-      const targetContent = tabsContainer.querySelector(targetId);
+      const targetContent = sectionEl.querySelector(targetId);
+      
+      // Deactivate all buttons and content panels in this section
+      sectionEl.querySelectorAll('.product-tabs__button').forEach(btn => btn.classList.remove('active'));
+      sectionEl.querySelectorAll('.product-tabs__content').forEach(content => content.classList.remove('active'));
 
-      // Update button states
-      tabButtons.forEach(btn => btn.classList.remove('active'));
+      // Activate the clicked button and its corresponding content
       button.classList.add('active');
-
-      // Update content visibility and animation
-      tabContents.forEach(content => content.classList.remove('active'));
       if (targetContent) {
         targetContent.classList.add('active');
       }
@@ -161,9 +155,43 @@ document.addEventListener('DOMContentLoaded', () => {
       "label": "Color Scheme"
     }
   ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab Title",
+          "default": "Tab Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Tab Content",
+          "default": "<p>Use this area to explain a product feature, shipping policy, or anything else you wish to show here.</p>"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Product Tabs"
+      "name": "Product Tabs",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Specifications"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Shipping and Return"
+          }
+        }
+      ]
     }
   ]
 }
