@@ -2327,6 +2327,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
 
     .button {
       flex: 0 0 fit-content;
+      margin-top: 0 !important;
     }
   }
 }
