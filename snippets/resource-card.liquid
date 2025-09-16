@@ -191,19 +191,24 @@
     gap: var(--padding-xs);
   }
 
-  .resource-card__image {
-    aspect-ratio: var(--resource-card-aspect-ratio, auto);
-    object-fit: cover;
-    border-radius: var(--resource-card-corner-radius);
-    opacity: var(--resource-card-primary-image-opacity);
-  }
+ .resource-card__image {
+  aspect-ratio: var(--resource-card-aspect-ratio, auto);
+  object-fit: cover;
+  border-radius: var(--resource-card-corner-radius);
+  opacity: var(--resource-card-primary-image-opacity);
+  /* ADD THIS LINE for the fade transition */
+  transition: opacity 0.4s ease-in-out; 
+}
 
-  .resource-card__image--secondary {
-    position: absolute;
-    top: 0;
-    opacity: var(--resource-card-secondary-image-opacity);
-    border-radius: var(--resource-card-corner-radius);
-  }
+/* Update the existing .resource-card__image--secondary rule */
+.resource-card__image--secondary {
+  position: absolute;
+  top: 0;
+  opacity: var(--resource-card-secondary-image-opacity);
+  border-radius: var(--resource-card-corner-radius);
+  /* ADD THIS LINE for the fade transition */
+  transition: opacity 0.4s ease-in-out;
+}
 
   .resource-card__media:empty {
     display: none;
