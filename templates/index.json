@@ -660,6 +660,96 @@
         "products_to_slide": 1,
         "products_to_show": 8
       }
+    },
+    "custom_testimonials_gjpyCb": {
+      "type": "custom-testimonials",
+      "blocks": {
+        "testimonial_rxChQL": {
+          "type": "testimonial",
+          "settings": {
+            "author_image": "shopify://shop_images/blog-1.webp",
+            "quote": "<p>Share a glowing review from one of your customers to build trust and social proof.</p>",
+            "author_name": "Jennifer Nguyen",
+            "author_title": "Attorney"
+          }
+        },
+        "testimonial_68GiTh": {
+          "type": "testimonial",
+          "settings": {
+            "author_image": "shopify://shop_images/blog-1.webp",
+            "quote": "<p>Share a glowing review from one of your customers to build trust and social proof.</p>",
+            "author_name": "Jennifer Nguyen",
+            "author_title": "Attorney"
+          }
+        },
+        "testimonial_MD4X8A": {
+          "type": "testimonial",
+          "settings": {
+            "author_image": "shopify://shop_images/blog-1.webp",
+            "quote": "<p>Share a glowing review from one of your customers to build trust and social proof.</p>",
+            "author_name": "Jennifer Nguyen",
+            "author_title": "Attorney"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_rxChQL",
+        "testimonial_68GiTh",
+        "testimonial_MD4X8A"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "sub_heading": "Our Customers",
+        "main_heading": "Voices Of Elegance",
+        "color_scheme": ""
+      }
+    },
+    "custom_latest_blogs_6XrNBx": {
+      "type": "custom-latest-blogs",
+      "blocks": {
+        "article_XDx34x": {
+          "type": "article",
+          "settings": {
+            "article": "news/why-gold-chains-are-the-ultimate-accessory"
+          }
+        },
+        "article_L94gtt": {
+          "type": "article",
+          "settings": {
+            "article": "news/the-most-stunning-gold-earrings-for-any-occasion"
+          }
+        },
+        "article_7dFmCQ": {
+          "type": "article",
+          "settings": {
+            "article": "news/why-gold-chains-are-the-ultimate-accessory"
+          }
+        },
+        "article_nYCw7L": {
+          "type": "article",
+          "settings": {
+            "article": "news/the-most-stunning-gold-earrings-for-any-occasion"
+          }
+        }
+      },
+      "block_order": [
+        "article_XDx34x",
+        "article_L94gtt",
+        "article_7dFmCQ",
+        "article_nYCw7L"
+      ],
+      "name": "Latest Thought Blogs",
+      "settings": {
+        "subheading": "Fresh Reads",
+        "heading": "The Latest Thought",
+        "show_view_all": true,
+        "button_text": "View All Blogs",
+        "button_link": "",
+        "posts_to_show": 4,
+        "columns_mobile": "1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
@@ -669,6 +759,8 @@
     "product_list_YidTcf",
     "media_with_content_HP7Qpp",
     "collection_showcase_section_LcYmLk",
-    "collection_showcase_section_CM9XwH"
+    "collection_showcase_section_CM9XwH",
+    "custom_testimonials_gjpyCb",
+    "custom_latest_blogs_6XrNBx"
   ]
 }
