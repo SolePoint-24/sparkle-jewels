@@ -1,9 +1,9 @@
 {% comment %}
   Section: Three Column Collections
-  - Updated to use a more robust Flexbox layout for the content overlay.
+  - Updated with responsive layout changes for screens below 1024px.
 {% endcomment %}
 
-<div class="section-three-column-collections section  color-{{ section.settings.color_scheme }}">
+<div class="section-three-column-collections color-{{ section.settings.color_scheme }}">
   <div class="page-width">
     <div class="three-column-collections__grid">
       {%- for block in section.blocks -%}
@@ -12,8 +12,8 @@
 
           {%- if collection != blank -%}
             {%- liquid
-                assign title = collection.metafields.custom.product_page_collection_title | default: collection.title
-              assign description = collection.metafields.custom.product_page_collection_description | default: collection.description | strip_html | truncatewords: 20
+              assign title = collection.title
+              assign description = collection.description | strip_html | truncatewords: 20
               assign image = collection.featured_image | default: collection.products.first.featured_image
             -%}
 
@@ -103,18 +103,6 @@
       aspect-ratio: 3 / 4; /* Taller, portrait aspect ratio */
     }
   }
-  .three-column-collections__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .three-column-collections__grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-    }
-  }
 
   .three-column-collections__item {
     overflow: hidden;
@@ -125,16 +113,6 @@
     display: block;
     text-decoration: none;
     color: inherit;
-  }
-
-  .three-column-collections__image-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1/1; /* Portrait aspect ratio */
-    display: flex; /* Using Flexbox for alignment */
-    align-items: flex-end; /* Vertically align content to the bottom */
-    justify-content: center; /* Horizontally center content */
-    padding: 20px;
   }
 
   .three-column-collections__image-wrapper img,
@@ -154,8 +132,8 @@
   }
 
   .three-column-collections__content-overlay {
-    position: relative; /* Changed from absolute */
-    z-index: 2; /* Sits on top of the image */
+    position: relative;
+    z-index: 2;
     width: 100%;
     max-width: 90%;
   }
