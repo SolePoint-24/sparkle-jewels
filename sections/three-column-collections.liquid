@@ -1,10 +1,10 @@
 {% comment %}
   Section: Three Column Collections
-  - Displays 3 collections with custom images, titles, descriptions, and buttons.
-  - Custom data pulled from collection metafields or falls back to defaults.
+  - Displays 3 collections with overlayed custom titles, descriptions, and buttons.
+  - Image and text content sourced from collection defaults.
 {% endcomment %}
 
-<div class="section-three-column-collections section color-{{ section.settings.color_scheme }}">
+<div class="section-three-column-collections color-{{ section.settings.color_scheme }}">
   <div class="page-width">
     <div class="three-column-collections__grid">
       {%- for block in section.blocks -%}
@@ -13,46 +13,49 @@
 
           {%- if collection != blank -%}
             {%- liquid
-              assign custom_image = collection.metafields.custom.custom_image.value
-              assign custom_title = collection.metafields.custom.product_page_collection_title | default: collection.title
-              assign custom_description = collection.metafields.custom.product_page_collection_description | default: collection.description | strip_html | truncatewords: 20
-              assign image = custom_image | default: collection.featured_image | default: collection.products.first.featured_image
+              assign title = collection.title
+              assign description = collection.description | strip_html | truncatewords: 20
+              assign image = collection.featured_image | default: collection.products.first.featured_image
             -%}
 
             <div class="three-column-collections__item" {{ block.shopify_attributes }}>
-              <div class="three-column-collections__image-wrapper">
-                {%- if image != blank -%}
-                  <img
-                    src="{{ image | image_url: width: 700 }}"
-                    alt="{{ image.alt | escape }}"
-                    loading="lazy"
-                    width="{{ image.width }}"
-                    height="{{ image.height }}"
-                  >
-                {%- else -%}
-                  {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                {%- endif -%}
-              </div>
-              <div class="three-column-collections__content">
-                <h3 class="three-column-collections__title">{{ custom_title }}</h3>
-                {%- if custom_description != blank -%}
-                  <p class="three-column-collections__description">{{ custom_description }}</p>
-                {%- endif -%}
-                <a href="{{ collection.url }}" class="three-column-collections__button">
-                  Shop {{ collection.title }}
-                </a>
-              </div>
+              <a href="{{ collection.url }}" class="three-column-collections__link">
+                <div class="three-column-collections__image-wrapper">
+                  {%- if image != blank -%}
+                    <img
+                      src="{{ image | image_url: width: 700 }}"
+                      alt="{{ image.alt | escape }}"
+                      loading="lazy"
+                      width="{{ image.width }}"
+                      height="{{ image.height }}"
+                    >
+                  {%- else -%}
+                    {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {%- endif -%}
+                </div>
+                <div class="three-column-collections__content-overlay">
+                  <h3 class="three-column-collections__title">{{ title }}</h3>
+                  {%- if description != blank -%}
+                    <p class="three-column-collections__description">{{ description }}</p>
+                  {%- endif -%}
+                  <span class="three-column-collections__button">
+                    Shop {{ collection.title }}
+                  </span>
+                </div>
+              </a>
             </div>
           {%- else -%}
             <div class="three-column-collections__item placeholder-item" {{ block.shopify_attributes }}>
-              <div class="three-column-collections__image-wrapper">
-                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-              </div>
-              <div class="three-column-collections__content">
-                <h3 class="three-column-collections__title">Collection Title</h3>
-                <p class="three-column-collections__description">Curate your collection description here.</p>
-                <span class="three-column-collections__button">Shop Collection</span>
-              </div>
+              <a href="#" class="three-column-collections__link">
+                <div class="three-column-collections__image-wrapper">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+                <div class="three-column-collections__content-overlay">
+                  <h3 class="three-column-collections__title">Collection Title</h3>
+                  <p class="three-column-collections__description">Select a collection to display its details.</p>
+                  <span class="three-column-collections__button">Shop Collection</span>
+                </div>
+              </a>
             </div>
           {%- endif -%}
         {%- endif -%}
@@ -65,7 +68,6 @@
   .section-three-column-collections {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
-    background-color: var(--color-background); /* Or set a specific color */
   }
 
   .three-column-collections__grid {
@@ -82,20 +84,23 @@
   }
 
   .three-column-collections__item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    color: var(--color-foreground); /* Ensure text color is readable */
+    position: relative; /* Needed for positioning the overlay */
+    overflow: hidden; /* Ensures rounded corners apply to image too */
+    border-radius: var(--media-radius, 4px); /* Apply border-radius here */
+  }
+
+  .three-column-collections__link {
+    display: block; /* Make the whole item clickable */
+    text-decoration: none;
+    color: inherit; /* Inherit color from parent for text, adjusted by overlay */
   }
 
   .three-column-collections__image-wrapper {
     position: relative;
     width: 100%;
     height: 0;
-    padding-bottom: 120%; /* For portrait aspect ratio like in image */
+    padding-bottom: 120%; /* Portrait aspect ratio as in image */
     overflow: hidden;
-    border-radius: var(--media-radius); /* Use theme's border radius */
   }
 
   .three-column-collections__image-wrapper img,
@@ -113,36 +118,34 @@
     transform: scale(1.05);
   }
 
-  .three-column-collections__content {
+  .three-column-collections__content-overlay {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 30px 25px;
-    background: rgba(255, 255, 255, 0.8); /* Semi-transparent white overlay */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center horizontally and vertically */
+    width: calc(100% - 60px); /* 30px padding on each side */
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.75); /* Semi-transparent white background */
     text-align: center;
-    transform: translateY(0); /* Start visible */
-    transition: transform 0.4s ease;
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Soft shadow */
+    pointer-events: none; /* Allows clicks to pass through to the main link */
   }
-
-  .three-column-collections__item:hover .three-column-collections__content {
-    /* No change on hover for the content overlay as per image */
-  }
-
+  
   .three-column-collections__title {
     font-size: 1.8rem;
     line-height: 1.2;
-    margin-bottom: 10px;
+    margin: 0 0 10px 0;
     font-family: 'Times New Roman', Times, serif; /* Elegant font */
     font-weight: 500;
+    color: #333; /* Darker title text */
   }
 
   .three-column-collections__description {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.5;
     color: #666;
-    margin-bottom: 20px;
+    margin: 0 0 20px 0;
   }
 
   .three-column-collections__button {
@@ -157,6 +160,7 @@
     letter-spacing: 1px;
     border-radius: 2px;
     transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer; /* Ensure cursor shows it's clickable, even with pointer-events:none on parent */
   }
 
   .three-column-collections__button:hover {
@@ -205,15 +209,12 @@
     {
       "type": "collection_item",
       "name": "Collection",
+      "limit": 3,
       "settings": [
         {
           "type": "collection",
           "id": "collection",
           "label": "Collection"
-        },
-        {
-          "type": "paragraph",
-          "content": "Custom Image, Title, and Description are set in the Collection's Metafields. If not set, it will use the collection's default details."
         }
       ]
     }
