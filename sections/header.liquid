@@ -510,36 +510,36 @@
     }
 
     @media screen and (max-width: 749px) {
-  .header__columns {
-    --header-template-columns: 44px 1fr 44px 44px; 
-    grid-template-areas: "menu logo search cart";
-    grid-template-columns: var(--header-template-columns);
-    align-items: center;
-    column-gap: var(--gap-md);
-    padding-inline: var(--padding-sm);
-  }
+      --header-template-columns: var(--header-mobile-bookend) var(--header-mobile-bookend) 1fr
+        var(--header-mobile-bookend) var(--header-mobile-bookend);
 
-  .header-logo {
-    grid-area: logo;
-    justify-self: center;
-  }
+      grid-template-areas: 'leftA leftB center rightA rightB';
+      grid-column: span 3;
+      column-gap: 0;
+      align-items: center;
+      padding-block: 0;
+      padding-inline: 0 var(--padding-3xs);
 
-  .header__icon--menu {
-    grid-area: menu;
-    justify-self: start;
-  }
+      .header-logo {
+        grid-area: center;
+      }
 
-  .search-action {
-    grid-area: search;
-    justify-self: center;
-  }
+      &:not(:has(header-actions)) .search-action {
+        grid-area: leftB;
+      }
 
-  header-actions {
-    grid-area: cart;
-    justify-self: end;
-  }
-}
+      &:not(:has(.account-actions)) .search-action {
+        grid-area: rightA;
+      }
 
+      .search-action {
+        grid-area: leftB;
+      }
+
+      header-actions {
+        grid-area: rightB;
+      }
+    }
   }
 
   /* Single column layout if there are no columns within */
@@ -637,38 +637,6 @@
       margin-top: calc(var(--header-height) * var(--transparent-header-offset-boolean) * -1);
     }
   }
-
-  /* new styles */
-
-  /* Ensure all icons and logo align consistently */
-.header__columns {
-  align-items: center !important;
-}
-
-.header__column {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--gap-md); /* even spacing between icons */
-}
-
-.header-actions__action,
-.header__icon--menu,
-.search-action {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%; /* prevents icons from floating */
-}
-.header-actions__action svg,
-.header__icon--menu svg,
-.search-action svg {
-  width: 20px;
-  height: 20px;
-  stroke-width: 1.5; /* makes all icons uniform */
-}
-
-
 {% endstylesheet %}
 
 {% unless request.design_mode %}
