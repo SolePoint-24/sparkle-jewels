@@ -42,8 +42,8 @@
       "name": "t:names.hero",
       "settings": {
         "color_scheme": "scheme-6",
-        "section_height_desktop": 90,
-        "section_height_mobile": 85,
+        "section_height_desktop": 75,
+        "section_height_mobile": 40,
         "autoplay": true,
         "autoplay_speed": 5000
       }
