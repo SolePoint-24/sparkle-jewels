@@ -75,6 +75,34 @@
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
 
+  /* --- CHANGED --- Mobile-first styles (for screens < 1024px) */
+  .three-column-collections__grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column layout */
+    gap: 30px;
+  }
+
+  .three-column-collections__image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Shorter, square aspect ratio */
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 20px;
+  }
+  /* --- END CHANGES --- */
+
+  /* Desktop styles (for screens >= 1024px) */
+  @media screen and (min-width: 1024px) {
+    .three-column-collections__grid {
+      grid-template-columns: repeat(3, 1fr); /* Back to 3 columns */
+      gap: 30px;
+    }
+    .three-column-collections__image-wrapper {
+      aspect-ratio: 3 / 4; /* Taller, portrait aspect ratio */
+    }
+  }
   .three-column-collections__grid {
     display: grid;
     grid-template-columns: 1fr;
