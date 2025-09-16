@@ -923,12 +923,12 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<h3>Frequently asked questions</h3><h6>Welcome To Our Frequently Asked Questions (FAQs) Section! We Understand That You May Have Questions About Our Products, Services, Or Policies. And We’re Here To Provide You With All The Information You Need.<br/><br/></h6>",
+            "text": "<h3>Frequently asked questions</h3><h3></h3><h5>Welcome To Our Frequently Asked Questions (FAQs) Section! We Understand That You May Have Questions About Our Products, Services, Or Policies. And We’re Here To Provide You With All The Information You Need.<br/><br/></h5>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",
             "type_preset": "rte",
-            "font": "var(--font-body--family)",
+            "font": "var(--font-heading--family)",
             "font_size": "1rem",
             "line_height": "normal",
             "letter_spacing": "normal",
@@ -938,7 +938,7 @@
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
-            "padding-block-start": 0,
+            "padding-block-start": 16,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
