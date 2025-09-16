@@ -16,6 +16,7 @@
           "type": "collection_slide",
           "settings": {
             "collection": "rings",
+            "image_desktop": "shopify://shop_images/rings-test-4k.jpg",
             "subheading": "Shine Brighter",
             "heading": "Where Grace Meets Glamour",
             "text": "Timeless gold pieces designed to elevate every occasion.",
