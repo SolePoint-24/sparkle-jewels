@@ -249,7 +249,7 @@
         }
       },
       "custom_css": [
-        ".product-media-container {border: 1px solid black;}"
+        ".product-media-container {border: 1px solid #e0dcdc;}"
       ],
       "settings": {
         "content_width": "content-center-aligned",
