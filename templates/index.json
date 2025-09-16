@@ -217,6 +217,25 @@
         "padding-block-end": 24
       }
     },
+    "custom_event_section_E9KnPD": {
+      "type": "custom-event-section",
+      "name": "Event Countdown",
+      "settings": {
+        "color_scheme": "",
+        "image": "shopify://shop_images/NK-028_2.png",
+        "subheading": "The Grand Jewellery Pavilion",
+        "heading": "Timeless Treasures by Cello",
+        "description": "<p>Join us at our exclusive jewelry showcase where elegance meets craftsmanship. Discover limited-edition designs and experience luxury like never before.</p>",
+        "event_date": "2025-12-31 00:00:00",
+        "enable_author": true,
+        "author_line_1": "Follow The Sparkle On Instagram",
+        "author_line_2": "@Cello.Jewellery",
+        "button_label": "Explore The Event",
+        "button_link": "",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
     "product_list_YidTcf": {
       "type": "product-list",
       "blocks": {
@@ -404,6 +423,7 @@
           ]
         }
       },
+      "disabled": true,
       "name": "Featured collection",
       "settings": {
         "collection": "all",
@@ -645,6 +665,7 @@
   "order": [
     "hero_G7CAX9",
     "collection_list_3ejxRy",
+    "custom_event_section_E9KnPD",
     "product_list_YidTcf",
     "media_with_content_HP7Qpp",
     "collection_showcase_section_LcYmLk",
