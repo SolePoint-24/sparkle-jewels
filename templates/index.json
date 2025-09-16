@@ -53,7 +53,6 @@
       "disabled": true,
       "name": "t:names.collections_bento",
       "settings": {
-        "title": "Collections",
         "image_aspect_ratio": "1 / 1",
         "columns_desktop": 6,
         "padding_top": 40,
@@ -64,6 +63,12 @@
     "collection_list_GyxPdP": {
       "type": "collection-list",
       "blocks": {
+        "title_8xCmiU": {
+          "type": "title",
+          "settings": {
+            "title": "Explore Jewelry by types"
+          }
+        },
         "collection_8i6zPd": {
           "type": "collection",
           "settings": {
@@ -102,6 +107,7 @@
         }
       },
       "block_order": [
+        "title_8xCmiU",
         "collection_8i6zPd",
         "collection_YL8rrV",
         "collection_RrhfYc",
@@ -111,7 +117,6 @@
       ],
       "name": "t:names.collections_carousel",
       "settings": {
-        "title": "",
         "image_aspect_ratio": "1 / 1",
         "columns_desktop": 5,
         "padding_top": 40,
