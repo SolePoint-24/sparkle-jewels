@@ -4,7 +4,7 @@
   - Image and text content sourced from collection defaults.
 {% endcomment %}
 
-<div class="section-three-column-collections color-{{ section.settings.color_scheme }}">
+<div class="section-three-column-collections section color-{{ section.settings.color_scheme }}">
   <div class="page-width">
     <div class="three-column-collections__grid">
       {%- for block in section.blocks -%}
@@ -13,8 +13,8 @@
 
           {%- if collection != blank -%}
             {%- liquid
-              assign title = collection.title
-              assign description = collection.description | strip_html | truncatewords: 20
+              assign custom_title = collection.metafields.custom.product_page_collection_title | default: collection.title
+              assign custom_description = collection.metafields.custom.product_page_collection_description | default: collection.description | strip_html | truncatewords: 20
               assign image = collection.featured_image | default: collection.products.first.featured_image
             -%}
 
