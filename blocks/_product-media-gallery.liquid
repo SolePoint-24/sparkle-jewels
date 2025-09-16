@@ -139,6 +139,9 @@
   {% unless block_settings.aspect_ratio == 'adapt' %}
     .product-media-container {
       --media-preview-ratio: {{ block_settings.aspect_ratio }};
+      border: 2px solid #007BFF;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     {% if block_settings.constrain_to_viewport %}
