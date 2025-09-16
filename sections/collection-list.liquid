@@ -1,8 +1,6 @@
 {% comment %}
   Section: Collection List Carousel
-  - Displays a clean, horizontally scrolling carousel of collections.
-  - Ensures all images are the same size.
-  - Does not overflow the container.
+  - Updated with stacked navigation arrows on the right.
 {% endcomment %}
 
 <div class="section color-{{ section.settings.color_scheme }}">
@@ -12,10 +10,10 @@
         <h2 class="collection-list__title">{{ section.settings.title | escape }}</h2>
         <div class="collection-list__arrows">
           <button type="button" class="collection-arrow prev" aria-label="Previous slide">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </button>
           <button type="button" class="collection-arrow next" aria-label="Next slide">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
         </div>
       </div>
@@ -56,18 +54,28 @@
   }
   .collection-list__title {
     margin: 0;
+    font-size: 1.8rem; /* Adjusted title size */
+    font-weight: 400;
+  }
+
+  /* --- NEW STYLES for Arrows --- */
+  .collection-list__arrows {
+    display: flex;
+    flex-direction: column; /* Stacks buttons vertically */
+    gap: 8px; /* Adds space between buttons */
   }
   .collection-list__arrows button {
     background: none;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
+    border: 1px solid #e0e0e0;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
-    margin-left: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0;
+    transition: background-color 0.2s ease;
+    color: #555;
   }
   .collection-list__arrows button:hover {
     background-color: #f5f5f5;
@@ -75,7 +83,10 @@
   .collection-list__arrows button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    background-color: transparent;
   }
+  /* --- END NEW STYLES --- */
+
   .collection-list__container {
     position: relative;
     overflow: hidden;
@@ -86,13 +97,13 @@
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
   }
   .collection-list__grid::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+    display: none;
   }
   .collection-list__slide {
-    flex: 0 0 100%; /* Mobile default: 1 item */
+    flex: 0 0 100%;
     scroll-snap-align: start;
     padding: 0 10px;
   }
@@ -120,7 +131,6 @@
     margin-top: 15px;
     padding: 0 10px;
   }
-  /* Tablet and Desktop styles */
   @media (min-width: 750px) {
     .collection-list__slide {
       flex-basis: calc(100% / {{ section.settings.columns_desktop }});
@@ -128,7 +138,7 @@
   }
   @media (min-width: 550px) and (max-width: 749px) {
     .collection-list__slide {
-      flex-basis: 50%; /* 2 items on tablet */
+      flex-basis: 50%;
     }
   }
 </style>
@@ -153,14 +163,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleScroll = (direction) => {
     const slideWidth = container.querySelector('.collection-list__slide').clientWidth;
     container.scrollLeft += slideWidth * direction;
-    setTimeout(updateArrowState, 400); // Update after scroll animation
+    setTimeout(updateArrowState, 400);
   };
 
   nextButton.addEventListener('click', () => handleScroll(1));
   prevButton.addEventListener('click', () => handleScroll(-1));
   container.addEventListener('scroll', updateArrowState);
 
-  // Initial check in case it loads scrolled
   updateArrowState();
 });
 </script>
