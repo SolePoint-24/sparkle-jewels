@@ -750,6 +750,18 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "newsletter_EWWhJB": {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "background_image": "shopify://shop_images/news-letter-image.webp",
+        "heading": "Join Our Newsletter",
+        "subheading": "<p>FIRST AND FOREMOST, AN EMAIL NEWSLETTER SIGNUP SHOULD INCENTIVIZE PEOPLE TO SIGN UP</p>",
+        "overlay_opacity": 30,
+        "success_message": "Thank you for subscribing!",
+        "color_scheme": ""
+      }
     }
   },
   "order": [
@@ -761,6 +773,7 @@
     "collection_showcase_section_LcYmLk",
     "collection_showcase_section_CM9XwH",
     "custom_testimonials_gjpyCb",
-    "custom_latest_blogs_6XrNBx"
+    "custom_latest_blogs_6XrNBx",
+    "newsletter_EWWhJB"
   ]
 }
