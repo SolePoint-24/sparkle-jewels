@@ -259,6 +259,15 @@
         "padding-block-end": 0
       }
     },
+    "product_tabs_mq6BCd": {
+      "type": "product-tabs",
+      "name": "Product Tabs",
+      "settings": {
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "color_scheme": ""
+      }
+    },
     "product_recommendations_xmXAhw": {
       "type": "product-recommendations",
       "blocks": {
@@ -619,6 +628,7 @@
   },
   "order": [
     "main",
+    "product_tabs_mq6BCd",
     "product_recommendations_xmXAhw",
     "media_with_content_9rDKpN"
   ]
