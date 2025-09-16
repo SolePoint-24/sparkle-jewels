@@ -364,11 +364,11 @@
       "settings": {
         "collection_list": [
           "chains",
-          "earrings",
           "engagement-rings",
           "frontpage",
           "neklaces",
-          "rings"
+          "rings",
+          "earrings"
         ],
         "layout_type": "carousel",
         "carousel_on_mobile": false,
