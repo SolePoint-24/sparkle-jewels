@@ -4,7 +4,9 @@
   <p>{{ product.metafields.custom.stone_configuration.type.size}}</p>
 </div>
 
-
+<script type="application/json" id="ProductMetafieldsData">
+  {{ product.metafields | json }}
+</script>
 
 {% schema %}
 {
