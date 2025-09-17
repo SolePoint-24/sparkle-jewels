@@ -322,7 +322,7 @@
       },
       "scheme-f7e6b3d3-6ded-42f6-a5cc-b7d842e2f918": {
         "settings": {
-          "background": "#ffffff",
+          "background": "#000000",
           "foreground_heading": "#ffffff",
           "foreground": "#ffffffcf",
           "primary": "#000000b5",
