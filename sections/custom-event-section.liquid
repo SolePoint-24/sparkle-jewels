@@ -38,15 +38,15 @@
     
     <div class="event-countdown-timer" data-countdown-date="{{ section.settings.event_date }}">
       <div class="time">
-        <span class="count" data-days>00:</span>
+        <span class="count" data-days>00</span>
         <span class="label">Days</span>
       </div>
       <div class="time">
-        <span class="count" data-hours>00:</span>
+        <span class="count" data-hours>00</span>
         <span class="label">Hours</span>
       </div>
       <div class="time">
-        <span class="count" data-minutes>00:</span>
+        <span class="count" data-minutes>00</span>
         <span class="label">Minutes</span>
       </div>
       <div class="time">
@@ -87,25 +87,24 @@
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
 
-  /* Flexbox Layout */
   .event-countdown__flex-container {
     display: flex;
-    flex-direction: row; /* Image on left, text on right */
-    align-items: center;  /* Vertically centers content */
-    gap: 2rem; /* Adds space between image and text */
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
   }
 
   .event-countdown__media,
   .event-countdown__content {
-    flex: 1 1 50%; /* Each takes up 50% of the width */
-    min-width: 0; /* Prevents flex items from overflowing */
+    flex: 1 1 50%;
+    min-width: 0;
   }
 
   .event-countdown__content {
     padding: 2rem 0px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Aligns content to the left */
+    align-items: flex-start;
     justify-content: center;
     height: 100%;
   }
@@ -113,19 +112,19 @@
   .event-countdown__media img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures image covers the area nicely */
+    object-fit: cover;
   }
   
-  /* General Styling (mostly unchanged) */
   .event-subheading {
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
-    color: rgba(var(--color-foreground), 0.75);
+    color: var(--color-foreground-muted); /* UPDATED */
   }
 
   .image-with-text__heading {
     margin-top: 0;
     margin-bottom: 1.5rem;
+    color: var(--color-foreground-heading); /* UPDATED */
   }
 
   .event-countdown-timer {
@@ -144,19 +143,13 @@
     font-size: 2.8rem;
     font-weight: 600;
     line-height: 1.2;
-    color: rgb(var(--color-base-text));
-  }
-
-  .conut {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    color: var(--color-foreground-heading); /* UPDATED */
   }
 
   .event-countdown-timer .label {
     font-size: 1.2rem;
     text-transform: uppercase;
-    color: rgba(var(--color-foreground), 0.75);
+    color: var(--color-foreground-muted); /* UPDATED */
   }
 
   .author-info {
@@ -179,9 +172,14 @@
     line-height: 1.4;
   }
 
-   .author-text h3 {
+  .author-text h3 {
     font-weight: 500;
-   }
+    color: var(--color-foreground-heading); /* UPDATED */
+  }
+
+  .author-text p {
+    color: var(--color-foreground); /* UPDATED */
+  }
 
  @media (max-width: 400px) {
    .event-countdown-timer .count {
@@ -192,30 +190,26 @@
   }
 }
 
-
-  /* Responsive Styling for Mobile */
   @media screen and (max-width: 900px) {
     .event-countdown__flex-container {
-      flex-direction: column; /* Stacks image on top of text */
+      flex-direction: column;
       width: 100%;
-
     }
 
     .event-countdown__content {
-     
-      align-items: center; /* Center-aligns content on mobile */
+      align-items: center;
       text-align: center;
     }
     .event-countdown__media img {
     max-width: 100%;
-    height: auto; /* prevent stretching */
+    height: auto;
   }
   }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const countdownTimer = document.querySelector('.event-countdown-timer');
+    const countdownTimer = document.querySelector('#shopify-section-{{ section.id }} .event-countdown-timer');
     if (!countdownTimer) return;
 
     const targetDate = new Date(countdownTimer.dataset.countdownDate.replace(/-/g, '/')).getTime();
@@ -235,10 +229,15 @@
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      countdownTimer.querySelector('[data-days]').innerText = String(days).padStart(2, '0');
-      countdownTimer.querySelector('[data-hours]').innerText = String(hours).padStart(2, '0');
-      countdownTimer.querySelector('[data-minutes]').innerText = String(minutes).padStart(2, '0');
-      countdownTimer.querySelector('[data-seconds]').innerText = String(seconds).padStart(2, '0');
+      const daysEl = countdownTimer.querySelector('[data-days]');
+      const hoursEl = countdownTimer.querySelector('[data-hours]');
+      const minutesEl = countdownTimer.querySelector('[data-minutes]');
+      const secondsEl = countdownTimer.querySelector('[data-seconds]');
+
+      if(daysEl) daysEl.innerText = String(days).padStart(2, '0');
+      if(hoursEl) hoursEl.innerText = String(hours).padStart(2, '0');
+      if(minutesEl) minutesEl.innerText = String(minutes).padStart(2, '0');
+      if(secondsEl) secondsEl.innerText = String(seconds).padStart(2, '0');
     };
 
     const interval = setInterval(updateCountdown, 1000);
@@ -255,8 +254,7 @@
     {
       "type": "color_scheme",
       "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "background-1"
+      "label": "Color scheme"
     },
     {
       "type": "image_picker",
@@ -363,6 +361,6 @@
     {
       "name": "Event Countdown"
     }
-  ],
-  }
+  ]
+}
 {% endschema %}
