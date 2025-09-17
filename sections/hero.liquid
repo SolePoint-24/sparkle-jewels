@@ -253,12 +253,36 @@
   }
 }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const heroCarouselSection = document.getElementById('Hero-{{ section.id }}');
-    if (heroCarouselSection) {
-      new HeroCarousel(heroCarouselSection);
-    }
-  });
+  const carousels = {};
+
+function initCarousel(sectionId) {
+  const sectionElement = document.getElementById(`Hero-${sectionId}`);
+  if (sectionElement && !carousels[sectionId]) {
+    carousels[sectionId] = new HeroCarousel(sectionElement);
+  }
+}
+
+function destroyCarousel(sectionId) {
+  if (carousels[sectionId]) {
+    carousels[sectionId].destroy();
+    delete carousels[sectionId];
+  }
+}
+
+document.addEventListener('shopify:section:load', (event) => {
+  if (event.detail.sectionId === '{{ section.id }}') {
+    initCarousel(event.detail.sectionId);
+  }
+});
+
+document.addEventListener('shopify:section:unload', (event) => {
+  if (event.detail.sectionId === '{{ section.id }}') {
+    destroyCarousel(event.detail.sectionId);
+  }
+});
+
+// Initialize on initial page load
+initCarousel('{{ section.id }}'););
 </script>
 
 {% stylesheet %}
