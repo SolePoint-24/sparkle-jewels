@@ -276,14 +276,13 @@
     opacity: 1; z-index: 2;
   }
   
- .hero-carousel__media-item picture,
+.hero-carousel__media-item picture,
 .hero-carousel__media-item img,
 .hero-carousel__media-item .placeholder-svg {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  height: auto; /* Changed from 100% */
+  /* object-fit and object-position are no longer needed */
 }
   
   .hero-carousel__media-item .placeholder-wrapper {
