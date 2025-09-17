@@ -229,14 +229,14 @@
 </script>
 
 {% stylesheet %}
-  .hero-carousel-section {
-    width: var(--section-width);
-    margin-left: calc(50% - 50vw);
-    position: relative;
-    height: var(--section-height-mobile);
-    color: #000;
-    overflow: hidden;
-  }
+ .hero-carousel-section {
+  width: var(--section-width);
+  margin-left: calc(50% - 50vw);
+  position: relative;
+  /* height property is now gone */
+  color: #000;
+  overflow: hidden;
+}
 
   @media screen and (min-width: 768px) {
     .hero-carousel-section {
