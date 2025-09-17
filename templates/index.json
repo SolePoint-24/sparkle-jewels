@@ -652,7 +652,7 @@
       "type": "custom-event-section",
       "name": "Event Countdown",
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-1",
         "image": "shopify://shop_images/event-section-image.webp",
         "subheading": "The Grand Jewellery Pavilion",
         "heading": "Timeless Treasures by Cello",
