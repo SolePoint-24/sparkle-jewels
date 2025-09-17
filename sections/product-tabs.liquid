@@ -1,0 +1,212 @@
+{% comment %}
+  Section: Product Tabs
+  - Styling updated to match the reference image.
+{% endcomment %}
+
+<div class="section product-tabs-wrapper color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    {%- if section.blocks.size > 0 -%}
+      <div class="product-tabs">
+        <ul class="product-tabs__nav" role="tablist">
+          {%- for block in section.blocks -%}
+            <li class="product-tabs__item" {{ block.shopify_attributes }}>
+              <button
+                class="product-tabs__button{% if forloop.first %} active{% endif %}"
+                data-tab-target="#tab-{{ block.id }}"
+                role="tab"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+              >
+                {{ block.settings.title | default: "Tab Title" }}
+              </button>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        <div class="product-tabs__content-container">
+          {%- for block in section.blocks -%}
+            <div
+              id="tab-{{ block.id }}"
+              class="product-tabs__content rte{% if forloop.first %} active{% endif %}"
+            >
+              {{ block.settings.content }}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .product-tabs-wrapper {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .product-tabs{
+    background-color: #f5f5f5;
+    padding:30px
+}
+  .product-tabs__nav {
+    display: flex;
+    gap: 30px; /* Increased gap */
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px 0; /* Add bottom margin */
+  }
+  .product-tabs__button {
+    background: none;
+    border: none;
+    padding: 10px 0;
+    margin-bottom: -1px;
+    font-size: 0.9rem; /* Slightly smaller font size */
+    cursor: pointer;
+    color: #555; /* Darker grey for inactive tab */
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+    text-transform: uppercase; /* Text to uppercase */
+    letter-spacing: 1.5px; /* Added letter spacing */
+    font-weight: 500;
+  }
+  .product-tabs__button:hover {
+    color: #111;
+  }
+  .product-tabs__button.active {
+    color: #111;
+    border-bottom-color: #111;
+  }
+
+  /* Animation Styles */
+  .product-tabs__content-container {
+    position: relative;
+    min-height: 150px;
+  }
+  .product-tabs__content {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  .product-tabs__content.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    position: relative;
+  }
+
+  /* Content typography to match the image */
+  .product-tabs__content.rte p {
+    margin: 0 0 1em 0;
+    line-height: 1.6;
+  }
+  .product-tabs__content.rte p:last-child {
+    margin-bottom: 0;
+  }
+  .product-tabs__content.rte strong {
+    font-weight: 700; /* Bolder headings */
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const sectionEl = document.querySelector('#shopify-section-{{ section.id }}');
+  if (!sectionEl) return;
+
+  const tabButtons = sectionEl.querySelectorAll('.product-tabs__button');
+
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const targetId = button.dataset.tabTarget;
+      const targetContent = sectionEl.querySelector(targetId);
+      
+      sectionEl.querySelectorAll('.product-tabs__button').forEach(btn => btn.classList.remove('active'));
+      sectionEl.querySelectorAll('.product-tabs__content').forEach(content => content.classList.remove('active'));
+
+      button.classList.add('active');
+      if (targetContent) {
+        targetContent.classList.add('active');
+      }
+    });
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Product Tabs",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 40
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab Title",
+          "default": "Tab Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Tab Content",
+          "default": "<p><strong>Care Instructions:</strong> Use this area to explain a product feature, shipping policy, or anything else you wish to show here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Tabs",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Specifications"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "title": "Shipping and Return"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

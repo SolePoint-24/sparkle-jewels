@@ -32,24 +32,24 @@
               {%- assign fetch_priority_attr = 'high' -%}
             {%- endif -%}
 
-            <picture>
-              <source
-                media="(min-width: 1024px)"
-                srcset="{{ image_desktop | image_url: width: 3840 }}"
-              >
-              <source
-                media="(min-width: 768px)"
-                srcset="{{ image_tablet | image_url: width: 2048 }}"
-              >
-              <img
-                src="{{ image_mobile | image_url: width: 1534 }}"
-                alt="{{ image_desktop.alt | default: collection.title | escape }}"
-                loading="{{ loading_attr }}"
-                fetchpriority="{{ fetch_priority_attr }}"
-                width="{{ image_desktop.width }}"
-                height="{{ image_desktop.height }}"
-              >
-            </picture>
+           <picture>
+            <source
+              media="(min-width: 1024px)"
+              srcset="{{ image_desktop | image_url: width: 3840 }}"
+            >
+            <source
+              media="(min-width: 768px)"
+              srcset="{{ image_tablet | image_url: width: 2048 }}"
+            >
+            <img
+              src="{{ image_mobile | image_url: width: 1534 }}"
+              alt="{{ image_desktop.alt | default: collection.title | escape }}"
+              loading="{{ loading_attr }}"
+              fetchpriority="{{ fetch_priority_attr }}"
+              width="{{ image_desktop.width }}"
+              height="{{ image_desktop.height }}"
+              class="full-height-image"  >
+          </picture>
           {% else %}
             <div class="placeholder-wrapper">{{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}</div>
           {% endif %}
@@ -266,6 +266,12 @@
     position: absolute; inset: 0; z-index: 1;
   }
   
+  .full-height-image {
+  height: 100%; /* Make the image take 100% of its parent's height */
+  width: 100%;  /* Make the image take 100% of its parent's width */
+  object-fit: cover; /* Crop the image to fill the container while maintaining aspect ratio */
+  display: block; /* Removes extra space below the image if it's inline */
+}
   .hero-carousel__media-item.is-active {
     opacity: 1; z-index: 2;
   }

@@ -139,6 +139,7 @@
   {% unless block_settings.aspect_ratio == 'adapt' %}
     .product-media-container {
       --media-preview-ratio: {{ block_settings.aspect_ratio }};
+      
     }
 
     {% if block_settings.constrain_to_viewport %}
@@ -193,6 +194,7 @@
     /* Clear gallery aspect ratio for zoom dialog - let media display at natural aspect ratios */
     .dialog-zoomed-gallery .product-media {
       --gallery-aspect-ratio: var(--ratio);
+      
     }
   {% endunless %}
 
@@ -684,6 +686,7 @@
   .dialog-zoomed-gallery .product-media-container--external_video deferred-media {
     height: auto;
     aspect-ratio: var(--ratio);
+    
   }
 
   .dialog-zoomed-gallery .product-media-container--model .product-media__image {
