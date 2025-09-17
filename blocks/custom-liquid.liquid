@@ -4,7 +4,7 @@
   {{ product.title}}
 </div>
 <script>
-  const productData = {{ product | json }};
+  const productData = {{ product.metafields | json }};
   console.log('Product Object:', productData);
 </script>
 {% schema %}
