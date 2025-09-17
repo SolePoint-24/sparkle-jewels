@@ -29,10 +29,10 @@
     <div class="collection-hero__content page-width">
       
       <nav class="breadcrumbs" aria-label="breadcrumbs">
-        <a href="/" title="Home">Home</a> {# UPDATED: Removed inline style #}
+        <a href="/" title="Home">Home</a> 
         <span class="separator">&gt;</span>
         {%- if collection.handle -%}
-          <a href="{{ routes.collections_url }}"> Collections</a> {# UPDATED: Removed inline style #}
+          <a href="{{ routes.collections_url }}"> Collections</a>
           <span class="separator">&gt;</span>
           <strong>{{ collection.title }}</strong>
         {%- else -%}
