@@ -323,8 +323,8 @@
       "scheme-f7e6b3d3-6ded-42f6-a5cc-b7d842e2f918": {
         "settings": {
           "background": "#ffffffcf",
-          "foreground_heading": "#000000",
-          "foreground": "#000000b5",
+          "foreground_heading": "#ffffffcf",
+          "foreground": "#ffffffcf",
           "primary": "#000000b5",
           "primary_hover": "#000000",
           "border": "#eae8e6",
