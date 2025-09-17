@@ -259,20 +259,22 @@
 </script>
 
 {% stylesheet %}
-.hero-carousel-section {
+ .hero-carousel-section {
   width: var(--section-width);
   margin-left: calc(50% - 50vw);
   position: relative;
+  /* height property is now gone */
   color: #000;
   overflow: hidden;
-  display: grid; /* Use grid to create a layering context */
 }
 
 
- .hero-carousel__media-container,
-.hero-carousel__content-container {
-  grid-area: 1 / 1; /* Place both items in the same grid cell to stack them */
-}
+  .hero-carousel__media-container {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: #f0f0f0;
+  }
   
   .hero-carousel__media-container::after {
     content: '';
