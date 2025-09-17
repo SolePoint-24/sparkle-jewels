@@ -135,7 +135,7 @@
         "subheading": "The Grand Jewellery Pavilion",
         "heading": "Timeless Treasures by Cello",
         "description": "<p>Join us at our exclusive jewelry showcase where elegance meets craftsmanship. Discover limited-edition designs and experience luxury like never before.</p>",
-        "event_date": "2025-09-16 08:00:00",
+        "event_date": "2025-12-31 08:00:00",
         "enable_author": true,
         "author_line_1": "Follow The Sparkle On Instagram",
         "author_line_2": "@Cello.Jewellery",
@@ -1475,7 +1475,7 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
-    },
+    }
   },
   "order": [
     "hero_G7CAX9",
@@ -1490,7 +1490,6 @@
     "custom_latest_blogs_6XrNBx",
     "newsletter_EWWhJB",
     "section_HAz3WV",
-    "section_Vtakah",
-
+    "section_Vtakah"
   ]
 }
