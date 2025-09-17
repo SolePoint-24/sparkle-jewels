@@ -3,7 +3,10 @@
 <div>
   {{ product.title}}
 </div>
-
+<script>
+  const productData = {{ product | json }};
+  console.log('Product Object:', productData);
+</script>
 {% schema %}
 {
   "name": "t:names.custom_liquid",
