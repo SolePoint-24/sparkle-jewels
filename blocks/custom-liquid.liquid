@@ -5,8 +5,8 @@
 </div>
 
 <script>
-  const allMetafields = {{ product.metafields | json }};
-  console.log('All Product Metafields:', allMetafields);
+  
+  console.log('All Product Metafields:', product.metafields.custom);
 </script>
 
 {% schema %}
