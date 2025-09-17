@@ -1,6 +1,7 @@
 {% comment %}
   Section: Three Column Collections
   - Updated with responsive layout changes for screens below 1024px.
+  - Colors updated to use Shopify color scheme variables.
 {% endcomment %}
 
 <div class="section-three-column-collections section  color-{{ section.settings.color_scheme }}">
@@ -75,32 +76,28 @@
     padding-bottom: {{ section.settings.padding_bottom }}px;
   }
 
-  /* --- CHANGED --- Mobile-first styles (for screens < 1024px) */
   .three-column-collections__grid {
     display: grid;
-    grid-template-columns: 1fr; /* Single column layout */
+    grid-template-columns: 1fr;
     gap: 30px;
   }
 
   .three-column-collections__image-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 4/1; /* Shorter, square aspect ratio */
+    aspect-ratio: 4/1;
     display: flex;
     align-items: flex-end;
     justify-content: center;
     padding: 20px;
   }
-  /* --- END CHANGES --- */
-
-  /* Desktop styles (for screens >= 1024px) */
+  
   @media screen and (min-width: 1024px) {
     .three-column-collections__grid {
-      grid-template-columns: repeat(3, 1fr); /* Back to 3 columns */
-      gap: 30px;
+      grid-template-columns: repeat(3, 1fr);
     }
     .three-column-collections__image-wrapper {
-      aspect-ratio: 1/1; /* Taller, portrait aspect ratio */
+      aspect-ratio: 1/1;
     }
   }
 
@@ -140,10 +137,10 @@
 
   .three-column-collections__content-inner {
     padding: 25px;
-    background: rgba(252, 252, 252, 0.5);
+    background: var(--color-background); /* UPDATED */
     text-align: center;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-border); /* UPDATED */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Shadow color is usually subtle and not themed */
   }
   
   .three-column-collections__title {
@@ -152,33 +149,32 @@
     margin: 0 0 10px 0;
     font-family: 'Times New Roman', Times, serif;
     font-weight: 500;
-    color: #333;
+    color: var(--color-heading); /* UPDATED */
   }
 
   .three-column-collections__description {
     font-size: 0.9rem;
     line-height: 1.5;
-    color: #666;
+    color: var(--color-text); /* UPDATED */
     margin: 0 0 20px 0;
   }
 
   .three-column-collections__button {
     display: inline-block;
     padding: 12px 25px;
-    background-color: #333;
-    color: #fff;
+    background-color: var(--color-button-background); /* UPDATED */
+    color: var(--color-button-text); /* UPDATED */
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
     border-radius: 2px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: filter 0.3s ease; /* UPDATED for filter transition */
   }
 
   .three-column-collections__button:hover {
-    background-color: #555;
-    color: #fff;
+    filter: brightness(0.9); /* UPDATED for dynamic hover effect */
   }
 </style>
 
