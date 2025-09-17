@@ -482,6 +482,9 @@
       "block_order": [
         "text_R8dDRK"
       ],
+      "custom_css": [
+        ".product-card:hover{box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* strong shadow */ transform: translateY(-2px); /* slight lift */}"
+      ],
       "name": "t:names.product_recommendations",
       "settings": {
         "product": "{{ closest.product }}",
