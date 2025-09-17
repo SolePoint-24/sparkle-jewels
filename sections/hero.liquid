@@ -269,12 +269,10 @@
 }
 
 
-  .hero-carousel__media-container {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background-color: #f0f0f0;
-  }
+ .hero-carousel__media-container,
+.hero-carousel__content-container {
+  grid-area: 1 / 1; /* Place both items in the same grid cell to stack them */
+}
   
   .hero-carousel__media-container::after {
     content: '';
