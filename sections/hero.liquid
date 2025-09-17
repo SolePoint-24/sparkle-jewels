@@ -118,107 +118,137 @@
 </div>
 
 <script>
-  class HeroCarousel {
-    constructor(section) {
-      this.section = section;
-      this.nav = this.section.querySelector('.hero-carousel__nav-wrapper');
-      if (!this.nav) return;
+ class HeroCarousel {
+  constructor(section) {
+    this.section = section;
+    this.nav = this.section.querySelector('.hero-carousel__nav-wrapper');
+    // No nav on single-slide carousels
+    if (!this.nav) {
+        this.updateSectionHeight();
+        window.addEventListener('resize', () => this.updateSectionHeight());
+        return;
+    };
 
-      this.links = this.section.querySelectorAll('.hero-carousel__title-link');
-      this.images = this.section.querySelectorAll('.hero-carousel__media-item');
-      this.contents = this.section.querySelectorAll('.hero-carousel__content-inner');
-      this.prevButton = this.nav.querySelector('.hero-carousel__arrow--prev');
-      this.nextButton = this.nav.querySelector('.hero-carousel__arrow--next');
-      this.playPauseButton = this.nav.querySelector('.hero-carousel__play-pause');
-      this.isPaused = false;
-      this.autoplay = this.section.dataset.autoplay === 'true';
-      this.autoplaySpeed = parseInt(this.section.dataset.autoplaySpeed, 10);
-      this.interval = null;
-      this.currentIndex = 0;
+    this.links = this.section.querySelectorAll('.hero-carousel__title-link');
+    this.images = this.section.querySelectorAll('.hero-carousel__media-item');
+    this.contents = this.section.querySelectorAll('.hero-carousel__content-inner');
+    this.prevButton = this.nav.querySelector('.hero-carousel__arrow--prev');
+    this.nextButton = this.nav.querySelector('.hero-carousel__arrow--next');
+    this.playPauseButton = this.nav.querySelector('.hero-carousel__play-pause');
+    this.isPaused = false;
+    this.autoplay = this.section.dataset.autoplay === 'true';
+    this.autoplaySpeed = parseInt(this.section.dataset.autoplaySpeed, 10);
+    this.interval = null;
+    this.currentIndex = 0;
 
-      this.prevButton.addEventListener('click', this.prev.bind(this));
-      this.nextButton.addEventListener('click', this.next.bind(this));
-      
-      this.links.forEach((link, index) => {
-        link.addEventListener('click', (event) => {
-          event.preventDefault();
-          this.goTo(index);
-        });
+    // Initialize height on load and resize
+    this.updateSectionHeight();
+    window.addEventListener('resize', () => this.updateSectionHeight());
+    const firstImage = this.images[0].querySelector('img');
+    if (firstImage && !firstImage.complete) {
+        firstImage.addEventListener('load', () => this.updateSectionHeight());
+    }
+
+    this.prevButton.addEventListener('click', this.prev.bind(this));
+    this.nextButton.addEventListener('click', this.next.bind(this));
+
+    this.links.forEach((link, index) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        this.goTo(index);
       });
-      
-      if (this.autoplay) {
-        this.playPauseButton.addEventListener('click', this.togglePlayPause.bind(this));
-        this.section.addEventListener('mouseenter', () => this.pause());
-        this.section.addEventListener('mouseleave', () => this.play());
-        this.start();
-      } else {
-        this.playPauseButton.style.display = 'none';
-      }
-    }
+    });
 
-    goTo(index) {
-      if (index === this.currentIndex || index < 0 || index >= this.links.length) return;
-      this.restartInterval();
-      
-      this.links[this.currentIndex].classList.remove('is-active');
-      this.images[this.currentIndex].classList.remove('is-active');
-      this.contents[this.currentIndex].classList.remove('is-active');
-
-      this.links[index].classList.add('is-active');
-      this.images[index].classList.add('is-active');
-      this.contents[index].classList.add('is-active');
-
-      this.currentIndex = index;
-    }
-
-    next() {
-      const newIndex = (this.currentIndex + 1) % this.links.length;
-      this.goTo(newIndex);
-    }
-
-    prev() {
-      const newIndex = (this.currentIndex - 1 + this.links.length) % this.links.length;
-      this.goTo(newIndex);
-    }
-    
-    start() {
-      this.isPaused = false;
-      this.playPauseButton.classList.remove('is-paused');
-      this.playPauseButton.setAttribute('aria-label', 'Pause autoplay');
-      this.interval = setInterval(() => this.next(), this.autoplaySpeed);
-    }
-    
-    pause() {
-      if (this.interval) {
-        clearInterval(this.interval);
-        this.interval = null;
-      }
-    }
-
-    play() {
-      if (!this.isPaused && !this.interval) {
-        this.start();
-      }
-    }
-
-    togglePlayPause() {
-      this.isPaused = !this.isPaused;
-      if (this.isPaused) {
-        this.pause();
-        this.playPauseButton.classList.add('is-paused');
-        this.playPauseButton.setAttribute('aria-label', 'Play autoplay');
-      } else {
-        this.play();
-      }
-    }
-    
-    restartInterval() {
-      if (this.autoplay && !this.isPaused) {
-        this.pause();
-        this.play();
-      }
+    if (this.autoplay) {
+      this.playPauseButton.addEventListener('click', this.togglePlayPause.bind(this));
+      this.section.addEventListener('mouseenter', () => this.pause());
+      this.section.addEventListener('mouseleave', () => this.play());
+      this.start();
+    } else {
+      this.playPauseButton.style.display = 'none';
     }
   }
+
+  // NEW FUNCTION TO SET HEIGHT
+  updateSectionHeight() {
+    const activeImage = this.section.querySelector('.hero-carousel__media-item.is-active img');
+    if (activeImage) {
+      // Use a small timeout to ensure image has rendered
+      setTimeout(() => {
+        const height = activeImage.offsetHeight;
+        if (height > 0) {
+          this.section.style.height = `${height}px`;
+        }
+      }, 50);
+    }
+  }
+
+  goTo(index) {
+    if (index === this.currentIndex || index < 0 || index >= this.links.length) return;
+    this.restartInterval();
+
+    this.links[this.currentIndex].classList.remove('is-active');
+    this.images[this.currentIndex].classList.remove('is-active');
+    this.contents[this.currentIndex].classList.remove('is-active');
+
+    this.links[index].classList.add('is-active');
+    this.images[index].classList.add('is-active');
+    this.contents[index].classList.add('is-active');
+
+    this.currentIndex = index;
+
+    // Update height every time the slide changes
+    this.updateSectionHeight();
+  }
+
+  next() {
+    const newIndex = (this.currentIndex + 1) % this.links.length;
+    this.goTo(newIndex);
+  }
+
+  prev() {
+    const newIndex = (this.currentIndex - 1 + this.links.length) % this.links.length;
+    this.goTo(newIndex);
+  }
+
+  start() {
+    this.isPaused = false;
+    this.playPauseButton.classList.remove('is-paused');
+    this.playPauseButton.setAttribute('aria-label', 'Pause autoplay');
+    this.interval = setInterval(() => this.next(), this.autoplaySpeed);
+  }
+
+  pause() {
+    if (this.interval) {
+      clearInterval(this.interval);
+      this.interval = null;
+    }
+  }
+
+  play() {
+    if (!this.isPaused && !this.interval) {
+      this.start();
+    }
+  }
+
+  togglePlayPause() {
+    this.isPaused = !this.isPaused;
+    if (this.isPaused) {
+      this.pause();
+      this.playPauseButton.classList.add('is-paused');
+      this.playPauseButton.setAttribute('aria-label', 'Play autoplay');
+    } else {
+      this.play();
+    }
+  }
+
+  restartInterval() {
+    if (this.autoplay && !this.isPaused) {
+      this.pause();
+      this.play();
+    }
+  }
+}
 
   document.addEventListener('DOMContentLoaded', () => {
     const heroCarouselSection = document.getElementById('Hero-{{ section.id }}');
