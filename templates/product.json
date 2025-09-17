@@ -257,10 +257,34 @@
                   "block_order": [
                     "product_description_TH8Net"
                   ]
+                },
+                "accordion_row_8QU8Dj": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "When will I get my order?",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "custom_liquid_arEHw3": {
+                      "type": "custom-liquid",
+                      "name": "t:names.custom_liquid",
+                      "settings": {
+                        "custom_liquid": ""
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "custom_liquid_arEHw3"
+                  ]
                 }
               },
               "block_order": [
-                "accordion_row_P46NdC"
+                "accordion_row_P46NdC",
+                "accordion_row_8QU8Dj"
               ]
             }
           },
