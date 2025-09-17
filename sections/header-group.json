@@ -133,7 +133,7 @@
             "image_border_radius": 0,
             "product_title_case": "default",
             "collection_title_case": "default",
-            "color_scheme": "",
+            "color_scheme": "scheme-1",
             "menu_font_style": "inverse",
             "type_font_primary_link": "secondary",
             "type_font_primary_size": "var(--font-size--body-md)",
@@ -141,19 +141,20 @@
             "type_font_secondary_link": "secondary",
             "type_case_secondary_link": "none",
             "type_font_tertiary_link": "secondary",
-            "type_case_tertiary_link": "none",
-            "navigation_bar": false,
+            "type_case_tertiary_link": "uppercase",
+            "navigation_bar": true,
             "color_scheme_navigation_bar": "",
             "drawer_accordion": true,
             "drawer_accordion_expand_first": false,
-            "drawer_dividers": false
+            "drawer_dividers": true
           },
           "blocks": {}
         }
       },
+      "custom_css": [],
       "settings": {
-        "logo_position": "left",
-        "menu_position": "center",
+        "logo_position": "center",
+        "menu_position": "left",
         "menu_row": "top",
         "show_search": true,
         "search_position": "right",
@@ -166,7 +167,7 @@
         "localization_position": "right",
         "localization_row": "top",
         "section_width": "page-width",
-        "section_height": "standard",
+        "section_height": "compact",
         "enable_sticky_header": "never",
         "divider_width": 1,
         "divider_size": "page-width",

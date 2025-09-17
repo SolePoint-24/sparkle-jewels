@@ -158,9 +158,16 @@
     position: relative;
     text-decoration: none;
     height: 100%;
+    border: 1px solid #e0e0e0;
+    padding: 5px;
     opacity: 0;
+    transition: box-shadow 0.3s ease-in-out;
     animation: fadeIn var(--animation-speed-medium) var(--animation-timing-fade-in) forwards;
   }
+
+  .resource-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+}
 
   .resource-card__link {
     position: absolute;
@@ -184,19 +191,24 @@
     gap: var(--padding-xs);
   }
 
-  .resource-card__image {
-    aspect-ratio: var(--resource-card-aspect-ratio, auto);
-    object-fit: cover;
-    border-radius: var(--resource-card-corner-radius);
-    opacity: var(--resource-card-primary-image-opacity);
-  }
+ .resource-card__image {
+  aspect-ratio: var(--resource-card-aspect-ratio, auto);
+  object-fit: cover;
+  border-radius: var(--resource-card-corner-radius);
+  opacity: var(--resource-card-primary-image-opacity);
+  /* ADD THIS LINE for the fade transition */
+  transition: opacity 0.4s ease-in-out; 
+}
 
-  .resource-card__image--secondary {
-    position: absolute;
-    top: 0;
-    opacity: var(--resource-card-secondary-image-opacity);
-    border-radius: var(--resource-card-corner-radius);
-  }
+/* Update the existing .resource-card__image--secondary rule */
+.resource-card__image--secondary {
+  position: absolute;
+  top: 0;
+  opacity: var(--resource-card-secondary-image-opacity);
+  border-radius: var(--resource-card-corner-radius);
+  /* ADD THIS LINE for the fade transition */
+  transition: opacity 0.4s ease-in-out;
+}
 
   .resource-card__media:empty {
     display: none;
