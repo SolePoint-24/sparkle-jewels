@@ -122,12 +122,10 @@
   constructor(section) {
     this.section = section;
     this.nav = this.section.querySelector('.hero-carousel__nav-wrapper');
-    this.onResize = () => this.updateSectionHeight(); // For cleanup
-
     // No nav on single-slide carousels
     if (!this.nav) {
         this.updateSectionHeight();
-        window.addEventListener('resize', this.onResize);
+        window.addEventListener('resize', () => this.updateSectionHeight());
         return;
     };
 
@@ -145,7 +143,7 @@
 
     // Initialize height on load and resize
     this.updateSectionHeight();
-    window.addEventListener('resize', this.onResize);
+    window.addEventListener('resize', () => this.updateSectionHeight());
     const firstImage = this.images[0].querySelector('img');
     if (firstImage && !firstImage.complete) {
         firstImage.addEventListener('load', () => this.updateSectionHeight());
@@ -153,14 +151,14 @@
 
     this.prevButton.addEventListener('click', this.prev.bind(this));
     this.nextButton.addEventListener('click', this.next.bind(this));
-    
+
     this.links.forEach((link, index) => {
       link.addEventListener('click', (event) => {
         event.preventDefault();
         this.goTo(index);
       });
     });
-    
+
     if (this.autoplay) {
       this.playPauseButton.addEventListener('click', this.togglePlayPause.bind(this));
       this.section.addEventListener('mouseenter', () => this.pause());
@@ -171,9 +169,11 @@
     }
   }
 
+  // NEW FUNCTION TO SET HEIGHT
   updateSectionHeight() {
     const activeImage = this.section.querySelector('.hero-carousel__media-item.is-active img');
     if (activeImage) {
+      // Use a small timeout to ensure image has rendered
       setTimeout(() => {
         const height = activeImage.offsetHeight;
         if (height > 0) {
@@ -186,7 +186,7 @@
   goTo(index) {
     if (index === this.currentIndex || index < 0 || index >= this.links.length) return;
     this.restartInterval();
-    
+
     this.links[this.currentIndex].classList.remove('is-active');
     this.images[this.currentIndex].classList.remove('is-active');
     this.contents[this.currentIndex].classList.remove('is-active');
@@ -196,6 +196,8 @@
     this.contents[index].classList.add('is-active');
 
     this.currentIndex = index;
+
+    // Update height every time the slide changes
     this.updateSectionHeight();
   }
 
@@ -208,14 +210,14 @@
     const newIndex = (this.currentIndex - 1 + this.links.length) % this.links.length;
     this.goTo(newIndex);
   }
-  
+
   start() {
     this.isPaused = false;
     this.playPauseButton.classList.remove('is-paused');
     this.playPauseButton.setAttribute('aria-label', 'Pause autoplay');
     this.interval = setInterval(() => this.next(), this.autoplaySpeed);
   }
-  
+
   pause() {
     if (this.interval) {
       clearInterval(this.interval);
@@ -239,50 +241,21 @@
       this.play();
     }
   }
-  
+
   restartInterval() {
     if (this.autoplay && !this.isPaused) {
       this.pause();
       this.play();
     }
   }
-
-  // NEW METHOD FOR CLEANUP
-  destroy() {
-    window.removeEventListener('resize', this.onResize);
-  }
 }
 
-  const carousels = {};
-
-function initCarousel(sectionId) {
-  const sectionElement = document.getElementById(`Hero-${sectionId}`);
-  if (sectionElement && !carousels[sectionId]) {
-    carousels[sectionId] = new HeroCarousel(sectionElement);
-  }
-}
-
-function destroyCarousel(sectionId) {
-  if (carousels[sectionId]) {
-    carousels[sectionId].destroy();
-    delete carousels[sectionId];
-  }
-}
-
-document.addEventListener('shopify:section:load', (event) => {
-  if (event.detail.sectionId === '{{ section.id }}') {
-    initCarousel(event.detail.sectionId);
-  }
-});
-
-document.addEventListener('shopify:section:unload', (event) => {
-  if (event.detail.sectionId === '{{ section.id }}') {
-    destroyCarousel(event.detail.sectionId);
-  }
-});
-
-// Initialize on initial page load
-initCarousel('{{ section.id }}'););
+  document.addEventListener('DOMContentLoaded', () => {
+    const heroCarouselSection = document.getElementById('Hero-{{ section.id }}');
+    if (heroCarouselSection) {
+      new HeroCarousel(heroCarouselSection);
+    }
+  });
 </script>
 
 {% stylesheet %}
