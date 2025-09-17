@@ -230,20 +230,25 @@
 
 {% stylesheet %}
  .hero-carousel-section {
-   width: var(--section-width);
+  width: var(--section-width);
   margin-left: calc(50% - 50vw);
   position: relative;
+  /* height property is now gone */
   color: #000;
   overflow: hidden;
-  display: grid; /* Use grid for layering */
 }
 
+  @media screen and (min-width: 768px) {
+    .hero-carousel-section {
+      height: var(--section-height-desktop);
+    }
+  }
 
   .hero-carousel__media-container {
-    grid-area: 1 / 1; /* Place in the first grid cell */
-  position: relative; /* Change from absolute */
-  z-index: 1;
-  background-color: #f0f0f0;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: #f0f0f0;
   }
   
   .hero-carousel__media-container::after {
@@ -286,14 +291,9 @@
   }
 
   .hero-carousel__content-container {
-    grid-area: 1 / 1; /* Place in the same grid cell */
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  padding: 0 5vw;
-  display: flex;
-  align-items: center;
-  pointer-events: none;
+    position: relative; z-index: 3;
+    width: 100%; padding: 0 5vw;
+    display: flex; align-items: center; height: 100%;
   }
 
   .hero-carousel__content-inner {
