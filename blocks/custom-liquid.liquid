@@ -4,7 +4,19 @@
   <p>{{ product.metafields.custom.stone_configuration}}</p>
 </div>
 
+<script type="application/json" id="StoneConfigData">
+  {{ product.metafields.custom.stone_configuration.value | json }}
+</script>
+
 <script>
+  try {
+    const dataElement = document.getElementById('StoneConfigData');
+    const stoneMetaObject = JSON.parse(dataElement.textContent);
+
+    console.log('Stone Configuration Metaobject:', stoneMetaObject);
+  } catch (error) {
+    console.error('Could not parse metaobject data:', error);
+  }
 </script>
 
 {% schema %}
