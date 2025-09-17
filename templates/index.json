@@ -45,7 +45,7 @@
       "settings": {
         "color_scheme": "scheme-6",
         "section_height_desktop": 75,
-        "section_height_mobile": 50,
+        "section_height_mobile": 60,
         "autoplay": true,
         "autoplay_speed": 5000
       }
@@ -128,6 +128,7 @@
     },
     "custom_event_section_GxK8zR": {
       "type": "custom-event-section",
+      "disabled": true,
       "name": "Event Countdown",
       "settings": {
         "color_scheme": "",
