@@ -16,7 +16,7 @@
           "type": "collection_slide",
           "settings": {
             "collection": "rings",
-            "image_desktop": "shopify://shop_images/news-letter-image.webp",
+            "image_desktop": "shopify://shop_images/hero-test-desktop.jpg",
             "image_mobile": "shopify://shop_images/collection-showcase-bg.webp",
             "subheading": "Shine Brighter",
             "heading": "Where Grace Meets Glamour",
@@ -1125,65 +1125,6 @@
         "color_scheme": ""
       }
     },
-    "custom_latest_blogs_6XrNBx": {
-      "type": "custom-latest-blogs",
-      "blocks": {
-        "article_XDx34x": {
-          "type": "article",
-          "settings": {
-            "article": "news/why-gold-chains-are-the-ultimate-accessory"
-          }
-        },
-        "article_L94gtt": {
-          "type": "article",
-          "settings": {
-            "article": "news/the-most-stunning-gold-earrings-for-any-occasion"
-          }
-        },
-        "article_7dFmCQ": {
-          "type": "article",
-          "settings": {
-            "article": "news/why-gold-chains-are-the-ultimate-accessory"
-          }
-        },
-        "article_nYCw7L": {
-          "type": "article",
-          "settings": {
-            "article": "news/the-most-stunning-gold-earrings-for-any-occasion"
-          }
-        }
-      },
-      "block_order": [
-        "article_XDx34x",
-        "article_L94gtt",
-        "article_7dFmCQ",
-        "article_nYCw7L"
-      ],
-      "name": "Latest Thought Blogs",
-      "settings": {
-        "subheading": "Fresh Reads",
-        "heading": "The Latest Thought",
-        "show_view_all": true,
-        "button_text": "View All Blogs",
-        "button_link": "",
-        "posts_to_show": 4,
-        "columns_mobile": "1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "newsletter_EWWhJB": {
-      "type": "newsletter",
-      "name": "Newsletter",
-      "settings": {
-        "background_image": "shopify://shop_images/news-letter-image.webp",
-        "heading": "Join Our Newsletter",
-        "subheading": "<p>FIRST AND FOREMOST, AN EMAIL NEWSLETTER SIGNUP SHOULD INCENTIVIZE PEOPLE TO SIGN UP</p>",
-        "overlay_opacity": 30,
-        "success_message": "Thank you for subscribing!",
-        "color_scheme": ""
-      }
-    },
     "section_Vtakah": {
       "type": "section",
       "blocks": {
@@ -1474,6 +1415,65 @@
         "gradient_direction": "to top",
         "padding-block-start": 48,
         "padding-block-end": 48
+      }
+    },
+    "custom_latest_blogs_6XrNBx": {
+      "type": "custom-latest-blogs",
+      "blocks": {
+        "article_XDx34x": {
+          "type": "article",
+          "settings": {
+            "article": "news/why-gold-chains-are-the-ultimate-accessory"
+          }
+        },
+        "article_L94gtt": {
+          "type": "article",
+          "settings": {
+            "article": "news/the-most-stunning-gold-earrings-for-any-occasion"
+          }
+        },
+        "article_7dFmCQ": {
+          "type": "article",
+          "settings": {
+            "article": "news/why-gold-chains-are-the-ultimate-accessory"
+          }
+        },
+        "article_nYCw7L": {
+          "type": "article",
+          "settings": {
+            "article": "news/the-most-stunning-gold-earrings-for-any-occasion"
+          }
+        }
+      },
+      "block_order": [
+        "article_XDx34x",
+        "article_L94gtt",
+        "article_7dFmCQ",
+        "article_nYCw7L"
+      ],
+      "name": "Latest Thought Blogs",
+      "settings": {
+        "subheading": "Fresh Reads",
+        "heading": "The Latest Thought",
+        "show_view_all": true,
+        "button_text": "View All Blogs",
+        "button_link": "",
+        "posts_to_show": 4,
+        "columns_mobile": "1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "newsletter_EWWhJB": {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "background_image": "shopify://shop_images/news-letter-image.webp",
+        "heading": "Join Our Newsletter",
+        "subheading": "<p>FIRST AND FOREMOST, AN EMAIL NEWSLETTER SIGNUP SHOULD INCENTIVIZE PEOPLE TO SIGN UP</p>",
+        "overlay_opacity": 30,
+        "success_message": "Thank you for subscribing!",
+        "color_scheme": ""
       }
     }
   },
