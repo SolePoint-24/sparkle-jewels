@@ -1494,6 +1494,7 @@
       ],
       "name": "Latest Thought Blogs",
       "settings": {
+        "color_scheme": "scheme-4",
         "subheading": "Fresh Reads",
         "heading": "The Latest Thought",
         "show_view_all": true,
