@@ -1,9 +1,13 @@
 
 
 <div>
-  <p>{{ product.metafields.custom}}</p>
+  <p>{{ product.metafields.custom.stone_configuration.type.size}}</p>
 </div>
 
+<script>
+  const allMetafields = {{ product.metafields | json }};
+  console.log('All Product Metafields:', allMetafields);
+</script>
 
 {% schema %}
 {
