@@ -315,7 +315,7 @@
       "settings": {
         "padding_top": 40,
         "padding_bottom": 40,
-        "color_scheme": ""
+        "color_scheme": "scheme-5"
       }
     },
     "product_recommendations_xmXAhw": {
@@ -483,7 +483,7 @@
         "text_R8dDRK"
       ],
       "custom_css": [
-        ".product-card:hover{box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* strong shadow */ transform: translateY(-2px); /* slight lift */}"
+        ".product-card:hover {box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* strong shadow */ transform: translateY(-2px); /* slight lift */}"
       ],
       "name": "t:names.product_recommendations",
       "settings": {
