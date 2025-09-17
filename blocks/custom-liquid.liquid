@@ -1,11 +1,9 @@
 
 
 <div>
-  <p>{{ product.metafields.custom.care_instructions }}</p>
+  <p>{{ product.metafields.custom.stone_configuration.type.size}}</p>
 </div>
-<script>
-  const productData = {{ product.metafields | json }};
-</script>
+
 {% schema %}
 {
   "name": "t:names.custom_liquid",
