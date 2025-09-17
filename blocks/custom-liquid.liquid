@@ -1,27 +1,9 @@
 
 
 <div>
-  <p>{{ product.metafields.custom.stone_configuration.type.size}}</p>
+  <p>{{ product.metafields.custom}}</p>
 </div>
 
-<script type="application/json" id="ProductMetafieldsData">
-  {{ product.metafields | json }}
-</script>
-
-<script>
-  try {
-    const dataElement = document.getElementById('ProductMetafieldsData');
-    if (dataElement) {
-      // Get the text content and parse it into a JavaScript object
-      const allMetafields = JSON.parse(dataElement.textContent);
-      
-      // Now you can log it to the console
-      console.log('All Product Metafields:', allMetafields);
-    }
-  } catch (error) {
-    console.error('Could not parse product metafields:', error);
-  }
-</script>
 
 {% schema %}
 {
