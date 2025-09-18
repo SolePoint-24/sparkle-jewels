@@ -91,22 +91,6 @@
   </div>
 {%- endif -%}
 
-<script>
-
-
-let currentSelectedVariant = null;
-
-currentSelectedVariant = {{ product.selected_or_first_available_variant | json }};
-
-document.addEventListener('variant:change', function(event) {
-  const variant = event.detail.variant;
-
-  if (variant) {
-    currentSelectedVariant = variant;
-  }
-});
-
-</script>
 
 {% stylesheet %}
   .price-config-wrapper {
