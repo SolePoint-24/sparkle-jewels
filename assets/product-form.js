@@ -330,7 +330,7 @@ class ProductFormComponent extends Component {
       const productVariantMedia = event.detail.resource.featured_media?.preview_image?.src;
       productVariantMedia &&
         addToCartButtonContainer?.setAttribute('data-product-variant-media', productVariantMedia + '&width=100');
-      console.log('I AM HERE HABIBI')
+      console.log('I AM HERE HABIBI', product)
     }
   };
 
