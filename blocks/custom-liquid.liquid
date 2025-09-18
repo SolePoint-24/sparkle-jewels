@@ -32,16 +32,26 @@
 
 {%- assign fully_resolved_json_string = fully_resolved_json_string | append: ']' -%}
 
+
 {% comment %}
   STEP 2: Now, pass the complete and resolved JSON string to JavaScript.
 {% endcomment %}
 <script>
-  // This variable gets the complete data prepared by Liquid.
+  // This variable now contains the full data with no unresolved references.
   const stoneConfigurations = {{ fully_resolved_json_string }};
-  console.log("stone config",stoneConfigurations);
-  // Find the placeholder div on the page.
 
+  console.log('Fully Resolved Stone Configurations:', stoneConfigurations);
 
+  // You can now easily loop through it and access the nested data in JavaScript
+  stoneConfigurations.forEach(config => {
+    console.log('Setting Type:', config.setting_type);
+    
+    // Accessing the nested metaobject's data
+    if (config.stone_details) {
+      console.log('Stone Name:', config.stone_details.name); // Replace 'name' with your actual field key
+      console.log('Stone Color:', config.stone_details.color); // Replace 'color' with your actual field key
+    }
+  });
 </script>
 
 {% schema %}
