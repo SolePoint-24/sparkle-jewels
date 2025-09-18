@@ -1,8 +1,7 @@
 import { Component } from '@theme/component';
 import { ThemeEvents } from '@theme/events';
 
-
-class PriceBreakdown extends Component {
+export class PriceBreakdown extends Component {
 	#abortController = new AbortController();
 
 	connectedCallback() {
