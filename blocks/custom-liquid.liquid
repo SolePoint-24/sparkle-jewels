@@ -44,10 +44,10 @@
 
   // You can now easily loop through it and access the nested data in JavaScript
   stoneConfigurations.forEach(config => {
-    console.log('Setting Type:', config.setting_type);
-    
     // Accessing the nested metaobject's data
-   
+    if (config.stone_details) {
+      console.log('Stone Name:', config.stone_details.value);  // Replace 'color' with your actual field key
+    }
   });
 </script>
 
