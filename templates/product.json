@@ -268,9 +268,9 @@
                     "width": 20
                   },
                   "blocks": {
-                    "custom_liquid_arEHw3": {
+                    "stone_config_XGR3N3": {
                       "type": "stone-config",
-                      "name": "t:names.custom_liquid",
+                      "name": "t:names.stone_configuration",
                       "settings": {
                         "custom_liquid": ""
                       },
@@ -278,7 +278,7 @@
                     }
                   },
                   "block_order": [
-                    "custom_liquid_arEHw3"
+                    "stone_config_XGR3N3"
                   ]
                 }
               },
