@@ -94,45 +94,9 @@
 {%- endif -%}
 
 <script>
- (() => {
-  // --- This is the variable you will use ---
-  // It will always be up-to-date with the user's selection.
-  let currentVariant;
+ 
+  console.log({{ current_variant | json }})
 
-  // 1. Get the complete list of all variants from Liquid.
-  // This is our unchanging "reference book" for all variant data.
-  const allVariants = {{ product.variants | json }};
-
-  // 2. Find and set the initial variant when the page first loads.
-  const initialVariantId = {{ product.selected_or_first_available_variant.id }};
-  currentVariant = allVariants.find(variant => variant.id === initialVariantId);
-  console.log(currentVariant);
-
-  
-  // You can uncomment this line to check the initial variant in the console.
-  // console.log('Initial variant loaded:', currentVariant);
-
-  // 3. Listen for the 'variant:change' event that the theme fires
-  // whenever a user selects a different color, size, etc.
-  document.addEventListener('variant:change', (event) => {
-    // The event passes the full object for the newly selected variant.
-    const newlySelectedVariant = event.detail.variant;
-
-    if (newlySelectedVariant) {
-      // 4. Update our `currentVariant` variable to the new object.
-      currentVariant = newlySelectedVariant;
-
-      // You can uncomment this line to see the change happen in real-time.
-      console.log('New variant selected. The `currentVariant` variable is now:', currentVariant);
-    }
-  });
-
-  // To make the variable accessible outside this script for other developers,
-  // you can attach it to the window object. This is optional.
-  window.currentVariant = currentVariant;
-  document.addEventListener('variant:change', (e) => window.currentVariant = e.detail.variant);
-
-})();
 </script>
 
 {% stylesheet %}
