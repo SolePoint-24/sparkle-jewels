@@ -1,5 +1,6 @@
 import { Component } from '@theme/component';
 import { ThemeEvents } from '@theme/events';
+import { morph } from '@theme/morph';
 
 export class PriceBreakdown extends Component {
 	#abortController = new AbortController();
