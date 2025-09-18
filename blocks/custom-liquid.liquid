@@ -1,40 +1,130 @@
 
 
 {% comment %}
-  STEP 1: Use Liquid to build a complete JSON string.
-  We will loop through the list and resolve the nested 'stone' metaobject for each item.
+  ============================================================================
+  STONE CONFIGURATION TABLES
+  - This code loops through a list of metaobjects.
+  - For each item in the list, it creates a styled information table.
+  ============================================================================
 {% endcomment %}
 
-<div class="stone-configurations">
-  <h4>Configuration Details:</h4>
+{%- comment -%}
+  Assign your metaobject list to a variable.
+  Replace this with your actual metafield variable if it's different.
+{%- endcomment -%}
+{%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
 
-  {% comment %}
-    Loop through the list and directly print the HTML.
-    This is all done in Liquid. No JavaScript needed.
-  {% endcomment %}
-  {%- for config_item in product.metafields.custom.stone_configuration.value -%}
+{%- if stone_configurations.size > 0 -%}
+  {%- for config_item in stone_configurations -%}
     
-    <div class="config-item" style="border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px;">
-      <p><strong>Setting Type:</strong> {{ config_item.setting_type }}</p>
-      <p><strong>Stone Count:</strong> {{ config_item.number_of_stone }}</p>
+    {%- comment -%} Assign the nested stone_details object to its own variable for easier access. {%- endcomment -%}
+    {%- assign stone = config_item.stone_details -%}
 
-      {%- comment %} Get the nested "Stone" metaobject by adding .value {%- endcomment -%}
-      {%- assign stone_metaobject = config_item.stone.value -%}
+    <div class="stone-info-wrapper">
+      <div class="stone-info-header">
+        <h3 class="stone-info-title">{{ stone.type | default: "Stone" | upcase }} INFORMATION</h3>
+        <a href="#" class="stone-info-link">Know More</a>
+      </div>
 
-      {%- if stone_metaobject -%}
-        <p><strong>Stone Name:</strong> {{ stone_metaobject.name }}</p>
-        <p><strong>Stone Color:</strong> {{ stone_metaobject.color }}</p>
-      {%- endif -%}
+      <table class="stone-info-table">
+        <tbody>
+          <tr>
+            <td>No. Of {{ stone.shape | default: 'Stone' }}</td>
+            <td>{{ config_item.number_of_stone }}</td>
+          </tr>
+          <tr>
+            <td>Enhancement</td>
+            <td>{{ stone.enhancement | default: "None" }}</td>
+          </tr>
+          <tr>
+            <td>Total Weight (ct. tw.)</td>
+            <td>{{ config_item.weight_carat }}</td>
+          </tr>
+           <tr>
+            <td>Stone Size (mm)</td>
+            <td>{{ config_item.stone_size }}</td>
+          </tr>
+          <tr>
+            <td>Colour Clarity</td>
+            <td>{{ stone.quality_grade }}</td>
+          </tr>
+          <tr>
+            <td>Setting Type</td>
+            <td>{{ config_item.setting_type }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
   {%- endfor -%}
-</div>
+{%- endif -%}
 
-{% comment %}
-  STEP 2: Now, pass the complete and resolved JSON string to JavaScript.
-{% endcomment %}
-<script>
-</script>
+
+{% stylesheet %}
+  .stone-info-wrapper {
+    margin-bottom: 30px; /* Adds space between multiple tables */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  }
+
+  .stone-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .stone-info-title {
+    margin: 0;
+    font-size: 1em;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: #333;
+  }
+
+  .stone-info-link {
+    font-size: 0.9em;
+    text-decoration: underline;
+    color: #555;
+  }
+  .stone-info-link:hover {
+    color: #000;
+  }
+
+  .stone-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e9e9e9;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .stone-info-table tr {
+    border-bottom: 1px solid #e9e9e9;
+  }
+
+  .stone-info-table tr:last-child {
+    border-bottom: none;
+  }
+
+  .stone-info-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .stone-info-table td {
+    padding: 12px 15px;
+    font-size: 0.95em;
+    color: #444;
+  }
+  
+  .stone-info-table td:first-child {
+    width: 60%;
+  }
+
+  .stone-info-table td:last-child {
+    font-weight: 500;
+    color: #111;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
