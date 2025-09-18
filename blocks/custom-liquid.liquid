@@ -14,7 +14,7 @@
   {%- for config_item in stone_configurations -%}
     
     {%- comment -%} Assign the nested stone_details object to its own variable for easier access. {%- endcomment -%}
-    {%- assign stone = config_item.stone_details -%}
+    {%- assign stone = config_item.stone.value -%}
 
     <div class="stone-info-wrapper">
      <div class="stone-info-header">
