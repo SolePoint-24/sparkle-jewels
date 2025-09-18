@@ -13,7 +13,7 @@
     const dataElement = document.getElementById('StoneConfigData');
     const stoneMetaObject = JSON.parse(dataElement.textContent);
 
-    console.log('Stone Configuration Metaobject:', stoneMetaObject);
+    console.table('Stone Configuration Metaobject:', stoneMetaObject);
   } catch (error) {
     console.error('Could not parse metaobject data:', error);
   }
