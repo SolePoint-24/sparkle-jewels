@@ -1,19 +1,23 @@
-{% comment %}
-  ============================================================================
-    STONE CONFIGURATION TABLES
-      - This code loops through a list of metaobjects.
-        - For each item in the list, it creates a styled information table.
-          ============================================================================
+{%- comment %}
+ ============================================================================
+  STONE CONFIGURATION ACCORDION
+  - This code first finds all unique stone types.
+  - Then, it loops through those unique types to create an accordion.
+  - Inside each accordion panel, it loops through the configurations again
+    to show only the stones that match the current type.
+ ============================================================================
 {% endcomment %}
 
 {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
 
 {%- if stone_configurations.count > 0 -%}
-  {%- for config_item in stone_configurations -%}
-    {%- comment -%} Assign the nested stone_details object to its own variable for easier access. {%- endcomment -%}
-    {%- assign stone = config_item.stone.value -%}
 
-     {%- assign unique_types_string = '' -%}
+  {%- comment %}
+    Step 1: Create an array of unique stone types.
+    We build a string of types, separated by commas, then split it into an array.
+    This prevents duplicate types like "Diamond, Diamond, Sapphire" and gives us "Diamond, Sapphire".
+  {%- endcomment -%}
+  {%- assign unique_types_string = '' -%}
   {%- for config_item in stone_configurations -%}
     {%- assign current_type = config_item.stone.value.type -%}
     {%- unless unique_types_string contains current_type -%}
@@ -22,9 +26,11 @@
   {%- endfor -%}
   {%- assign unique_types = unique_types_string | split: '|' | compact -%}
 
-
-
-    <div class="stone-accordion">
+  {%- comment %}
+    Step 2: Build the accordion.
+    Loop through the unique types array we just created. Each 'type' will be an accordion header.
+  {%- endcomment -%}
+  <div class="stone-accordion">
     {%- for type in unique_types -%}
       <details class="accordion-item" open>
         <summary class="accordion-header">
@@ -75,40 +81,43 @@
       </details>
     {%- endfor -%}
   </div>
-  {%- endfor -%}
 {%- endif -%}
 
 {% stylesheet %}
-  .stone-info-wrapper {
-    margin-bottom: 30px; /* Adds space between multiple tables */
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
-      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  }
-
-  .stone-info-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  /* Styles for the accordion structure */
+  .accordion-item {
+    border: 1px solid #e9e9e9;
+    border-radius: 4px;
     margin-bottom: 10px;
+    overflow: hidden;
   }
-
-  .stone-info-title {
-    margin: 0;
-    font-size: 1em;
+  .accordion-header {
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    cursor: pointer;
     font-weight: 600;
-    letter-spacing: 0.1em;
-    color: #333;
+    letter-spacing: 0.05em;
+    font-size: 1.1em;
+    list-style: none; /* Removes the default marker */
+  }
+  .accordion-header::-webkit-details-marker {
+    display: none; /* Hides the default arrow in Chrome/Safari */
+  }
+  .accordion-content {
+    padding: 15px;
+  }
+  .accordion-item[open] .accordion-header {
+    border-bottom: 1px solid #e9e9e9;
   }
 
-  .stone-info-link {
-    font-size: 0.9em;
-    text-decoration: underline;
-    color: #555;
+  /* Your original table styles - slightly adjusted for the new context */
+  .stone-info-wrapper {
+    margin-bottom: 15px; /* Adds space between multiple tables within one accordion */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   }
-  .stone-info-link:hover {
-    color: #000;
+  .stone-info-wrapper:last-child {
+    margin-bottom: 0;
   }
-
   .stone-info-table {
     width: 100%;
     border-collapse: collapse;
@@ -116,34 +125,22 @@
     border-radius: 4px;
     overflow: hidden;
   }
-
   .stone-info-table tr {
     border-bottom: 1px solid #e9e9e9;
   }
-
   .stone-info-table tr:last-child {
     border-bottom: none;
   }
-
-  .stone-info-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-
   .stone-info-table td {
-    padding: 6px 12px;
+    padding: 8px 12px;
     font-size: 14px;
     color: #444;
     line-height: 20px;
   }
-
   .stone-info-table td:first-child {
     width: 60%;
-    background-color: #bbbbbb;
-  }
-
-  .stone-info-table td:last-child {
-    color: #111;
-    background-color: #ffffff;
+    background-color: #fdfdfd; /* A softer background */
+    font-weight: 500;
   }
 {% endstylesheet %}
 
