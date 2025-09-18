@@ -31,10 +31,6 @@
 {%- endfor -%}
 
 {%- assign fully_resolved_json_string = fully_resolved_json_string | append: ']' -%}
-<div id="stone-details-container">
-  <h4>Configuration Details:</h4>
-  </div>
-
 
 {% comment %}
   STEP 2: Now, pass the complete and resolved JSON string to JavaScript.
@@ -42,7 +38,7 @@
 <script>
   // This variable gets the complete data prepared by Liquid.
   const stoneConfigurations = {{ fully_resolved_json_string }};
-  console.log("stone config",stone_configuration)
+  console.log("stone config",stone_configuration);
   // Find the placeholder div on the page.
 
 
