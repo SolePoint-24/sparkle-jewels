@@ -3,8 +3,6 @@ import { Component } from '@theme/component';
 class PriceBreakdown extends Component {
 	#abortController = new AbortController();
 	connectedCallback() {
-		console.log('HERE within connected callaback initial')
-
     super.connectedCallback();
 
     const { signal } = this.#abortController;
@@ -23,8 +21,6 @@ class PriceBreakdown extends Component {
 		console.log('I AM HERE BOUY', event);
 	}
 }
-
-console.log('price-breakdown file loaded')
 
 if (!customElements.get('price-breakdown')) {
   customElements.define('price-breakdown', PriceBreakdown);
