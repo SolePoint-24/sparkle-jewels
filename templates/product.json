@@ -279,6 +279,7 @@
                     "price_config_btPyMp": {
                       "type": "price-config",
                       "name": "Price_Configuration",
+                      "disabled": true,
                       "settings": {
                         "show_block": true
                       },
