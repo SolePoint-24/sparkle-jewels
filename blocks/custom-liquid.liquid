@@ -12,6 +12,8 @@
   Assign your metaobject list to a variable.
   Replace this with your actual metafield variable if it's different.
 {%- endcomment -%}
+
+
 {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
 
 {%- if stone_configurations.size > 0 -%}
@@ -19,6 +21,10 @@
     
     {%- comment -%} Assign the nested stone_details object to its own variable for easier access. {%- endcomment -%}
     {%- assign stone = config_item.stone_details -%}
+
+    <div style="background: yellow; padding: 10px;">
+  DEBUG: The size is {{ product.metafields.custom.stone_configuration.value.size }}
+    </div>
 
     <div class="stone-info-wrapper">
       <div class="stone-info-header">
