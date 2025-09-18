@@ -92,61 +92,43 @@
 {%- endif -%}
 
 <script>
-  (() => {
-    // Select this section's container to make sure our code only affects this block
-    const container = document.querySelector('#shopify-section-{{ section.id }}');
-    if (!container) return;
+ (() => {
+  // --- This is the variable you will use ---
+  // It will always be up-to-date with the user's selection.
+  let currentVariant;
 
-    // --- STEP 1: Liquid's Job: Give JavaScript all the data it needs ---
-    const allVariants = {{ product.variants | json }};
+  // 1. Get the complete list of all variants from Liquid.
+  // This is our unchanging "reference book" for all variant data.
+  const allVariants = {{ product.variants | json }};
 
-    // --- STEP 2: JavaScript's Job: Listen for changes and update the page ---
-    const priceElement = container.querySelector('[data-variant-price]');
-    const skuElement = container.querySelector('[data-variant-sku]');
+  // 2. Find and set the initial variant when the page first loads.
+  const initialVariantId = {{ product.selected_or_first_available_variant.id }};
+  currentVariant = allVariants.find(variant => variant.id === initialVariantId);
+  
+  // You can uncomment this line to check the initial variant in the console.
+  // console.log('Initial variant loaded:', currentVariant);
 
-    // This function will update the HTML with new variant info
-    function updateVariantInfo(variant) {
-      if (!variant) return;
+  // 3. Listen for the 'variant:change' event that the theme fires
+  // whenever a user selects a different color, size, etc.
+  document.addEventListener('variant:change', (event) => {
+    // The event passes the full object for the newly selected variant.
+    const newlySelectedVariant = event.detail.variant;
 
-      // Update the price
-      if (priceElement) {
-        const formattedPrice = new Intl.NumberFormat('en-IN', {
-          style: 'currency',
-          currency: '{{ cart.currency.iso_code }}',
-          minimumFractionDigits: 0
-        }).format(variant.price / 100);
-        priceElement.textContent = formattedPrice;
-      }
+    if (newlySelectedVariant) {
+      // 4. Update our `currentVariant` variable to the new object.
+      currentVariant = newlySelectedVariant;
 
-      // Update the SKU
-      if (skuElement) {
-        // If the variant has a SKU, display it. Otherwise, show 'N/A'.
-        skuElement.textContent = variant.sku || 'N/A';
-      }
-
-      // You can update anything else here! For example:
-      // const weightElement = container.querySelector('[data-variant-weight]');
-      // if (weightElement) {
-      //   weightElement.textContent = `${variant.weight} ${variant.weight_unit}`;
-      // }
+      // You can uncomment this line to see the change happen in real-time.
+      console.log('New variant selected. The `currentVariant` variable is now:', currentVariant);
     }
+  });
 
-    // Listen for the theme's built-in event for when a variant changes
-    document.addEventListener('variant:change', (event) => {
-      const selectedVariant = event.detail.variant;
-      
-      console.log('User selected a new variant:', selectedVariant);
+  // To make the variable accessible outside this script for other developers,
+  // you can attach it to the window object. This is optional.
+  window.currentVariant = currentVariant;
+  document.addEventListener('variant:change', (e) => window.currentVariant = e.detail.variant);
 
-      // Call our function to update the page with the new information
-      updateVariantInfo(selectedVariant);
-    });
-
-    // --- Initial Load ---
-    // Ensure the correct information is displayed when the page first loads
-    const initialVariant = allVariants.find(v => v.id === {{ product.selected_or_first_available_variant.id }});
-    updateVariantInfo(initialVariant);
-
-  })();
+})();
 </script>
 
 {% stylesheet %}
