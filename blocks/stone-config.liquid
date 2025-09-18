@@ -24,39 +24,57 @@
 
 
 
-    <div class="stone-info-wrapper">
-      <table class="stone-info-table">
-        <tbody>
-          <tr>
-            <td>
-              No. Of {{ stone.shape }}
-              {{ stone.type }}
-            </td>
-            <td>{{ config_item.number_of_stone }}</td>
-          </tr>
-          <tr>
-            <td>Quality Grade</td>
-            <td>{{ stone.quality_grade }}</td>
-          </tr>
-          <tr>
-            <td>Total Weight (ct. tw.)</td>
-            <td>{{ config_item.weight_carat }}</td>
-          </tr>
-          <tr>
-            <td>Stone Size (mm)</td>
-            <td>{{ config_item.stone_size }}</td>
-          </tr>
-          <tr>
-            <td>Colour Clarity</td>
-            <td>{{ stone.quality_grade }}</td>
-          </tr>
-          <tr>
-            <td>Setting Type</td>
-            <td>{{ config_item.setting_type }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="stone-accordion">
+    {%- for type in unique_types -%}
+      <details class="accordion-item" open>
+        <summary class="accordion-header">
+          {{ type | capitalize }} Details
+        </summary>
+        <div class="accordion-content">
+          {%- comment %}
+            Inner Loop: Now, go through the original list again.
+            Only display the stones where the type matches the current accordion header's type.
+          {%- endcomment -%}
+          {%- for config_item in stone_configurations -%}
+            {%- if config_item.stone.value.type == type -%}
+              {%- assign stone = config_item.stone.value -%}
+
+              <div class="stone-info-wrapper">
+                <table class="stone-info-table">
+                  <tbody>
+                    <tr>
+                      <td>No. Of {{ stone.shape }} {{ stone.type }}</td>
+                      <td>{{ config_item.number_of_stone }}</td>
+                    </tr>
+                    <tr>
+                      <td>Quality Grade</td>
+                      <td>{{ stone.quality_grade }}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Weight (ct. tw.)</td>
+                      <td>{{ config_item.weight_carat }}</td>
+                    </tr>
+                    <tr>
+                      <td>Stone Size (mm)</td>
+                      <td>{{ config_item.stone_size }}</td>
+                    </tr>
+                    <tr>
+                      <td>Colour Clarity</td>
+                      <td>{{ stone.quality_grade }}</td>
+                    </tr>
+                    <tr>
+                      <td>Setting Type</td>
+                      <td>{{ config_item.setting_type }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </details>
+    {%- endfor -%}
+  </div>
   {%- endfor -%}
 {%- endif -%}
 
