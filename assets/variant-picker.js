@@ -2,7 +2,7 @@ import { Component } from '@theme/component';
 import { VariantSelectedEvent, VariantUpdateEvent } from '@theme/events';
 import { morph } from '@theme/morph';
 import { requestYieldCallback } from '@theme/utilities';
-import {PriceBreakdown} from '@theme/PriceBreakdown';
+import {PriceBreakdown} from '@theme/priceBreakdown';
 
 /**
  * A custom element that manages a variant picker.
