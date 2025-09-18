@@ -26,7 +26,7 @@ export class PriceBreakdown extends Component {
     /** @type {NewProduct | undefined} */
     let newProduct;
 
-    const newPriceBreakdown = newHtml.querySelector(this.tagName.toLowerCase());
+    const newPriceBreakdown = newHtml.querySelector('price-breakdown');
 
     if (!newPriceBreakdown) {
       throw new Error('No new price breakdown found');
