@@ -6,6 +6,8 @@
 {% endcomment %}
 
 {%- if block.settings.show_block -%}
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+
   <div class="price-config-wrapper" {{ block.shopify_attributes }}>
     {%- comment %}
       <!-- The main container for the price breakdown table -->
