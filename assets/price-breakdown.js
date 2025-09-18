@@ -23,7 +23,7 @@ class PriceBreakdown extends Component {
 	}
 }
 
-if(customComponent.get('price-breakdown')) {
-    customComponent.assign('price-breakdown', PriceBreakdown)
+if (!customElements.get('price-breakdown')) {
+  customElements.define('price-breakdown', PriceBreakdown);
 }
 
