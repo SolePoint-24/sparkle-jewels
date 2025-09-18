@@ -94,18 +94,41 @@
 {%- endif -%}
 
 <script>
- const currentUrl = new URL(window.location.href);
+(() => {
+  // This variable will be updated every time a new variant is selected.
+  let currentSelectedVariant = null;
 
-// 2. Get the value of the 'variant' parameter
-// The .get() method looks for a parameter with the name you provide.
-const variantIdFromUrl = currentUrl.searchParams.get('variant');
+  console.log('Listener script loaded. Waiting for variant changes...');
 
-// 3. Log the result to the console
-if (variantIdFromUrl) {
-  console.log('The variant ID from the URL is:', variantIdFromUrl);
-} else {
-  console.log('No variant ID was found in the URL.');
-}
+  // Listen on the entire document for the 'variant:change' announcement.
+  document.addEventListener('variant:change', (event) => {
+    
+    // The full variant object is passed in the event's "detail" property.
+    const selectedVariantObject = event.detail.variant;
+
+    if (selectedVariantObject) {
+      // Update our variable with the new variant object.
+      currentSelectedVariant = selectedVariantObject;
+
+      // You now have access to the complete, up-to-date variant object!
+      console.clear(); // Clears the console for better readability
+      console.log('✅ New variant selected! The current variant is now:');
+      console.log(currentSelectedVariant);
+
+      // You can access all its properties here:
+      console.log('ID:', currentSelectedVariant.id);
+      console.log('Price:', currentSelectedVariant.price);
+      console.log('SKU:', currentSelectedVariant.sku);
+      console.log('Available:', currentSelectedVariant.available);
+
+    } else {
+      // This can happen if the combination selected is not a valid variant
+      console.log('The selected combination is not available.');
+      currentSelectedVariant = null;
+    }
+  });
+
+})();
 
 </script>
 
