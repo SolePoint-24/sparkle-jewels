@@ -12,7 +12,7 @@ class PriceBreakdown extends Component {
     console.log('HERE within connected callaback')
 		const target = this.closest('.price-config-wrapper');
 		console.log('target', target)
-    target?.addEventListener(ThemeEvents.variantUpdate, this.#onVariantUpdate, { signal });
+    target?.addEventListener(ThemeEvents.variantUpdate, () => {console.log('NOBODY DOES IT BETTER')}, { signal });
   }
 
   disconnectedCallback() {
