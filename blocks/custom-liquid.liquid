@@ -1,23 +1,46 @@
 
 
+{% comment %}
+  STEP 1: Use Liquid to build a complete JSON string.
+  We will loop through the list and resolve the nested 'stone' metaobject for each item.
+{% endcomment %}
 
-<div>
-  <p>{{ product.metafields.custom.stone_configuration.value}}</p>
-</div>
+{%- assign fully_resolved_json_string = '[' -%}
 
-<script type="application/json" id="StoneConfigData">
-  {{ product.metafields.custom.stone_configuration.value | json }}
-</script>
+{%- for config_item in product.metafields.custom.stone_configuration.value -%}
+  
+  {%- comment -%} Capture the current item, including its resolved nested metaobject, as a JSON object. {%- endcomment -%}
+  {%- capture item_json -%}
+    {
+      "display_name": {{ config_item.display_name | json }},
+      "number_of_stone": {{ config_item.number_of_stone | json }},
+      "setting_type": {{ config_item.setting_type | json }},
+      "stone_details": {{ config_item.stone.value | json }},
+      "stone_size": {{ config_item.stone_size | json }},
+      "weight_carat": {{ config_item.weight_carat | json }}
+    }
+  {%- endcapture -%}
+  
+  {%- assign fully_resolved_json_string = fully_resolved_json_string | append: item_json -%}
+  
+  {%- comment -%} Add a comma between objects, but not after the last one. {%- endcomment -%}
+  {%- unless forloop.last -%}
+    {%- assign fully_resolved_json_string = fully_resolved_json_string | append: ',' -%}
+  {%- endunless -%}
 
+{%- endfor -%}
+
+{%- assign fully_resolved_json_string = fully_resolved_json_string | append: ']' -%}
+
+
+{% comment %}
+  STEP 2: Now, pass the complete and resolved JSON string to JavaScript.
+{% endcomment %}
 <script>
-  try {
-    const dataElement = document.getElementById('StoneConfigData');
-    const stoneMetaObject = JSON.parse(dataElement.textContent);
+  // This variable now contains the full data with no unresolved references.
+  const stoneConfigurations = {{ fully_resolved_json_string }};
 
-    console.log('Stone Configuration Metaobject:', stoneMetaObject);
-  } catch (error) {
-    console.error('Could not parse metaobject data:', error);
-  }
+  console.log('Fully Resolved Stone Configurations:', stoneConfigurations);
 </script>
 
 {% schema %}
