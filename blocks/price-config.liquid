@@ -100,11 +100,12 @@
   // 1. Get the complete list of all variants from Liquid.
   // This is our unchanging "reference book" for all variant data.
   const allVariants = {{ product.variants | json }};
-  console.log(allVariants);
 
   // 2. Find and set the initial variant when the page first loads.
   const initialVariantId = {{ product.selected_or_first_available_variant.id }};
   currentVariant = allVariants.find(variant => variant.id === initialVariantId);
+  console.log(currentVariant);
+
   
   // You can uncomment this line to check the initial variant in the console.
   // console.log('Initial variant loaded:', currentVariant);
