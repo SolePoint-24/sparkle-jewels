@@ -91,6 +91,59 @@
   </div>
 {%- endif -%}
 
+<script>
+  // A self-invoking function to keep our variables local to this script
+  (() => {
+    // This variable will ALWAYS hold the currently selected variant object.
+    // It is the single source of truth on the client-side.
+    let currentVariant;
+
+    // A complete list of all product variants, passed from Liquid to JavaScript.
+    const allVariants = {{ product.variants | json }};
+    
+    // The ID of the variant selected when the page first loads.
+    const initialVariantId = {{ product.selected_or_first_available_variant.id }};
+
+    // --- Function to set the current variant ---
+    function setCurrentVariant(variantId) {
+      // Find the full variant object from our complete list
+      const variant = allVariants.find(v => v.id === variantId);
+      if (variant) {
+        currentVariant = variant;
+        // You can now use the 'currentVariant' variable for anything.
+        console.log('Current variant is now:', currentVariant);
+        updateDisplay();
+      }
+    }
+    
+    // --- Function to update the price in the table ---
+    function updateDisplay() {
+        const priceElement = document.querySelector('[data-price-config-total]');
+        if (priceElement && currentVariant) {
+            // Format the price (which is in cents) into a currency string
+            const formattedPrice = new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: '{{ cart.currency.iso_code }}',
+                minimumFractionDigits: 0
+            }).format(currentVariant.price / 100);
+
+            priceElement.textContent = formattedPrice;
+        }
+    }
+
+    // --- Listen for the theme's variant change event ---
+    document.addEventListener('variant:change', (event) => {
+      if (event.detail.variant) {
+        // When the user selects a new variant, update our variable.
+        setCurrentVariant(event.detail.variant.id);
+      }
+    });
+
+    // --- Initial Setup ---
+    // Set the initial variant when the script first runs.
+    setCurrentVariant(initialVariantId);
+  })();
+</script>
 
 {% stylesheet %}
   .price-config-wrapper {
