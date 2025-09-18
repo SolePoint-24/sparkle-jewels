@@ -40,10 +40,31 @@
   STEP 2: Now, pass the complete and resolved JSON string to JavaScript.
 {% endcomment %}
 <script>
-  // This variable now contains the full data with no unresolved references.
+  // This variable gets the complete data prepared by Liquid.
   const stoneConfigurations = {{ fully_resolved_json_string }};
 
-  console.log('Fully Resolved Stone Configurations:', stoneConfigurations);
+  // Find the placeholder div on the page.
+  const container = document.getElementById('stone-details-container');
+
+  // Check if the container exists to avoid errors.
+  if (container) {
+    // Loop through each configuration object in our JavaScript array.
+    stoneConfigurations.forEach(config => {
+      // Create an HTML string for the current configuration item.
+      const htmlContent = `
+        <div class="config-item" style="border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px;">
+          <p><strong>Setting Type:</strong> ${config.setting_type}</p>
+          <p><strong>Stone Count:</strong> ${config.number_of_stone}</p>
+          
+          <p><strong>Stone Name:</strong> ${config.stone_details.name}</p>
+          <p><strong>Stone Color:</strong> ${config.stone_details.color}</p>
+        </div>
+      `;
+      
+      // Add the newly created HTML to our container.
+      container.innerHTML += htmlContent;
+    });
+  }
 </script>
 
 {% schema %}
