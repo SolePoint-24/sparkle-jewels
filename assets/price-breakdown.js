@@ -27,28 +27,13 @@ class PriceBreakdown extends Component {
     /** @type {NewProduct | undefined} */
     let newProduct;
 
-    const newVariantPickerSource = newHtml.querySelector(this.tagName.toLowerCase());
+    const newPriceBreakdown = newHtml.querySelector(this.tagName.toLowerCase());
 
-    if (!newVariantPickerSource) {
-      throw new Error('No new variant picker source found');
+    if (!newPriceBreakdown) {
+      throw new Error('No new price breakdown found');
     }
 
-    // For combined listings, the product might have changed, so update the related data attribute.
-    if (newVariantPickerSource instanceof HTMLElement) {
-      const newProductId = newVariantPickerSource.dataset.productId;
-      const newProductUrl = newVariantPickerSource.dataset.productUrl;
-
-      if (newProductId && newProductUrl && this.dataset.productId !== newProductId) {
-        newProduct = { id: newProductId, url: newProductUrl };
-      }
-
-      this.dataset.productId = newProductId;
-      this.dataset.productUrl = newProductUrl;
-    }
-
-    morph(this, newVariantPickerSource);
-
-    return newProduct;
+    morph(this, newPriceBreakdown);
   }
 }
 
