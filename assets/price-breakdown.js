@@ -2,6 +2,8 @@ import { Component } from '@theme/component';
 
 class PriceBreakdown extends Component {
 	connectedCallback() {
+		console.log('HERE within connected callaback initial')
+
     super.connectedCallback();
 
     const { signal } = this.#abortController;
