@@ -20,8 +20,8 @@ class PriceBreakdown extends Component {
   }
 
 	#onVariantUpdate(event) {
-		console.log('I AM HERE BOUY', event);
-	}
+    
+  }
 
   updatePriceBreakdown(newHtml) {
     /** @type {NewProduct | undefined} */
