@@ -4,6 +4,7 @@ import { ThemeEvents } from '@theme/events';
 
 class PriceBreakdown extends Component {
 	#abortController = new AbortController();
+	
 	connectedCallback() {
     super.connectedCallback();
 
