@@ -20,10 +20,10 @@ class PriceBreakdown extends Component {
   }
 
 	#onVariantUpdate(event) {
-    
+    console.log('hai hai buou', event);
   }
 
-  updatePriceBreakdown(newHtml) {
+  static updatePriceBreakdown(newHtml) {
     /** @type {NewProduct | undefined} */
     let newProduct;
 
