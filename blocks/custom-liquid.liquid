@@ -10,7 +10,7 @@
 
 {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
 
-<div> stone config : {{ stone_configurations }}</div>
+<div> stone config : {{ stone_configurations.count }}</div>
 
 {%- if stone_configurations.count > 0 -%}
   {%- for config_item in stone_configurations -%}
