@@ -9,10 +9,8 @@ class PriceBreakdown extends Component {
     super.connectedCallback();
 
     const { signal } = this.#abortController;
-    console.log('HERE within connected callaback')
 		const target = this.closest('.shopify-section, dialog, product-card');
-		console.log('target', target)
-    target?.addEventListener(ThemeEvents.variantUpdate, () => {console.log('NOBODY DOES IT BETTER')}, { signal });
+    target?.addEventListener(ThemeEvents.variantUpdate, this.#onVariantUpdate, { signal });
   }
 
   disconnectedCallback() {
