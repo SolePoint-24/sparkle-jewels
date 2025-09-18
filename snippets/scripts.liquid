@@ -11,7 +11,6 @@
       "@theme/paginated-list": "{{ 'paginated-list.js' | asset_url }}",
       "@theme/performance": "{{ 'performance.js' | asset_url }}",
       "@theme/product-form": "{{ 'product-form.js' | asset_url }}",
-      "@theme/price-breakdown": {{ 'price-breakdown.js' | asset_url }}
       "@theme/recently-viewed-products": "{{ 'recently-viewed-products.js' | asset_url }}",
       "@theme/scrolling": "{{ 'scrolling.js' | asset_url }}",
       "@theme/section-renderer": "{{ 'section-renderer.js' | asset_url }}",
@@ -140,6 +139,11 @@
 ></script>
 <script
   src="{{ 'product-form.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+<script
+  src="{{ 'price-breakdown.js' | asset_url }}"
   type="module"
   fetchpriority="low"
 ></script>
