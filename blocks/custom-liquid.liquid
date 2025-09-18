@@ -5,53 +5,35 @@
   We will loop through the list and resolve the nested 'stone' metaobject for each item.
 {% endcomment %}
 
-{%- assign fully_resolved_json_string = '[' -%}
+<div class="stone-configurations">
+  <h4>Configuration Details:</h4>
 
-{%- for config_item in product.metafields.custom.stone_configuration.value -%}
-  
-  {%- comment -%} Capture the current item, including its resolved nested metaobject, as a JSON object. {%- endcomment -%}
-  {%- capture item_json -%}
-    {
-      "display_name": {{ config_item.display_name | json }},
-      "number_of_stone": {{ config_item.number_of_stone | json }},
-      "setting_type": {{ config_item.setting_type | json }},
-      "stone_details": {{ config_item.stone.value | json }},
-      "stone_size": {{ config_item.stone_size | json }},
-      "weight_carat": {{ config_item.weight_carat | json }}
-    }
-  {%- endcapture -%}
-  
-  {%- assign fully_resolved_json_string = fully_resolved_json_string | append: item_json -%}
-  
-  {%- comment -%} Add a comma between objects, but not after the last one. {%- endcomment -%}
-  {%- unless forloop.last -%}
-    {%- assign fully_resolved_json_string = fully_resolved_json_string | append: ',' -%}
-  {%- endunless -%}
+  {% comment %}
+    Loop through the list and directly print the HTML.
+    This is all done in Liquid. No JavaScript needed.
+  {% endcomment %}
+  {%- for config_item in product.metafields.custom.stone_configuration.value -%}
+    
+    <div class="config-item" style="border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px;">
+      <p><strong>Setting Type:</strong> {{ config_item.setting_type }}</p>
+      <p><strong>Stone Count:</strong> {{ config_item.number_of_stone }}</p>
 
-{%- endfor -%}
+      {%- comment %} Get the nested "Stone" metaobject by adding .value {%- endcomment -%}
+      {%- assign stone_metaobject = config_item.stone.value -%}
 
-{%- assign fully_resolved_json_string = fully_resolved_json_string | append: ']' -%}
+      {%- if stone_metaobject -%}
+        <p><strong>Stone Name:</strong> {{ stone_metaobject.name }}</p>
+        <p><strong>Stone Color:</strong> {{ stone_metaobject.color }}</p>
+      {%- endif -%}
+    </div>
 
+  {%- endfor -%}
+</div>
 
 {% comment %}
   STEP 2: Now, pass the complete and resolved JSON string to JavaScript.
 {% endcomment %}
 <script>
-  // This variable now contains the full data with no unresolved references.
-  const stoneConfigurations = {{ fully_resolved_json_string }};
-
-  console.log('Fully Resolved Stone Configurations:', stoneConfigurations);
-
-  // You can now easily loop through it and access the nested data in JavaScript
-  stoneConfigurations.forEach(config => {
-    console.log('Setting Type:', config.setting_type);
-    
-    // Accessing the nested metaobject's data
-    if (config.stone_details) {
-      console.log('Stone Name:', config.stone_details.name); // Replace 'name' with your actual field key
-      console.log('Stone Color:', config.stone_details.color); // Replace 'color' with your actual field key
-    }
-  });
 </script>
 
 {% schema %}
