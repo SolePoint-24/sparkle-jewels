@@ -1,7 +1,7 @@
 import { Component } from '@theme/component';
 
 class PriceBreakdown extends Component {
-    connectedCallback() {
+	connectedCallback() {
     super.connectedCallback();
 
     const { signal } = this.#abortController;
