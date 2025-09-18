@@ -5,7 +5,8 @@ class PriceBreakdown extends Component {
     super.connectedCallback();
 
     const { signal } = this.#abortController;
-    const target = this.closest('.price-config-wrapper');
+    console.log('HERE within connected callaback')
+		const target = this.closest('.price-config-wrapper');
     target?.addEventListener(ThemeEvents.variantUpdate, this.#onVariantUpdate, { signal });
   }
 
