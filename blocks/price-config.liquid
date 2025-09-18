@@ -9,7 +9,7 @@
   {%- assign current_variant = product.selected_variant.id-%}
       <div>{{current_variant}}</div>
       <div>{{ metaobject | json }}</div> 
-  <div class="price-config-wrapper" {{ block.shopify_attributes }}>
+  <price-breakdown class="price-config-wrapper" {{ block.shopify_attributes }}>
     {%- comment %}
       <!-- The main container for the price breakdown table -->
     {%- endcomment %}
@@ -91,7 +91,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </price-breakdown>
 {%- endif -%}
 
 <script>
