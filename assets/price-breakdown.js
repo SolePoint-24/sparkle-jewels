@@ -7,7 +7,6 @@ class PriceBreakdown extends Component {
     const { signal } = this.#abortController;
     const target = this.closest('.shopify-section');
     target?.addEventListener(ThemeEvents.variantUpdate, this.#onVariantUpdate, { signal });
-    target?.addEventListener(ThemeEvents.variantSelected, this.#onVariantSelected, { signal });
   }
 
   disconnectedCallback() {
@@ -15,6 +14,10 @@ class PriceBreakdown extends Component {
 
     this.#abortController.abort();
   }
+
+	#onVariantUpdate(event) {
+		console.log('I AM HERE BOUY', event);
+	}
 }
 
 if(customComponent.get('price-breakdown')) {
