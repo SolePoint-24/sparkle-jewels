@@ -5,66 +5,36 @@
   We will loop through the list and resolve the nested 'stone' metaobject for each item.
 {% endcomment %}
 
-{%- assign fully_resolved_json_string = '[' -%}
-
-{%- for config_item in product.metafields.custom.stone_configuration.value -%}
-  
-  {%- comment -%} Capture the current item, including its resolved nested metaobject, as a JSON object. {%- endcomment -%}
-  {%- capture item_json -%}
-    {
-      "display_name": {{ config_item.display_name | json }},
-      "number_of_stone": {{ config_item.number_of_stone | json }},
-      "setting_type": {{ config_item.setting_type | json }},
-      "stone_details": {{ config_item.stone.value | json }},
-      "stone_size": {{ config_item.stone_size | json }},
-      "weight_carat": {{ config_item.weight_carat | json }}
-    }
-  {%- endcapture -%}
-  
-  {%- assign fully_resolved_json_string = fully_resolved_json_string | append: item_json -%}
-  
-  {%- comment -%} Add a comma between objects, but not after the last one. {%- endcomment -%}
-  {%- unless forloop.last -%}
-    {%- assign fully_resolved_json_string = fully_resolved_json_string | append: ',' -%}
-  {%- endunless -%}
-
-{%- endfor -%}
-
-{%- assign fully_resolved_json_string = fully_resolved_json_string | append: ']' -%}
-<div id="stone-details-container">
+<div class="stone-configurations">
   <h4>Configuration Details:</h4>
-  </div>
+
+  {% comment %}
+    Loop through the list and directly print the HTML.
+    This is all done in Liquid. No JavaScript needed.
+  {% endcomment %}
+  {%- for config_item in product.metafields.custom.stone_configuration.value -%}
+    
+    <div class="config-item" style="border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px;">
+      <p><strong>Setting Type:</strong> {{ config_item.setting_type }}</p>
+      <p><strong>Stone Count:</strong> {{ config_item.number_of_stone }}</p>
+
+      {%- comment %} Get the nested "Stone" metaobject by adding .value {%- endcomment -%}
+      {%- assign stone_metaobject = config_item.stone.value -%}
+
+      {%- if stone_metaobject -%}
+        <p><strong>Stone Name:</strong> {{ stone_metaobject.name }}</p>
+        <p><strong>Stone Color:</strong> {{ stone_metaobject.color }}</p>
+      {%- endif -%}
+    </div>
+
+  {%- endfor -%}
+</div>
 
 
 {% comment %}
   STEP 2: Now, pass the complete and resolved JSON string to JavaScript.
 {% endcomment %}
 <script>
-  // This variable gets the complete data prepared by Liquid.
-  const stoneConfigurations = {{ fully_resolved_json_string }};
-
-  // Find the placeholder div on the page.
-  const container = document.getElementById('stone-details-container');
-  console.log(stone_configuration)
-  // Check if the container exists to avoid errors.
-  if (container) {
-    // Loop through each configuration object in our JavaScript array.
-    stoneConfigurations.forEach(config => {
-      // Create an HTML string for the current configuration item.
-      const htmlContent = `
-        <div class="config-item" style="border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px;">
-          <p><strong>Setting Type:</strong> ${config.setting_type}</p>
-          <p><strong>Stone Count:</strong> ${config.number_of_stone}</p>
-          
-          <p><strong>Stone Name:</strong> ${config.stone_details.name}</p>
-          <p><strong>Stone Color:</strong> ${config.stone_details.color}</p>
-        </div>
-      `;
-      
-      // Add the newly created HTML to our container.
-      container.innerHTML += htmlContent;
-    });
-  }
 </script>
 
 {% schema %}
