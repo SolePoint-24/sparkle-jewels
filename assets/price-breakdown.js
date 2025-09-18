@@ -24,6 +24,8 @@ class PriceBreakdown extends Component {
 	}
 }
 
+console.log('price-breakdown file loaded')
+
 if (!customElements.get('price-breakdown')) {
   customElements.define('price-breakdown', PriceBreakdown);
 }
