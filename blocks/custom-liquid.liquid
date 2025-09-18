@@ -10,8 +10,6 @@
 
 {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
 
-<div> stone config : {{ product.metafields.custom.stone_configuration }}</div>
-
   {%- for config_item in stone_configurations -%}
     
     {%- comment -%} Assign the nested stone_details object to its own variable for easier access. {%- endcomment -%}
