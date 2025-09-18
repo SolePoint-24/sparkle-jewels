@@ -275,10 +275,19 @@
                         "custom_liquid": ""
                       },
                       "blocks": {}
+                    },
+                    "price_config_btPyMp": {
+                      "type": "price-config",
+                      "name": "Price_Configuration",
+                      "settings": {
+                        "show_block": true
+                      },
+                      "blocks": {}
                     }
                   },
                   "block_order": [
-                    "stone_config_XGR3N3"
+                    "stone_config_XGR3N3",
+                    "price_config_btPyMp"
                   ]
                 }
               },

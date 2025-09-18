@@ -6,28 +6,13 @@
   ============================================================================
 {% endcomment %}
 
-{%- comment -%}
-  Use block settings to control the block's appearance and behavior.
-  Example: Only show the block if the 'show_block' setting is checked.
-{%- endcomment -%}
 {%- if block.settings.show_block -%}
   <div class="price-config-wrapper" {{ block.shopify_attributes }}>
-
-    {%- comment -%}
-      You can add a title that is editable from the theme editor.
-    {%- endcomment -%}
     {%- if block.settings.title != blank -%}
       <h3 class="price-config-title">{{ block.settings.title }}</h3>
     {%- endif -%}
 
-    {%- comment -%}
-      ======================================================
-      || YOUR MAIN LIQUID AND HTML CODE GOES HERE           ||
-      ||                                                    ||
-      || For example, you could fetch metafields,           ||
-      || display variant information, or calculate prices.  ||
-      ======================================================
-    {%- endcomment -%}
+
     <div class="price-config-content">
       <p>This is your new 'Price Config' block. Start adding your custom content here.</p>
       <p>The current product is: <strong>{{ product.title }}</strong></p>
