@@ -12,11 +12,6 @@
 
 {%- if stone_configurations.count > 0 -%}
 
-  {%- comment %}
-    Step 1: Create an array of unique stone types.
-    We build a string of types, separated by commas, then split it into an array.
-    This prevents duplicate types like "Diamond, Diamond, Sapphire" and gives us "Diamond, Sapphire".
-  {%- endcomment -%}
   {%- assign unique_types_string = '' -%}
   {%- for config_item in stone_configurations -%}
     {%- assign current_type = config_item.stone.value.type -%}
@@ -26,10 +21,6 @@
   {%- endfor -%}
   {%- assign unique_types = unique_types_string | split: '|' | compact -%}
 
-  {%- comment %}
-    Step 2: Build the accordion.
-    Loop through the unique types array we just created. Each 'type' will be an accordion header.
-  {%- endcomment -%}
   <div class="stone-accordion">
     {%- for type in unique_types -%}
       <details class="accordion-item" collapse>
@@ -37,10 +28,7 @@
           {{ type | capitalize }} Details
         </summary>
         <div class="accordion-content">
-          {%- comment %}
-            Inner Loop: Now, go through the original list again.
-            Only display the stones where the type matches the current accordion header's type.
-          {%- endcomment -%}
+          
           {%- for config_item in stone_configurations -%}
             {%- if config_item.stone.value.type == type -%}
               {%- assign stone = config_item.stone.value -%}
