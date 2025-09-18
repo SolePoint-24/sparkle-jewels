@@ -10,10 +10,6 @@
 
 {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
 
-<div style="background: yellow; padding: 10px;">
-  DEBUG: The size is {{ product.metafields.custom.stone_configuration.value.size }}
-    </div>
-
 {%- if stone_configurations.size > 0 -%}
   {%- for config_item in stone_configurations -%}
     
