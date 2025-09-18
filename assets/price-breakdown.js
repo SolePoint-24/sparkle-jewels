@@ -10,7 +10,7 @@ class PriceBreakdown extends Component {
 
     const { signal } = this.#abortController;
     console.log('HERE within connected callaback')
-		const target = this.closest('.price-config-wrapper');
+		const target = this.closest('.shopify-section, dialog, product-card');
 		console.log('target', target)
     target?.addEventListener(ThemeEvents.variantUpdate, () => {console.log('NOBODY DOES IT BETTER')}, { signal });
   }
