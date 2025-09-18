@@ -105,19 +105,37 @@
   /* ======================================== */
   /* ADDED: Styles for the animated icon      */
   /* ======================================== */
-  .accordion-header::after {
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-bottom: 2px solid #333;
-    border-right: 2px solid #333;
-    transform: rotate(45deg); /* Pointing down (closed) */
-    transition: transform 0.3s ease-in-out;
-    margin-right: 5px;
+   .accordion-header {
+    /* This is needed to position the icon bars correctly */
+    position: relative;
   }
 
+  /* This creates the two bars of the '+' icon */
+  .accordion-header::before,
+  .accordion-header::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 20px; /* Position from the right edge */
+    width: 14px; /* Width of the icon lines */
+    height: 2px; /* Thickness of the icon lines */
+    background-color: #333;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* This creates the vertical bar */
+  .accordion-header::after {
+    transform: translateY(-50%) rotate(90deg);
+  }
+  
+  /* This creates the horizontal bar */
+  .accordion-header::before {
+     transform: translateY(-50%);
+  }
+
+  /* This rotates the vertical bar when the accordion is open */
   .accordion-item[open] > .accordion-header::after {
-    transform: rotate(-135deg); /* Pointing up (open) */
+    transform: translateY(-50%) rotate(180deg);
   }
 
   /* Your original table styles - slightly adjusted for the new context */
