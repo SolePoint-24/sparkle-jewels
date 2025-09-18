@@ -92,7 +92,35 @@
 {%- endif -%}
 
 <script>
-  console.log({{ current_variant | json }})
+
+  // This script should be placed within a <script> tag in your Liquid file.
+
+// 1. Declare a global variable to hold the current variant object.
+let currentSelectedVariant = null;
+
+// 2. Set the initial variant when the page first loads.
+// We use the 'json' filter to convert the server-side Liquid object
+// into a client-side JavaScript object.
+currentSelectedVariant = {{ product.selected_or_first_available_variant | json }};
+
+// You can uncomment the line below for testing in your browser's console.
+// console.log('Initial Variant Loaded:', currentSelectedVariant);
+
+// 3. Listen for the 'variant:change' event that Shopify themes fire.
+document.addEventListener('variant:change', function(event) {
+  // The new variant object is passed in the event's 'detail' property.
+  const variant = event.detail.variant;
+
+  if (variant) {
+    // 4. Update our global variable to the newly selected variant.
+    currentSelectedVariant = variant;
+
+    // You can uncomment the line below to see the update happen in real-time.
+    // console.log('New Variant Selected:', currentSelectedVariant);
+    // console.log('New Price:', currentSelectedVariant.price);
+  }
+});
+
 </script>
 {% stylesheet %}
   .price-config-wrapper {
