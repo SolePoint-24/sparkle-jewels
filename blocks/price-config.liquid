@@ -1,23 +1,92 @@
 {% comment %}
   ============================================================================
   BLOCK: Price Config
-  - A starter block for displaying custom product configurations.
-  - Add your specific Liquid logic to fetch and display data.
+  - This block displays a detailed price breakdown for the product.
   ============================================================================
 {% endcomment %}
 
 {%- if block.settings.show_block -%}
   <div class="price-config-wrapper" {{ block.shopify_attributes }}>
-    {%- if block.settings.title != blank -%}
-      <h3 class="price-config-title">{{ block.settings.title }}</h3>
-    {%- endif -%}
+    {%- comment %}
+      <!-- The main container for the price breakdown table -->
+    {%- endcomment %}
+    <div class="price-breakdown-table">
+      <!-- Header Row -->
+      <div class="pbt-row pbt-header">
+        <div class="pbt-cell">COMPONENT</div>
+        <div class="pbt-cell">RATE</div>
+        <div class="pbt-cell">WEIGHT</div>
+        <div class="pbt-cell pbt-align-right">VALUE</div>
+      </div>
 
+      <!-- Metals Group -->
+      <div class="pbt-row pbt-group-title">
+        <div class="pbt-cell">METALS</div>
+      </div>
+      <div class="pbt-row">
+        <div class="pbt-cell">
+          <span class="pbt-main-text">14K Rose Gold</span>
+        </div>
+        <div class="pbt-cell">₹6,592</div>
+        <div class="pbt-cell">2.97 g</div>
+        <div class="pbt-cell pbt-align-right">
+          <s class="pbt-strikethrough">₹19,578</s>
+          <span>₹18,599</span>
+        </div>
+      </div>
 
-    <div class="price-config-content">
-      <p>This is your new 'Price Config' block. Start adding your custom content here.</p>
-      <p>The current product is: <strong>{{ product.variants }}</strong></p>
+      <!-- Stones Group -->
+      <div class="pbt-row pbt-group-title">
+        <div class="pbt-cell">STONES</div>
+      </div>
+      <div class="pbt-row">
+        <div class="pbt-cell">
+          <span class="pbt-main-text">Cushion London Blue Topaz</span>
+          <span class="pbt-sub-text">x 1(6mm)</span>
+        </div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">1.10 ct.w</div>
+        <div class="pbt-cell pbt-align-right">
+           <s class="pbt-strikethrough">₹4,017</s>
+          <span>₹3,816</span>
+        </div>
+      </div>
+      
+      <!-- Stones Value Row -->
+      <div class="pbt-row pbt-summary-row">
+        <div class="pbt-cell">STONES VALUE</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right">
+           <s class="pbt-strikethrough">₹4,017</s>
+          <span>₹3,816</span>
+        </div>
+      </div>
+      
+      <!-- Subtotal Row -->
+      <div class="pbt-row pbt-summary-row">
+        <div class="pbt-cell pbt-bold">SUBTOTAL</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right">
+           <s class="pbt-strikethrough">₹29,994</s>
+          <span>₹28,494</span>
+        </div>
+      </div>
+
+      <!-- Grand Total Row -->
+      <div class="pbt-row pbt-grand-total">
+        <div class="pbt-cell">
+          <span class="pbt-main-text pbt-bold">GRAND TOTAL</span>
+          <span class="pbt-sub-text">(MRP Incl. of all taxes)</span>
+        </div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right pbt-final-price">
+          <span>₹29,349</span>
+        </div>
+      </div>
     </div>
-
   </div>
 {%- endif -%}
 
@@ -25,19 +94,106 @@
 {% stylesheet %}
   .price-config-wrapper {
     margin-bottom: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  }
 
+  .price-breakdown-table {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden; /* Ensures the border-radius is respected by child elements */
   }
-  .price-config-title {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.1em;
-    font-family: var(--font-heading-family);
-    color: var(--color-foreground-heading);
+
+  .pbt-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 15px;
+    background-color: #fff;
   }
-  .price-config-content {
-    font-size: 0.95em;
-    color: var(--color-foreground);
+
+  .pbt-row:last-child {
+    border-bottom: none;
   }
+
+  .pbt-cell {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 25%; /* Each column takes up 25% of the width */
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .pbt-cell:first-child {
+    flex-basis: 35%; /* Make the first column wider */
+  }
+  
+  .pbt-cell:last-child {
+     flex-basis: 20%; /* Adjust last column */
+  }
+
+  .pbt-align-right {
+    align-items: flex-end; /* Aligns text to the right for value columns */
+    text-align: right;
+  }
+
+  .pbt-header {
+    background-color: #f8f8f8;
+    color: #333;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .pbt-group-title {
+    background-color: #fdfaf4;
+  }
+
+  .pbt-group-title .pbt-cell {
+    color: #d4a356;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    flex-basis: 100% !important; /* Make title span full width */
+  }
+  
+  .pbt-main-text {
+    font-size: 15px;
+    color: #222;
+  }
+  
+  .pbt-sub-text {
+    font-size: 12px;
+    color: #777;
+    margin-top: 2px;
+  }
+
+  .pbt-strikethrough {
+    color: #888;
+    text-decoration: line-through;
+    font-size: 13px;
+  }
+  
+  .pbt-summary-row .pbt-cell {
+     padding-top: 15px;
+     padding-bottom: 15px;
+  }
+  
+  .pbt-grand-total {
+    background-color: #f8f8f8;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .pbt-bold {
+    font-weight: 600;
+  }
+  
+  .pbt-final-price span {
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+  }
+
 {% endstylesheet %}
 
 {% schema %}
@@ -54,12 +210,7 @@
       "id": "show_block",
       "label": "Show this block",
       "default": true
-    },
-    {
-      "type": "header",
-      "content": "Content Settings"
-    },
-
+    }
   ],
   "presets": [
     {
