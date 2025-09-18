@@ -6,11 +6,12 @@
 {% endcomment %}
 
 {%- if block.settings.show_block -%}
-  {% comment %} {%- assign current_variant = product.selected_or_first_available_variant -%} {% endcomment %}
+  {%- assign current_variant = product.selected_variant-%}
   <div class="price-config-wrapper" {{ block.shopify_attributes }}>
     {%- comment %}
       <!-- The main container for the price breakdown table -->
     {%- endcomment %}
+     <div>{{current_variant}}</div>
     <div class="price-breakdown-table">
       <!-- Header Row -->
       <div class="pbt-row pbt-header">
