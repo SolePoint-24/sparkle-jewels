@@ -32,7 +32,7 @@
   {%- endcomment -%}
   <div class="stone-accordion">
     {%- for type in unique_types -%}
-      <details class="accordion-item" open>
+      <details class="accordion-item" collapse>
         <summary class="accordion-header">
           {{ type | capitalize }} Details
         </summary>
