@@ -12,7 +12,7 @@
 
 <div> stone config : {{ stone_configurations }}</div>
 
-{%- if stone_configurations.size > 0 -%}
+{%- if stone_configurations.count > 0 -%}
   {%- for config_item in stone_configurations -%}
     
     {%- comment -%} Assign the nested stone_details object to its own variable for easier access. {%- endcomment -%}
