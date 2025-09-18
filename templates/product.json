@@ -269,7 +269,7 @@
                   },
                   "blocks": {
                     "custom_liquid_arEHw3": {
-                      "type": "custom-liquid",
+                      "type": "stone-config",
                       "name": "t:names.custom_liquid",
                       "settings": {
                         "custom_liquid": ""
