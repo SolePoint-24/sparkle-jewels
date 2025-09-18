@@ -94,8 +94,18 @@
 {%- endif -%}
 
 <script>
- 
-  console.log({{ current_variant | json }})
+ const currentUrl = new URL(window.location.href);
+
+// 2. Get the value of the 'variant' parameter
+// The .get() method looks for a parameter with the name you provide.
+const variantIdFromUrl = currentUrl.searchParams.get('variant');
+
+// 3. Log the result to the console
+if (variantIdFromUrl) {
+  console.log('The variant ID from the URL is:', variantIdFromUrl);
+} else {
+  console.log('No variant ID was found in the URL.');
+}
 
 </script>
 
