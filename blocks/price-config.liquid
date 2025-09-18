@@ -91,7 +91,9 @@
   </div>
 {%- endif -%}
 
-
+<script>
+  console.log({{ current_variant | json }})
+</script>
 {% stylesheet %}
   .price-config-wrapper {
     margin-bottom: 20px;
