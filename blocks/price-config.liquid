@@ -1,0 +1,88 @@
+{% comment %}
+  ============================================================================
+  BLOCK: Price Config
+  - A starter block for displaying custom product configurations.
+  - Add your specific Liquid logic to fetch and display data.
+  ============================================================================
+{% endcomment %}
+
+{%- comment -%}
+  Use block settings to control the block's appearance and behavior.
+  Example: Only show the block if the 'show_block' setting is checked.
+{%- endcomment -%}
+{%- if block.settings.show_block -%}
+  <div class="price-config-wrapper" {{ block.shopify_attributes }}>
+
+    {%- comment -%}
+      You can add a title that is editable from the theme editor.
+    {%- endcomment -%}
+    {%- if block.settings.title != blank -%}
+      <h3 class="price-config-title">{{ block.settings.title }}</h3>
+    {%- endif -%}
+
+    {%- comment -%}
+      ======================================================
+      || YOUR MAIN LIQUID AND HTML CODE GOES HERE           ||
+      ||                                                    ||
+      || For example, you could fetch metafields,           ||
+      || display variant information, or calculate prices.  ||
+      ======================================================
+    {%- endcomment -%}
+    <div class="price-config-content">
+      <p>This is your new 'Price Config' block. Start adding your custom content here.</p>
+      <p>The current product is: <strong>{{ product.title }}</strong></p>
+    </div>
+
+  </div>
+{%- endif -%}
+
+
+{% stylesheet %}
+  .price-config-wrapper {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+  }
+  .price-config-title {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    font-family: var(--font-heading-family);
+    color: var(--color-foreground-heading);
+  }
+  .price-config-content {
+    font-size: 0.95em;
+    color: var(--color-foreground);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Price Config",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Block Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_block",
+      "label": "Show this block",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Custom Title",
+      "default": "Configuration Details"
+    },
+
+  ]
+}
+{% endschema %}
