@@ -8,7 +8,7 @@
 {%- if block.settings.show_block -%}
   {%- assign current_variant = product.selected_variant.id-%}
       <div>{{current_variant}}</div>
-      <div>{{ metaobjects.stones }}</div> 
+      <div>{{ metaobjects.type.handle }}</div> 
   <div class="price-config-wrapper" {{ block.shopify_attributes }}>
     {%- comment %}
       <!-- The main container for the price breakdown table -->
