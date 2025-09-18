@@ -1,143 +1,140 @@
-
-
 {% comment %}
   ============================================================================
     STONE CONFIGURATION TABLES
       - This code loops through a list of metaobjects.
         - For each item in the list, it creates a styled information table.
           ============================================================================
-          {% endcomment %}
+{% endcomment %}
 
-          {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
+{%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
 
-          {%- if stone_configurations.count > 0 -%}
-            {%- for config_item in stone_configurations -%}
-                
-                    {%- comment -%} Assign the nested stone_details object to its own variable for easier access. {%- endcomment -%}
-                        {%- assign stone = config_item.stone.value -%}
+{%- if stone_configurations.count > 0 -%}
+  {%- for config_item in stone_configurations -%}
+    {%- comment -%} Assign the nested stone_details object to its own variable for easier access. {%- endcomment -%}
+    {%- assign stone = config_item.stone.value -%}
 
-                            <div class="stone-info-wrapper">
+    <div class="stone-info-wrapper">
+      <table class="stone-info-table">
+        <tbody>
+          <tr>
+            <td>
+              No. Of {{ stone.shape }}
+              {{ stone.type }}
+            </td>
+            <td>{{ config_item.number_of_stone }}</td>
+          </tr>
+          <tr>
+            <td>Quality Grade</td>
+            <td>{{ stone.quality_grade }}</td>
+          </tr>
+          <tr>
+            <td>Total Weight (ct. tw.)</td>
+            <td>{{ config_item.weight_carat }}</td>
+          </tr>
+          <tr>
+            <td>Stone Size (mm)</td>
+            <td>{{ config_item.stone_size }}</td>
+          </tr>
+          <tr>
+            <td>Colour Clarity</td>
+            <td>{{ stone.quality_grade }}</td>
+          </tr>
+          <tr>
+            <td>Setting Type</td>
+            <td>{{ config_item.setting_type }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  {%- endfor -%}
+{%- endif -%}
 
-                                  <table class="stone-info-table">
-                                          <tbody>
-                                                    <tr>
-                                                                <td>No. Of {{ stone.shape  }} {{ stone.type  }}</td>
-                                                                            <td>{{ config_item.number_of_stone }}</td>
-                                                                                      </tr>
-                                                                                                <tr>
-                                                                                                            <td>Quality Grade</td>
-                                                                                                                        <td>{{ stone.quality_grade }}</td>
-                                                                                                                                  </tr>
-                                                                                                                                            <tr>
-                                                                                                                                                        <td>Total Weight (ct. tw.)</td>
-                                                                                                                                                                    <td>{{ config_item.weight_carat }}</td>
-                                                                                                                                                                              </tr>
-                                                                                                                                                                                         <tr>
-                                                                                                                                                                                                     <td>Stone Size (mm)</td>
-                                                                                                                                                                                                                 <td>{{ config_item.stone_size }}</td>
-                                                                                                                                                                                                                           </tr>
-                                                                                                                                                                                                                                     <tr>
-                                                                                                                                                                                                                                                 <td>Colour Clarity</td>
-                                                                                                                                                                                                                                                             <td>{{ stone.quality_grade }}</td>
-                                                                                                                                                                                                                                                                       </tr>
-                                                                                                                                                                                                                                                                                 <tr>
-                                                                                                                                                                                                                                                                                             <td>Setting Type</td>
-                                                                                                                                                                                                                                                                                                         <td>{{ config_item.setting_type }}</td>
-                                                                                                                                                                                                                                                                                                                   </tr>
-                                                                                                                                                                                                                                                                                                                           </tbody>
-                                                                                                                                                                                                                                                                                                                                 </table>
-                                                                                                                                                                                                                                                                                                                                     </div>
+{% stylesheet %}
+  .stone-info-wrapper {
+      margin-bottom: 30px; /* Adds space between multiple tables */
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+            }
 
-                                                                                                                                                                                                                                                                                                                                       {%- endfor -%}
-                                                                                                                                                                                                                                                                                                                                       {%- endif -%}
+              .stone-info-header {
+                  display: flex;
+                      justify-content: space-between;
+                          align-items: center;
+                              margin-bottom: 10px;
+                                }
+
+                                  .stone-info-title {
+                                      margin: 0;
+                                          font-size: 1em;
+                                              font-weight: 600;
+                                                  letter-spacing: 0.1em;
+                                                      color: #333;
+                                                        }
+
+                                                          .stone-info-link {
+                                                              font-size: 0.9em;
+                                                                  text-decoration: underline;
+                                                                      color: #555;
+                                                                        }
+                                                                          .stone-info-link:hover {
+                                                                              color: #000;
+                                                                                }
+
+                                                                                  .stone-info-table {
+                                                                                      width: 100%;
+                                                                                          border-collapse: collapse;
+                                                                                              border: 1px solid #e9e9e9;
+                                                                                                  border-radius: 4px;
+                                                                                                      overflow: hidden;
+                                                                                                        }
+
+                                                                                                          .stone-info-table tr {
+                                                                                                              border-bottom: 1px solid #e9e9e9;
+                                                                                                                }
+
+                                                                                                                  .stone-info-table tr:last-child {
+                                                                                                                      border-bottom: none;
+                                                                                                                        }
+
+                                                                                                                          .stone-info-table tr:nth-child(even) {
+                                                                                                                              background-color: #f9f9f9;
+                                                                                                                                }
+
+                                                                                                                                    .stone-info-table td {
+                                                                                                                                        padding: 6px 12px;
+                                                                                                                                            font-size: 14px;
+                                                                                                                                                color: #444;
+                                                                                                                                                    line-height: 20px;
+                                                                                                                                                      }
 
 
-                                                                                                                                                                                                                                                                                                                                       {% stylesheet %}
-                                                                                                                                                                                                                                                                                                                                         .stone-info-wrapper {
-                                                                                                                                                                                                                                                                                                                                             margin-bottom: 30px; /* Adds space between multiple tables */
-                                                                                                                                                                                                                                                                                                                                                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-                                                                                                                                                                                                                                                                                                                                                   }
+                                                                                                                                                          .stone-info-table td:first-child {
+                                                                                                                                                              width: 60%;
+                                                                                                                                                                  background-color: #bbbbbb;
+                                                                                                                                                                    }
 
-                                                                                                                                                                                                                                                                                                                                                     .stone-info-header {
-                                                                                                                                                                                                                                                                                                                                                         display: flex;
-                                                                                                                                                                                                                                                                                                                                                             justify-content: space-between;
-                                                                                                                                                                                                                                                                                                                                                                 align-items: center;
-                                                                                                                                                                                                                                                                                                                                                                     margin-bottom: 10px;
-                                                                                                                                                                                                                                                                                                                                                                       }
+                                                                                                                                                                      .stone-info-table td:last-child {
+                                                                                                                                                                          color: #111;
+                                                                                                                                                                              background-color: #ffffff;
+                                                                                                                                                                                }
+{% endstylesheet %}
 
-                                                                                                                                                                                                                                                                                                                                                                         .stone-info-title {
-                                                                                                                                                                                                                                                                                                                                                                             margin: 0;
-                                                                                                                                                                                                                                                                                                                                                                                 font-size: 1em;
-                                                                                                                                                                                                                                                                                                                                                                                     font-weight: 600;
-                                                                                                                                                                                                                                                                                                                                                                                         letter-spacing: 0.1em;
-                                                                                                                                                                                                                                                                                                                                                                                             color: #333;
-                                                                                                                                                                                                                                                                                                                                                                                               }
-
-                                                                                                                                                                                                                                                                                                                                                                                                 .stone-info-link {
-                                                                                                                                                                                                                                                                                                                                                                                                     font-size: 0.9em;
-                                                                                                                                                                                                                                                                                                                                                                                                         text-decoration: underline;
-                                                                                                                                                                                                                                                                                                                                                                                                             color: #555;
-                                                                                                                                                                                                                                                                                                                                                                                                               }
-                                                                                                                                                                                                                                                                                                                                                                                                                 .stone-info-link:hover {
-                                                                                                                                                                                                                                                                                                                                                                                                                     color: #000;
-                                                                                                                                                                                                                                                                                                                                                                                                                       }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                         .stone-info-table {
-                                                                                                                                                                                                                                                                                                                                                                                                                             width: 100%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                 border-collapse: collapse;
-                                                                                                                                                                                                                                                                                                                                                                                                                                     border: 1px solid #e9e9e9;
-                                                                                                                                                                                                                                                                                                                                                                                                                                         border-radius: 4px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                             overflow: hidden;
-                                                                                                                                                                                                                                                                                                                                                                                                                                               }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                 .stone-info-table tr {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                     border-bottom: 1px solid #e9e9e9;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                       }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                         .stone-info-table tr:last-child {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                             border-bottom: none;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                               }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                 .stone-info-table tr:nth-child(even) {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                     background-color: #f9f9f9;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                       }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                           .stone-info-table td {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                               padding: 6px 12px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   font-size: 14px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       color: #444;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           line-height: 20px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 .stone-info-table td:first-child {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     width: 60%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         background-color: #bbbbbb; 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             .stone-info-table td:last-child {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 color: #111;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     background-color: #ffffff;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       {% endstylesheet %}
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       {% schema %}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "name": "t:names.stone_configuration",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "tag": null,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             "settings": [
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       "type": "liquid",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             "id": "custom_liquid",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "label": "t:settings.custom_liquid",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "info": "t:info.custom_liquid"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ],
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 "presets": [
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "name": "t:names.stone_configuration",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 "category": "t:categories.custom"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       {% endschema %}
+{% schema %}
+{
+  "name": "t:names.stone_configuration",
+  "tag": null,
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "t:settings.custom_liquid",
+      "info": "t:info.custom_liquid"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.stone_configuration",
+      "category": "t:categories.custom"
+    }
+  ]
+}
+{% endschema %}
