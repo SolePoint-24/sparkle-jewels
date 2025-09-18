@@ -1,6 +1,7 @@
 import { Component } from '@theme/component';
 
 class PriceBreakdown extends Component {
+	#abortController = new AbortController();
 	connectedCallback() {
 		console.log('HERE within connected callaback initial')
 
