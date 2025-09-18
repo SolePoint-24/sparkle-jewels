@@ -13,6 +13,15 @@
     {%- comment -%} Assign the nested stone_details object to its own variable for easier access. {%- endcomment -%}
     {%- assign stone = config_item.stone.value -%}
 
+     {%- assign unique_types_string = '' -%}
+  {%- for config_item in stone_configurations -%}
+    {%- assign current_type = config_item.stone.value.type -%}
+    {%- unless unique_types_string contains current_type -%}
+      {%- capture unique_types_string -%}{{ unique_types_string }}{{ current_type }}|{%- endcapture -%}
+    {%- endunless -%}
+  {%- endfor -%}
+  {%- assign unique_types = unique_types_string | split: '|' | compact -%}
+
     <div class="stone-info-wrapper">
       <table class="stone-info-table">
         <tbody>
