@@ -19,7 +19,7 @@
       This data is now in a table. Replace the placeholder text with your
       dynamic Liquid variables, like {{ product.metafields.custom.metal_type }}.
     {% endcomment %}
-     {%- assign variable_name = metaobjects['metal_configuration']['metal_variant'] -%}
+     {%- assign variable_name = metaobjects['metal_configuration'] -%}
     <div class="metal-info-container">
       {{ variable_name }}
       <table class="metal-info-table">
