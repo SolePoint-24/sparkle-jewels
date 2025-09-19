@@ -15,11 +15,6 @@
 
 {%- if block.settings.show_block -%}
   <div class="metal-config-wrapper" {{ block.shopify_attributes }}>
-
-    {%- if block.settings.title != blank -%}
-      <h3 class="metal-config-title">{{ block.settings.title }}</h3>
-    {%- endif -%}
-
     {%- comment %}
       This data is now in a table. Replace the placeholder text with your
       dynamic Liquid variables, like {{ product.metafields.custom.metal_type }}.
