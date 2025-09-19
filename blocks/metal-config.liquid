@@ -19,36 +19,25 @@
       for metal type: {{ product.metafields.custom.metal_type }}.
       For now, we'll use placeholder text.
     {% endcomment %}
-    <div class="stone-info-wrapper">
-                <table class="stone-info-table">
-                  <tbody>
-                    <tr>
-                      <td>No. Of </td>
-                      <td>{</td>
-                    </tr>
-                    <tr>
-                      <td>Quality Grade</td>
-                      <td>blah</td>
-                    </tr>
-                    <tr>
-                      <td>Total Weight (ct. tw.)</td>
-                      <td>blah</td>
-                    </tr>
-                    <tr>
-                      <td>Stone Size (mm)</td>
-                      <td>blah</td>
-                    </tr>
-                    <tr>
-                      <td>Colour Clarity</td>
-                      <td>blah</td>
-                    </tr>
-                    <tr>
-                      <td>Setting Type</td>
-                      <td>blah</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+    <div class="metal-info-grid">
+      <!-- Row 1: Metal Type -->
+      <div class="metal-info-row">
+        <span class="metal-info-label">Metal Type</span>
+        <span class="metal-info-value">18K Rose Gold</span>
+      </div>
+
+      <!-- Row 2: Purity -->
+      <div class="metal-info-row">
+        <span class="metal-info-label">Purity</span>
+        <span class="metal-info-value">75.0%</span>
+      </div>
+
+      <!-- Row 3: Approx. Weight -->
+      <div class="metal-info-row">
+        <span class="metal-info-label">Approx. Weight</span>
+        <span class="metal-info-value">3.50 g</span>
+      </div>
+    </div>
 
   </div>
 {%- endif -%}
