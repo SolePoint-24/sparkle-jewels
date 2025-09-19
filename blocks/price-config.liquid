@@ -102,26 +102,18 @@
 
   console.log('Listener script loaded. Waiting for variant changes...');
 
-  // Listen on the entire document for the 'variant:change' announcement.
-  document.addEventListener('variant:change', (event) => {
+  // Listen on the entire document for the 'variant:update' announcement.
+  document.addEventListener('variant:update', (event) => {
     
-    // The full variant object is passed in the event's "detail" property.
-    const selectedVariantObject = event.detail.variant;
+    // The full variant object is passed in the event's "detail.resource" property.
+    const selectedVariantObject = event.detail.resource;
 
     if (selectedVariantObject) {
       // Update our variable with the new variant object.
       currentSelectedVariant = selectedVariantObject;
 
-      // You now have access to the complete, up-to-date variant object!
-      console.clear(); // Clears the console for better readability
-      console.log('✅ New variant selected! The current variant is now:');
-      console.log(currentSelectedVariant);
-
-      // You can access all its properties here:
-      console.log('ID:', currentSelectedVariant.id);
-      console.log('Price:', currentSelectedVariant.price);
-      console.log('SKU:', currentSelectedVariant.sku);
-      console.log('Available:', currentSelectedVariant.available);
+      // Console.log the current variant in JSON format
+      console.log('Current Selected Variant (JSON):', JSON.stringify(currentSelectedVariant, null, 2));
 
     } else {
       // This can happen if the combination selected is not a valid variant
