@@ -1,0 +1,121 @@
+{% comment %}
+  ============================================================================
+  BLOCK: Metal Config
+  - Renders basic information about the product's metal composition.
+  - This is a starter template. Replace placeholders with your actual
+    product metafields or variant options.
+  ============================================================================
+{% endcomment %}
+
+{%- if block.settings.show_block -%}
+  <div class="metal-config-wrapper" {{ block.shopify_attributes }}>
+
+    {%- if block.settings.title != blank -%}
+      <h3 class="metal-config-title">{{ block.settings.title }}</h3>
+    {%- endif -%}
+
+    {%- comment %}
+      You can make this data dynamic. For example, you might have a metafield
+      for metal type: {{ product.metafields.custom.metal_type }}.
+      For now, we'll use placeholder text.
+    {% endcomment %}
+    <div class="metal-info-grid">
+      <!-- Row 1: Metal Type -->
+      <div class="metal-info-row">
+        <span class="metal-info-label">Metal Type</span>
+        <span class="metal-info-value">18K Rose Gold</span>
+      </div>
+
+      <!-- Row 2: Purity -->
+      <div class="metal-info-row">
+        <span class="metal-info-label">Purity</span>
+        <span class="metal-info-value">75.0%</span>
+      </div>
+
+      <!-- Row 3: Approx. Weight -->
+      <div class="metal-info-row">
+        <span class="metal-info-label">Approx. Weight</span>
+        <span class="metal-info-value">3.50 g</span>
+      </div>
+    </div>
+
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .metal-config-wrapper {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  .metal-config-title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+  }
+
+  .metal-info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between each row */
+  }
+
+  .metal-info-row {
+    display: flex;
+    justify-content: space-between; /* Pushes label and value apart */
+    align-items: center;
+    font-size: 15px;
+  }
+
+  .metal-info-label {
+    color: #555;
+  }
+
+  .metal-info-value {
+    color: #111;
+    font-weight: 500;
+    padding: 4px 8px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    border: 1px solid #e5e5e5;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Metal Configuration",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Block Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_block",
+      "label": "Show this block",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Block Title",
+      "default": "Metal Details"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Metal Configuration"
+    }
+  ]
+}
+{% endschema %}
