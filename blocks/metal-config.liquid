@@ -44,7 +44,8 @@
 {%- endif -%}
 
 <script>
-  console.log({{ variable_name | json }})
+  const myMetaobjectData = {{ variable_name | json }};
+      console.log(myMetaobjectData);
 </script>
 
 {% stylesheet %}
