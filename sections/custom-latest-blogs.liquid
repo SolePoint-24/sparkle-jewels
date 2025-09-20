@@ -3,6 +3,7 @@
   - All styling is untouched.
   - Added a 'select' dropdown for "Columns on mobile".
   - Updated the CSS and Liquid to use this new setting.
+  - Colors updated to use theme's color scheme variables.
 {% endcomment %}
 
 {%- liquid
@@ -23,7 +24,7 @@
   }
   .custom-blog__subheading {
     font-size: 18px;
-    color: #555;
+    color: var(--color-foreground-muted); /* UPDATED */
     margin: 0;
     font-family: var(--font-body-family);
   }
@@ -32,19 +33,20 @@
     margin: 0;
     font-family: var(--font-heading-family);
     font-weight: var(--font-heading-weight);
+    color: var(--color-foreground-heading); /* UPDATED */
   }
   .custom-blog__view-all {
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-border); /* UPDATED */
     padding: 10px 20px;
     text-decoration: none;
-    color: #333;
-    transition: background-color 0.3s, color 0.3s;
+    color: var(--color-foreground); /* UPDATED */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
     white-space: nowrap;
   }
   .custom-blog__view-all:hover {
-    background-color: #333;
-    color: #fff;
-    border-color: #333;
+    background-color: var(--color-primary-button-background); /* UPDATED */
+    color: var(--color-primary-button-text); /* UPDATED */
+    border-color: var(--color-primary-button-background); /* UPDATED */
   }
   .custom-blog__grid {
     display: grid;
@@ -55,7 +57,7 @@
     display: flex;
     flex-direction: column;
     text-align: left;
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--color-border); /* UPDATED */
   }
   .custom-blog-card__image-wrapper {
     position: relative;
@@ -80,11 +82,11 @@
     position: absolute;
     bottom: 24px;
     left: 24px;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(var(--color-background-rgb), 0.9); /* UPDATED */
     padding: 5px 10px;
     font-size: 0.8rem;
     border-radius: 16px;
-    color: #333;
+    color: var(--color-foreground); /* UPDATED */
   }
   .custom-blog-card__content {
     flex-grow: 1;
@@ -97,6 +99,7 @@
     margin: 0 0 10px 0;
     font-weight: bold;
     font-family: var(--font-heading-family);
+    color: var(--color-foreground-heading); /* UPDATED */
   }
   .custom-blog-card__title a {
     text-decoration: none;
@@ -107,22 +110,23 @@
   }
   .custom-blog-card__excerpt {
     font-size: 0.9rem;
-    color: #555;
+    color: var(--color-foreground); /* UPDATED */
     margin: 0 0 20px 0;
     flex-grow: 1;
   }
   .custom-blog-card__read-more {
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-border); /* UPDATED */
     padding: 8px 18px;
     text-decoration: none;
-    color: #333;
+    color: var(--color-foreground); /* UPDATED */
     align-self: flex-start;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
   }
   .custom-blog-card__read-more:hover {
-    background-color: #333;
-    color: #fff;
-    border-color: #333;
+    background-color: var(--color-primary-button-background); /* UPDATED */
+    color: var(--color-primary-button-text); /* UPDATED */
+    border-color: var(--color-primary-button-background); /* UPDATED */
   }
   /* Responsive Adjustments */
   @media screen and (max-width: 990px) {
@@ -141,7 +145,6 @@
     }
   }
 
-  /* --- CHANGE: Using CSS variable for dynamic mobile columns --- */
   @media screen and (max-width: 550px) {
     .custom-blog__grid {
       grid-template-columns: repeat(var(--columns-mobile, 1), 1fr);
@@ -235,6 +238,11 @@
   "class": "section",
   "max_blocks": 12,
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme"
+    },
     {
       "type": "text",
       "id": "subheading",

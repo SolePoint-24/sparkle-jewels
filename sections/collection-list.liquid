@@ -3,6 +3,7 @@
   - Aligned title with carousel by matching padding.
   - Updated title font style.
   - Navigation buttons now have no background, border, or box-shadow.
+  - Colors updated to use theme's color scheme variables.
 {% endcomment %}
 
 <div class="section collection-list-wrapper color-{{ section.settings.color_scheme }}">
@@ -52,6 +53,7 @@
   .collection-list-wrapper {
     padding-top: {{ section.settings.padding_top }}px;
     padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: var(--color-background);
   }
 
   .collection-list__header {
@@ -63,44 +65,44 @@
     font-size: 2.2rem;
     font-weight: 400;
     font-family: 'Times New Roman', Times, serif;
+    color: var(--color-foreground-heading); /* UPDATED */
   }
 
   .collection-list__container {
     position: relative;
   }
 
-  /* --- MODIFIED STYLES FOR ARROWS --- */
   .collection-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: transparent; /* Changed to transparent */
-    border: none; /* Changed to no border */
-    border-radius: 0; /* Changed to no border-radius */
-    width: 24px; /* Adjusted width to fit icon */
-    height: 24px; /* Adjusted height to fit icon */
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
-    transition: opacity 0.2s ease; /* Only opacity transition */
-    color: #555; /* Icon color */
+    transition: opacity 0.2s ease;
+    color: var(--color-foreground); /* UPDATED */
     z-index: 1;
-    box-shadow: none; /* Removed box-shadow */
+    box-shadow: none;
   }
   .collection-arrow.prev {
-    left: -35px; /* Adjusted position, considering button size change */
+    left: -35px;
     z-index:10
   }
   .collection-arrow.next {
-    right: -35px; /* Adjusted position, considering button size change */
+    right: -35px;
     z-index:10
   }
   .collection-arrow:hover {
-    opacity: 0.7; /* Only opacity change on hover */
-    background-color: transparent; /* Ensure no background on hover */
-    border-color: transparent; /* Ensure no border on hover */
+    opacity: 0.7;
+    background-color: transparent;
+    border-color: transparent;
   }
   .collection-arrow:disabled {
     opacity: 0.3;
@@ -108,7 +110,6 @@
     background-color: transparent;
     border-color: transparent;
   }
-  /* --- END MODIFIED STYLES --- */
 
   .collection-list__grid {
     display: flex;
@@ -149,29 +150,29 @@
     text-align: center;
     margin-top: 15px;
     padding: 0 10px;
+    color: var(--color-foreground); /* UPDATED */
   }
   @media (max-width: 1023px) {
-  .collection-arrow {
-    background: rgba(255, 255, 255, 0.6); /* optional visibility */
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    z-index: 10;
+    .collection-arrow {
+      background: rgba(var(--color-background-rgb), 0.6); /* UPDATED */
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      z-index: 10;
+    }
+    .collection-arrow.prev {
+      left: 10px;
+    }
+    .collection-arrow.next {
+      right: 10px;
+    }
   }
-  .collection-arrow.prev {
-    left: 10px;  /* inside image */
-  }
-  .collection-arrow.next {
-    right: 10px; /* inside image */
-  }
-}
 
-/* Tablet (750px–1023px): hide arrows completely */
-@media (max-width: 749px) {
-  .collection-arrow {
-    display: none !important;
+  @media (max-width: 749px) {
+    .collection-arrow {
+      display: none !important;
+    }
   }
-}
   @media (min-width: 990px) {
     .collection-list__slide {
       flex-basis: calc(100% / {{ section.settings.columns_desktop }});

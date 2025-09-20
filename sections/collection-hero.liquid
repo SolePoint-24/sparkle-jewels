@@ -1,6 +1,7 @@
 {% comment %}
   Section: Collection Hero
   - Aligns text to the top-left of the hero banner.
+  - Colors updated to use theme's color scheme variables.
 {% endcomment %}
 
 {%- liquid
@@ -9,7 +10,7 @@
 
   # 2. Fallback to the standard collection image, then to the section's default image.
   assign hero_image = custom_hero_image | default: collection.image | default: section.settings.default_image
- -%}
+-%}
 
 <style>
   #shopify-section-{{ section.id }} .collection-hero__wrapper {
@@ -17,25 +18,25 @@
   }
 
   #shopify-section-{{ section.id }} .collection-hero__overlay {
-    background-color: #000;
+    background-color: var(--color-background); /* UPDATED */
     opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
   }
 </style>
 
-<section class="section" id="shopify-section-{{ section.id }}">
+<section class="section color-{{ section.settings.color_scheme }} gradient" id="shopify-section-{{ section.id }}">
   <div class="collection-hero__wrapper">
     <div class="collection-hero__overlay"></div>
     <div class="collection-hero__content page-width">
       
       <nav class="breadcrumbs" aria-label="breadcrumbs">
-        <a href="/" title="Home" style="color:#ffffff;">Home</a>
+        <a href="/" title="Home">Home</a> 
         <span class="separator">&gt;</span>
         {%- if collection.handle -%}
-          <a href="{{ routes.collections_url }} "style="color:#ffffff;"> Collections</a>
+          <a href="{{ routes.collections_url }}"> Collections</a>
           <span class="separator">&gt;</span>
           <strong>{{ collection.title }}</strong>
         {%- else -%}
-           <strong>{{ page_title }}</strong>
+          <strong>{{ page_title }}</strong>
         {%- endif -%}
       </nav>
 
@@ -54,9 +55,9 @@
     background-position: center;
     min-height: 280px;
     display: flex;
-    justify-content: flex-start; /* Aligns content horizontally to the left */
-    align-items: flex-start;    /* --- CHANGED --- Aligns content vertically to the top */
-    color: #ffffff;
+    justify-content: flex-start;
+    align-items: flex-start;
+    color: var(--color-foreground); /* UPDATED */
   }
   .collection-hero__overlay {
     position: absolute;
@@ -75,21 +76,20 @@
   }
   
   /* Breadcrumb styles within the hero */
-  .collection-hero .breadcrumbs {
+  .collection-hero-section .breadcrumbs { /* Made selector more specific */
     font-size: 0.9em;
     margin-bottom: 15px;
   }
-  .collection-hero .breadcrumbs a,
-  .collection-hero .breadcrumbs span,
-  .collection-hero .breadcrumbs strong {
-    color: #ffffff !important;
+  .collection-hero-section .breadcrumbs a,
+  .collection-hero-section .breadcrumbs span,
+  .collection-hero-section .breadcrumbs strong {
+    color: var(--color-foreground); /* UPDATED */
     text-decoration: none;
-    
   }
-  .collection-hero .breadcrumbs a:hover {
+  .collection-hero-section .breadcrumbs a:hover {
     text-decoration: underline;
   }
-  .collection-hero .breadcrumbs .separator {
+  .collection-hero-section .breadcrumbs .separator {
     margin: 0 8px;
     opacity: 0.7;
   }
@@ -100,7 +100,7 @@
     font-size: 2.8rem;
     font-weight: 400;
     margin: 0;
-    color: #ffffff;
+    color: var(--color-foreground-heading); /* UPDATED */
   }
   @media (max-width: 768px) {
     .collection-hero__title {
@@ -115,6 +115,12 @@
   "tag": "section",
   "class": "collection-hero-section",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "info": "Choose a high-contrast scheme (e.g., dark background, light text) for best results over an image."
+    },
     {
       "type": "image_picker",
       "id": "default_image",

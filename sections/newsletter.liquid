@@ -1,13 +1,13 @@
 {% comment %}
   This section renders a full-width newsletter signup form
   over a background image with success/error handling.
+  - Colors updated to use theme's color scheme variables.
 {% endcomment %}
 
 {%- liquid
   assign heading = section.settings.heading
   assign subheading = section.settings.subheading
   assign image = section.settings.background_image
-  assign overlay_opacity = section.settings.overlay_opacity | divided_by: 100.0
 -%}
 
 {%- if image != blank -%}
@@ -17,8 +17,9 @@
     }
 
     #shopify-section-{{ section.id }} .newsletter__overlay {
-      background-color: #000;
-      opacity: {{ overlay_opacity }};
+      background-color: var(--color-background);
+      opacity: 0.5;
+      
     }
   </style>
 {%- endif -%}
@@ -107,7 +108,7 @@
     position: relative;
     z-index: 2;
     text-align: center;
-    color: #ffffff;
+    color: var(--color-foreground-heading); /* UPDATED */
     width: 100%;
     max-width: 550px;
   }
@@ -133,18 +134,19 @@
   .newsletter__input {
     width: 100%;
     padding: 14px 50px 14px 20px;
-    background-color: #000000; /* --- CHANGED --- This is now solid black */
-    color: #ffffff;
-    border: 1px solid #ffffff;
+    background-color: var(--color-input-background); /* UPDATED */
+    color: var(--color-foreground); /* UPDATED */
+    border: 1px solid var(--color-border); /* UPDATED */
     font-size: 1rem;
     line-height: 1.5;
+    transition: background-color 0.3s, color 0.3s;
   }
   .newsletter__input:hover {
-   background-color: #fff; /* White background on hover */
-  color: #000; /* Black text on hover */
+    background-color: var(--color-foreground); /* UPDATED */
+    color: var(--color-background); /* UPDATED */
   }
   .newsletter__input::placeholder {
-    color: #cccccc;
+    color: var(--color-foreground-muted); /* UPDATED */
     opacity: 1;
   }
   .newsletter__submit {
@@ -155,7 +157,7 @@
     width: 50px;
     background: transparent;
     border: none;
-    color: #ffffff;
+    color: var(--color-foreground); /* UPDATED */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -167,14 +169,13 @@
     opacity: 0.7;
   }
 
-  /* Added styles for success/error messages */
   .newsletter__success-message,
   .newsletter__error-message {
     margin-top: 15px;
     font-size: 1rem;
   }
   .newsletter__error-message {
-    color: #ff5c5c; /* A typical error color */
+    color: #ff5c5c;
   }
 
   @media (max-width: 768px) {
@@ -227,7 +228,8 @@
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "Color Scheme",
-      "default": "background-1"
+      "info": "Choose a high-contrast scheme (e.g., dark background, light text) for best results over an image.",
+      "default": "background-2"
     }
   ],
   "presets": [

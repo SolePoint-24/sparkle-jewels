@@ -2,6 +2,7 @@ import { Component } from '@theme/component';
 import { VariantSelectedEvent, VariantUpdateEvent } from '@theme/events';
 import { morph } from '@theme/morph';
 import { requestYieldCallback } from '@theme/utilities';
+import {PriceBreakdown} from '@theme/priceBreakdown';
 
 /**
  * A custom element that manages a variant picker.
@@ -165,6 +166,7 @@ export default class VariantPicker extends Component {
           this.updateMain(html);
         } else {
           const newProduct = this.updateVariantPicker(html);
+          PriceBreakdown.updatePriceBreakdown(html);
 
           // We grab the variant object from the response and dispatch an event with it.
           if (this.selectedOptionId) {

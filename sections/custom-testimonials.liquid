@@ -2,6 +2,7 @@
   Shopify Section: Testimonials
   - Uses specific class names to avoid theme style conflicts.
   - Fixes left button disable logic and increases card size.
+  - Colors updated to use theme's color scheme variables.
 {% endcomment %}
 
 <div class="testimonials-section color-{{ section.settings.color_scheme }} gradient">
@@ -66,18 +67,17 @@
   #shopify-section-{{ section.id }} .testimonials-section { padding: 50px 0; }
   #shopify-section-{{ section.id }} .page-width { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
   #shopify-section-{{ section.id }} .section-header { text-align: left; margin-bottom: 50px; }
-  #shopify-section-{{ section.id }} .sub-heading { font-size: 18px; color: #888; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-  #shopify-section-{{ section.id }} .main-heading { font-family: var(--font-heading-family, serif); font-size: 32px; font-weight: 400; margin: 0; }
+  #shopify-section-{{ section.id }} .sub-heading { font-size: 18px; color: var(--color-foreground-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  #shopify-section-{{ section.id }} .main-heading { font-family: var(--font-heading-family, serif); font-size: 32px; font-weight: 400; margin: 0; color: var(--color-foreground-heading); }
   #shopify-section-{{ section.id }} .testimonials-container { position: relative; }
   #shopify-section-{{ section.id }} .testimonials-grid { display: flex; gap: 30px; padding: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; }
   #shopify-section-{{ section.id }} .testimonials-grid::-webkit-scrollbar { display: none; }
 
-  /* --- CHANGED --- Card size adjustments */
   #shopify-section-{{ section.id }} .testimonial-card {
     flex: 0 0 calc(33.333% - 20px);
-    min-width: 350px; /* Increased min-width */
-    min-height: 280px; /* Added min-height */
-    border: 1px solid #e0e0e0;
+    min-width: 350px;
+    min-height: 280px;
+    border: 1px solid var(--color-border); /* UPDATED */
     border-radius: var(--card-corner-radius, 8px);
     background-color: var(--color-background);
     display: flex;
@@ -87,21 +87,21 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
-  #shopify-section-{{ section.id }} .testimonial-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07); }
+  #shopify-section-{{ section.id }} .testimonial-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(var(--color-shadow-rgb), 0.07); } /* UPDATED */
   #shopify-section-{{ section.id }} .card-body { padding: 30px; flex-grow: 1; }
-  #shopify-section-{{ section.id }} .card-body blockquote { margin: 0; font-style: italic; line-height: 1.6; font-size: 20px; color: rgba(var(--color-foreground), 0.75); }
-  #shopify-section-{{ section.id }} .card-footer { display: flex; align-items: center; gap: 15px; background-color: #f2f2f2; padding: 20px 30px; border-bottom-left-radius: var(--card-corner-radius, 8px); border-bottom-right-radius: var(--card-corner-radius, 8px); border-top: 1px solid #e0e0e0; }
+  #shopify-section-{{ section.id }} .card-body blockquote { margin: 0; font-style: italic; line-height: 1.6; font-size: 20px; color: var(--color-foreground-muted); } /* UPDATED */
+  #shopify-section-{{ section.id }} .card-footer { display: flex; align-items: center; gap: 15px; background-color: rgba(var(--color-foreground-rgb), var(--opacity-5-15)); padding: 20px 30px; border-bottom-left-radius: var(--card-corner-radius, 8px); border-bottom-right-radius: var(--card-corner-radius, 8px); border-top: 1px solid var(--color-border); } /* UPDATED */
   #shopify-section-{{ section.id }} .author-image { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
   #shopify-section-{{ section.id }} .author-details p { margin: 0; line-height: 1.4; }
-  #shopify-section-{{ section.id }} .author-name { font-weight: 500; font-size:20px;}
-  #shopify-section-{{ section.id }} .author-title { font-size:16px; color: rgba(var(--color-foreground), 0.7); }
+  #shopify-section-{{ section.id }} .author-name { font-weight: 500; font-size:20px; color: var(--color-foreground-heading); } /* UPDATED */
+  #shopify-section-{{ section.id }} .author-title { font-size:16px; color: var(--color-foreground-muted); } /* UPDATED */
 
   #shopify-section-{{ section.id }} .testimonial-slider-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     background-color: var(--color-background);
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border); /* UPDATED */
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -114,19 +114,19 @@
     transition: all 0.3s;
   }
   #shopify-section-{{ section.id }} .testimonial-slider-arrow:hover {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--color-primary-button-background); /* UPDATED */
+    color: var(--color-primary-button-text); /* UPDATED */
   }
   #shopify-section-{{ section.id }} .testimonial-slider-arrow:disabled {
     opacity: 0.4;
     cursor: not-allowed;
-    background-color: #f0f0f0;
-    color: #aaa;
-    border-color: #ddd;
+    background-color: var(--input-disabled-background-color); /* UPDATED */
+    color: var(--input-disabled-text-color); /* UPDATED */
+    border-color: var(--input-disabled-border-color); /* UPDATED */
   }
   #shopify-section-{{ section.id }} .testimonial-slider-arrow:disabled:hover {
-    background-color: #f0f0f0;
-    color: #aaa;
+    background-color: var(--input-disabled-background-color); /* UPDATED */
+    color: var(--input-disabled-text-color); /* UPDATED */
   }
   #shopify-section-{{ section.id }} .testimonial-slider-arrow.prev {
     left: -20px;
@@ -152,44 +152,56 @@
 
   if (!container || !prevButton || !nextButton || !cards.length) return;
 
-  let currentIndex = 0; // track which card we’re on
+  let currentIndex = 0;
 
   const updateArrowState = () => {
     prevButton.disabled = currentIndex === 0;
-    nextButton.disabled = currentIndex === cards.length - 1;
+    nextButton.disabled = currentIndex >= cards.length - Math.floor(container.clientWidth / cards[0].offsetWidth);
   };
-
+  
   const scrollToCard = (index) => {
     if (index < 0 || index >= cards.length) return;
     currentIndex = index;
-    cards[index].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
-    updateArrowState();
+    const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(container).gap);
+    container.scrollTo({
+      left: currentIndex * cardWidth,
+      behavior: 'smooth'
+    });
+    setTimeout(updateArrowState, 350); // Allow scroll to finish
   };
 
   nextButton.addEventListener('click', () => {
-    scrollToCard(currentIndex + 1);
+    const itemsPerPage = Math.floor(container.clientWidth / cards[0].offsetWidth);
+    const nextIndex = Math.min(currentIndex + 1, cards.length - itemsPerPage);
+    scrollToCard(nextIndex);
   });
 
   prevButton.addEventListener('click', () => {
-    scrollToCard(currentIndex - 1);
+    const nextIndex = Math.max(currentIndex - 1, 0);
+    scrollToCard(nextIndex);
   });
-
-  // Also update index on manual scroll (touch/drag)
+  
+  let isScrolling;
   container.addEventListener('scroll', () => {
-    let closestIndex = 0;
-    let minOffset = Infinity;
-    cards.forEach((card, idx) => {
-      const offset = Math.abs(card.offsetLeft - container.scrollLeft);
-      if (offset < minOffset) {
-        minOffset = offset;
-        closestIndex = idx;
-      }
-    });
-    currentIndex = closestIndex;
-    updateArrowState();
+    window.clearTimeout(isScrolling);
+    isScrolling = setTimeout(() => {
+      let closestIndex = 0;
+      let minOffset = Infinity;
+      const scrollLeft = container.scrollLeft;
+      
+      cards.forEach((card, idx) => {
+        const offset = Math.abs(card.offsetLeft - scrollLeft);
+        if (offset < minOffset) {
+          minOffset = offset;
+          closestIndex = idx;
+        }
+      });
+      currentIndex = closestIndex;
+      updateArrowState();
+    }, 150);
   });
 
-  // Initialize
+  new ResizeObserver(updateArrowState).observe(container);
   updateArrowState();
 });
 </script>
