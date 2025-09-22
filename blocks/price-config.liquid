@@ -8,7 +8,7 @@
 {%- if block.settings.show_block -%}
       
   <price-breakdown class="price-config-wrapper" {{ block.shopify_attributes }}>
-    {%- assign current_variant = product.selected_or_first_available_variant -%}
+    {%- assign current_variant = product.selected_or_first_available_variantID -%}
     <div>{{current_variant}}</div>
     {%- comment %}
       <!-- The main container for the price breakdown table -->
