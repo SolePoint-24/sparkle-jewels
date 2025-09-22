@@ -13,6 +13,15 @@
 -%}
 
 <style>
+    #shopify-section-{{ section.id }} {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+
   #shopify-section-{{ section.id }} .collection-hero__wrapper {
     background-image: url('{{ hero_image | image_url: width: 1920 }}');
   }
