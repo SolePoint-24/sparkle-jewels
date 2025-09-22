@@ -9,7 +9,7 @@ export class PriceBreakdown extends Component {
     super.connectedCallback();
 
     const { signal } = this.#abortController;
-		const target = .closest('.shopify-section, dialog, product-card');
+		const target = this.closest('.shopify-section, dialog, product-card');
     target?.addEventListener(ThemeEvents.variantUpdate, this.onVariantUpdate.bind(this), { signal });
   }
 
