@@ -20,11 +20,7 @@ export class PriceBreakdown extends Component {
   }
 
 	#onVariantUpdate(event) {
-    console.log('hai hai buou', event);
-  }
-
-  static updatePriceBreakdown(newHtml) {
-    /** @type {NewProduct | undefined} */
+    const newHtml = event.detail?.newHtml as Document | HTMLElement | undefined;
     let newProduct;
 
     const newPriceBreakdown = newHtml.querySelector('price-breakdown');
