@@ -1339,7 +1339,7 @@
                   "settings": {
                     "text": "<p>Yes, all our diamonds are certified by internationally recognized gemological laboratories such as GIA, IGI, or HRD. Each certified diamond comes with an official grading report.</p>",
                     "width": "100%",
-                    "max_width": "normal",
+                    "max_width": "none",
                     "alignment": "left",
                     "type_preset": "rte",
                     "font": "var(--font-body--family)",
@@ -1380,7 +1380,7 @@
                   "settings": {
                     "text": "<p>We provide a 1-year warranty on all jewellery items against manufacturing defects. This includes repair or replacement of defective products. Normal wear and tear or damage caused by accidents is not covered</p>",
                     "width": "100%",
-                    "max_width": "normal",
+                    "max_width": "none",
                     "alignment": "left",
                     "type_preset": "rte",
                     "font": "var(--font-body--family)",
@@ -1421,7 +1421,7 @@
                   "settings": {
                     "text": "<p>Yes, we offer one free resizing within 30 days of purchase. Additional resizing requests or resizing beyond this period may involve a small service fee.</p>",
                     "width": "100%",
-                    "max_width": "normal",
+                    "max_width": "none",
                     "alignment": "left",
                     "type_preset": "rte",
                     "font": "var(--font-body--family)",
@@ -1462,7 +1462,7 @@
                   "settings": {
                     "text": "<p>Shipping is calculated based on your location and the items in your order. You will always know the shipping price before you purchase.</p>",
                     "width": "100%",
-                    "max_width": "normal",
+                    "max_width": "none",
                     "alignment": "left",
                     "type_preset": "rte",
                     "font": "var(--font-body--family)",
