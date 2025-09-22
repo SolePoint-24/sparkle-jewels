@@ -4455,8 +4455,8 @@ box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* strong shadow */
   margin-bottom: 5px;
 }
 .product-card-wrapper .card__heading {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 400;
   margin: 0 0 8px;
   flex-grow: 1; /* This is the magic part: it pushes the price to the bottom */
 }
