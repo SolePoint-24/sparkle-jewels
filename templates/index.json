@@ -1088,8 +1088,8 @@
         "promo_button_text": "Discover Now",
         "promo_button_link": "",
         "collection": "rings",
-        "products_per_view": 4,
-        "products_to_slide": 1,
+        "products_per_view": 3,
+        "products_to_slide": 2,
         "products_to_show": 8
       }
     },
