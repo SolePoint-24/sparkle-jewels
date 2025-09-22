@@ -95,33 +95,7 @@
 {%- endif -%}
 
 <script>
-(() => {
-  // This variable will be updated every time a new variant is selected.
-  let currentSelectedVariant = null;
-
-  console.log('Listener script loaded. Waiting for variant changes...');
-
-  // Listen on the entire document for the 'variant:update' announcement.
-  document.addEventListener('variant:update', (event) => {
-    
-    // The full variant object is passed in the event's "detail.resource" property.
-    const selectedVariantObject = event.detail.resource;
-
-    if (selectedVariantObject) {
-      // Update our variable with the new variant object.
-      currentSelectedVariant = selectedVariantObject;
-
-      // Console.log the current variant in JSON format
-      console.log('Current Selected Variant (JSON):', JSON.stringify(currentSelectedVariant, null, 2));
-
-    } else {
-      // This can happen if the combination selected is not a valid variant
-      console.log('The selected combination is not available.');
-      currentSelectedVariant = null;
-    }
-  });
-
-})();
+console.log({{ current_variant }})
 
 </script>
 
