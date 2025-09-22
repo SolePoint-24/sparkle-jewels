@@ -151,7 +151,9 @@
           "blocks": {}
         }
       },
-      "custom_css": [],
+      "custom_css": [
+        ".header__row{height: 100px}"
+      ],
       "settings": {
         "logo_position": "center",
         "menu_position": "left",
