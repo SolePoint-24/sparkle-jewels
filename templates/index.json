@@ -1292,7 +1292,7 @@
                 "heading": "Can I cancel or modify my order after it has been placed?",
                 "open_by_default": false,
                 "icon": "none",
-                "width": 20
+                "width": 60
               },
               "blocks": {
                 "text_JCVekc": {
@@ -1300,7 +1300,7 @@
                   "settings": {
                     "text": "<p>Orders can be cancelled or modified within 24 hours of purchase. After this time, we may have already started processing your order and cannot guarantee changes. Please contact our support team as soon as possible for assistance.</p>",
                     "width": "100%",
-                    "max_width": "normal",
+                    "max_width": "none",
                     "alignment": "left",
                     "type_preset": "rte",
                     "font": "var(--font-body--family)",
