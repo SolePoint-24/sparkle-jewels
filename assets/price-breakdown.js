@@ -24,7 +24,6 @@ export class PriceBreakdown extends Component {
 
     const newPriceBreakdown = newHtml.querySelector('price-breakdown');
 
-    console.log('newPriceBreakdown', newPriceBreakdown)
 
     if (!newPriceBreakdown) {
       throw new Error('No new price breakdown found');
