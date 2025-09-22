@@ -165,7 +165,8 @@ export default class VariantPicker extends Component {
           this.updateMain(html);
         } else {
           const newProduct = this.updateVariantPicker(html);
-          PriceBreakdown.updatePriceBreakdown(html);
+          const priceBreakdownEl = html.querySelector('price-breakdown');
+          priceBreakdownEl.updatePriceBreakdown(html);
 
           // We grab the variant object from the response and dispatch an event with it.
           if (this.selectedOptionId) {
