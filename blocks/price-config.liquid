@@ -10,7 +10,6 @@
   <price-breakdown class="price-config-wrapper" {{ block.shopify_attributes }}>
     {%- assign current_variant = product.selected_variant.id-%}
     <div>{{current_variant}}</div>
-    <div>{{ metaobject | json }}</div> 
     {%- comment %}
       <!-- The main container for the price breakdown table -->
     {%- endcomment %}
