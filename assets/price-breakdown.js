@@ -10,7 +10,7 @@ export class PriceBreakdown extends Component {
 
     const { signal } = this.#abortController;
 		const target = this.closest('.shopify-section, dialog, product-card');
-    target?.addEventListener(ThemeEvents.variantUpdate, this.#onVariantUpdate, { signal });
+    target?.addEventListener(ThemeEvents.variantUpdate, (e) => this.#onVariantUpdate(e), { signal });
   }
 
   disconnectedCallback() {
