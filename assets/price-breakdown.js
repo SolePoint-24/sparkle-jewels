@@ -10,7 +10,7 @@ export class PriceBreakdown extends Component {
 
     const { signal } = this.#abortController;
 		const target = this.closest('.shopify-section, dialog, product-card');
-    target?.addEventListener(ThemeEvents.variantUpdate, (e) => this.#onVariantUpdate(e), { signal });
+    target?.addEventListener(ThemeEvents.variantUpdate, this.onVariantUpdate, { signal });
   }
 
   disconnectedCallback() {
@@ -19,7 +19,7 @@ export class PriceBreakdown extends Component {
     this.#abortController.abort();
   }
 
-	#onVariantUpdate(event) {
+	onVariantUpdate(event) {
     const newHtml = event.detail?.data?.html as Document | HTMLElement | undefined;
 
     const newPriceBreakdown = newHtml.querySelector('price-breakdown');
