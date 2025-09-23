@@ -637,6 +637,35 @@
       margin-top: calc(var(--header-height) * var(--transparent-header-offset-boolean) * -1);
     }
   }
+.logo-with-tagline {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This ensures both logo and text are centered */
+}
+
+.logo__tagline {
+  /* Controls the space between the logo and the text below it */
+  margin-top: 5px; 
+  
+  /* Sets the font size. Adjust as needed. */
+  font-size: 13px; 
+  
+  /* Makes the text color match the other header text (e.g., white on a dark background) */
+  color: inherit; 
+  
+  /* Ensures the text is centered along with the logo */
+  text-align: center; 
+  
+  /* Optional: Adds a little space between letters for a more refined look */
+  letter-spacing: 0.05em; 
+  
+  /* Prevents the text from affecting the main navigation's alignment */
+  line-height: 1.2; 
+  
+  /* Removes any default margin from the paragraph tag */
+  margin-bottom: 0;
+}
+
 {% endstylesheet %}
 
 {% unless request.design_mode %}
