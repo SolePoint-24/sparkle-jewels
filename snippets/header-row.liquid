@@ -60,11 +60,11 @@
               {{ first }}
             {% when 'logo' %}
                <div class="logo-with-tagline">
-    {{ logo }}
-    {%- if section.settings.logo_tagline != blank -%}
-      <p class="logo__tagline">{{ section.settings.logo_tagline | escape }}</p>
-    {%- endif -%}
-  </div>
+                  {{ logo }}
+                    {%- if section.settings.logo_tagline != blank -%}
+                        <p class="logo__tagline">{{ section.settings.logo_tagline | escape }}</p>
+                    {%- endif -%}
+                </div>
             {% when 'menu' %}
               {{ menu }}
             {% when 'localization' %}
