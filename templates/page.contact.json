@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "main": {
       "type": "main-page",
@@ -100,8 +101,8 @@
               "settings": {
                 "label": "Submit",
                 "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
+                "width": "custom",
+                "custom_width": 43,
                 "width_mobile": "fit-content",
                 "custom_width_mobile": 100
               },
