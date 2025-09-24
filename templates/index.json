@@ -253,7 +253,8 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "box",
-                    "width": 38,
+                    "image_upload": "shopify://shop_images/BIS-Hallmark-Black.png",
+                    "width": 54,
                     "link": "",
                     "open_in_new_tab": false
                   },
@@ -337,7 +338,7 @@
                   "settings": {
                     "icon": "price_tag",
                     "image_upload": "shopify://shop_images/badge-check_1.svg",
-                    "width": 38,
+                    "width": 54,
                     "link": "",
                     "open_in_new_tab": false
                   },
@@ -420,7 +421,7 @@
                   "name": "t:names.icon",
                   "settings": {
                     "icon": "truck",
-                    "width": 38,
+                    "width": 54,
                     "link": "",
                     "open_in_new_tab": false
                   },
@@ -504,7 +505,7 @@
                   "settings": {
                     "icon": "none",
                     "image_upload": "shopify://shop_images/clock-fading.svg",
-                    "width": 38,
+                    "width": 54,
                     "link": "",
                     "open_in_new_tab": false
                   },
@@ -588,7 +589,7 @@
                   "settings": {
                     "icon": "none",
                     "image_upload": "shopify://shop_images/clock-fading.svg",
-                    "width": 38,
+                    "width": 54,
                     "link": "",
                     "open_in_new_tab": false
                   },
