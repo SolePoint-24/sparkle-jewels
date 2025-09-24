@@ -54,7 +54,6 @@
         -%}
 
         {%- if variant_style == 'swatch' or block_settings.variant_style == 'buttons' -%}
-          <!-- Button/Swatch variant code remains the same -->
           <fieldset
             class="variant-option variant-option--buttons{% if variant_style == 'swatch' %} variant-option--swatches{% else %} variant-option--{{ settings.variant_button_width }}{% endif %}"
             {{ option_id_attribute }}
@@ -119,12 +118,10 @@
           </fieldset>
           
         {%- elsif block_settings.variant_style == 'slider' -%}
-          <!-- UPDATED SLIDER VARIANT STYLE -->
           <fieldset class="variant-option variant-option--slider" data-slider-id="{{ product_option.name | handleize }}-{{ block.id }}">
             <legend>{{ product_option.name | escape }}</legend>
             <div class="variant-slider__container">
               <div class="variant-slider__wrapper">
-                <!-- Previous Button -->
                 <button 
                   type="button"
                   class="variant-slider__nav variant-slider__nav--prev" 
@@ -136,7 +133,6 @@
                   </svg>
                 </button>
                 
-                <!-- Next Button -->
                 <button 
                   type="button"
                   class="variant-slider__nav variant-slider__nav--next" 
@@ -148,7 +144,6 @@
                   </svg>
                 </button>
                 
-                <!-- Slider Track -->
                 <div class="variant-slider__track">
                   <div class="variant-slider__list" data-slider-list>
                     {%- for product_option_value in product_option.values -%}
@@ -192,7 +187,6 @@
           </fieldset>
           
         {%- elsif block_settings.variant_style == 'dropdowns' -%}
-          <!-- Dropdown variant code remains the same -->
           {% liquid
             assign property_being_updated = false
             if settings.variant_swatch_width != settings.variant_swatch_height
@@ -255,7 +249,6 @@
   </variant-picker>
 {% endunless %}
 
-<!-- JavaScript for Slider Functionality -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     // Initialize all variant sliders
@@ -365,12 +358,13 @@
 
   .variant-slider__wrapper {
     position: relative;
-    padding: 0 40px; /* Space for nav buttons */
+    /* CHANGE: Removed padding: 0 40px; */
   }
 
   .variant-slider__track {
     overflow: hidden;
-    margin: 0 auto;
+    /* CHANGE: Changed margin to create space for nav buttons */
+    margin: 0 40px;
   }
 
   .variant-slider__list {
