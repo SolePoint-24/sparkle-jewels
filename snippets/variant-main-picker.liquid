@@ -250,92 +250,82 @@
 {% endunless %}
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const sliders = document.querySelectorAll('.variant-option--slider');
-
-  sliders.forEach(slider => {
-    const list = slider.querySelector('[data-slider-list]');
-    const prevBtn = slider.querySelector('[data-slider-prev]');
-    const nextBtn = slider.querySelector('[data-slider-next]');
-    if (!list || !prevBtn || !nextBtn) return;
-
-    // Accessibility: allow keyboard focus on slider
-    slider.setAttribute('tabindex', '0');
-
-    // Utility to update button state and hide navs when not needed
-    function updateControls() {
-      // small tolerance to avoid off-by-one
-      const maxScrollLeft = list.scrollWidth - list.clientWidth;
-      const atStart = list.scrollLeft <= 1;
-      const atEnd = list.scrollLeft >= (maxScrollLeft - 1);
-
-      prevBtn.disabled = atStart;
-      nextBtn.disabled = atEnd;
-
-      // hide navs if there is nothing to scroll
-      const shouldHideNavs = list.scrollWidth <= list.clientWidth + 1;
-      if (shouldHideNavs) slider.setAttribute('data-nav-hidden', 'true');
-      else slider.removeAttribute('data-nav-hidden');
-    }
-
-    // page scroll amount — scroll one "page" (visible width) at a time
-    function scrollNext() {
-      list.scrollBy({ left: list.clientWidth, behavior: 'smooth' });
-    }
-    function scrollPrev() {
-      list.scrollBy({ left: -list.clientWidth, behavior: 'smooth' });
-    }
-
-    nextBtn.addEventListener('click', scrollNext);
-    prevBtn.addEventListener('click', scrollPrev);
-
-    // Sync buttons while scrolling (use rAF for cheap throttling)
-    let rafId = null;
-    list.addEventListener('scroll', () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        updateControls();
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all variant sliders
+    const sliders = document.querySelectorAll('.variant-option--slider');
+    
+    sliders.forEach(slider => {
+      const list = slider.querySelector('[data-slider-list]');
+      const prevBtn = slider.querySelector('[data-slider-prev]');
+      const nextBtn = slider.querySelector('[data-slider-next]');
+      const items = slider.querySelectorAll('.variant-slider__item');
+      
+      if (!list || !prevBtn || !nextBtn || items.length === 0) return;
+      
+      let currentIndex = 0;
+      const itemsPerView = getItemsPerView();
+      const maxIndex = Math.max(0, items.length - itemsPerView);
+      
+      function getItemsPerView() {
+        const width = window.innerWidth;
+        if (width <= 480) return 2;
+        if (width <= 768) return 3;
+        return 4;
+      }
+      
+      function updateSlider() {
+        const itemWidth = 100 / itemsPerView;
+        const offset = -currentIndex * itemWidth;
+        list.style.transform = `translateX(${offset}%)`;
+        
+        // Update button states
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex >= maxIndex;
+      }
+      
+      function goToNext() {
+        if (currentIndex < maxIndex) {
+          currentIndex++;
+          updateSlider();
+        }
+      }
+      
+      function goToPrev() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateSlider();
+        }
+      }
+      
+      // Event listeners
+      nextBtn.addEventListener('click', goToNext);
+      prevBtn.addEventListener('click', goToPrev);
+      
+      // Handle window resize
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          const newItemsPerView = getItemsPerView();
+          const newMaxIndex = Math.max(0, items.length - newItemsPerView);
+          if (currentIndex > newMaxIndex) {
+            currentIndex = newMaxIndex;
+          }
+          updateSlider();
+        }, 250);
       });
-    });
-
-    // Update on load, images loaded, and resize
-    function scheduleUpdate() {
-      // give the browser a tick so layout stabilizes (images may load)
-      requestAnimationFrame(updateControls);
-    }
-
-    // Recalculate when window resizes
-    window.addEventListener('resize', scheduleUpdate);
-
-    // Also update once each image inside list loads (images change scrollWidth)
-    const imgs = Array.from(list.querySelectorAll('img'));
-    if (imgs.length) {
-      let loadedCount = 0;
-      imgs.forEach(img => {
-        if (img.complete) loadedCount++;
-        else img.addEventListener('load', () => {
-          loadedCount++;
-          if (loadedCount === imgs.length) scheduleUpdate();
-          else scheduleUpdate();
-        });
-        // also handle error/cached
-        img.addEventListener('error', scheduleUpdate);
+      
+      // Keyboard navigation
+      slider.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') goToPrev();
+        if (e.key === 'ArrowRight') goToNext();
       });
-    }
-
-    // Keyboard nav on slider container
-    slider.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); scrollPrev(); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); scrollNext(); }
+      
+      // Initial update
+      updateSlider();
     });
-
-    // initial state
-    scheduleUpdate();
   });
-});
 </script>
-
-
 
 {% stylesheet %}
   .variant-picker {
@@ -834,106 +824,4 @@ document.addEventListener('DOMContentLoaded', function() {
     text-align: right;
     justify-content: right;
   }
-
-  /* Make items sizing controlled by JS (flex-basis in px) */
-.variant-slider__list {
-  display: flex;
-  flex-basis: 33%;
-  gap: 12px;
-  transition: transform 0.3s ease-in-out;
-  will-change: transform;
-  align-items: flex-start;
-}
-
-.variant-slider__item {
-  flex: 0 0 auto;
-  min-width: 80px; /* ensure buttons don’t collapse too much */
-  max-width: 100%; /* don’t let them stretch beyond track */
-  box-sizing: border-box;
-}
-
-.variant-slider__track {
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-}
-/* Slightly inset the nav buttons so they sit on each side properly */
-.variant-slider__nav--prev { left: 8px; }
-.variant-slider__nav--next { right: 8px; }
-
-/* Make dragging user-friendly */
-.variant-slider__list,
-.variant-slider__item {
-  -webkit-user-select: none;
-  user-select: none;
-  touch-action: pan-y;
-}
-
-/* Slider: CSS-only sizing, native scroll with scroll-snap */
-.variant-slider__track {
-  position: relative;
-  width: 100%;
-  overflow: hidden; /* hide outer overflow/scrollbars while inner list scrolls */
-}
-
-.variant-slider__list {
-  display: flex;
-  gap: 12px; /* matches your existing gap */
-  margin: 0;
-  padding-inline: 8px; /* optional padding so edge items have breathing room */
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  align-items: flex-start;
-  /* hide scrollbars visually */
-  scrollbar-width: none; /* Firefox */
-}
-.variant-slider__list::-webkit-scrollbar { display: none; } /* WebKit */
-
-/* Items size themselves via min-width. Adjust the var to control how many fit. */
-:root { --variant-min-width: 80px; } /* tweak globally if you want */
-.variant-slider__item {
-  flex: 0 0 auto;              /* do not grow/shrink relative to container */
-  min-width: var(--variant-min-width);
-  max-width: 100%;
-  box-sizing: border-box;
-  scroll-snap-align: start;    /* snap to item start */
-}
-
-/* Make the image wrapper responsive inside the item */
-.variant-slider__image-wrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* nav buttons overlay — keep them visible but not changing layout */
-.variant-slider__nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 3;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.variant-slider__nav--prev { left: 8px; }
-.variant-slider__nav--next { right: 8px; }
-
-/* visually disabled state */
-.variant-slider__nav:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-/* if list fits entirely, hide navs */
-.variant-option--slider[data-nav-hidden="true"] .variant-slider__nav {
-  display: none;
-}
-
-
 {% endstylesheet %}
