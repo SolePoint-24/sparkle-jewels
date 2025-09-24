@@ -290,7 +290,7 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "price_tag",
-                        "image_upload": "shopify://shop_images/Ethical-Sourcing-icon.png",
+                        "image_upload": "shopify://shop_images/return-icon.png",
                         "width": 24,
                         "link": "",
                         "open_in_new_tab": false
@@ -301,7 +301,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>Ethical Sourcing</p>",
+                        "text": "<p>15 days return</p>",
                         "width": "100%",
                         "max_width": "none",
                         "alignment": "center",
