@@ -258,9 +258,9 @@
 
 <!-- JavaScript for Slider Functionality -->
 <script>
-    console.log("image url")
+    {% comment %} console.log("image url")
 
-  console.log({{ image_url | json }})
+  console.log({{ image_url | json }}) {% endcomment %}
   document.addEventListener('DOMContentLoaded', function() {
     // Initialize all variant sliders
     const sliders = document.querySelectorAll('.variant-option--slider');
