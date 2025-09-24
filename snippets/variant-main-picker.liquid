@@ -1,4 +1,4 @@
-
+<!-- variant-picker.liquid snippet -->
 {%- doc -%}
   Renders a default variant picker, used to display the variant picker in the variants block.
 
@@ -119,88 +119,7 @@
             {% endif %}
           </fieldset>
           
-      {%- elsif block_settings.variant_style == 'slider' -%}
-        {%- liquid
-        
-          assign global_variant_images = shop.metaobjects.variant_image_map.values
-        
-        -%}
-        <fieldset class="variant-option variant-option--slider" data-slider-id="{{ product_option.name | handleize }}-{{ block.id }}">
-          <legend>{{ product_option.name | escape }}</legend>
-          <div class="variant-slider__container">
-            <div class="variant-slider__wrapper">
-              <button
-                type="button"
-                class="variant-slider__nav variant-slider__nav--prev"
-                aria-label="Previous {{ product_option.name }} options"
-                data-slider-prev
-              >
-                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
-              </button>
-
-              <button
-                type="button"
-                class="variant-slider__nav variant-slider__nav--next"
-                aria-label="Next {{ product_option.name }} options"
-                data-slider-next
-              >
-                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-              </button>
-
-              <div class="variant-slider__track">
-                <div class="variant-slider__list" data-slider-list>
-                  {%- for product_option_value in product_option.values -%}
-                    {%- liquid
-                      
-                      assign image_url = ''
-                      for item in global_variant_images
-                        if item.variant_name == product_option_value
-                          assign image_url = item.variant_image | image_url: width: 120
-                          break 
-                        endif
-                      endfor
-
-                      
-                      if image_url == ''
-                        assign variant_handle = product_option_value | handleize
-                        assign image_name = variant_handle | append: '.png'
-                        assign image_url = image_name | asset_url
-                      endif
-                   
-                    -%}
-                    <div class="variant-slider__item">
-                      <label class="variant-slider__label">
-                        <input
-                          type="radio"
-                          name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
-                          value="{{ product_option_value | escape }}"
-                          aria-label="{{ product_option_value.name }}"
-                          {% if product_option_value.available == false %}
-                            aria-disabled="true"
-                          {% endif %}
-                          data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
-                          data-option-value-id="{{ product_option_value.id }}"
-                          data-option-available="{{ product_option_value.available }}"
-                          data-connected-product-url="{{ product_option_value.product_url }}"
-                          {% if product_option_value.variant.id %}
-                            data-variant-id="{{ product_option_value.variant.id }}"
-                          {% endif %}
-                          {% if product_option_value.selected %}
-                            checked
-                          {% endif %}
-                        >
-                        <div class="variant-slider__image-wrapper">
-                           <img src="{{ image_url }}" alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
-                          <span>{{ product_option_value | escape }}</span>
-                        </div>
-                      </label>
-                    </div>
-                  {%- endfor -%}
-                </div>
-              </div>
-            </div>
-          </div>
-        </fieldset>
+        {%- elsif block_settings.variant_style == 'slider' -%}
           <!-- UPDATED SLIDER VARIANT STYLE -->
           <fieldset class="variant-option variant-option--slider" data-slider-id="{{ product_option.name | handleize }}-{{ block.id }}">
             <legend>{{ product_option.name | escape }}</legend>
