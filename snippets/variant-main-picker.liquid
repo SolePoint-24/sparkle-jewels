@@ -1,3 +1,4 @@
+
 {%- doc -%}
   Renders a default variant picker, used to display the variant picker in the variants block.
 
@@ -92,6 +93,8 @@
                   {% liquid
                     assign featured_media = product_option_value.variant.featured_media
 
+                    # If the variant has no featured media, and we have a combined listing product, then fall back to
+                    # using the featured media of the child product that is linked to this option value.
                     if featured_media == blank and product_option_value.product_url
                       assign featured_media = product_option_value.variant.product.featured_media
                     endif
@@ -116,81 +119,59 @@
               {% endstyle %}
             {% endif %}
           </fieldset>
-          
         {%- elsif block_settings.variant_style == 'slider' -%}
-          <fieldset class="variant-option variant-option--slider" data-slider-id="{{ product_option.name | handleize }}-{{ block.id }}">
+          <fieldset class="variant-option variant-option--slider">
             <legend>{{ product_option.name | escape }}</legend>
             <div class="variant-slider__container">
-              <div class="variant-slider__wrapper">
-                <button 
-                  type="button"
-                  class="variant-slider__nav variant-slider__nav--prev" 
-                  aria-label="Previous {{ product_option.name }} options"
-                  data-slider-prev
-                >
-                  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                  </svg>
-                </button>
-                
-                <button 
-                  type="button"
-                  class="variant-slider__nav variant-slider__nav--next" 
-                  aria-label="Next {{ product_option.name }} options"
-                  data-slider-next
-                >
-                  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </button>
-                
-                <div class="variant-slider__track">
-                  <div class="variant-slider__list" data-slider-list>
-                    {%- for product_option_value in product_option.values -%}
-                      {%- liquid
-                        assign variant_handle = product_option_value | handleize
-                        assign image_name = variant_handle | append: '.png'
-                        assign image_url = image_name | asset_url
-                      -%}
-                      <div class="variant-slider__item">
-                        <label class="variant-slider__label">
-                          <input
-                            type="radio"
-                            name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
-                            value="{{ product_option_value | escape }}"
-                            aria-label="{{ product_option_value.name }}"
-                            {% if product_option_value.available == false %}
-                              aria-disabled="true"
-                            {% endif %}
-                            data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
-                            data-option-value-id="{{ product_option_value.id }}"
-                            data-option-available="{{ product_option_value.available }}"
-                            data-connected-product-url="{{ product_option_value.product_url }}"
-                            {% if product_option_value.variant.id %}
-                              data-variant-id="{{ product_option_value.variant.id }}"
-                            {% endif %}
-                            {% if product_option_value.selected %}
-                              checked
-                            {% endif %}
-                          >
-                          <div class="variant-slider__image-wrapper">
-                            <img src="{{ image_url }}" alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
-                            <span>{{ product_option_value | escape }}</span>
-                          </div>
-                        </label>
+              <overflow-list class="variant-slider__list">
+                {%- for product_option_value in product_option.values -%}
+                  {%- liquid
+                    assign variant_handle = product_option_value | handleize
+                    assign image_name = variant_handle | append: '.png'
+                    assign image_url = image_name | asset_url
+                  -%}
+                  <div class="variant-slider__item">
+                    <label class="variant-slider__label">
+                      <input
+                        type="radio"
+                        name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
+                        value="{{ product_option_value | escape }}"
+                        aria-label="{{ product_option_value.name }}"
+                        {% if product_option_value.available == false %}
+                          aria-disabled="true"
+                        {% endif %}
+                        data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                        data-option-value-id="{{ product_option_value.id }}"
+                        data-option-available="{{ product_option_value.available }}"
+                        data-connected-product-url="{{ product_option_value.product_url }}"
+                        {% if product_option_value.variant.id %}
+                          data-variant-id="{{ product_option_value.variant.id }}"
+                        {% endif %}
+                        {% if product_option_value.selected %}
+                          checked
+                        {% endif %}
+                      >
+                      <div class="variant-slider__image-wrapper">
+                        <img src="{{ image_url }}" alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
+                        <span>{{ product_option_value | escape }}</span>
                       </div>
-                    {%- endfor -%}
+                    </label>
                   </div>
-                </div>
-              </div>
+                {%- endfor -%}
+              </overflow-list>
             </div>
           </fieldset>
-          
         {%- elsif block_settings.variant_style == 'dropdowns' -%}
+          {%
+            # There is an opportunity to build a custom select component that will allow us to style the select element further (animation for dropdown, swatches shown in the dropdown options, etc)
+            # It's too bad as it mean rebuilding baked in behaviours but I think we've already done that for the locale selectors
+            # in dawn. So it might mean more time spent in setting it up but worth it for future updates/styling.
+          %}
           {% liquid
             assign property_being_updated = false
             if settings.variant_swatch_width != settings.variant_swatch_height
               assign property_being_updated = true
+              # (original width / original height) x new height (20px at the moment) = new width
               assign new_width = settings.variant_swatch_width | times: 1.0 | divided_by: settings.variant_swatch_height | times: 20
             endif
           %}
@@ -249,156 +230,6 @@
   </variant-picker>
 {% endunless %}
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const sliders = document.querySelectorAll('.variant-option--slider');
-
-  sliders.forEach(initSlider);
-
-  function initSlider(slider) {
-    const list = slider.querySelector('[data-slider-list]');
-    const track = slider.querySelector('.variant-slider__track');
-    const prevBtn = slider.querySelector('[data-slider-prev]');
-    const nextBtn = slider.querySelector('[data-slider-next]');
-    const items = Array.from(slider.querySelectorAll('.variant-slider__item'));
-
-    if (!list || !track || !prevBtn || !nextBtn || items.length === 0) return;
-
-    // configuration: tweak minItemWidth to control how many items fit
-    const MIN_ITEM_WIDTH = 120; // px — change this value to make items larger/smaller
-    const GAP = parseFloat(getComputedStyle(list).gap) || 12; // px
-
-    let currentIndex = 0;
-    let itemsPerView = 1;
-    let itemWidth = 0;
-
-    // compute and apply sizes
-    function computeLayout() {
-      const available = Math.max(0, track.clientWidth);
-      const maxPossible = items.length;
-      let perView = Math.floor((available + GAP) / (MIN_ITEM_WIDTH + GAP));
-      if (perView < 1) perView = 1;
-      if (perView > maxPossible) perView = maxPossible;
-
-      itemsPerView = perView;
-      itemWidth = Math.floor((available - GAP * (itemsPerView - 1)) / itemsPerView);
-
-      items.forEach(item => {
-        item.style.flex = `0 0 ${itemWidth}px`;
-      });
-
-      updateSlider();
-    }
-
-    function updateSlider(instant = false) {
-      const maxIndex = Math.max(0, items.length - itemsPerView);
-      if (currentIndex > maxIndex) currentIndex = maxIndex;
-      if (currentIndex < 0) currentIndex = 0;
-
-      const translate = currentIndex * (itemWidth + GAP);
-      if (instant) list.style.transition = 'none';
-      else list.style.transition = 'transform 300ms ease';
-
-      list.style.transform = `translateX(-${translate}px)`;
-
-      prevBtn.disabled = currentIndex === 0;
-      nextBtn.disabled = currentIndex >= maxIndex;
-    }
-
-    function goNext() {
-      const maxIndex = Math.max(0, items.length - itemsPerView);
-      if (currentIndex < maxIndex) {
-        currentIndex += 1;
-        updateSlider();
-      }
-    }
-    function goPrev() {
-      if (currentIndex > 0) {
-        currentIndex -= 1;
-        updateSlider();
-      }
-    }
-
-    nextBtn.addEventListener('click', goNext);
-    prevBtn.addEventListener('click', goPrev);
-
-    // Recalculate on resize using ResizeObserver for the track
-    const ro = new ResizeObserver(() => {
-      computeLayout();
-    });
-    ro.observe(track);
-
-    // Keyboard navigation
-    slider.setAttribute('tabindex', '0');
-    slider.style.outline = 'none';
-    slider.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') goPrev();
-      if (e.key === 'ArrowRight') goNext();
-    });
-
-    // Pointer / touch dragging (pointer events)
-    let isDragging = false;
-    let startX = 0;
-    let startTranslate = 0;
-
-    list.style.willChange = 'transform';
-    list.style.touchAction = 'pan-y'; // allow vertical scroll; horizontal we handle
-    list.addEventListener('pointerdown', (e) => {
-      isDragging = true;
-      list.style.transition = 'none';
-      startX = e.clientX;
-
-      // compute currentTranslate (absolute px)
-      const matrix = window.getComputedStyle(list).transform;
-      let currentTranslate = 0;
-      if (matrix && matrix !== 'none') {
-        const domMatrix = new DOMMatrixReadOnly(matrix);
-        currentTranslate = Math.abs(domMatrix.m41);
-      }
-      startTranslate = currentTranslate;
-
-      list.setPointerCapture(e.pointerId);
-    });
-
-    list.addEventListener('pointermove', (e) => {
-      if (!isDragging) return;
-      const delta = e.clientX - startX;
-      let newTranslate = startTranslate - delta;
-      const maxTranslate = Math.max(0, (items.length * (itemWidth + GAP)) - (itemsPerView * (itemWidth + GAP)));
-      if (newTranslate < 0) newTranslate = 0;
-      if (newTranslate > maxTranslate) newTranslate = maxTranslate;
-      list.style.transform = `translateX(-${newTranslate}px)`;
-    });
-
-    function endDrag(e) {
-      if (!isDragging) return;
-      isDragging = false;
-      try { list.releasePointerCapture(e.pointerId); } catch (err) {}
-      // get current translate
-      const matrix = window.getComputedStyle(list).transform;
-      let currentTranslate = 0;
-      if (matrix && matrix !== 'none') {
-        const domMatrix = new DOMMatrixReadOnly(matrix);
-        currentTranslate = Math.abs(domMatrix.m41);
-      }
-      const perItem = itemWidth + GAP;
-      const nearestIndex = Math.round(currentTranslate / perItem);
-      currentIndex = Math.min(Math.max(nearestIndex, 0), Math.max(0, items.length - itemsPerView));
-      list.style.transition = 'transform 300ms ease';
-      updateSlider();
-    }
-
-    list.addEventListener('pointerup', endDrag);
-    list.addEventListener('pointercancel', endDrag);
-    list.addEventListener('pointerleave', (e) => { if (isDragging) endDrag(e); });
-
-    // initial compute
-    computeLayout();
-  }
-});
-</script>
-
-
 {% stylesheet %}
   .variant-picker {
     width: 100%;
@@ -411,7 +242,18 @@ document.addEventListener('DOMContentLoaded', function() {
     width: 100%;
   }
 
-  /* --- SLIDER STYLES --- */
+  .variant-picker[data-shopify-visual-preview] {
+    min-width: 300px;
+    padding-inline-start: max(4px, var(--padding-inline-start));
+  }
+
+  .variant-option {
+    --options-border-radius: var(--variant-picker-button-radius);
+    --options-border-width: var(--variant-picker-button-border-width);
+    --variant-option-padding-inline: var(--padding-md);
+  }
+  
+  /* --- SLIDER STYLES START --- */
   .variant-option--slider {
     padding: 0;
     margin: 0;
@@ -421,51 +263,29 @@ document.addEventListener('DOMContentLoaded', function() {
   .variant-option--slider legend {
     padding: 0;
     margin-block-end: var(--margin-xs);
-    font-weight: 600;
   }
 
   .variant-slider__container {
     position: relative;
   }
 
-  .variant-slider__wrapper {
-    position: relative;
-    /* CHANGE: Removed padding: 0 40px; */
-  }
-
-  .variant-slider__track {
-    overflow: hidden;
-    /* CHANGE: Changed margin to create space for nav buttons */
-    margin: 0 40px;
-  }
-
   .variant-slider__list {
-    display: flex;
-    gap: 12px;
-    transition: transform 0.3s ease-in-out;
+    --visible-items: 4;
+    --item-gap: 12px;
+    padding-inline: 40px; /* Space for arrows */
   }
 
+  .variant-slider__list > [slot='list'] {
+    grid-auto-columns: calc((100% - (var(--item-gap) * (var(--visible-items) - 1))) / var(--visible-items));
+  }
+  
   .variant-slider__item {
-    flex: 0 0 calc(25% - 9px); /* 4 items per view */
-    min-width: 0;
-  }
-
-  @media (max-width: 768px) {
-    .variant-slider__item {
-      flex: 0 0 calc(33.333% - 8px); /* 3 items per view */
-    }
-  }
-
-  @media (max-width: 480px) {
-    .variant-slider__item {
-      flex: 0 0 calc(50% - 6px); /* 2 items per view */
-    }
+    width: 100%;
   }
 
   .variant-slider__label {
     display: block;
     cursor: pointer;
-    width: 100%;
   }
 
   .variant-slider__image-wrapper {
@@ -476,13 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
     padding: 8px;
     border: 2px solid transparent;
     border-radius: 8px;
-    transition: all 0.2s ease-in-out;
-    background: var(--color-background);
-  }
-
-  .variant-slider__image-wrapper:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: border-color 0.2s ease-in-out;
   }
 
   .variant-slider__image-wrapper img {
@@ -490,18 +304,13 @@ document.addEventListener('DOMContentLoaded', function() {
     width: 60px;
     height: 60px;
     object-fit: cover;
-    border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+    border: 1px solid #e0e0e0;
   }
   
   .variant-slider__label span {
     font-size: 12px;
     text-align: center;
-    color: rgb(var(--color-foreground-rgb) / 0.75);
-    display: block;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    color: rgb(var(--color-foreground-rgb) / 0.85);
   }
 
   .variant-slider__label input {
@@ -513,86 +322,34 @@ document.addEventListener('DOMContentLoaded', function() {
   
   .variant-slider__label input:checked + .variant-slider__image-wrapper {
     border-color: rgb(var(--color-foreground-rgb));
-    background: rgb(var(--color-foreground-rgb) / 0.05);
-  }
-
-  .variant-slider__label input:checked + .variant-slider__image-wrapper span {
-    color: rgb(var(--color-foreground-rgb));
-    font-weight: 600;
   }
 
   .variant-slider__label input:focus-visible + .variant-slider__image-wrapper {
-    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-foreground);
+      box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-foreground);
   }
   
-  /* Navigation Buttons */
-  .variant-slider__nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+  .variant-slider__list [slot="previous-button"],
+  .variant-slider__list [slot="next-button"] {
     width: 32px;
     height: 32px;
-    background-color: var(--color-background);
-    border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
     border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    z-index: 2;
-    padding: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
 
-  .variant-slider__nav:hover:not(:disabled) {
-    background-color: rgb(var(--color-foreground-rgb));
-    border-color: rgb(var(--color-foreground-rgb));
-    transform: translateY(-50%) scale(1.1);
-  }
-
-  .variant-slider__nav:hover:not(:disabled) svg {
-    stroke: var(--color-background);
-  }
-
-  .variant-slider__nav:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-
-  .variant-slider__nav--prev {
-    left: 0;
-  }
-
-  .variant-slider__nav--next {
-    right: 0;
-  }
-
-  .variant-slider__nav svg {
-    width: 16px;
-    height: 16px;
-    stroke: rgb(var(--color-foreground-rgb));
-    stroke-width: 2;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  /* Unavailable state */
-  .variant-slider__label input[aria-disabled="true"] + .variant-slider__image-wrapper {
-    opacity: 0.5;
-    position: relative;
-  }
-
-  .variant-slider__label input[aria-disabled="true"] + .variant-slider__image-wrapper::after {
-    content: '';
+  .variant-slider__list [slot="previous-button"] {
     position: absolute;
+    left: 0;
     top: 50%;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: rgb(var(--color-foreground-rgb) / 0.3);
-    transform: rotate(-45deg);
+    transform: translateY(-50%);
+  }
+
+  .variant-slider__list [slot="next-button"] {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
   }
   
   /* --- SLIDER STYLES END --- */
@@ -896,39 +653,4 @@ document.addEventListener('DOMContentLoaded', function() {
     text-align: right;
     justify-content: right;
   }
-
-  /* Make items sizing controlled by JS (flex-basis in px) */
-.variant-slider__list {
-  display: flex;
-  flex-basis: 33%;
-  gap: 12px;
-  transition: transform 0.3s ease-in-out;
-  will-change: transform;
-  align-items: flex-start;
-}
-
-.variant-slider__item {
-  flex: 0 0 auto;
-  min-width: 80px; /* ensure buttons don’t collapse too much */
-  max-width: 100%; /* don’t let them stretch beyond track */
-  box-sizing: border-box;
-}
-
-.variant-slider__track {
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-}
-/* Slightly inset the nav buttons so they sit on each side properly */
-.variant-slider__nav--prev { left: 8px; }
-.variant-slider__nav--next { right: 8px; }
-
-/* Make dragging user-friendly */
-.variant-slider__list,
-.variant-slider__item {
-  -webkit-user-select: none;
-  user-select: none;
-  touch-action: pan-y;
-}
-
 {% endstylesheet %}
