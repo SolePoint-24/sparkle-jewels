@@ -3763,7 +3763,7 @@ slideshow-arrows .slideshow-control {
   opacity: 0;
   min-height: var(--minimum-touch-target);
   padding: 0 var(--padding-xs);
-  color: var(--color-white);
+  color: #000;
 }
 
 slideshow-arrows .slideshow-control.slideshow-control--style-none {
