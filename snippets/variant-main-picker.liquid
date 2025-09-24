@@ -118,73 +118,36 @@
           </fieldset>
           
         {%- elsif block_settings.variant_style == 'slider' -%}
-          <fieldset class="variant-option variant-option--slider" data-slider-id="{{ product_option.name | handleize }}-{{ block.id }}">
+        <fieldset class="variant-option variant-option--slider" data-slider-id="{{ product_option.name | handleize }}-{{ block.id }}">
             <legend>{{ product_option.name | escape }}</legend>
+
             <div class="variant-slider__container">
               <div class="variant-slider__wrapper">
-                <button 
-                  type="button"
-                  class="variant-slider__nav variant-slider__nav--prev" 
-                  aria-label="Previous {{ product_option.name }} options"
-                  data-slider-prev
-                >
-                  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                  </svg>
+                <button type="button" class="variant-slider__nav variant-slider__nav--prev" aria-label="Previous {{ product_option.name }}" data-slider-prev>
+                  <!-- svg -->
                 </button>
-                
-                <button 
-                  type="button"
-                  class="variant-slider__nav variant-slider__nav--next" 
-                  aria-label="Next {{ product_option.name }} options"
-                  data-slider-next
-                >
-                  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
+
+                <button type="button" class="variant-slider__nav variant-slider__nav--next" aria-label="Next {{ product_option.name }}" data-slider-next>
+                  <!-- svg -->
                 </button>
-                
+
                 <div class="variant-slider__track">
-                  <div class="variant-slider__list" data-slider-list>
+                  <!-- ADD `glider` CLASS HERE -->
+                  <div class="variant-slider__list glider" data-slider-list>
                     {%- for product_option_value in product_option.values -%}
-                      {%- liquid
-                        assign variant_handle = product_option_value | handleize
-                        assign image_name = variant_handle | append: '.png'
-                        assign image_url = image_name | asset_url
-                      -%}
                       <div class="variant-slider__item">
-                        <label class="variant-slider__label">
-                          <input
-                            type="radio"
-                            name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
-                            value="{{ product_option_value | escape }}"
-                            aria-label="{{ product_option_value.name }}"
-                            {% if product_option_value.available == false %}
-                              aria-disabled="true"
-                            {% endif %}
-                            data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
-                            data-option-value-id="{{ product_option_value.id }}"
-                            data-option-available="{{ product_option_value.available }}"
-                            data-connected-product-url="{{ product_option_value.product_url }}"
-                            {% if product_option_value.variant.id %}
-                              data-variant-id="{{ product_option_value.variant.id }}"
-                            {% endif %}
-                            {% if product_option_value.selected %}
-                              checked
-                            {% endif %}
-                          >
-                          <div class="variant-slider__image-wrapper">
-                            <img src="{{ image_url }}" alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
-                            <span>{{ product_option_value | escape }}</span>
-                          </div>
-                        </label>
+                        <!-- content -->
                       </div>
                     {%- endfor -%}
                   </div>
+
+                  <!-- optional dots -->
+                  <div class="glider-dots" role="tablist" aria-hidden="true"></div>
                 </div>
               </div>
             </div>
           </fieldset>
+
           
         {%- elsif block_settings.variant_style == 'dropdowns' -%}
           {% liquid
@@ -824,4 +787,36 @@
     text-align: right;
     justify-content: right;
   }
+  /* Ensure glider track hides overflow and arrow placement is stable */
+.variant-slider__track {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Glider list already set up by glider.min.css, but we make sure gap & snapping are OK */
+.variant-slider__list {
+  display: flex;
+  gap: 12px;
+  padding-inline: 8px; /* optional breathing room */
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+/* Basic item sizing: let the item determine its width (so cards don't blow up) */
+.variant-slider__item {
+  flex: 0 0 auto;
+  min-width: 80px;   /* tweak this to control how many fit on tiny screens */
+  max-width: 160px;  /* optional upper cap so items don't blow up on wider screens */
+  box-sizing: border-box;
+  scroll-snap-align: start;
+}
+
+/* arrow placement (tweak spacing as needed) */
+.variant-slider__nav--prev { left: 8px; }
+.variant-slider__nav--next { right: 8px; }
+
+/* hide native scrollbar for aesthetics */
+.variant-slider__list::-webkit-scrollbar { display: none; }
+
 {% endstylesheet %}
