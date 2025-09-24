@@ -17,6 +17,75 @@
       assign strikethrough_color_mix = '#fff'
     endif
   %}
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".variant-slider__list").forEach((slider) => {
+      const list = slider.querySelector("[slot='list']");
+      const prevBtn = slider.querySelector("[slot='previous-button']");
+      const nextBtn = slider.querySelector("[slot='next-button']");
+
+      if (!list) return;
+
+      const scrollAmount = list.clientWidth * 0.8; // scroll by ~80% width
+
+      prevBtn?.addEventListener("click", () => {
+        list.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+      });
+
+      nextBtn?.addEventListener("click", () => {
+        list.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      });
+
+      // Touch / drag scrolling for mobile
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      list.addEventListener("mousedown", (e) => {
+        isDown = true;
+        list.classList.add("dragging");
+        startX = e.pageX - list.offsetLeft;
+        scrollLeft = list.scrollLeft;
+      });
+
+      list.addEventListener("mouseleave", () => {
+        isDown = false;
+        list.classList.remove("dragging");
+      });
+
+      list.addEventListener("mouseup", () => {
+        isDown = false;
+        list.classList.remove("dragging");
+      });
+
+      list.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - list.offsetLeft;
+        const walk = (x - startX) * 1.2; // scroll-fast multiplier
+        list.scrollLeft = scrollLeft - walk;
+      });
+
+      // Touch support
+      let touchStartX = 0;
+      let touchScrollLeft = 0;
+
+      list.addEventListener("touchstart", (e) => {
+        touchStartX = e.touches[0].pageX;
+        touchScrollLeft = list.scrollLeft;
+      });
+
+      list.addEventListener("touchmove", (e) => {
+        const x = e.touches[0].pageX;
+        const walk = (x - touchStartX) * 1.2;
+        list.scrollLeft = touchScrollLeft - walk;
+      });
+    });
+  });
+</script>
+
+
   <variant-picker
     class="variant-picker spacing-style variant-picker--{{ block_settings.alignment }}"
     style="--color-strikethrough-mix: {{ strikethrough_color_mix }}; {% render 'spacing-style', settings: block_settings %}"
@@ -120,9 +189,15 @@
             {% endif %}
           </fieldset>
         {%- elsif block_settings.variant_style == 'slider' -%}
-          <fieldset class="variant-option variant-option--slider">
+        <fieldset class="variant-option variant-option--slider">
   <legend>{{ product_option.name | escape }}</legend>
   <overflow-list class="variant-slider__list">
+    <!-- Prev button -->
+    <button type="button" class="variant-slider__arrow" slot="previous-button" aria-label="Previous">
+      &larr;
+    </button>
+
+    <!-- List wrapper -->
     <div slot="list">
       {%- for product_option_value in product_option.values -%}
         {%- liquid
@@ -154,6 +229,10 @@
         </div>
       {%- endfor -%}
     </div>
+    <!-- Next button -->
+    <button type="button" class="variant-slider__arrow" slot="next-button" aria-label="Next">
+      &rarr;
+    </button>
   </overflow-list>
 </fieldset>
 
@@ -657,4 +736,9 @@
     text-align: right;
     justify-content: right;
   }
+  .variant-slider__list.dragging {
+  cursor: grabbing;
+  scroll-behavior: auto; /* disable smooth scroll during drag for responsiveness */
+}
+
 {% endstylesheet %}
