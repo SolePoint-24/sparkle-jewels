@@ -22,9 +22,6 @@
       id="view-transition-render-blocker"
     >
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glider-js@1.7.8/glider.min.css">
-
-
     {%- render 'meta-tags' -%}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
@@ -50,101 +47,6 @@
       async
       blocking="render"
     ></script>
-    <script src="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.js" defer></script>
-    <script>
-document.addEventListener('DOMContentLoaded', () => {
-  if (typeof Glider === 'undefined') {
-    console.warn('Glider.js not loaded.');
-    return;
-  }
-
-  const sliders = Array.from(document.querySelectorAll('.variant-option--slider'));
-  const instances = new Map();
-
-  function initSlider(slider) {
-    const list = slider.querySelector('.glider');
-    if (!list) return;
-
-    // If already initialized, destroy to avoid double-init
-    if (instances.has(slider)) {
-      try { instances.get(slider).destroy(); } catch (e) {}
-      instances.delete(slider);
-    }
-
-    const prev = slider.querySelector('[data-slider-prev]') || slider.querySelector('.variant-slider__nav--prev');
-    const next = slider.querySelector('[data-slider-next]') || slider.querySelector('.variant-slider__nav--next');
-    const dots = slider.querySelector('.glider-dots') || null;
-
-    // Wait for images inside the list to load to get correct widths
-    const imgs = Array.from(list.querySelectorAll('img'));
-    const imagesReady = imgs.length === 0 ? Promise.resolve() :
-      Promise.all(imgs.map(img => img.complete ? Promise.resolve() : new Promise(r => img.addEventListener('load', r, { once: true }))));
-
-    imagesReady.then(() => {
-      // Create Glider
-      const gl = new Glider(list, {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        draggable: true,
-        dots: dots || false,
-        arrows: { prev: prev || undefined, next: next || undefined },
-        // Responsive breakpoints - tweak counts as you like
-        responsive: [
-          { breakpoint: 480, settings: { slidesToShow: 2, slidesToScroll: 1 } },
-          { breakpoint: 768, settings: { slidesToShow: 3, slidesToScroll: 1 } },
-          { breakpoint: 1024, settings: { slidesToShow: 4, slidesToScroll: 1 } }
-        ]
-      });
-
-      instances.set(slider, gl);
-      // initial control update if needed
-      try { gl.updateControls && gl.updateControls(); } catch (e) {}
-    }).catch((err) => {
-      console.warn('Error waiting for variant slider images:', err);
-    });
-  }
-
-  // init all sliders initially
-  sliders.forEach(initSlider);
-
-  // Resize handling — debounce a bit
-  let rt;
-  window.addEventListener('resize', () => {
-    clearTimeout(rt);
-    rt = setTimeout(() => {
-      instances.forEach((inst, slider) => {
-        try {
-          // refresh keeps DOM & arrows intact
-          inst.refresh && inst.refresh(true);
-        } catch (err) {
-          // if refresh fails for any reason, destroy & re-init to be safe
-          try { inst.destroy(); } catch(e){}
-          initSlider(slider);
-        }
-      });
-    }, 150);
-  });
-
-  // Shopify Theme Editor / Section reinit hooks (safe no-op if not present)
-  document.addEventListener('shopify:section:load', (e) => {
-    const section = e.target;
-    const slider = section.querySelector('.variant-option--slider');
-    if (slider) initSlider(slider);
-  });
-
-  document.addEventListener('shopify:section:unload', (e) => {
-    const section = e.target;
-    const slider = section.querySelector('.variant-option--slider');
-    if (slider && instances.has(slider)) {
-      try { instances.get(slider).destroy(); } catch (err) {}
-      instances.delete(slider);
-    }
-  });
-});
-</script>
-
-
-
 
     <main
       id="MainContent"
@@ -164,6 +66,5 @@ document.addEventListener('DOMContentLoaded', () => {
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
-    
   </body>
 </html>
