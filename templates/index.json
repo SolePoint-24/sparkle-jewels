@@ -12,19 +12,6 @@
     "hero_G7CAX9": {
       "type": "hero",
       "blocks": {
-        "collection_slide_ADhWbF": {
-          "type": "collection_slide",
-          "settings": {
-            "collection": "rings",
-            "image_desktop": "shopify://shop_images/pendant_necklace_hero.webp",
-            "image_mobile": "shopify://shop_images/collection-showcase-bg.webp",
-            "subheading": "Shine Brighter",
-            "heading": "Where Grace Meets Glamour",
-            "text": "Timeless gold pieces designed to elevate every occasion.",
-            "button_label": "Explore Gold Collection",
-            "button_link": ""
-          }
-        },
         "collection_slide_Uq6qFi": {
           "type": "collection_slide",
           "settings": {
@@ -78,7 +65,6 @@
         }
       },
       "block_order": [
-        "collection_slide_ADhWbF",
         "collection_slide_Uq6qFi",
         "collection_slide_ERayxk",
         "collection_slide_h3qKUF",
