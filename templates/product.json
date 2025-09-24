@@ -205,168 +205,6 @@
               "settings": {},
               "blocks": {}
             },
-            "accordion_Yd4U4w": {
-              "type": "accordion",
-              "name": "Accordion",
-              "settings": {
-                "icon": "plus",
-                "dividers": true,
-                "type_preset": "h6",
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "accordion_row_P46NdC": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Details",
-                    "open_by_default": true,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "product_description_TH8Net": {
-                      "type": "product-description",
-                      "name": "t:names.product_description",
-                      "settings": {
-                        "text": "{{ closest.product.description }}<p></p>",
-                        "width": "fit-content",
-                        "max_width": "none",
-                        "alignment": "left",
-                        "type_preset": "rte",
-                        "font": "var(--font-primary--family)",
-                        "font_size": "",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "product_description_TH8Net"
-                  ]
-                },
-                "accordion_row_8QU8Dj": {
-                  "type": "_accordion-row",
-                  "name": "t:names.accordion_row",
-                  "settings": {
-                    "heading": "Stone configuration",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "stone_config_XGR3N3": {
-                      "type": "stone-config",
-                      "name": "t:names.stone_configuration",
-                      "settings": {
-                        "custom_liquid": ""
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "stone_config_XGR3N3"
-                  ]
-                },
-                "accordion_row_xAWcUb": {
-                  "type": "_accordion-row",
-                  "name": "t:names.accordion_row",
-                  "settings": {
-                    "heading": "Price configuration",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "price_config_zypxTc": {
-                      "type": "price-config",
-                      "name": "Price_Configuration",
-                      "settings": {
-                        "show_block": true
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "price_config_zypxTc"
-                  ]
-                },
-                "accordion_row_VwqRzd": {
-                  "type": "_accordion-row",
-                  "name": "t:names.accordion_row",
-                  "settings": {
-                    "heading": "metal configuration",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "metal_config_Ctkxh4": {
-                      "type": "metal-config",
-                      "name": "Metal Configuration",
-                      "settings": {
-                        "show_block": true,
-                        "title": "Metal Details"
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "metal_config_Ctkxh4"
-                  ]
-                },
-                "accordion_row_JkddYP": {
-                  "type": "_accordion-row",
-                  "name": "t:names.accordion_row",
-                  "settings": {
-                    "heading": "manufacturer and origin",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "manufacturer_BUH6WD": {
-                      "type": "manufacturer",
-                      "name": "manufacturer and origin",
-                      "settings": {
-                        "show_block": true,
-                        "title": "Metal Details"
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "manufacturer_BUH6WD"
-                  ]
-                }
-              },
-              "block_order": [
-                "accordion_row_P46NdC",
-                "accordion_row_8QU8Dj",
-                "accordion_row_xAWcUb",
-                "accordion_row_VwqRzd",
-                "accordion_row_JkddYP"
-              ]
-            },
             "group_mPWi7V": {
               "type": "group",
               "name": "t:names.group",
@@ -835,6 +673,168 @@
                 "group_hwq4w8",
                 "group_pt6gyM"
               ]
+            },
+            "accordion_Yd4U4w": {
+              "type": "accordion",
+              "name": "Accordion",
+              "settings": {
+                "icon": "plus",
+                "dividers": true,
+                "type_preset": "h6",
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_P46NdC": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Details",
+                    "open_by_default": true,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "product_description_TH8Net": {
+                      "type": "product-description",
+                      "name": "t:names.product_description",
+                      "settings": {
+                        "text": "{{ closest.product.description }}<p></p>",
+                        "width": "fit-content",
+                        "max_width": "none",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-primary--family)",
+                        "font_size": "",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "product_description_TH8Net"
+                  ]
+                },
+                "accordion_row_8QU8Dj": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "Stone configuration",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "stone_config_XGR3N3": {
+                      "type": "stone-config",
+                      "name": "t:names.stone_configuration",
+                      "settings": {
+                        "custom_liquid": ""
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "stone_config_XGR3N3"
+                  ]
+                },
+                "accordion_row_xAWcUb": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "Price configuration",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "price_config_zypxTc": {
+                      "type": "price-config",
+                      "name": "Price_Configuration",
+                      "settings": {
+                        "show_block": true
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "price_config_zypxTc"
+                  ]
+                },
+                "accordion_row_VwqRzd": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "metal configuration",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "metal_config_Ctkxh4": {
+                      "type": "metal-config",
+                      "name": "Metal Configuration",
+                      "settings": {
+                        "show_block": true,
+                        "title": "Metal Details"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "metal_config_Ctkxh4"
+                  ]
+                },
+                "accordion_row_JkddYP": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "manufacturer and origin",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "manufacturer_BUH6WD": {
+                      "type": "manufacturer",
+                      "name": "manufacturer and origin",
+                      "settings": {
+                        "show_block": true,
+                        "title": "Metal Details"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "manufacturer_BUH6WD"
+                  ]
+                }
+              },
+              "block_order": [
+                "accordion_row_P46NdC",
+                "accordion_row_8QU8Dj",
+                "accordion_row_xAWcUb",
+                "accordion_row_VwqRzd",
+                "accordion_row_JkddYP"
+              ]
             }
           },
           "block_order": [
@@ -845,8 +845,8 @@
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
             "delivery_date_rAwi84",
-            "accordion_Yd4U4w",
-            "group_mPWi7V"
+            "group_mPWi7V",
+            "accordion_Yd4U4w"
           ]
         }
       },
