@@ -281,7 +281,7 @@
               "type": "text",
               "name": "Heading",
               "settings": {
-                "text": "<h3>24/7 Jewelry concierge</h3>",
+                "text": "<h3>24/7 Jewelry Concierge</h3>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
@@ -365,7 +365,7 @@
               "type": "text",
               "name": "Heading",
               "settings": {
-                "text": "<h3>Unmatched values and deals</h3>",
+                "text": "<h3>Unmatched Values and Deals</h3>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "center",
@@ -448,7 +448,7 @@
               "type": "text",
               "name": "Heading",
               "settings": {
-                "text": "<h3>7-days easy returns</h3>",
+                "text": "<h3>7-Days Easy Returns</h3>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
