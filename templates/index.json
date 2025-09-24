@@ -650,6 +650,7 @@
     },
     "custom_event_section_GxK8zR": {
       "type": "custom-event-section",
+      "disabled": true,
       "name": "Event Countdown",
       "settings": {
         "color_scheme": "scheme-1",
