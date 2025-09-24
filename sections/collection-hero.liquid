@@ -18,6 +18,16 @@
     background-image: url('{{ hero_image | image_url: width: 1920 }}');
   }
 
+  
+  {% comment %} /* Mobile background image for screens smaller than 768px */
+  @media (max-width: 767px) {
+    #shopify-section-{{ section.id }} .collection-hero__wrapper {
+      {%- if mobile_hero_image != blank -%}
+        background-image: url('{{ mobile_hero_image | image_url: width: 768 }}');
+      {%- endif -%}
+    }
+  } {% endcomment %}
+
   #shopify-section-{{ section.id }} .collection-hero__overlay {
     background-color: var(--color-background); /* UPDATED */
     opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
