@@ -327,13 +327,38 @@
                   "block_order": [
                     "metal_config_Ctkxh4"
                   ]
+                },
+                "accordion_row_JkddYP": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "manufacturer and origin",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "manufacturer_BUH6WD": {
+                      "type": "manufacturer",
+                      "name": "manufacturer and origin",
+                      "settings": {
+                        "show_block": true,
+                        "title": "Metal Details"
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "manufacturer_BUH6WD"
+                  ]
                 }
               },
               "block_order": [
                 "accordion_row_P46NdC",
                 "accordion_row_8QU8Dj",
                 "accordion_row_xAWcUb",
-                "accordion_row_VwqRzd"
+                "accordion_row_VwqRzd",
+                "accordion_row_JkddYP"
               ]
             }
           },
