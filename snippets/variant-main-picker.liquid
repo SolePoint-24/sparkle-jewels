@@ -362,7 +362,7 @@
 
   .variant-slider__container {
     position: relative;
-    max-width: 700px;
+   
 
   }
 
@@ -374,6 +374,7 @@
   .variant-slider__track {
     overflow: hidden;
     margin: 0 auto;
+     max-width: 680px;
   }
 
   .variant-slider__list {
@@ -389,8 +390,13 @@
   }
 
   @media (max-width: 768px) {
+    .variant-slider__container {
+    position: relative;
+    max-width: 280px;
+
+  }
     .variant-slider__item {
-      flex: 0 0 calc(33.333% - 8px); /* 3 items per view */
+      flex-basis: 33.33%; /* 3 items per view */
     }
   }
 
