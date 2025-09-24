@@ -24,7 +24,7 @@
         {{- product.title }}
       </a>
     </div>
-    <div>hello </div>
+    <div>{{ product.selected_or_first_available_variant.sku }} </div>
 
     {% content_for 'blocks' %}
   {% endcapture %}
