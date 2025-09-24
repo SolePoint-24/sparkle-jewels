@@ -33,7 +33,6 @@
   }
 
   .footer__logo img {
-    /* UPDATED: max-width is now dynamic */
     max-width: {{ section.settings.logo_width }}px;
     height: auto;
     margin: 0 auto;
@@ -238,9 +237,14 @@
       {%- if section.settings.logo != blank -%}
         <div class="footer__logo">
           <a href="{{ routes.root_url }}">
-            {%- comment -%} UPDATED: Hardcoded widths replaced with dynamic setting {%- endcomment -%}
+            {%- comment -%}
+              CORRECTION:
+              Calculate the width before using it in the image_url filter.
+              This fixes the broken image source issue.
+            {%- endcomment -%}
+            {%- assign logo_retina_width = section.settings.logo_width | times: 2 -%}
             <img
-              src="{{ section.settings.logo | image_url: width: section.settings.logo_width | times: 2 }}"
+              src="{{ section.settings.logo | image_url: width: logo_retina_width }}"
               alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
               width="{{ section.settings.logo_width }}"
               height="{{ section.settings.logo_width | divided_by: section.settings.logo.aspect_ratio | round }}"
@@ -272,8 +276,6 @@
 
     {%- comment -%}
       NEW MENU LOGIC STARTS HERE
-      This section now gets the menu from a single setting and loops through its
-      top-level links to create columns. The nested links become the list items.
     {%- endcomment -%}
     {%- assign footer_menu = linklists[section.settings.footer_menu] -%}
     {%- if footer_menu.links.size > 0 -%}
@@ -335,10 +337,7 @@
 
 </footer>
 
-{%- comment -%}
-  UPDATED SCHEMA
-  The 'blocks' have been removed and replaced with a single 'link_list' setting.
-{%- endcomment -%}
+
 {% schema %}
 {
   "name": "Custom Footer",
