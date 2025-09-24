@@ -1,7 +1,7 @@
 <div class="delivery-date-container" style="text-align: center; padding: 10px;">
   <p class="delivery-text">
     Order now and get it by
-        {%- assign three_weeks_in_seconds = 604800 -%}
+        {%- assign three_weeks_in_seconds = 60480 -%}
 
     {%- assign future_date = 'now' | plus: three_weeks_in_seconds -%}
     <strong>{{ future_date | date: "%d %b" }}</strong>
