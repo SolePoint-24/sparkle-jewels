@@ -122,44 +122,47 @@
         {%- elsif block_settings.variant_style == 'slider' -%}
           <fieldset class="variant-option variant-option--slider">
             <legend>{{ product_option.name | escape }}</legend>
-            <div class="variant-slider__container">
-              <overflow-list class="variant-slider__list">
-                {%- for product_option_value in product_option.values -%}
-                  {%- liquid
-                    assign variant_handle = product_option_value | handleize
-                    assign image_name = variant_handle | append: '.png'
-                    assign image_url = image_name | asset_url
-                  -%}
-                  <div class="variant-slider__item">
-                    <label class="variant-slider__label">
-                      <input
-                        type="radio"
-                        name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
-                        value="{{ product_option_value | escape }}"
-                        aria-label="{{ product_option_value.name }}"
-                        {% if product_option_value.available == false %}
-                          aria-disabled="true"
-                        {% endif %}
-                        data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
-                        data-option-value-id="{{ product_option_value.id }}"
-                        data-option-available="{{ product_option_value.available }}"
-                        data-connected-product-url="{{ product_option_value.product_url }}"
-                        {% if product_option_value.variant.id %}
-                          data-variant-id="{{ product_option_value.variant.id }}"
-                        {% endif %}
-                        {% if product_option_value.selected %}
-                          checked
-                        {% endif %}
-                      >
-                      <div class="variant-slider__image-wrapper">
-                        <img src="{{ image_url }}" alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
-                        <span>{{ product_option_value | escape }}</span>
-                      </div>
-                    </label>
-                  </div>
-                {%- endfor -%}
-              </overflow-list>
-            </div>
+            <overflow-list class="variant-slider__list">
+              {%- for product_option_value in product_option.values -%}
+                {%- liquid
+                  assign variant_handle = product_option_value | handleize
+                  assign image_name = variant_handle | append: '.png'
+                  
+                  # CORRECTED: Use 'file_url' to get images from Content > Files
+                  assign image_url = image_name | file_url
+                  
+                  # NEW: Create a shorter label text (e.g., "White Gold" from "14K White Gold")
+                  assign label_text = product_option_value | remove: '14K ' | remove: '18K '
+                -%}
+                <div class="variant-slider__item">
+                  <label class="variant-slider__label">
+                    <input
+                      type="radio"
+                      name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
+                      value="{{ product_option_value | escape }}"
+                      aria-label="{{ product_option_value.name }}"
+                      {% if product_option_value.available == false %}
+                        aria-disabled="true"
+                      {% endif %}
+                      data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                      data-option-value-id="{{ product_option_value.id }}"
+                      data-option-available="{{ product_option_value.available }}"
+                      data-connected-product-url="{{ product_option_value.product_url }}"
+                      {% if product_option_value.variant.id %}
+                        data-variant-id="{{ product_option_value.variant.id }}"
+                      {% endif %}
+                      {% if product_option_value.selected %}
+                        checked
+                      {% endif %}
+                    >
+                    <div class="variant-slider__image-wrapper">
+                      <img src="{{ image_url }}" alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
+                      <span>{{ label_text | escape }}</span>
+                    </div>
+                  </label>
+                </div>
+              {%- endfor -%}
+            </overflow-list>
           </fieldset>
         {%- elsif block_settings.variant_style == 'dropdowns' -%}
           {%
@@ -265,27 +268,39 @@
     margin-block-end: var(--margin-xs);
   }
 
-  .variant-slider__container {
-    position: relative;
-  }
-
   .variant-slider__list {
-    --visible-items: 4;
+    --visible-items: 4; /* Controls how many items are visible at once */
     --item-gap: 12px;
-    padding-inline: 40px; /* Space for arrows */
+    position: relative;
+    padding-inline: 45px; /* Make space for absolutely positioned arrows */
   }
 
+  /* Target the inner list container that overflow-list creates */
   .variant-slider__list > [slot='list'] {
+    display: grid;
+    grid-auto-flow: column; /* This is the key to a horizontal layout */
     grid-auto-columns: calc((100% - (var(--item-gap) * (var(--visible-items) - 1))) / var(--visible-items));
+    gap: var(--item-gap);
+    overflow-x: auto; /* Allow scrolling */
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;  /* Hide scrollbar IE and Edge */
+    scrollbar-width: none;  /* Hide scrollbar Firefox */
   }
-  
-  .variant-slider__item {
+
+  /* Hide scrollbar Chrome, Safari and Opera */
+  .variant-slider__list > [slot='list']::-webkit-scrollbar {
+    display: none;
+  }
+
+  .variant-slider__list .variant-slider__item {
+    scroll-snap-align: start;
     width: 100%;
   }
-
+  
   .variant-slider__label {
     display: block;
     cursor: pointer;
+    width: 100%;
   }
 
   .variant-slider__image-wrapper {
@@ -293,22 +308,24 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    padding: 8px;
+    padding: 4px;
     border: 2px solid transparent;
-    border-radius: 8px;
+    border-radius: var(--style-border-radius);
     transition: border-color 0.2s ease-in-out;
   }
 
   .variant-slider__image-wrapper img {
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border: 1px solid #e0e0e0;
+    width: 100%;
+    max-width: 60px;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    border: 1px solid rgb(var(--color-border));
   }
   
   .variant-slider__label span {
     font-size: 12px;
+    line-height: 1.3;
     text-align: center;
     color: rgb(var(--color-foreground-rgb) / 0.85);
   }
@@ -330,29 +347,23 @@
   
   .variant-slider__list [slot="previous-button"],
   .variant-slider__list [slot="next-button"] {
+    position: absolute; /* Position arrows over the padding area */
+    top: 30px; /* Position vertically centered on the image */
+    transform: translateY(-50%);
     width: 32px;
     height: 32px;
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
+    background-color: rgb(var(--color-background));
+    border: 1px solid rgb(var(--color-border));
     border-radius: 50%;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    z-index: 1; /* Ensure arrows are on top */
   }
 
-  .variant-slider__list [slot="previous-button"] {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .variant-slider__list [slot="next-button"] {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
+  .variant-slider__list [slot="previous-button"] { left: 5px; }
+  .variant-slider__list [slot="next-button"] { right: 5px; }
   
   /* --- SLIDER STYLES END --- */
+
 
   .variant-option--swatches {
     --options-border-radius: var(--variant-picker-swatch-radius);
