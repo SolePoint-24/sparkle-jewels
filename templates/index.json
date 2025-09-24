@@ -514,7 +514,7 @@
                   "type": "text",
                   "name": "Heading",
                   "settings": {
-                    "text": "<h3>24/7 Jewelry Concierge</h3>",
+                    "text": "<p>Free Shipping</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
@@ -598,7 +598,7 @@
                   "type": "text",
                   "name": "Heading",
                   "settings": {
-                    "text": "<h3>24/7 Jewelry Concierge</h3>",
+                    "text": "<p>Ethical Sourcing</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
