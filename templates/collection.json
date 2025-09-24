@@ -97,7 +97,7 @@
         }
       },
       "custom_css": [
-        ".main-collection-grid{padding: 10px}"
+        ".main-collection-grid {padding: 12px;}"
       ],
       "settings": {
         "layout_type": "grid",
