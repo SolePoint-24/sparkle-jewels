@@ -1,0 +1,124 @@
+{% comment %}
+  This snippet renders the icon blocks.
+  It expects to receive the parent block object as 'section_block'.
+  e.g. {% render 'benefits-block', section_block: block %}
+{% endcomment %}
+
+<div class="page-width">
+  <div class="icon-blocks-wrapper">
+    {%- for block in section_block.blocks -%}
+      <div class="icon-block-item" {{ block.shopify_attributes }}>
+        <div class="icon-block__image-wrapper">
+          {%- if block.settings.icon_image != blank -%}
+            <img
+              src="{{ block.settings.icon_image | image_url: width: 100, height: 100 }}"
+              alt="{{ block.settings.icon_image.alt | escape }}"
+              loading="lazy"
+              width="50"
+              height="50">
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+        {%- if block.settings.title != blank -%}
+          <p class="icon-block__title">{{ block.settings.title | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% comment %}
+  CSS styles for the section.
+  - Uses Flexbox for easy alignment and spacing.
+  - Ensures the icons are circular and centered.
+  - Responsive design to stack on smaller screens.
+{% endcomment %}
+{% stylesheet %}
+  .icon-blocks-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  .icon-block-item {
+    flex: 0 1 120px; /* Flex-grow, flex-shrink, flex-basis */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .icon-block__image-wrapper {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .icon-block__image-wrapper img,
+  .icon-block__image-wrapper .placeholder-svg {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .icon-block__title {
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .icon-blocks-wrapper {
+      gap: 1.5rem;
+      justify-content: space-around;
+    }
+    .icon-block-item {
+      flex-basis: 80px; /* Smaller base width on mobile */
+    }
+    .icon-block__image-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+    .icon-block__title {
+        font-size: 12px;
+    }
+  }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Price_Configuration",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Block Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_block",
+      "label": "Show this block",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Price_Configuration",
+      "category": "t:categories.custom"
+    }
+  ]
+}
+{% endschema %}
