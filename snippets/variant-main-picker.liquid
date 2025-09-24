@@ -272,23 +272,28 @@ document.addEventListener('DOMContentLoaded', function() {
     let itemsPerView = 1;
     let itemWidth = 0;
 
-    // compute and apply sizes
     function computeLayout() {
-      const available = Math.max(0, track.clientWidth);
-      const maxPossible = items.length;
-      let perView = Math.floor((available + GAP) / (MIN_ITEM_WIDTH + GAP));
-      if (perView < 1) perView = 1;
-      if (perView > maxPossible) perView = maxPossible;
+  const available = Math.max(0, track.clientWidth);
+  const maxPossible = items.length;
 
-      itemsPerView = perView;
-      itemWidth = Math.floor((available - GAP * (itemsPerView - 1)) / itemsPerView);
+  // how many can we actually fit?
+  let perView = Math.floor((available + GAP) / (MIN_ITEM_WIDTH + GAP));
+  if (perView < 1) perView = 1;
+  if (perView > maxPossible) perView = maxPossible;
 
-      items.forEach(item => {
-        item.style.flex = `0 0 ${itemWidth}px`;
-      });
+  itemsPerView = perView;
 
-      updateSlider();
-    }
+  // exact width per item (don’t exceed available)
+  itemWidth = (available - GAP * (itemsPerView - 1)) / itemsPerView;
+
+  items.forEach(item => {
+    item.style.flex = `0 0 ${itemWidth}px`;
+    item.style.maxWidth = `${itemWidth}px`; // hard cap at per-item width
+  });
+
+  updateSlider(true);
+}
+
 
     function updateSlider(instant = false) {
       const maxIndex = Math.max(0, items.length - itemsPerView);
@@ -908,17 +913,17 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .variant-slider__item {
-  flex: 0 0 auto; /* JS will set exact px basis */
-  min-width: 0;
+  flex: 0 0 auto;
+  min-width: 80px; /* ensure buttons don’t collapse too much */
+  max-width: 100%; /* don’t let them stretch beyond track */
+  box-sizing: border-box;
 }
 
-/* Ensure track hides overflow but leaves space for nav buttons */
 .variant-slider__track {
   overflow: hidden;
-  margin: 0 40px; /* keeps nav buttons visually outside the track */
+  width: 100%;
   position: relative;
 }
-
 /* Slightly inset the nav buttons so they sit on each side properly */
 .variant-slider__nav--prev { left: 8px; }
 .variant-slider__nav--next { right: 8px; }
