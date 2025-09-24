@@ -1,4 +1,12 @@
-<!-- variant-picker.liquid snippet -->
+{%- comment -%}
+  MODIFICATION:
+  This file has been updated to replace the custom <overflow-list> slider
+  with a Swiper.js slider for the 'slider' variant style.
+  - The HTML structure under `block_settings.variant_style == 'slider'` is changed.
+  - A new <script> tag is added within that block to initialize Swiper.
+  - The CSS in the <stylesheet> tag has been updated to style the Swiper instance.
+{%- endcomment -%}
+
 {%- doc -%}
   Renders a default variant picker, used to display the variant picker in the variants block.
 
@@ -55,7 +63,6 @@
         -%}
 
         {%- if variant_style == 'swatch' or block_settings.variant_style == 'buttons' -%}
-          <!-- Button/Swatch variant code remains the same -->
           <fieldset
             class="variant-option variant-option--buttons{% if variant_style == 'swatch' %} variant-option--swatches{% else %} variant-option--{{ settings.variant_button_width }}{% endif %}"
             {{ option_id_attribute }}
@@ -94,6 +101,8 @@
                   {% liquid
                     assign featured_media = product_option_value.variant.featured_media
 
+                    # If the variant has no featured media, and we have a combined listing product, then fall back to
+                    # using the featured media of the child product that is linked to this option value.
                     if featured_media == blank and product_option_value.product_url
                       assign featured_media = product_option_value.variant.product.featured_media
                     endif
@@ -118,86 +127,86 @@
               {% endstyle %}
             {% endif %}
           </fieldset>
-          
+        
+        {%- comment -%} {%- endcomment -%}
         {%- elsif block_settings.variant_style == 'slider' -%}
-          <!-- UPDATED SLIDER VARIANT STYLE -->
-          <fieldset class="variant-option variant-option--slider" data-slider-id="{{ product_option.name | handleize }}-{{ block.id }}">
+          {%- liquid
+            assign swiper_id = 'variant-swiper-' | append: section.id | append: '-' | append: block.id | append: '-' | append: product_option.position
+          -%}
+          <fieldset class="variant-option variant-option--slider">
             <legend>{{ product_option.name | escape }}</legend>
-            <div class="variant-slider__container">
-              <div class="variant-slider__wrapper">
-                <!-- Previous Button -->
-                <button 
-                  type="button"
-                  class="variant-slider__nav variant-slider__nav--prev" 
-                  aria-label="Previous {{ product_option.name }} options"
-                  data-slider-prev
-                >
-                  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                  </svg>
-                </button>
-                
-                <!-- Next Button -->
-                <button 
-                  type="button"
-                  class="variant-slider__nav variant-slider__nav--next" 
-                  aria-label="Next {{ product_option.name }} options"
-                  data-slider-next
-                >
-                  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </button>
-                
-                <!-- Slider Track -->
-                <div class="variant-slider__track">
-                  <div class="variant-slider__list" data-slider-list>
-                    {%- for product_option_value in product_option.values -%}
-                      {%- liquid
-                        assign variant_handle = product_option_value | handleize
-                        assign image_name = variant_handle | append: '.png'
-                        assign image_url = image_name | asset_url
-                      -%}
-                      <div class="variant-slider__item">
-                        <label class="variant-slider__label">
-                          <input
-                            type="radio"
-                            name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
-                            value="{{ product_option_value | escape }}"
-                            aria-label="{{ product_option_value.name }}"
-                            {% if product_option_value.available == false %}
-                              aria-disabled="true"
-                            {% endif %}
-                            data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
-                            data-option-value-id="{{ product_option_value.id }}"
-                            data-option-available="{{ product_option_value.available }}"
-                            data-connected-product-url="{{ product_option_value.product_url }}"
-                            {% if product_option_value.variant.id %}
-                              data-variant-id="{{ product_option_value.variant.id }}"
-                            {% endif %}
-                            {% if product_option_value.selected %}
-                              checked
-                            {% endif %}
-                          >
-                          <div class="variant-slider__image-wrapper">
-                            <img src="{{ image_url }}" alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
-                            <span>{{ product_option_value | escape }}</span>
-                          </div>
-                        </label>
+            <div class="variant-slider__container swiper" id="{{ swiper_id }}">
+              <div class="swiper-wrapper">
+                {%- for product_option_value in product_option.values -%}
+                  {%- liquid
+                    assign variant_handle = product_option_value | handleize
+                    assign image_name = variant_handle | append: '.png'
+                    assign image_url = image_name | asset_url
+                  -%}
+                  <div class="swiper-slide">
+                    <label class="variant-slider__label">
+                      <input
+                        type="radio"
+                        name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
+                        value="{{ product_option_value | escape }}"
+                        aria-label="{{ product_option_value.name }}"
+                        {% if product_option_value.available == false %}
+                          aria-disabled="true"
+                        {% endif %}
+                        data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                        data-option-value-id="{{ product_option_value.id }}"
+                        data-option-available="{{ product_option_value.available }}"
+                        data-connected-product-url="{{ product_option_value.product_url }}"
+                        {% if product_option_value.variant.id %}
+                          data-variant-id="{{ product_option_value.variant.id }}"
+                        {% endif %}
+                        {% if product_option_value.selected %}
+                          checked
+                        {% endif %}
+                      >
+                      <div class="variant-slider__image-wrapper">
+                        <img src="{{ image_url }}" alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
+                        <span>{{ product_option_value | escape }}</span>
                       </div>
-                    {%- endfor -%}
+                    </label>
                   </div>
-                </div>
+                {%- endfor -%}
               </div>
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
             </div>
           </fieldset>
-          
+          <script>
+            document.addEventListener('DOMContentLoaded', () => {
+              const swiperVariantPicker = new Swiper('#{{ swiper_id }}', {
+                slidesPerView: 3,
+                spaceBetween: 10,
+                navigation: {
+                  nextEl: '#{{ swiper_id }} .swiper-button-next',
+                  prevEl: '#{{ swiper_id }} .swiper-button-prev',
+                },
+                breakpoints: {
+                  750: {
+                    slidesPerView: 4,
+                    spaceBetween: 15,
+                  },
+                }
+              });
+            });
+          </script>
+        {%- comment -%} {%- endcomment -%}
+
         {%- elsif block_settings.variant_style == 'dropdowns' -%}
-          <!-- Dropdown variant code remains the same -->
+          {%
+            # There is an opportunity to build a custom select component that will allow us to style the select element further (animation for dropdown, swatches shown in the dropdown options, etc)
+            # It's too bad as it mean rebuilding baked in behaviours but I think we've already done that for the locale selectors
+            # in dawn. So it might mean more time spent in setting it up but worth it for future updates/styling.
+          %}
           {% liquid
             assign property_being_updated = false
             if settings.variant_swatch_width != settings.variant_swatch_height
               assign property_being_updated = true
+              # (original width / original height) x new height (20px at the moment) = new width
               assign new_width = settings.variant_swatch_width | times: 1.0 | divided_by: settings.variant_swatch_height | times: 20
             endif
           %}
@@ -256,87 +265,140 @@
   </variant-picker>
 {% endunless %}
 
-<!-- JavaScript for Slider Functionality -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all variant sliders
-    const sliders = document.querySelectorAll('.variant-option--slider');
-    
-    sliders.forEach(slider => {
-      const list = slider.querySelector('[data-slider-list]');
-      const prevBtn = slider.querySelector('[data-slider-prev]');
-      const nextBtn = slider.querySelector('[data-slider-next]');
-      const items = slider.querySelectorAll('.variant-slider__item');
-      
-      if (!list || !prevBtn || !nextBtn || items.length === 0) return;
-      
-      let currentIndex = 0;
-      const itemsPerView = getItemsPerView();
-      const maxIndex = Math.max(0, items.length - itemsPerView);
-      
-      function getItemsPerView() {
-        const width = window.innerWidth;
-        if (width <= 480) return 2;
-        if (width <= 768) return 3;
-        return 4;
-      }
-      
-      function updateSlider() {
-        const itemWidth = 100 / itemsPerView;
-        const offset = -currentIndex * itemWidth;
-        list.style.transform = `translateX(${offset}%)`;
-        
-        // Update button states
-        prevBtn.disabled = currentIndex === 0;
-        nextBtn.disabled = currentIndex >= maxIndex;
-      }
-      
-      function goToNext() {
-        if (currentIndex < maxIndex) {
-          currentIndex++;
-          updateSlider();
-        }
-      }
-      
-      function goToPrev() {
-        if (currentIndex > 0) {
-          currentIndex--;
-          updateSlider();
-        }
-      }
-      
-      // Event listeners
-      nextBtn.addEventListener('click', goToNext);
-      prevBtn.addEventListener('click', goToPrev);
-      
-      // Handle window resize
-      let resizeTimeout;
-      window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-          const newItemsPerView = getItemsPerView();
-          const newMaxIndex = Math.max(0, items.length - newItemsPerView);
-          if (currentIndex > newMaxIndex) {
-            currentIndex = newMaxIndex;
-          }
-          updateSlider();
-        }, 250);
-      });
-      
-      // Keyboard navigation
-      slider.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') goToPrev();
-        if (e.key === 'ArrowRight') goToNext();
-      });
-      
-      // Initial update
-      updateSlider();
-    });
-  });
-</script>
-
 {% stylesheet %}
- .variant-option--swatches {
+  .variant-picker {
+    width: 100%;
+  }
+
+  .variant-picker__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-lg);
+    width: 100%;
+  }
+
+  .variant-picker[data-shopify-visual-preview] {
+    min-width: 300px;
+    padding-inline-start: max(4px, var(--padding-inline-start));
+  }
+
+  .variant-option {
+    --options-border-radius: var(--variant-picker-button-radius);
+    --options-border-width: var(--variant-picker-button-border-width);
+    --variant-option-padding-inline: var(--padding-md);
+  }
+  
+  /* --- MODIFICATION START: SWIPER SLIDER STYLES --- */
+  .variant-option--slider {
+    padding: 0;
+    margin: 0;
+    border: none;
+  }
+  
+  .variant-option--slider legend {
+    padding: 0;
+    margin-block-end: var(--margin-xs);
+  }
+
+  .variant-slider__container.swiper {
+    position: relative;
+    padding-inline: 40px; /* Space for arrows */
+    margin-inline: -40px;
+    overflow: hidden; /* Important for Swiper */
+  }
+
+  .swiper-slide {
+    width: auto; /* Allow slides to size based on content if needed */
+    height: auto; /* Ensure full height for alignment */
+    display: flex;
+    justify-content: center;
+  }
+  
+  .variant-slider__label {
+    display: block;
+    cursor: pointer;
+  }
+
+  .variant-slider__image-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: border-color 0.2s ease-in-out;
+  }
+
+  .variant-slider__image-wrapper img {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .variant-slider__label span {
+    font-size: 12px;
+    text-align: center;
+    color: rgb(var(--color-foreground-rgb) / 0.85);
+  }
+
+  .variant-slider__label input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .variant-slider__label input:checked + .variant-slider__image-wrapper {
+    border-color: rgb(var(--color-foreground-rgb));
+  }
+
+  .variant-slider__label input:focus-visible + .variant-slider__image-wrapper {
+      box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-foreground);
+  }
+  
+  .variant-slider__container .swiper-button-prev,
+  .variant-slider__container .swiper-button-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    background-color: rgb(var(--color-background-rgb));
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    color: rgb(var(--color-foreground-rgb));
+    transition: background-color 0.2s;
+  }
+  .variant-slider__container .swiper-button-prev:hover,
+  .variant-slider__container .swiper-button-next:hover {
+    background-color: rgb(var(--color-background-rgb) / 0.8);
+  }
+
+  .variant-slider__container .swiper-button-prev {
+    left: 0;
+  }
+
+  .variant-slider__container .swiper-button-next {
+    right: 0;
+  }
+  
+  .variant-slider__container .swiper-button-next:after,
+  .variant-slider__container .swiper-button-prev:after {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .swiper-button-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  
+  /* --- MODIFICATION END: SWIPER SLIDER STYLES --- */
+
+  .variant-option--swatches {
     --options-border-radius: var(--variant-picker-swatch-radius);
 
     width: 100%;
@@ -635,214 +697,4 @@
     text-align: right;
     justify-content: right;
   }
-  .variant-picker {
-    width: 100%;
-  }
-
-  .variant-picker__form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--padding-lg);
-    width: 100%;
-  }
-
-  /* --- SLIDER STYLES --- */
-  .variant-option--slider {
-    padding: 0;
-    margin: 0;
-    border: none;
-  }
-  
-  .variant-option--slider legend {
-    padding: 0;
-    margin-block-end: var(--margin-xs);
-    font-weight: 600;
-  }
-
-  .variant-slider__container {
-    position: relative;
-   
-
-  }
-
-  .variant-slider__wrapper {
-    position: relative;
-    padding: 0 20px; /* Space for nav buttons */
-  }
-
-  .variant-slider__track {
-    overflow: hidden;
-    margin: 0 auto;
-     max-width: 680px;
-  }
-
-  .variant-slider__list {
-    display: flex;
-    gap: 12px;
-    transition: transform 0.3s ease-in-out;
-    padding: 40px 0;
-  }
-
-  .variant-slider__item {
-    flex: 0 0 calc(25% - 9px); /* 4 items per view */
-    min-width: 0;
-  }
-
-  @media (max-width: 768px) {
-     .variant-slider__track {
-      overflow: hidden;
-      margin: 0 auto;
-     max-width: 280px;
-  }
-    .variant-slider__item {
-      flex: 0 0 calc(33.33% - 6px); /* 2 items per view */
-    }
-  }
-
-  @media (max-width: 480px) {
-    .variant-slider__track {
-      overflow: hidden;
-      margin: 0 auto;
-     max-width: 180px;
-  }
-    .variant-slider__item {
-      flex: 0 0 calc(50% - 6px); /* 2 items per view */
-    }
-  }
-
-  .variant-slider__label {
-    display: block;
-    cursor: pointer;
-    width: 100%;
-  }
-
-  .variant-slider__image-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    padding: 8px;
-    border: 2px solid transparent;
-    border-radius: 8px;
-    transition: all 0.2s ease-in-out;
-    background: var(--color-background);
-  }
-
-  .variant-slider__image-wrapper:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-
-  .variant-slider__image-wrapper img {
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
-  }
-  
-  .variant-slider__label span {
-    font-size: 12px;
-    text-align: center;
-    color: rgb(var(--color-foreground-rgb) / 0.75);
-    display: block;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .variant-slider__label input {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .variant-slider__label input:checked + .variant-slider__image-wrapper {
-    border-color: rgb(var(--color-foreground-rgb));
-    background: rgb(var(--color-foreground-rgb) / 0.05);
-  }
-
-  .variant-slider__label input:checked + .variant-slider__image-wrapper span {
-    color: rgb(var(--color-foreground-rgb));
-    font-weight: 600;
-  }
-
-  .variant-slider__label input:focus-visible + .variant-slider__image-wrapper {
-    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-foreground);
-  }
-  
-  /* Navigation Buttons */
-  .variant-slider__nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 32px;
-    height: 32px;
-    background-color: var(--color-background);
-    border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
-    border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    z-index: 2;
-    padding: 0;
-  }
-
-  .variant-slider__nav:hover:not(:disabled) {
-    background-color: rgb(var(--color-foreground-rgb));
-    border-color: rgb(var(--color-foreground-rgb));
-    transform: translateY(-50%) scale(1.1);
-  }
-
-  .variant-slider__nav:hover:not(:disabled) svg {
-    stroke: var(--color-background);
-  }
-
-  .variant-slider__nav:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-
-  .variant-slider__nav--prev {
-    left: 0;
-  }
-
-  .variant-slider__nav--next {
-    right: 0;
-  }
-
-  .variant-slider__nav svg {
-    width: 16px;
-    height: 16px;
-    stroke: rgb(var(--color-foreground-rgb));
-    stroke-width: 2;
-    fill: none;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  /* Unavailable state */
-  .variant-slider__label input[aria-disabled="true"] + .variant-slider__image-wrapper {
-    opacity: 0.5;
-    position: relative;
-  }
-
-  .variant-slider__label input[aria-disabled="true"] + .variant-slider__image-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: rgb(var(--color-foreground-rgb) / 0.3);
-    transform: rotate(-45deg);
-  }
-  
-  /* Keep other existing styles for buttons, swatches, dropdowns */
-  /* ... rest of your existing CSS ... */
 {% endstylesheet %}
