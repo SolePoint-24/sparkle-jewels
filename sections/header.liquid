@@ -194,6 +194,13 @@
   {% if sticky %}
     sticky="{{ sticky }}"
   {% endif %}
+    style="
+    --tagline-font-size-desktop: {{ section.settings.tagline_font_size }}px;
+    --tagline-font-size-mobile: {{ section.settings.tagline_font_size_mobile }}px;
+  "
+
+ 
+
   data-skip-node-update
   data-scroll-direction="none"
 >
@@ -647,7 +654,7 @@
 
 .logo__tagline {
   margin-top: 5px; 
-  font-size: 28px; 
+  font-size: var(--text); 
   color: inherit; 
   font-family: 'Libre Baskerville', serif;
   text-align: center; 
