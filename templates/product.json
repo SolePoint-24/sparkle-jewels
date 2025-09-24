@@ -462,7 +462,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>ggg</p>",
+                        "text": "<p>Rated 4.7/5 Globally<br/></p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -545,7 +545,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>ggg</p>",
+                        "text": "<p>BIS Hallmarked</p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -628,7 +628,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>ggg</p>",
+                        "text": "<p>Sparkle Certified</p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -711,7 +711,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>ggg</p>",
+                        "text": "<p>15-Day Returns</p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
@@ -794,7 +794,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>ggg</p>",
+                        "text": "<p>Lifetime Exchange</p>",
                         "width": "fit-content",
                         "max_width": "normal",
                         "alignment": "left",
