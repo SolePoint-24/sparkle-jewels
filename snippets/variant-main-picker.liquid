@@ -189,16 +189,17 @@
             {% endif %}
           </fieldset>
         {%- elsif block_settings.variant_style == 'slider' -%}
-        <fieldset class="variant-option variant-option--slider">
+      <fieldset class="variant-option variant-option--slider">
   <legend>{{ product_option.name | escape }}</legend>
+  
   <overflow-list class="variant-slider__list">
     <!-- Prev button -->
-    <button type="button" class="variant-slider__arrow" slot="previous-button" aria-label="Previous">
+    <button type="button" slot="previous-button" class="variant-slider__arrow" aria-label="Previous">
       &larr;
     </button>
 
-    <!-- List wrapper -->
-    <div slot="list">
+    <!-- Actual scrollable list -->
+    <div slot="list" class="variant-slider__items">
       {%- for product_option_value in product_option.values -%}
         {%- liquid
           assign variant_handle = product_option_value | handleize
@@ -212,13 +213,6 @@
               type="radio"
               name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
               value="{{ product_option_value | escape }}"
-              aria-label="{{ product_option_value.name }}"
-              {% if product_option_value.available == false %}aria-disabled="true"{% endif %}
-              data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
-              data-option-value-id="{{ product_option_value.id }}"
-              data-option-available="{{ product_option_value.available }}"
-              data-connected-product-url="{{ product_option_value.product_url }}"
-              {% if product_option_value.variant.id %}data-variant-id="{{ product_option_value.variant.id }}"{% endif %}
               {% if product_option_value.selected %}checked{% endif %}
             >
             <div class="variant-slider__image-wrapper">
@@ -229,12 +223,14 @@
         </div>
       {%- endfor -%}
     </div>
+
     <!-- Next button -->
-    <button type="button" class="variant-slider__arrow" slot="next-button" aria-label="Next">
+    <button type="button" slot="next-button" class="variant-slider__arrow" aria-label="Next">
       &rarr;
     </button>
   </overflow-list>
 </fieldset>
+
 
         {%- elsif block_settings.variant_style == 'dropdowns' -%}
           {%
