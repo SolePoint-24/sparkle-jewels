@@ -14,7 +14,7 @@
       "name": "Collection Hero",
       "settings": {
         "color_scheme": "scheme-f7e6b3d3-6ded-42f6-a5cc-b7d842e2f918",
-        "default_image": "{{ collection.metafields.custom.collection_banner_image.value }}",
+        "default_image": "shopify://shop_images/collection-banner-sparkle.jpg",
         "overlay_opacity": 30
       }
     },
