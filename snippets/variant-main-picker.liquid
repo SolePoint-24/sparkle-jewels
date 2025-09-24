@@ -16,6 +16,35 @@
     else
       assign strikethrough_color_mix = '#fff'
     endif
+
+    assign variant_image_url = ''
+  case product_option_value.name
+    when '14K Rose Gold'
+      assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/14K_ROSE_GOLD.png?v=1758711942'
+    when '24K Rose Gold'
+      assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/24K_ROSE_GOLD.png?v=1758711942'
+    when '18K Rose Gold'
+      assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/18K_ROSE_GOLD.png?v=1758711943'
+    when '22K Rose Gold'
+      assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/22K_ROSE_GOLD.png?v=1758711942'
+    when '18K Yellow Gold'
+      assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/18K_YELLOW_GOLD.png?v=1758711942'
+    when '22K Yellow Gold'
+      assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/22K_YELLOW_GOLD.png?v=1758711943'
+    when '14K Yellow Gold'
+      assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/14K_YELLOW_GOLD.png?v=1758711942'
+    when '24K Yellow Gold'
+      assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/24K_YELLOW_GOLD.png?v=1758711943'
+    when '14K Silver Gold'
+      assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/14K_SILVER_GOLD.png?v=1758711942'
+    when '18K Silver Gold'
+      assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/18K_SILVER_GOLD.png?v=1758711942'
+    when '24K Silver Gold'
+      assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/24K_SILVER_GOLD.png?v=1758711942'
+    when '22K Silver Gold'
+      assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/22K_SILVER_GOLD.png?v=1758711942'
+    endcase
+  
   %}
   <variant-picker
     class="variant-picker spacing-style variant-picker--{{ block_settings.alignment }}"
@@ -180,7 +209,7 @@
                             {% endif %}
                           >
                           <div class="variant-slider__image-wrapper">
-                            <img src="https://cdn.shopify.com/s/files/1/0664/9456/2387/files/14K_ROSE_GOLD.png?v=1758711942" alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
+                            <img src= {{ variant_image_url }} alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
                             <span>{{ product_option_value | escape }}</span>
                           </div>
                         </label>
