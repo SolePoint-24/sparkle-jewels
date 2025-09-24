@@ -1,3 +1,5 @@
+//variant-main-picker.liquid
+
 {%- doc -%}
   Renders a default variant picker, used to display the variant picker in the variants block.
 
@@ -118,6 +120,48 @@
               {% endstyle %}
             {% endif %}
           </fieldset>
+        {%- elsif block_settings.variant_style == 'slider' -%}
+          <fieldset class="variant-option variant-option--slider">
+            <legend>{{ product_option.name | escape }}</legend>
+            <div class="variant-slider__container">
+              <overflow-list class="variant-slider__list">
+                {%- for product_option_value in product_option.values -%}
+                  {%- liquid
+                    assign variant_handle = product_option_value | handleize
+                    assign image_name = variant_handle | append: '.png'
+                    assign image_url = image_name | asset_url
+                  -%}
+                  <div class="variant-slider__item">
+                    <label class="variant-slider__label">
+                      <input
+                        type="radio"
+                        name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
+                        value="{{ product_option_value | escape }}"
+                        aria-label="{{ product_option_value.name }}"
+                        {% if product_option_value.available == false %}
+                          aria-disabled="true"
+                        {% endif %}
+                        data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                        data-option-value-id="{{ product_option_value.id }}"
+                        data-option-available="{{ product_option_value.available }}"
+                        data-connected-product-url="{{ product_option_value.product_url }}"
+                        {% if product_option_value.variant.id %}
+                          data-variant-id="{{ product_option_value.variant.id }}"
+                        {% endif %}
+                        {% if product_option_value.selected %}
+                          checked
+                        {% endif %}
+                      >
+                      <div class="variant-slider__image-wrapper">
+                        <img src="{{ image_url }}" alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
+                        <span>{{ product_option_value | escape }}</span>
+                      </div>
+                    </label>
+                  </div>
+                {%- endfor -%}
+              </overflow-list>
+            </div>
+          </fieldset>
         {%- elsif block_settings.variant_style == 'dropdowns' -%}
           {%
             # There is an opportunity to build a custom select component that will allow us to style the select element further (animation for dropdown, swatches shown in the dropdown options, etc)
@@ -209,6 +253,107 @@
     --options-border-width: var(--variant-picker-button-border-width);
     --variant-option-padding-inline: var(--padding-md);
   }
+  
+  /* --- SLIDER STYLES START --- */
+  .variant-option--slider {
+    padding: 0;
+    margin: 0;
+    border: none;
+  }
+  
+  .variant-option--slider legend {
+    padding: 0;
+    margin-block-end: var(--margin-xs);
+  }
+
+  .variant-slider__container {
+    position: relative;
+  }
+
+  .variant-slider__list {
+    --visible-items: 4;
+    --item-gap: 12px;
+    padding-inline: 40px; /* Space for arrows */
+  }
+
+  .variant-slider__list > [slot='list'] {
+    grid-auto-columns: calc((100% - (var(--item-gap) * (var(--visible-items) - 1))) / var(--visible-items));
+  }
+  
+  .variant-slider__item {
+    width: 100%;
+  }
+
+  .variant-slider__label {
+    display: block;
+    cursor: pointer;
+  }
+
+  .variant-slider__image-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: border-color 0.2s ease-in-out;
+  }
+
+  .variant-slider__image-wrapper img {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .variant-slider__label span {
+    font-size: 12px;
+    text-align: center;
+    color: rgb(var(--color-foreground-rgb) / 0.85);
+  }
+
+  .variant-slider__label input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .variant-slider__label input:checked + .variant-slider__image-wrapper {
+    border-color: rgb(var(--color-foreground-rgb));
+  }
+
+  .variant-slider__label input:focus-visible + .variant-slider__image-wrapper {
+      box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-foreground);
+  }
+  
+  .variant-slider__list [slot="previous-button"],
+  .variant-slider__list [slot="next-button"] {
+    width: 32px;
+    height: 32px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .variant-slider__list [slot="previous-button"] {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .variant-slider__list [slot="next-button"] {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  /* --- SLIDER STYLES END --- */
 
   .variant-option--swatches {
     --options-border-radius: var(--variant-picker-swatch-radius);
