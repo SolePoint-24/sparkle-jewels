@@ -274,7 +274,10 @@
     padding-inline: 40px; /* Space for arrows */
   }
 
-  .variant-slider__list > [slot='list'] {
+   .variant-slider__list > [slot='list'] {
+    display: grid; /* ADDED: This enables grid layout */
+    grid-auto-flow: column; /* ADDED: This forces items into a row */
+    gap: var(--item-gap); /* ADDED: This creates space between items */
     grid-auto-columns: calc((100% - (var(--item-gap) * (var(--visible-items) - 1))) / var(--visible-items));
   }
   
