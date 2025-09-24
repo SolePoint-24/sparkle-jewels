@@ -1,4 +1,342 @@
- .variant-picker {
+<!-- variant-picker.liquid snippet -->
+{%- doc -%}
+  Renders a default variant picker, used to display the variant picker in the variants block.
+
+  @param {object} product_resource - The product object.
+  @param {object} [block] - The block object
+{%- enddoc -%}
+
+{% assign block_settings = block.settings %}
+
+{% unless product_resource.has_only_default_variant %}
+  {% liquid
+    assign button_background_brightness = section.settings.color_scheme.settings.foreground | color_brightness
+    if button_background_brightness < 105
+      assign strikethrough_color_mix = '#000'
+    else
+      assign strikethrough_color_mix = '#fff'
+    endif
+  %}
+  <variant-picker
+    class="variant-picker spacing-style variant-picker--{{ block_settings.alignment }}"
+    style="--color-strikethrough-mix: {{ strikethrough_color_mix }}; {% render 'spacing-style', settings: block_settings %}"
+    data-section-id="{{ section.id }}"
+    data-product-id="{{ product_resource.id }}"
+    data-block-id="{{ block.id }}"
+    data-product-url="{{ product_resource.url }}"
+    ref="mainVariantPicker"
+    {% if product.id == product_resource.id %}
+      data-template-product-match="true"
+    {% endif %}
+    {{ block.shopify_attributes }}
+    {% if request.visual_preview_mode %}
+      data-shopify-visual-preview
+    {% endif %}
+  >
+    <form class="variant-picker__form">
+      {%- for product_option in product_resource.options_with_values -%}
+        {%- liquid
+          assign swatch_count = product_option.values | map: 'swatch' | compact | size
+          assign variant_style = block_settings.variant_style
+
+          if swatch_count > 0 and block_settings.show_swatches
+            if block_settings.variant_style == 'dropdown'
+              assign variant_style = 'swatch_dropdown'
+            else
+              assign variant_style = 'swatch'
+            endif
+          endif
+
+          if variant_style == 'buttons' and settings.variant_button_width == 'equal-width-buttons'
+            assign fieldset_id = section.id | append: '-' | append: product_resource.id | append: '-' | append: product_option.name | handleize
+            assign option_id_attribute = 'data-option-id="' | append: fieldset_id | append: '"'
+            assign longest_value = 0
+          endif
+        -%}
+
+        {%- if variant_style == 'swatch' or block_settings.variant_style == 'buttons' -%}
+          <!-- Button/Swatch variant code remains the same -->
+          <fieldset
+            class="variant-option variant-option--buttons{% if variant_style == 'swatch' %} variant-option--swatches{% else %} variant-option--{{ settings.variant_button_width }}{% endif %}"
+            {{ option_id_attribute }}
+          >
+            <legend>
+              {{ product_option.name | escape -}}
+              {%- if variant_style == 'swatch' -%}
+                <span class="variant-option__swatch-value">{{ product_option.selected_value }}</span>
+              {%- endif %}
+            </legend>
+            {%- for product_option_value in product_option.values -%}
+              {% if product_option_value.size > longest_value and option_id_attribute %}
+                {% assign longest_value = product_option_value.size %}
+              {% endif %}
+              <label class="variant-option__button-label{% if variant_style == 'swatch' %} variant-option__button-label--has-swatch{% endif %}">
+                <input
+                  type="radio"
+                  name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
+                  value="{{ product_option_value | escape }}"
+                  aria-label="{{ product_option_value.name }}"
+                  {% if product_option_value.available == false %}
+                    aria-disabled="true"
+                  {% endif %}
+                  data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                  data-option-value-id="{{ product_option_value.id }}"
+                  data-option-available="{{ product_option_value.available }}"
+                  data-connected-product-url="{{ product_option_value.product_url }}"
+                  {% if product_option_value.variant.id %}
+                    data-variant-id="{{ product_option_value.variant.id }}"
+                  {% endif %}
+                  {% if product_option_value.selected %}
+                    checked
+                  {% endif %}
+                >
+                {% if variant_style == 'swatch' %}
+                  {% liquid
+                    assign featured_media = product_option_value.variant.featured_media
+
+                    if featured_media == blank and product_option_value.product_url
+                      assign featured_media = product_option_value.variant.product.featured_media
+                    endif
+                  %}
+
+                  {% render 'swatch',
+                    swatch: product_option_value.swatch,
+                    variant_image: featured_media,
+                    mode: 'unscaled'
+                  %}
+                {% else %}
+                  <span class="variant-option__button-label__text">{{ product_option_value | escape }}</span>
+                {% endif %}
+                {% render 'strikethrough-variant', product_option: product_option_value %}
+              </label>
+            {%- endfor -%}
+            {% if option_id_attribute %}
+              {% style %}
+                [data-option-id="{{ fieldset_id }}"] {
+                  --variant-ch: {{ longest_value }}ch;
+                }
+              {% endstyle %}
+            {% endif %}
+          </fieldset>
+          
+        {%- elsif block_settings.variant_style == 'slider' -%}
+          <!-- UPDATED SLIDER VARIANT STYLE -->
+          <fieldset class="variant-option variant-option--slider" data-slider-id="{{ product_option.name | handleize }}-{{ block.id }}">
+            <legend>{{ product_option.name | escape }}</legend>
+            <div class="variant-slider__container">
+              <div class="variant-slider__wrapper">
+                <!-- Previous Button -->
+                <button 
+                  type="button"
+                  class="variant-slider__nav variant-slider__nav--prev" 
+                  aria-label="Previous {{ product_option.name }} options"
+                  data-slider-prev
+                >
+                  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                
+                <!-- Next Button -->
+                <button 
+                  type="button"
+                  class="variant-slider__nav variant-slider__nav--next" 
+                  aria-label="Next {{ product_option.name }} options"
+                  data-slider-next
+                >
+                  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+                
+                <!-- Slider Track -->
+                <div class="variant-slider__track">
+                  <div class="variant-slider__list" data-slider-list>
+                    {%- for product_option_value in product_option.values -%}
+                      {%- liquid
+                        assign variant_handle = product_option_value | handleize
+                        assign image_name = variant_handle | append: '.png'
+                        assign image_url = image_name | asset_url
+                      -%}
+                      <div class="variant-slider__item">
+                        <label class="variant-slider__label">
+                          <input
+                            type="radio"
+                            name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
+                            value="{{ product_option_value | escape }}"
+                            aria-label="{{ product_option_value.name }}"
+                            {% if product_option_value.available == false %}
+                              aria-disabled="true"
+                            {% endif %}
+                            data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                            data-option-value-id="{{ product_option_value.id }}"
+                            data-option-available="{{ product_option_value.available }}"
+                            data-connected-product-url="{{ product_option_value.product_url }}"
+                            {% if product_option_value.variant.id %}
+                              data-variant-id="{{ product_option_value.variant.id }}"
+                            {% endif %}
+                            {% if product_option_value.selected %}
+                              checked
+                            {% endif %}
+                          >
+                          <div class="variant-slider__image-wrapper">
+                            <img src="{{ image_url }}" alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
+                            <span>{{ product_option_value | escape }}</span>
+                          </div>
+                        </label>
+                      </div>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          
+        {%- elsif block_settings.variant_style == 'dropdowns' -%}
+          <!-- Dropdown variant code remains the same -->
+          {% liquid
+            assign property_being_updated = false
+            if settings.variant_swatch_width != settings.variant_swatch_height
+              assign property_being_updated = true
+              assign new_width = settings.variant_swatch_width | times: 1.0 | divided_by: settings.variant_swatch_height | times: 20
+            endif
+          %}
+
+          <div class="variant-option variant-option--dropdowns">
+            <label for="Option-{{ block.id }}-{{ forloop.index0 }}">{{ product_option.name | escape }}</label>
+            <div
+              class="variant-option__select-wrapper"
+              style="
+                {%- if property_being_updated  -%}
+                  --variant-picker-swatch-width: clamp(10px,{{ new_width }}px, 50px);
+                {%- endif -%}
+              "
+            >
+              <select
+                id="Option-{{ block.id }}-{{ forloop.index0 }}"
+                name="options[{{ product_option.name | escape }}]"
+                class="variant-option__select"
+              >
+                {%- for product_option_value in product_option.values -%}
+                  <option
+                    value="{{ product_option_value | escape }}"
+                    data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                    data-option-value-id="{{ product_option_value.id }}"
+                    data-variant-id="{{ product_option_value.variant.id }}"
+                    data-connected-product-url="{{ product_option_value.product_url }}"
+                    {% if product_option_value.selected %}
+                      selected="selected"
+                    {% endif %}
+                  >
+                    {% if product_option_value.available == false %}
+                      {{ product_option_value | escape }} - {{ 'content.unavailable' | t }}
+                    {% else %}
+                      {{ product_option_value | escape }}
+                    {% endif %}
+                  </option>
+                {%- endfor -%}
+              </select>
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                class="icon icon-caret"
+                viewBox="0 0 10 6"
+              >
+                {%- render 'icon', icon: 'caret' -%}
+              </svg>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      <script type="application/json">
+        {{ product_resource.selected_or_first_available_variant | json }}
+      </script>
+    </form>
+  </variant-picker>
+{% endunless %}
+
+<!-- JavaScript for Slider Functionality -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all variant sliders
+    const sliders = document.querySelectorAll('.variant-option--slider');
+    
+    sliders.forEach(slider => {
+      const list = slider.querySelector('[data-slider-list]');
+      const prevBtn = slider.querySelector('[data-slider-prev]');
+      const nextBtn = slider.querySelector('[data-slider-next]');
+      const items = slider.querySelectorAll('.variant-slider__item');
+      
+      if (!list || !prevBtn || !nextBtn || items.length === 0) return;
+      
+      let currentIndex = 0;
+      const itemsPerView = getItemsPerView();
+      const maxIndex = Math.max(0, items.length - itemsPerView);
+      
+      function getItemsPerView() {
+        const width = window.innerWidth;
+        if (width <= 480) return 2;
+        if (width <= 768) return 3;
+        return 4;
+      }
+      
+      function updateSlider() {
+        const itemWidth = 100 / itemsPerView;
+        const offset = -currentIndex * itemWidth;
+        list.style.transform = `translateX(${offset}%)`;
+        
+        // Update button states
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex >= maxIndex;
+      }
+      
+      function goToNext() {
+        if (currentIndex < maxIndex) {
+          currentIndex++;
+          updateSlider();
+        }
+      }
+      
+      function goToPrev() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateSlider();
+        }
+      }
+      
+      // Event listeners
+      nextBtn.addEventListener('click', goToNext);
+      prevBtn.addEventListener('click', goToPrev);
+      
+      // Handle window resize
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          const newItemsPerView = getItemsPerView();
+          const newMaxIndex = Math.max(0, items.length - newItemsPerView);
+          if (currentIndex > newMaxIndex) {
+            currentIndex = newMaxIndex;
+          }
+          updateSlider();
+        }, 250);
+      });
+      
+      // Keyboard navigation
+      slider.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') goToPrev();
+        if (e.key === 'ArrowRight') goToNext();
+      });
+      
+      // Initial update
+      updateSlider();
+    });
+  });
+</script>
+
+{% stylesheet %}
+  .variant-picker {
     width: 100%;
   }
 
@@ -191,3 +529,7 @@
     background: rgb(var(--color-foreground-rgb) / 0.3);
     transform: rotate(-45deg);
   }
+  
+  /* Keep other existing styles for buttons, swatches, dropdowns */
+  /* ... rest of your existing CSS ... */
+{% endstylesheet %}
