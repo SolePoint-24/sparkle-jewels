@@ -199,6 +199,12 @@
               },
               "block_order": []
             },
+            "delivery_date_rAwi84": {
+              "type": "delivery-date",
+              "name": "Delivery Date",
+              "settings": {},
+              "blocks": {}
+            },
             "accordion_Yd4U4w": {
               "type": "accordion",
               "name": "Accordion",
@@ -369,6 +375,7 @@
             "text_qyFipw",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
+            "delivery_date_rAwi84",
             "accordion_Yd4U4w"
           ]
         }
