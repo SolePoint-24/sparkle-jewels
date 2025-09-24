@@ -1,0 +1,121 @@
+{% comment %}
+  ============================================================================
+  BLOCK: Metal Config
+  - Renders basic information about the product's metal composition.
+  - This is a starter template. Replace placeholders with your actual
+    product metafields or variant options.
+  ============================================================================
+{% endcomment %}
+{% comment %}
+  ============================================================================
+  BLOCK: Metal Config
+  - Renders basic information about the product's metal composition using a table layout.
+  ============================================================================
+{% endcomment %}
+
+{%- if block.settings.show_block -%}
+  <div class="metal-config-wrapper" {{ block.shopify_attributes }}>
+    {%- comment %}
+      This data is now in a table. Replace the placeholder text with your
+      dynamic Liquid variables, like {{ product.metafields.custom.metal_type }}.
+    {% endcomment %}
+    <div class="metal-info-container">
+     <table class="metal-info-table">
+        <tbody>
+          <tr>
+            <td>Metal Type</td>
+            <td>blah</td>
+          </tr>
+          <tr>
+            <td>Purity</td>
+            <td>75.0%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+{%- endif -%}
+
+
+{% stylesheet %}
+  .metal-config-wrapper {
+    margin-bottom: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  .metal-config-title {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #333;
+  }
+
+  /* Styles adapted from your stone configuration table */
+  .metal-info-container {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #fff;
+  }
+  .metal-info-container:last-child {
+    margin-bottom: 0;
+  }
+  .metal-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e9e9e9;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #f2f2f2;
+  }
+  .metal-info-table tr {
+    border-bottom: 1px solid #e9e9e9;
+  }
+  .metal-info-table tr:last-child {
+    border-bottom: none;
+  }
+  .metal-info-table td {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #444;
+    line-height: 20px;
+  }
+  .metal-info-table td:first-child {
+    width: 60%;
+    font-weight: 500;
+    
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "manufacturer and origin",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Block Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_block",
+      "label": "Show this block",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Block Title",
+      "default": "Metal Details"
+    }
+  ],
+  "presets": [
+    {
+      "name": "manufacturer and origin",
+       "category": "t:categories.custom"
+    }
+  ]
+}
+{% endschema %}
