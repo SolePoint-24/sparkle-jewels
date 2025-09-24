@@ -155,7 +155,9 @@
         ".header__row {height: 100px;}"
       ],
       "settings": {
-        "logo_tagline": "SPARKLE JEWELS",
+        "logo_tagline": "SPARLKE JEWLS",
+        "tagline_font_size": 15,
+        "tagline_font_size_mobile": 13,
         "logo_position": "center",
         "menu_position": "left",
         "menu_row": "top",
