@@ -253,155 +253,88 @@
 document.addEventListener('DOMContentLoaded', function() {
   const sliders = document.querySelectorAll('.variant-option--slider');
 
-  sliders.forEach(initSlider);
-
-  function initSlider(slider) {
+  sliders.forEach(slider => {
     const list = slider.querySelector('[data-slider-list]');
-    const track = slider.querySelector('.variant-slider__track');
     const prevBtn = slider.querySelector('[data-slider-prev]');
     const nextBtn = slider.querySelector('[data-slider-next]');
-    const items = Array.from(slider.querySelectorAll('.variant-slider__item'));
+    if (!list || !prevBtn || !nextBtn) return;
 
-    if (!list || !track || !prevBtn || !nextBtn || items.length === 0) return;
-
-    // configuration: tweak minItemWidth to control how many items fit
-    const MIN_ITEM_WIDTH = 120; // px — change this value to make items larger/smaller
-    const GAP = parseFloat(getComputedStyle(list).gap) || 12; // px
-
-    let currentIndex = 0;
-    let itemsPerView = 1;
-    let itemWidth = 0;
-
-    function computeLayout() {
-  const available = Math.max(0, track.clientWidth);
-  const maxPossible = items.length;
-
-  // how many can we actually fit?
-  let perView = Math.floor((available + GAP) / (MIN_ITEM_WIDTH + GAP));
-  if (perView < 1) perView = 1;
-  if (perView > maxPossible) perView = maxPossible;
-
-  itemsPerView = perView;
-
-  // exact width per item (don’t exceed available)
-  itemWidth = (available - GAP * (itemsPerView - 1)) / itemsPerView;
-
-  items.forEach(item => {
-    item.style.flex = `0 0 ${itemWidth}px`;
-    item.style.maxWidth = `${itemWidth}px`; // hard cap at per-item width
-  });
-
-  updateSlider(true);
-}
-
-
-    function updateSlider(instant = false) {
-      const maxIndex = Math.max(0, items.length - itemsPerView);
-      if (currentIndex > maxIndex) currentIndex = maxIndex;
-      if (currentIndex < 0) currentIndex = 0;
-
-      const translate = currentIndex * (itemWidth + GAP);
-      if (instant) list.style.transition = 'none';
-      else list.style.transition = 'transform 300ms ease';
-
-      list.style.transform = `translateX(-${translate}px)`;
-
-      prevBtn.disabled = currentIndex === 0;
-      nextBtn.disabled = currentIndex >= maxIndex;
-    }
-
-    function goNext() {
-      const maxIndex = Math.max(0, items.length - itemsPerView);
-      if (currentIndex < maxIndex) {
-        currentIndex += 1;
-        updateSlider();
-      }
-    }
-    function goPrev() {
-      if (currentIndex > 0) {
-        currentIndex -= 1;
-        updateSlider();
-      }
-    }
-
-    nextBtn.addEventListener('click', goNext);
-    prevBtn.addEventListener('click', goPrev);
-
-    // Recalculate on resize using ResizeObserver for the track
-    const ro = new ResizeObserver(() => {
-      computeLayout();
-    });
-    ro.observe(track);
-
-    // Keyboard navigation
+    // Accessibility: allow keyboard focus on slider
     slider.setAttribute('tabindex', '0');
-    slider.style.outline = 'none';
-    slider.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') goPrev();
-      if (e.key === 'ArrowRight') goNext();
-    });
 
-    // Pointer / touch dragging (pointer events)
-    let isDragging = false;
-    let startX = 0;
-    let startTranslate = 0;
+    // Utility to update button state and hide navs when not needed
+    function updateControls() {
+      // small tolerance to avoid off-by-one
+      const maxScrollLeft = list.scrollWidth - list.clientWidth;
+      const atStart = list.scrollLeft <= 1;
+      const atEnd = list.scrollLeft >= (maxScrollLeft - 1);
 
-    list.style.willChange = 'transform';
-    list.style.touchAction = 'pan-y'; // allow vertical scroll; horizontal we handle
-    list.addEventListener('pointerdown', (e) => {
-      isDragging = true;
-      list.style.transition = 'none';
-      startX = e.clientX;
+      prevBtn.disabled = atStart;
+      nextBtn.disabled = atEnd;
 
-      // compute currentTranslate (absolute px)
-      const matrix = window.getComputedStyle(list).transform;
-      let currentTranslate = 0;
-      if (matrix && matrix !== 'none') {
-        const domMatrix = new DOMMatrixReadOnly(matrix);
-        currentTranslate = Math.abs(domMatrix.m41);
-      }
-      startTranslate = currentTranslate;
-
-      list.setPointerCapture(e.pointerId);
-    });
-
-    list.addEventListener('pointermove', (e) => {
-      if (!isDragging) return;
-      const delta = e.clientX - startX;
-      let newTranslate = startTranslate - delta;
-      const maxTranslate = Math.max(0, (items.length * (itemWidth + GAP)) - (itemsPerView * (itemWidth + GAP)));
-      if (newTranslate < 0) newTranslate = 0;
-      if (newTranslate > maxTranslate) newTranslate = maxTranslate;
-      list.style.transform = `translateX(-${newTranslate}px)`;
-    });
-
-    function endDrag(e) {
-      if (!isDragging) return;
-      isDragging = false;
-      try { list.releasePointerCapture(e.pointerId); } catch (err) {}
-      // get current translate
-      const matrix = window.getComputedStyle(list).transform;
-      let currentTranslate = 0;
-      if (matrix && matrix !== 'none') {
-        const domMatrix = new DOMMatrixReadOnly(matrix);
-        currentTranslate = Math.abs(domMatrix.m41);
-      }
-      const perItem = itemWidth + GAP;
-      const nearestIndex = Math.round(currentTranslate / perItem);
-      currentIndex = Math.min(Math.max(nearestIndex, 0), Math.max(0, items.length - itemsPerView));
-      list.style.transition = 'transform 300ms ease';
-      updateSlider();
+      // hide navs if there is nothing to scroll
+      const shouldHideNavs = list.scrollWidth <= list.clientWidth + 1;
+      if (shouldHideNavs) slider.setAttribute('data-nav-hidden', 'true');
+      else slider.removeAttribute('data-nav-hidden');
     }
 
-    list.addEventListener('pointerup', endDrag);
-    list.addEventListener('pointercancel', endDrag);
-    list.addEventListener('pointerleave', (e) => { if (isDragging) endDrag(e); });
+    // page scroll amount — scroll one "page" (visible width) at a time
+    function scrollNext() {
+      list.scrollBy({ left: list.clientWidth, behavior: 'smooth' });
+    }
+    function scrollPrev() {
+      list.scrollBy({ left: -list.clientWidth, behavior: 'smooth' });
+    }
 
-    // initial compute
-    computeLayout();
-  }
+    nextBtn.addEventListener('click', scrollNext);
+    prevBtn.addEventListener('click', scrollPrev);
+
+    // Sync buttons while scrolling (use rAF for cheap throttling)
+    let rafId = null;
+    list.addEventListener('scroll', () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        updateControls();
+      });
+    });
+
+    // Update on load, images loaded, and resize
+    function scheduleUpdate() {
+      // give the browser a tick so layout stabilizes (images may load)
+      requestAnimationFrame(updateControls);
+    }
+
+    // Recalculate when window resizes
+    window.addEventListener('resize', scheduleUpdate);
+
+    // Also update once each image inside list loads (images change scrollWidth)
+    const imgs = Array.from(list.querySelectorAll('img'));
+    if (imgs.length) {
+      let loadedCount = 0;
+      imgs.forEach(img => {
+        if (img.complete) loadedCount++;
+        else img.addEventListener('load', () => {
+          loadedCount++;
+          if (loadedCount === imgs.length) scheduleUpdate();
+          else scheduleUpdate();
+        });
+        // also handle error/cached
+        img.addEventListener('error', scheduleUpdate);
+      });
+    }
+
+    // Keyboard nav on slider container
+    slider.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); scrollPrev(); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); scrollNext(); }
+    });
+
+    // initial state
+    scheduleUpdate();
+  });
 });
 </script>
+
 
 
 {% stylesheet %}
@@ -935,5 +868,72 @@ document.addEventListener('DOMContentLoaded', function() {
   user-select: none;
   touch-action: pan-y;
 }
+
+/* Slider: CSS-only sizing, native scroll with scroll-snap */
+.variant-slider__track {
+  position: relative;
+  width: 100%;
+  overflow: hidden; /* hide outer overflow/scrollbars while inner list scrolls */
+}
+
+.variant-slider__list {
+  display: flex;
+  gap: 12px; /* matches your existing gap */
+  margin: 0;
+  padding-inline: 8px; /* optional padding so edge items have breathing room */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  align-items: flex-start;
+  /* hide scrollbars visually */
+  scrollbar-width: none; /* Firefox */
+}
+.variant-slider__list::-webkit-scrollbar { display: none; } /* WebKit */
+
+/* Items size themselves via min-width. Adjust the var to control how many fit. */
+:root { --variant-min-width: 80px; } /* tweak globally if you want */
+.variant-slider__item {
+  flex: 0 0 auto;              /* do not grow/shrink relative to container */
+  min-width: var(--variant-min-width);
+  max-width: 100%;
+  box-sizing: border-box;
+  scroll-snap-align: start;    /* snap to item start */
+}
+
+/* Make the image wrapper responsive inside the item */
+.variant-slider__image-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* nav buttons overlay — keep them visible but not changing layout */
+.variant-slider__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.variant-slider__nav--prev { left: 8px; }
+.variant-slider__nav--next { right: 8px; }
+
+/* visually disabled state */
+.variant-slider__nav:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* if list fits entirely, hide navs */
+.variant-option--slider[data-nav-hidden="true"] .variant-slider__nav {
+  display: none;
+}
+
 
 {% endstylesheet %}
