@@ -375,7 +375,7 @@
                       "settings": {
                         "icon": "price_tag",
                         "image_upload": "shopify://shop_images/BIS-Hallmark-Black.png",
-                        "width": 24,
+                        "width": 40,
                         "link": "",
                         "open_in_new_tab": false
                       },
