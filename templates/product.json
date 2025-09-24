@@ -370,7 +370,6 @@
             "group_mPWi7V": {
               "type": "group",
               "name": "t:names.group",
-              "disabled": true,
               "settings": {
                 "link": "",
                 "open_in_new_tab": false,
@@ -453,6 +452,7 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "price_tag",
+                        "image_upload": "shopify://shop_images/free-delivery.png",
                         "width": 24,
                         "link": "",
                         "open_in_new_tab": false
@@ -536,6 +536,7 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "price_tag",
+                        "image_upload": "shopify://shop_images/BIS-Hallmark-Black.png",
                         "width": 24,
                         "link": "",
                         "open_in_new_tab": false
@@ -619,6 +620,7 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "price_tag",
+                        "image_upload": "shopify://shop_images/sparkle-jewels-logo-transparent.png",
                         "width": 24,
                         "link": "",
                         "open_in_new_tab": false
@@ -702,6 +704,7 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "price_tag",
+                        "image_upload": "shopify://shop_images/lifetime-exchnage-icon.png",
                         "width": 24,
                         "link": "",
                         "open_in_new_tab": false
@@ -785,6 +788,7 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "price_tag",
+                        "image_upload": "shopify://shop_images/lifetime-exchnage-icon.png",
                         "width": 24,
                         "link": "",
                         "open_in_new_tab": false
