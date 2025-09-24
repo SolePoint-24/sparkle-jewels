@@ -201,35 +201,9 @@
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_nLziaf": {
-              "type": "text",
-              "name": "Description",
-              "settings": {
-                "text": "<p>Enjoy free, secure delivery on all jewellery orders always.</p>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "center",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": "1.125rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
@@ -248,8 +222,7 @@
           },
           "block_order": [
             "icon_Rxm7kn",
-            "text_94ABNQ",
-            "text_nLziaf"
+            "text_94ABNQ"
           ]
         },
         "group_PPBp7Y": {
@@ -308,39 +281,13 @@
               "type": "text",
               "name": "Heading",
               "settings": {
-                "text": "<h2>24/7 Jewelry concierge</h2>",
+                "text": "<h3>24/7 Jewelry concierge</h3>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_yTFqdG": {
-              "type": "text",
-              "name": "Description",
-              "settings": {
-                "text": "<p>out experts are here day or night to guide your sparkle journey </p>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "center",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": "1.125rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
@@ -359,8 +306,7 @@
           },
           "block_order": [
             "icon_9RTcd4",
-            "text_77AnjG",
-            "text_yTFqdG"
+            "text_77AnjG"
           ]
         },
         "group_qCytrz": {
@@ -419,39 +365,13 @@
               "type": "text",
               "name": "Heading",
               "settings": {
-                "text": "<h2>Unmatched values and deals</h2>",
+                "text": "<h3>Unmatched values and deals</h3>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "center",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_ypr7Nf": {
-              "type": "text",
-              "name": "Description",
-              "settings": {
-                "text": "<p>exclusive savings on luxorious items without compromise </p>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "center",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": "1.125rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
@@ -470,8 +390,7 @@
           },
           "block_order": [
             "icon_6QLwQ9",
-            "text_yF38je",
-            "text_ypr7Nf"
+            "text_yF38je"
           ]
         },
         "group_HLRt8K": {
@@ -529,39 +448,13 @@
               "type": "text",
               "name": "Heading",
               "settings": {
-                "text": "<h2>7-days easy returns</h2>",
+                "text": "<h3>7-days easy returns</h3>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_MXywAg": {
-              "type": "text",
-              "name": "Description",
-              "settings": {
-                "text": "<p>Not in love yet ? return within 7 days hassle free and secure </p>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "center",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": "1.125rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
@@ -580,8 +473,7 @@
           },
           "block_order": [
             "icon_BnX8zx",
-            "text_6JTctL",
-            "text_MXywAg"
+            "text_6JTctL"
           ]
         }
       },
@@ -603,8 +495,8 @@
         "vertical_alignment_flex_direction_column": "center",
         "gap": 12,
         "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
+        "section_height": "custom",
+        "section_height_custom": 21,
         "color_scheme": "scheme-4",
         "background_media": "none",
         "video_position": "cover",
@@ -1556,7 +1448,7 @@
       "type": "newsletter",
       "name": "Newsletter",
       "settings": {
-        "background_image": "shopify://shop_images/news-letter-image.webp",
+        "background_image": "shopify://shop_images/Gemini_Generated_Image_4y8ctc4y8ctc4y8c.png",
         "heading": "Join Our Newsletter",
         "subheading": "<p>FIRST AND FOREMOST, AN EMAIL NEWSLETTER SIGNUP SHOULD INCENTIVIZE PEOPLE TO SIGN UP</p>",
         "overlay_opacity": 30,
