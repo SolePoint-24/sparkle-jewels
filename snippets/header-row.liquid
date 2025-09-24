@@ -62,7 +62,9 @@
                <div class="logo-with-tagline">
                   {{ logo }}
                     {%- if section.settings.logo_tagline != blank -%}
+                      <a href="#">
                         <p class="logo__tagline">{{ section.settings.logo_tagline | escape }}</p>
+                      </a>
                     {%- endif -%}
                 </div>
             {% when 'menu' %}
