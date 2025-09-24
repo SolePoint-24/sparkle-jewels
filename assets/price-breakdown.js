@@ -22,7 +22,7 @@ export class PriceBreakdown extends Component {
 	onVariantUpdate(event) {
     const newHtml = event.detail?.data?.html;
 
-    const newPriceBreakdown = newHtml.querySelector('price-  ');
+    const newPriceBreakdown = newHtml.querySelector('price-breakdown');
 
 
     if (!newPriceBreakdown) {
