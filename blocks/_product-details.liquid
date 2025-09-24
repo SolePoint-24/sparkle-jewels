@@ -22,8 +22,9 @@
         class="link"
       >
         {{- product.title }}
+            {{product.selected_or_first_available_variant.sku }}
       </a>
-      {{product.selected_or_first_available_variant.sku }}
+  
     </div>
     {% content_for 'blocks' %}
   {% endcapture %}
