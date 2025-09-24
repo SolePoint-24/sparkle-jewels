@@ -10,7 +10,7 @@
 {
   "current": {
     "logo": "shopify://shop_images/sparkle-jewels-logo-transparent.png",
-    "favicon": "shopify://shop_images/sparkle-jewels-logo-2.jpg",
+    "favicon": "shopify://shop_images/sparkle-jewels-logo-transparent.png",
     "type_body_font": "system_ui_n4",
     "type_subheading_font": "newsreader_n4",
     "type_heading_font": "libre_baskerville_n4",
