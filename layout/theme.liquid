@@ -50,6 +50,9 @@
       async
       blocking="render"
     ></script>
+    <!-- Glider JS (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/glider-js@1.7.9/glider.min.js"></script>
+
 
     <main
       id="MainContent"
@@ -69,5 +72,6 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+    
   </body>
 </html>
