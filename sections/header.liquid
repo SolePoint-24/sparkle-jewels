@@ -194,9 +194,10 @@
   {% if sticky %}
     sticky="{{ sticky }}"
   {% endif %}
-    style="
-    --tagline-font-size-desktop: {{ section.settings.tagline_font_size }}px;
-    --tagline-font-size-mobile: {{ section.settings.tagline_font_size_mobile }}px;
+
+  style="
+  --tagline-font-size-desktop: {{ section.settings.tagline_font_size }}px;
+  --tagline-font-size-mobile: {{ section.settings.tagline_font_size_mobile }}px;
   "
 
  
@@ -645,6 +646,7 @@
     }
   }
 .logo-with-tagline {
+   font-size: var(--tagline-font-size-desktop);
   display: flex;
   flex-direction: row;
   gap: 8px;
@@ -664,7 +666,7 @@
 }
 @media screen and (max-width: 749px) {
   .logo__tagline {
-    font-size: 18px;
+      font-size: var(--tagline-font-size-mobile);
   }
 }
 
