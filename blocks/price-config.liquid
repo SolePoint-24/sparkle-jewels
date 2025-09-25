@@ -7,7 +7,7 @@
 {%- if block.settings.show_block -%}
   
 
-  <price-breakdown class="price-config-wrapper" {{ block.shopify_attributes }}>
+  <price-breakdown class="price-config-wrapper" data-id="price-breakdown" {{ block.shopify_attributes }}>
     {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
     {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
 
