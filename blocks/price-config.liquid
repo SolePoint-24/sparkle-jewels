@@ -19,7 +19,7 @@
     Step 2: Get the reference itself from the 'metal_variant' field.
     Do NOT add .value here yet.
   {% endcomment %}
-  {%- assign metal_variant_reference = metal_weights_object[0].metal_variant.handle -%}
+  {%- assign metal_variant_reference = metal_weights_object[0].metal_variant -%}
 
   {% if metal_variant_reference %}
     {% comment %} 
