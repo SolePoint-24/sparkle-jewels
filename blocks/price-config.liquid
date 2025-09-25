@@ -6,6 +6,13 @@
 {% endcomment %}
 
 {%- if block.settings.show_block -%}
+  
+  {% comment %}
+    Step 1: Fetch the global pricing config object and the JSON string from it.
+    ASSUMPTION: The handle/key for your JSON field is 'rates'.
+  {% endcomment %}
+  {%- assign pricing_config = metaobjects.metal_pricing_config.first -%}
+  {%- assign rates_json_string = pricing_config.rates.value -%}
       
   <price-breakdown class="price-config-wrapper" {{ block.shopify_attributes }}>
     <div class="price-breakdown-table">
@@ -16,11 +23,6 @@
         <div class="pbt-cell pbt-align-right">VALUE</div>
       </div>
 
-      {% comment %}
-      =======================================================
-      DYNAMIC METALS SECTION
-      =======================================================
-      {% endcomment %}
       <div class="pbt-row pbt-group-title">
         <div class="pbt-cell">METALS</div>
       </div>
@@ -30,23 +32,26 @@
       {% for metal_item in metal_weights_list %}
         {%- assign final_metal_object = metal_item.metal_variant.value -%}
         
-        {% if final_metal_object %}
+        {% if final_metal_object and rates_json_string %}
           {% comment %}
-            Reads the 'rate_per_gram' from your metal variant metaobject.
-            Example: 6592 (for ₹6,592)
+            Step 2: Manually parse the JSON string to find the rate.
+            This logic is fragile and depends on the exact JSON structure.
           {% endcomment %}
-          {%- assign rate = final_metal_object.rate_per_gram | default: 0 -%}
+          {%- assign metal_name_downcased = final_metal_object.display_name | downcase -%}
+          {%- assign rate = 0 -%}
 
-          {% comment %}
-            Reads the weight from the 'metal_item' object.
-            We multiply by 1.0 to ensure it's treated as a number.
-          {% endcomment %}
+          {%- if metal_name_downcased contains 'gold' -%}
+            {%- assign temp_string = rates_json_string | split: '"Gold":"' | last -%}
+            {%- assign rate = temp_string | split: '"' | first | plus: 0 -%}
+          {%- elsif metal_name_downcased contains 'silver' -%}
+            {%- assign temp_string = rates_json_string | split: '"Silver":"' | last -%}
+            {%- assign rate = temp_string | split: '"' | first | plus: 0 -%}
+          {%- elsif metal_name_downcased contains 'platinum' -%}
+            {%- assign temp_string = rates_json_string | split: '"Platinum":"' | last -%}
+            {%- assign rate = temp_string | split: '"' | first | plus: 0 -%}
+          {%- endif -%}
+
           {%- assign weight = metal_item.metal_weight | default: 0 | times: 1.0 -%}
-
-          {% comment %}
-            Calculate the total value. The 'money' filter expects a value in cents,
-            so we multiply the final price by 100.
-          {% endcomment %}
           {%- assign total_value = rate | times: weight -%}
           {%- assign total_value_in_cents = total_value | times: 100 -%}
           
