@@ -16,9 +16,8 @@
     else
       assign strikethrough_color_mix = '#fff'
     endif
-
-  
   %}
+  
   <variant-picker
     class="variant-picker spacing-style variant-picker--{{ block_settings.alignment }}"
     style="--color-strikethrough-mix: {{ strikethrough_color_mix }}; {% render 'spacing-style', settings: block_settings %}"
@@ -122,101 +121,86 @@
           </fieldset>
           
         {%- elsif block_settings.variant_style == 'slider' -%}
-          <!-- UPDATED SLIDER VARIANT STYLE -->
+          <!-- UPDATED SLIDER VARIANT STYLE WITH SWIPER -->
           <fieldset class="variant-option variant-option--slider" data-slider-id="{{ product_option.name | handleize }}-{{ block.id }}">
             <legend>{{ product_option.name | escape }}</legend>
+            
             <div class="variant-slider__container">
-              <div class="variant-slider__wrapper">
-                <!-- Previous Button -->
-                <button 
-                  type="button"
-                  class="variant-slider__nav variant-slider__nav--prev" 
-                  aria-label="Previous {{ product_option.name }} options"
-                  data-slider-prev
-                >
-                  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                  </svg>
-                </button>
-                
-                <!-- Next Button -->
-                <button 
-                  type="button"
-                  class="variant-slider__nav variant-slider__nav--next" 
-                  aria-label="Next {{ product_option.name }} options"
-                  data-slider-next
-                >
-                  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </button>
-                
-                <!-- Slider Track -->
-                <div class="variant-slider__track">
-                  <div class="variant-slider__list" data-slider-list>
-                    {%- for product_option_value in product_option.values -%}
-                      {%- liquid
-                        
-                        assign variant_image_url = ''
-                        case product_option_value
-                          when '14K Rose Gold'
-                            assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/14K_ROSE_GOLD.png?v=1758711942'
-                          when '24K Rose Gold'
-                            assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/24K_ROSE_GOLD.png?v=1758711942'
-                          when '18K Rose Gold'
-                            assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/18K_ROSE_GOLD.png?v=1758711943'
-                          when '22K Rose Gold'
-                            assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/22K_ROSE_GOLD.png?v=1758711942'
-                          when '18K Yellow Gold'
-                            assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/18K_YELLOW_GOLD.png?v=1758711942'
-                          when '22K Yellow Gold'
-                            assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/22K_YELLOW_GOLD.png?v=1758711943'
-                          when '14K Yellow Gold'
-                            assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/14K_YELLOW_GOLD.png?v=1758711942'
-                          when '24K Yellow Gold'
-                            assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/24K_YELLOW_GOLD.png?v=1758711943'
-                          when '14K White Gold'
-                            assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/14K_SILVER_GOLD.png?v=1758711942'
-                          when '18K White Gold'
-                            assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/18K_SILVER_GOLD.png?v=1758711942'
-                          when '24K White Gold'
-                            assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/24K_SILVER_GOLD.png?v=1758711942'
-                          when '22K White Gold'
-                            assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/22K_SILVER_GOLD.png?v=1758711942'
-                        endcase
-                        assign variant_handle = product_option_value | handleize
-                        assign image_name = variant_handle | append: '.png'
-                        assign image_url = image_name | asset_url
-                      -%}
-                      <div class="variant-slider__item">
-                        <label class="variant-slider__label">
-                          <input
-                            type="radio"
-                            name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
-                            value="{{ product_option_value | escape }}"
-                            aria-label="{{ product_option_value.name }}"
-                            {% if product_option_value.available == false %}
-                              aria-disabled="true"
-                            {% endif %}
-                            data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
-                            data-option-value-id="{{ product_option_value.id }}"
-                            data-option-available="{{ product_option_value.available }}"
-                            data-connected-product-url="{{ product_option_value.product_url }}"
-                            {% if product_option_value.variant.id %}
-                              data-variant-id="{{ product_option_value.variant.id }}"
-                            {% endif %}
-                            {% if product_option_value.selected %}
-                              checked
-                            {% endif %}
-                          >
-                          <div class="variant-slider__image-wrapper">
-                            <img src="{{variant_image_url }}" alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
-                            <span>{{ product_option_value | escape }}</span>
-                          </div>
-                        </label>
-                      </div>
-                    {%- endfor -%}
-                  </div>
+              <!-- Swiper Navigation -->
+              <div class="variant-slider__nav variant-slider__nav--prev swiper-button-prev-{{ forloop.index }}">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </div>
+              
+              <div class="variant-slider__nav variant-slider__nav--next swiper-button-next-{{ forloop.index }}">
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+
+              <!-- Swiper Container -->
+              <div class="swiper variant-slider-swiper" data-swiper-index="{{ forloop.index }}">
+                <div class="swiper-wrapper">
+                  {%- for product_option_value in product_option.values -%}
+                    {%- liquid
+                      assign variant_image_url = ''
+                      case product_option_value
+                        when '14K Rose Gold'
+                          assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/14K_ROSE_GOLD.png?v=1758711942'
+                        when '24K Rose Gold'
+                          assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/24K_ROSE_GOLD.png?v=1758711942'
+                        when '18K Rose Gold'
+                          assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/18K_ROSE_GOLD.png?v=1758711943'
+                        when '22K Rose Gold'
+                          assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/22K_ROSE_GOLD.png?v=1758711942'
+                        when '18K Yellow Gold'
+                          assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/18K_YELLOW_GOLD.png?v=1758711942'
+                        when '22K Yellow Gold'
+                          assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/22K_YELLOW_GOLD.png?v=1758711943'
+                        when '14K Yellow Gold'
+                          assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/14K_YELLOW_GOLD.png?v=1758711942'
+                        when '24K Yellow Gold'
+                          assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/24K_YELLOW_GOLD.png?v=1758711943'
+                        when '14K White Gold'
+                          assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/14K_SILVER_GOLD.png?v=1758711942'
+                        when '18K White Gold'
+                          assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/18K_SILVER_GOLD.png?v=1758711942'
+                        when '24K White Gold'
+                          assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/24K_SILVER_GOLD.png?v=1758711942'
+                        when '22K White Gold'
+                          assign variant_image_url = 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/22K_SILVER_GOLD.png?v=1758711942'
+                      endcase
+                    -%}
+                    
+                    <div class="swiper-slide">
+                      <label class="variant-slider__label">
+                        <input
+                          type="radio"
+                          name="{{ product_option.name | escape }}-{{ block.id }}-{{ product_resource.id }}"
+                          value="{{ product_option_value | escape }}"
+                          aria-label="{{ product_option_value.name }}"
+                          {% if product_option_value.available == false %}
+                            aria-disabled="true"
+                          {% endif %}
+                          data-input-id="{{ product_option.position }}-{{ forloop.index0 }}"
+                          data-option-value-id="{{ product_option_value.id }}"
+                          data-option-available="{{ product_option_value.available }}"
+                          data-connected-product-url="{{ product_option_value.product_url }}"
+                          {% if product_option_value.variant.id %}
+                            data-variant-id="{{ product_option_value.variant.id }}"
+                          {% endif %}
+                          {% if product_option_value.selected %}
+                            checked
+                          {% endif %}
+                        >
+                        <div class="variant-slider__image-wrapper">
+                          <img src="{{ variant_image_url }}" alt="{{ product_option_value | escape }}" loading="lazy" width="60" height="60">
+                          <span>{{ product_option_value | escape }}</span>
+                        </div>
+                      </label>
+                    </div>
+                  {%- endfor -%}
                 </div>
               </div>
             </div>
@@ -286,87 +270,181 @@
   </variant-picker>
 {% endunless %}
 
-<!-- JavaScript for Slider Functionality -->
+<!-- Include Swiper CSS and JS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js" defer></script>
+
+<!-- JavaScript for Swiper Carousel -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all variant sliders
-    const sliders = document.querySelectorAll('.variant-option--slider');
+    // Initialize Swiper instances
+    const swiperInstances = {};
     
-    sliders.forEach(slider => {
-      const list = slider.querySelector('[data-slider-list]');
-      const prevBtn = slider.querySelector('[data-slider-prev]');
-      const nextBtn = slider.querySelector('[data-slider-next]');
-      const items = slider.querySelectorAll('.variant-slider__item');
+    function initializeSliders() {
+      const sliders = document.querySelectorAll('.variant-slider-swiper');
       
-      if (!list || !prevBtn || !nextBtn || items.length === 0) return;
-      
-      let currentIndex = 0;
-      const itemsPerView = getItemsPerView();
-      const maxIndex = Math.max(0, items.length - itemsPerView);
-      
-      function getItemsPerView() {
-        const width = window.innerWidth;
-        if (width <= 480) return 2;
-        if (width <= 768) return 3;
-        return 4;
-      }
-      
-      function updateSlider() {
-        const itemWidth = 100 / itemsPerView;
-        const offset = -currentIndex * itemWidth;
-        list.style.transform = `translateX(${offset}%)`;
+      sliders.forEach((slider, index) => {
+        const swiperIndex = slider.dataset.swiperIndex;
         
-        // Update button states
-        prevBtn.disabled = currentIndex === 0;
-        nextBtn.disabled = currentIndex >= maxIndex;
-      }
-      
-      function goToNext() {
-        if (currentIndex < maxIndex) {
-          currentIndex++;
-          updateSlider();
+        // Destroy existing instance if it exists
+        if (swiperInstances[swiperIndex]) {
+          swiperInstances[swiperIndex].destroy(true, true);
         }
-      }
-      
-      function goToPrev() {
-        if (currentIndex > 0) {
-          currentIndex--;
-          updateSlider();
-        }
-      }
-      
-      // Event listeners
-      nextBtn.addEventListener('click', goToNext);
-      prevBtn.addEventListener('click', goToPrev);
-      
-      // Handle window resize
-      let resizeTimeout;
-      window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-          const newItemsPerView = getItemsPerView();
-          const newMaxIndex = Math.max(0, items.length - newItemsPerView);
-          if (currentIndex > newMaxIndex) {
-            currentIndex = newMaxIndex;
+        
+        // Create new Swiper instance
+        swiperInstances[swiperIndex] = new Swiper(slider, {
+          // Responsive breakpoints
+          slidesPerView: 2,
+          spaceBetween: 12,
+          breakpoints: {
+            480: {
+              slidesPerView: 3,
+              spaceBetween: 12,
+            },
+            768: {
+              slidesPerView: 4,
+              spaceBetween: 12,
+            },
+            1024: {
+              slidesPerView: 5,
+              spaceBetween: 15,
+            }
+          },
+          
+          // Navigation arrows
+          navigation: {
+            nextEl: `.swiper-button-next-${swiperIndex}`,
+            prevEl: `.swiper-button-prev-${swiperIndex}`,
+          },
+          
+          // Enable keyboard navigation
+          keyboard: {
+            enabled: true,
+          },
+          
+          // Enable touch/swipe
+          touchRatio: 1,
+          touchAngle: 45,
+          grabCursor: true,
+          
+          // Loop settings - disable loop to prevent infinite scrolling issues
+          loop: false,
+          
+          // Prevent clicks during transition
+          preventClicks: true,
+          preventClicksPropagation: true,
+          
+          // Update navigation buttons state
+          on: {
+            init: function() {
+              updateNavigationState(this, swiperIndex);
+            },
+            slideChange: function() {
+              updateNavigationState(this, swiperIndex);
+            },
+            reachBeginning: function() {
+              updateNavigationState(this, swiperIndex);
+            },
+            reachEnd: function() {
+              updateNavigationState(this, swiperIndex);
+            }
           }
-          updateSlider();
-        }, 250);
+        });
       });
+    }
+    
+    function updateNavigationState(swiper, swiperIndex) {
+      const prevBtn = document.querySelector(`.swiper-button-prev-${swiperIndex}`);
+      const nextBtn = document.querySelector(`.swiper-button-next-${swiperIndex}`);
       
-      // Keyboard navigation
-      slider.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') goToPrev();
-        if (e.key === 'ArrowRight') goToNext();
+      if (prevBtn && nextBtn) {
+        // Update disabled states
+        prevBtn.classList.toggle('swiper-button-disabled', swiper.isBeginning);
+        nextBtn.classList.toggle('swiper-button-disabled', swiper.isEnd);
+        
+        // Update aria-disabled for accessibility
+        prevBtn.setAttribute('aria-disabled', swiper.isBeginning);
+        nextBtn.setAttribute('aria-disabled', swiper.isEnd);
+      }
+    }
+    
+    // Function to handle variant selection and update carousel position
+    function handleVariantSelection() {
+      const variantInputs = document.querySelectorAll('.variant-option--slider input[type="radio"]');
+      
+      variantInputs.forEach(input => {
+        input.addEventListener('change', function() {
+          const slide = this.closest('.swiper-slide');
+          const swiper = slide.closest('.swiper');
+          const swiperIndex = swiper.dataset.swiperIndex;
+          const swiperInstance = swiperInstances[swiperIndex];
+          
+          if (swiperInstance && slide) {
+            const slideIndex = Array.from(slide.parentElement.children).indexOf(slide);
+            
+            // Slide to the selected variant with smooth transition
+            swiperInstance.slideTo(slideIndex, 300);
+            
+            // Store the current slide position for page refresh scenarios
+            sessionStorage.setItem(`variant-slider-${swiperIndex}`, slideIndex);
+          }
+        });
       });
-      
-      // Initial update
-      updateSlider();
+    }
+    
+    // Function to restore carousel position after page refresh
+    function restoreCarouselPosition() {
+      Object.keys(swiperInstances).forEach(swiperIndex => {
+        const storedPosition = sessionStorage.getItem(`variant-slider-${swiperIndex}`);
+        const swiper = swiperInstances[swiperIndex];
+        
+        if (storedPosition && swiper) {
+          // Find the currently selected variant
+          const selectedInput = document.querySelector(`.variant-slider-swiper[data-swiper-index="${swiperIndex}"] input:checked`);
+          
+          if (selectedInput) {
+            const slide = selectedInput.closest('.swiper-slide');
+            const slideIndex = Array.from(slide.parentElement.children).indexOf(slide);
+            
+            // Slide to the selected variant without animation (immediate)
+            swiper.slideTo(slideIndex, 0);
+          }
+        }
+      });
+    }
+    
+    // Initialize everything
+    initializeSliders();
+    handleVariantSelection();
+    
+    // Restore position after a short delay to ensure DOM is ready
+    setTimeout(restoreCarouselPosition, 100);
+    
+    // Handle window resize
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        Object.values(swiperInstances).forEach(swiper => {
+          if (swiper && !swiper.destroyed) {
+            swiper.update();
+          }
+        });
+      }, 250);
+    });
+    
+    // Clean up on page unload
+    window.addEventListener('beforeunload', function() {
+      Object.values(swiperInstances).forEach(swiper => {
+        if (swiper && !swiper.destroyed) {
+          swiper.destroy(true, true);
+        }
+      });
     });
   });
 </script>
 
 {% stylesheet %}
-
   .variant-picker {
     width: 100%;
   }
@@ -378,7 +456,7 @@
     width: 100%;
   }
 
-  /* --- SLIDER STYLES --- */
+  /* --- SWIPER SLIDER STYLES --- */
   .variant-option--slider {
     padding: 0;
     margin: 0;
@@ -393,53 +471,28 @@
 
   .variant-slider__container {
     position: relative;
-   
-
-  }
-
-  .variant-slider__wrapper {
-    position: relative;
-    padding: 0 20px; /* Space for nav buttons */
-  }
-
-  .variant-slider__track {
+    max-width: 100%;
     overflow: hidden;
-    margin: 0 auto;
-     max-width: 680px;
   }
 
-  .variant-slider__list {
-    display: flex;
-    gap: 12px;
-    transition: transform 0.3s ease-in-out;
-    padding: 40px 0;
-  }
-
-  .variant-slider__item {
-    flex: 0 0 calc(25% - 9px); /* 4 items per view */
-    min-width: 0;
+  .variant-slider-swiper {
+    width: 100%;
+    padding: 40px 50px;
+    margin: 0 -50px;
   }
 
   @media (max-width: 768px) {
-     .variant-slider__track {
-      overflow: hidden;
-      margin: 0 auto;
-     max-width: 280px;
-  }
-    .variant-slider__item {
-      flex: 0 0 calc(33.33% - 6px); /* 2 items per view */
+    .variant-slider-swiper {
+      padding: 40px 35px;
+      margin: 0 -35px;
     }
   }
 
-  @media (max-width: 480px) {
-    .variant-slider__track {
-      overflow: hidden;
-      margin: 0 auto;
-     max-width: 180px;
-  }
-    .variant-slider__item {
-      flex: 0 0 calc(50% - 6px); /* 2 items per view */
-    }
+  .swiper-slide {
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .variant-slider__label {
@@ -505,7 +558,7 @@
     box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-foreground);
   }
   
-  /* Navigation Buttons */
+  /* Custom Navigation Buttons */
   .variant-slider__nav {
     position: absolute;
     top: 50%;
@@ -521,31 +574,31 @@
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
-    z-index: 2;
+    z-index: 10;
     padding: 0;
   }
 
-  .variant-slider__nav:hover:not(:disabled) {
+  .variant-slider__nav:hover:not(.swiper-button-disabled) {
     background-color: rgb(var(--color-foreground-rgb));
     border-color: rgb(var(--color-foreground-rgb));
     transform: translateY(-50%) scale(1.1);
   }
 
-  .variant-slider__nav:hover:not(:disabled) svg {
+  .variant-slider__nav:hover:not(.swiper-button-disabled) svg {
     stroke: var(--color-background);
   }
 
-  .variant-slider__nav:disabled {
+  .variant-slider__nav.swiper-button-disabled {
     opacity: 0.3;
     cursor: not-allowed;
   }
 
   .variant-slider__nav--prev {
-    left: 0;
+    left: 10px;
   }
 
   .variant-slider__nav--next {
-    right: 0;
+    right: 10px;
   }
 
   .variant-slider__nav svg {
@@ -574,10 +627,37 @@
     background: rgb(var(--color-foreground-rgb) / 0.3);
     transform: rotate(-45deg);
   }
-  
-   .variant-option--swatches {
-    --options-border-radius: var(--variant-picker-swatch-radius);
 
+  /* Hide default Swiper navigation */
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .variant-slider__nav {
+      width: 28px;
+      height: 28px;
+    }
+    
+    .variant-slider__nav svg {
+      width: 14px;
+      height: 14px;
+    }
+    
+    .variant-slider__nav--prev {
+      left: 5px;
+    }
+
+    .variant-slider__nav--next {
+      right: 5px;
+    }
+  }
+  
+  /* Rest of the existing styles remain the same */
+  .variant-option--swatches {
+    --options-border-radius: var(--variant-picker-swatch-radius);
     width: 100%;
   }
 
@@ -875,17 +955,6 @@
     justify-content: right;
   }
 
-   .variant-picker {
-    width: 100%;
-  }
-
-  .variant-picker__form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--padding-lg);
-    width: 100%;
-  }
-
   .variant-picker[data-shopify-visual-preview] {
     min-width: 300px;
     padding-inline-start: max(4px, var(--padding-inline-start));
@@ -896,4 +965,5 @@
     --options-border-width: var(--variant-picker-button-border-width);
     --variant-option-padding-inline: var(--padding-md);
   }
-{% endstylesheet %}
+
+  {% endstylesheet %}
