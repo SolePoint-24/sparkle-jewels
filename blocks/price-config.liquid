@@ -29,17 +29,11 @@
     {%- case metal_variant_reference.type -%}
       {%- when 'gold_variant' -%}
         {% comment %} Now that we know it's a gold_variant, we can safely access its value and fields. {% endcomment %}
-        {%- assign the_actual_object = metal_variant_reference.value -%}
-        <p>Type: Gold</p>
-        <p>Purity: {{ the_actual_object.purity }}</p>
-        <p>Display Name: {{ the_actual_object.display_name }}</p>
+        {%- assign the_actual_object_gold = metal_variant_reference.value -%}
 
       {%- when 'silver_variant' -%}
         {% comment %} Handle the silver variant here, assuming it has similar fields. {% endcomment %}
-        {%- assign the_actual_object = metal_variant_reference.value -%}
-        <p>Type: Silver</p>
-        <p>Purity: {{ the_actual_object.purity }}</p>
-        <p>Display Name: {{ the_actual_object.display_name }}</p>
+        {%- assign the_actual_object_silver = metal_variant_reference.value -%}
     {%- endcase -%}
   {% endif %}
 {% endif %}
@@ -128,8 +122,8 @@
 {%- endif -%}
 
 <script>
-console.log({{ current_variant | json}})
-console.log({{ variable_name | json}})
+console.log({{ the_actual_object_gold | json}})
+console.log({{ the_actual_object_silver | json}})
 
 </script>
 
