@@ -22,14 +22,15 @@ export class PriceBreakdown extends Component {
 	onVariantUpdate(event) {
     const newHtml = event.detail?.data?.html;
 
-    // [...newHTML.getElementsByTagName('price-breakdown')].filter(el => el.dataset['id'] === this.dataset['id'])
-    const newPriceBreakdown = newHtml.querySelector('price-breakdown');
+    const variantValueUpdaterEls = [...newHTML.getElementsByTagName('price-breakdown')]
+    const newVariantHTMLForCurrentEl = variantValueUpdaterEls.filter(el => el.dataset['id'] === this.dataset['id'])
 
-    if (!newPriceBreakdown) {
+
+    if (!newVariantHTMLForCurrentEl) {
       throw new Error('No new price breakdown found');
     }
     
-    morph(this, newPriceBreakdown);
+    morph(this, newVariantHTMLForCurrentEl);
   }
 }
 
