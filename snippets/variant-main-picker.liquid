@@ -375,14 +375,14 @@
   });
 </script>
 {% stylesheet %}
-  /* ======== START: CORRECTED CSS ======== */
+
   .variant-picker {
     width: 100%;
     max-width: 100%;
     overflow: visible;
     box-sizing: border-box;
   }
-  /* ======== END: CORRECTED CSS ======== */
+
 
   .variant-picker * {
     box-sizing: border-box;
@@ -422,21 +422,10 @@
     padding: 5px 0;
     margin: 0;
     box-sizing: border-box;
-    overflow: hidden; /* This is correct for the swiper-container itself */
+    overflow: hidden; 
   }
 
-  @media (max-width: 768px) {
-    .variant-slider__container {
-      max-width: 400px;
-    }
-  }
 
-  @media (max-width: 480px) {
-    .variant-slider__container {
-      
-      max-width: 400px;
-    }
-  }
 
   .swiper-slide {
     height: auto;
@@ -545,11 +534,11 @@
   }
 
   .variant-slider__nav--prev {
-    left: 10px;
+    left: 0;
   }
 
   .variant-slider__nav--next {
-    right: 10px;
+    right: 0;
   }
 
   .variant-slider__nav svg {
