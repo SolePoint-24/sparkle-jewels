@@ -365,7 +365,6 @@
       if (!isNaN(slideIndex) && slideIndex < swiper.slides.length) {
         // Slide to the selected variant without animation (immediate)
         swiper.slideTo(slideIndex, 0);
-        // Force Swiper to recalculate its layout, fixing the "one slide" issue
         swiper.update(); 
       }
     }
