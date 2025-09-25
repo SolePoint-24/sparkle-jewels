@@ -4,7 +4,27 @@
   ============================================================================
 {% endcomment %}
 
+{% comment %}
+  ============================================================================
+  BLOCK: Price Config (Final Version with Dynamic Stones)
+  ============================================================================
+{% endcomment %}
+
 {%- if block.settings.show_block -%}
+
+  {% comment %}
+    Step 1: Fetch all data sources at the beginning.
+  {% endcomment %}
+  {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
+  {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
+  {%- assign all_stone_prices = metaobjects.stone_pricing.values -%}
+
+  {% comment %}
+    Step 2: Initialize variables to hold the total values.
+  {% endcomment %}
+  {%- assign total_metals_value = 0 -%}
+  {%- assign total_stones_value = 0 -%}
+
   <price-breakdown class="price-config-wrapper" {{ block.shopify_attributes }}>
     <div class="price-breakdown-table">
       <div class="pbt-row pbt-header">
@@ -18,35 +38,21 @@
         <div class="pbt-cell">METALS</div>
       </div>
 
-      {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
-
       {% for metal_item in metal_weights_list %}
         {%- assign final_metal_object = metal_item.metal_variant.value -%}
-        
         {% if final_metal_object %}
-          {% comment %}
-            The rate is now read directly from the 'pricing' field on the metal object itself.
-            ASSUMPTION: The handle for your new pricing field is 'pricing'.
-          {% endcomment %}
           {%- assign rate = final_metal_object.pricing | default: 0 -%}
-
           {%- assign weight = metal_item.metal_weight | default: 0 | times: 1.0 -%}
           {%- assign total_value = rate | times: weight -%}
-          {%- assign total_value_in_cents = total_value | times: 100 -%}
+          
+          {% comment %} Add current metal value to the running total {% endcomment %}
+          {%- assign total_metals_value = total_metals_value | plus: total_value -%}
           
           <div class="pbt-row">
-            <div class="pbt-cell">
-              <span class="pbt-main-text">{{ final_metal_object.display_name }}</span>
-            </div>
-            <div class="pbt-cell">
-              {{ rate | times: 100 | money }}
-            </div>
-            <div class="pbt-cell">
-              {{ weight }} g
-            </div>
-            <div class="pbt-cell pbt-align-right">
-              <span>{{ total_value_in_cents | money }}</span>
-            </div>
+            <div class="pbt-cell"><span class="pbt-main-text">{{ final_metal_object.display_name }}</span></div>
+            <div class="pbt-cell">{{ rate | times: 100 | money }}</div>
+            <div class="pbt-cell">{{ weight }} g</div>
+            <div class="pbt-cell pbt-align-right"><span>{{ total_value | times: 100 | money }}</span></div>
           </div>
         {% endif %}
       {% endfor %}
@@ -54,36 +60,55 @@
       <div class="pbt-row pbt-group-title">
         <div class="pbt-cell">STONES</div>
       </div>
-      <div class="pbt-row">
-        <div class="pbt-cell">
-          <span class="pbt-main-text">Cushion London Blue Topaz</span>
-          <span class="pbt-sub-text">x 1(6mm)</span>
-        </div>
-        <div class="pbt-cell">-</div>
-        <div class="pbt-cell">1.10 ct.w</div>
-        <div class="pbt-cell pbt-align-right">
-            <s class="pbt-strikethrough">₹4,017</s>
-          <span>₹3,816</span>
-        </div>
-      </div>
+
+      {% for config_item in stone_configurations %}
+        {%- assign stone = config_item.stone.value -%}
+        {% if stone %}
+          {%- assign stone_price_per_carat = 0 -%}
+          {%- for price_entry in all_stone_prices -%}
+            {%- if price_entry.shape_category == stone.stone_shape and price_entry.size_category == stone.stone_size and price_entry.quality_grade == stone.quality_grade -%}
+              {%- assign stone_price_per_carat = price_entry.pricing -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- assign total_weight = config_item.weight_carat | default: 0 | times: 1.0 -%}
+          {%- assign total_stone_value_for_item = total_weight | times: stone_price_per_carat -%}
+
+          {% comment %} Add current stone value to the running total {% endcomment %}
+          {%- assign total_stones_value = total_stones_value | plus: total_stone_value_for_item -%}
+
+          <div class="pbt-row">
+            <div class="pbt-cell">
+              <span class="pbt-main-text">{{ stone.display_name }}</span>
+              <span class="pbt-sub-text">x {{ config_item.number_of_stone }} ({{ config_item.stone_size }}mm)</span>
+            </div>
+            <div class="pbt-cell">{{ stone_price_per_carat | times: 100 | money }}</div>
+            <div class="pbt-cell">{{ total_weight }} ct.w</div>
+            <div class="pbt-cell pbt-align-right">
+              <span>{{ total_stone_value_for_item | times: 100 | money }}</span>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
       
       <div class="pbt-row pbt-summary-row">
         <div class="pbt-cell">STONES VALUE</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell pbt-align-right">
-            <s class="pbt-strikethrough">₹4,017</s>
-          <span>₹3,816</span>
+          <span>{{ total_stones_value | times: 100 | money }}</span>
         </div>
       </div>
+      
+      {%- assign subtotal = total_metals_value | plus: total_stones_value -%}
       
       <div class="pbt-row pbt-summary-row">
         <div class="pbt-cell pbt-bold">SUBTOTAL</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell pbt-align-right">
-            <s class="pbt-strikethrough">₹29,994</s>
-          <span>₹28,494</span>
+          <span>{{ subtotal | times: 100 | money }}</span>
         </div>
       </div>
 
