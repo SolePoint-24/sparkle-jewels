@@ -576,14 +576,15 @@
     },
     "newsletter_mJ7mxG": {
       "type": "newsletter",
+      "custom_css": [],
       "name": "Newsletter",
       "settings": {
         "background_image": "shopify://shop_images/Gemini_Generated_Image_4y8ctc4y8ctc4y8c.png",
         "heading": "Join Our Newsletter",
         "subheading": "",
-        "overlay_opacity": 0,
+        "overlay_opacity": 10,
         "success_message": "Thank you for subscribing!",
-        "color_scheme": ""
+        "color_scheme": "scheme-7"
       }
     }
   },
