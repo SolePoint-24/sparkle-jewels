@@ -23,7 +23,7 @@ export class VariantValueUpdater extends Component {
     const newHtml = event.detail?.data?.html;
 
     const variantValueUpdaterEls = [...newHtml.getElementsByTagName('variant-value-updater')]
-    const newVariantHTMLForCurrentEl = variantValueUpdaterEls.filter(el => el.dataset['id'] === this.dataset['id'])
+    const newVariantHTMLForCurrentEl = variantValueUpdaterEls.find(el => el.dataset['id'] === this.dataset['id'])
 
 
     if (!newVariantHTMLForCurrentEl) {
