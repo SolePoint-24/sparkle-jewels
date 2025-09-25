@@ -11,15 +11,10 @@
 {% comment %}
   Step 2: Check if the main object and the list of variants exist to prevent errors.
 {% endcomment %}
-{% if metal_config_object %}
+
 
   <h3>Available Metal Options:</h3>
   
-  {% comment %}
-    Step 3: Loop through EACH item in the 'metal_variant' list.
-    On each loop, the 'metal_object' variable will hold one of the referenced
-    objects (first Gold, then Silver, etc.).
-  {% endcomment %}
   <ul>
     {%- for metal_object in metal_config_object.metal_variant.value -%}
       <li>
@@ -28,9 +23,7 @@
     {%- endfor -%}
   </ul>
 
-{% endif %}
     <div class="metal-info-container">
-      {{ metal }}
       <table class="metal-info-table">
         <tbody>
           <tr>
