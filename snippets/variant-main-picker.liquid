@@ -272,7 +272,7 @@
 
 <!-- Include Swiper CSS and JS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js " defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js" defer></script>
 
 <!-- JavaScript for Swiper Carousel -->
 <script>
@@ -330,6 +330,11 @@
           // Loop settings - disable loop to prevent infinite scrolling issues
           loop: false,
           
+          // Allow slide to the last items even if they don't fill the entire view
+          slidesOffsetBefore: 0,
+          slidesOffsetAfter: 0,
+          centeredSlides: false,
+          
           // Prevent clicks during transition
           preventClicks: true,
           preventClicksPropagation: true,
@@ -347,6 +352,9 @@
             },
             reachEnd: function() {
               updateNavigationState(this, swiperIndex);
+            },
+            resize: function() {
+              updateNavigationState(this, swiperIndex);
             }
           }
         });
@@ -358,13 +366,22 @@
       const nextBtn = document.querySelector(`.swiper-button-next-${swiperIndex}`);
       
       if (prevBtn && nextBtn) {
+        // Get current slide info
+        const currentIndex = swiper.activeIndex;
+        const totalSlides = swiper.slides.length;
+        const slidesPerView = swiper.params.slidesPerView;
+        
+        // Calculate if we can still slide
+        const canSlidePrev = currentIndex > 0;
+        const canSlideNext = currentIndex < (totalSlides - slidesPerView);
+        
         // Update disabled states
-        prevBtn.classList.toggle('swiper-button-disabled', swiper.isBeginning);
-        nextBtn.classList.toggle('swiper-button-disabled', swiper.isEnd);
+        prevBtn.classList.toggle('swiper-button-disabled', !canSlidePrev);
+        nextBtn.classList.toggle('swiper-button-disabled', !canSlideNext);
         
         // Update aria-disabled for accessibility
-        prevBtn.setAttribute('aria-disabled', swiper.isBeginning);
-        nextBtn.setAttribute('aria-disabled', swiper.isEnd);
+        prevBtn.setAttribute('aria-disabled', !canSlidePrev);
+        nextBtn.setAttribute('aria-disabled', !canSlideNext);
       }
     }
     
@@ -471,23 +488,32 @@
 
   .variant-slider__container {
     position: relative;
-      max-width: 600px; /* Constrain maximum width */
-    margin: 0 auto; /* Center the container */
-    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: visible; /* Allow buttons to be visible outside container */
     box-sizing: border-box;
+    padding: 0 40px; /* Add padding to accommodate navigation buttons */
   }
 
   .variant-slider-swiper {
     width: 100%;
-    padding: 40px 50px;
+    max-width: 100%;
+    padding: 40px 0; /* Remove horizontal padding since container has it */
     margin: 0;
     box-sizing: border-box;
+    overflow: hidden;
   }
 
   @media (max-width: 768px) {
-    .variant-slider-swiper {
-      padding: 40px 35px;
-      margin: 0;
+    .variant-slider__container {
+      padding: 0 35px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .variant-slider__container {
+      padding: 0 30px;
     }
   }
 
@@ -597,11 +623,11 @@
   }
 
   .variant-slider__nav--prev {
-    left: 16px;
+    left: 0; /* Position relative to padded container */
   }
 
   .variant-slider__nav--next {
-    right: 16px;
+    right: 0; /* Position relative to padded container */
   }
 
   .variant-slider__nav svg {
@@ -648,13 +674,17 @@
       width: 14px;
       height: 14px;
     }
-    
-    .variant-slider__nav--prev {
-      left: 12px;
-    }
+  }
 
-    .variant-slider__nav--next {
-      right: 12px;
+  @media (max-width: 480px) {
+    .variant-slider__nav {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .variant-slider__nav svg {
+      width: 12px;
+      height: 12px;
     }
   }
 
