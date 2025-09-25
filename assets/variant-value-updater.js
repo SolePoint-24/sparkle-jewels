@@ -27,7 +27,8 @@ export class PriceBreakdown extends Component {
 
 
     if (!newVariantHTMLForCurrentEl) {
-      throw new Error('No new price breakdown found');
+      console.error('Could not found the variant value updater for id: ', this.dataset['id']);
+      return;
     }
     
     morph(this, newVariantHTMLForCurrentEl);
