@@ -191,6 +191,24 @@
         "padding-block-end": 0
       }
     },
+    "custom_image_banner_section_8riTL7": {
+      "type": "custom-image-banner-section",
+      "name": "Image Banner",
+      "settings": {
+        "image": "shopify://shop_images/necklace-hero-desktop.jpg",
+        "section_height": 60,
+        "heading": "",
+        "text": "",
+        "button_label": "Shop Now",
+        "button_link": "",
+        "text_color": "#FFFFFF",
+        "overlay_opacity": 0,
+        "button_bg_color": "#333333",
+        "button_text_color": "#FFFFFF",
+        "heading_font_size": 40,
+        "text_font_size": 18
+      }
+    },
     "media_with_content_pE8aY4": {
       "type": "media-with-content",
       "blocks": {
@@ -591,6 +609,7 @@
   "order": [
     "main",
     "media_with_content_WDhyJT",
+    "custom_image_banner_section_8riTL7",
     "media_with_content_pE8aY4",
     "media_with_content_iJPW8A",
     "newsletter_mJ7mxG"
