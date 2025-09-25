@@ -9,6 +9,7 @@
       
   <price-breakdown class="price-config-wrapper" {{ block.shopify_attributes }}>
     {%- assign current_variant = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
+    {% assign variable_name = current_variant.gold_variant %}
     
     {%- comment %}
       <!-- The main container for the price breakdown table -->
@@ -96,6 +97,8 @@
 
 <script>
 console.log({{ current_variant | json}})
+console.log({{ variable_name | json}})
+
 </script>
 
 {% stylesheet %}
