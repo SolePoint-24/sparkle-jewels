@@ -4,11 +4,12 @@
   ============================================================================
 {% endcomment %}
 
-
 {%- if block.settings.show_block -%}
+  {%- comment %} Fetch all product and variant metafields at the top {% endcomment %}
   {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
   {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
 
+  {%- comment %} Initialize totals for calculation {% endcomment %}
   {%- assign total_metals_value = 0 -%}
   {%- assign total_stones_value = 0 -%}
 
@@ -16,6 +17,7 @@
     <div class="price-breakdown-table">
       <div class="pbt-row pbt-header">
         <div class="pbt-cell">COMPONENT</div>
+        <div class="pbt-cell">QUALITY</div>
         <div class="pbt-cell">RATE</div>
         <div class="pbt-cell">WEIGHT</div>
         <div class="pbt-cell pbt-align-right">VALUE</div>
@@ -35,7 +37,7 @@
           
           <div class="pbt-row">
             <div class="pbt-cell"><span class="pbt-main-text">{{ final_metal_object.display_name }}</span></div>
-            <div class="pbt-cell">{{ rate | times: 100 | money }}</div>
+            <div class="pbt-cell">-</div> <div class="pbt-cell">{{ rate | times: 100 | money }}</div>
             <div class="pbt-cell">{{ weight }} g</div>
             <div class="pbt-cell pbt-align-right"><span>{{ total_value | times: 100 | money }}</span></div>
           </div>
@@ -48,24 +50,18 @@
 
       {% for stone_item in stone_configurations %}
         {% if stone_item %}
-          {% comment %}
-            CORRECTED LOGIC:
-            1. 'stone_item' is the "Stone" object from the list.
-            2. 'stone_item.stone' is the reference field to "Stone pricing".
-            3. 'stone_item.stone.value' is the final "Stone pricing" object.
-          {% endcomment %}
           {%- assign pricing_object = stone_item.stone.value -%}
           {%- assign stone_price_per_carat = pricing_object.pricing | default: 0 -%}
-
           {%- assign total_weight = stone_item.weight_carat | default: 0 | times: 1.0 -%}
           {%- assign total_stone_value_for_item = total_weight | times: stone_price_per_carat -%}
           {%- assign total_stones_value = total_stones_value | plus: total_stone_value_for_item -%}
 
           <div class="pbt-row">
             <div class="pbt-cell">
-              <span class="pbt-main-text">{{ stone_item.display_name }}</span>
+              <span class="pbt-main-text">{{ pricing_object.shape_category }} {{ pricing_object.size_category }} {{ pricing_object.type }}</span>
               <span class="pbt-sub-text">x {{ stone_item.number_of_stone }} ({{ stone_item.stone_size }}mm)</span>
             </div>
+            <div class="pbt-cell">{{ pricing_object.quality_grade }}</div>
             <div class="pbt-cell">{{ stone_price_per_carat | times: 100 | money }}</div>
             <div class="pbt-cell">{{ total_weight }} ct.w</div>
             <div class="pbt-cell pbt-align-right">
@@ -79,6 +75,7 @@
         <div class="pbt-cell">STONES VALUE</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
         <div class="pbt-cell pbt-align-right">
           <span>{{ total_stones_value | times: 100 | money }}</span>
         </div>
@@ -90,20 +87,29 @@
         <div class="pbt-cell pbt-bold">SUBTOTAL</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
         <div class="pbt-cell pbt-align-right">
           <span>{{ subtotal | times: 100 | money }}</span>
         </div>
       </div>
 
       <div class="pbt-row pbt-grand-total">
+        <div class="pbt-cell">
+          <span class="pbt-main-text pbt-bold">GRAND TOTAL</span>
+          <span class="pbt-sub-text">(MRP Incl. of all taxes)</span>
         </div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right pbt-final-price">
+          <span>₹29,349</span>
+        </div>
+      </div>
     </div>
   </price-breakdown>
 {%- endif -%}
 
-<script>
-
-</script>
+<script></script>
 
 {% stylesheet %}
   .price-config-wrapper {
@@ -132,17 +138,19 @@
   .pbt-cell {
     display: flex;
     flex-direction: column;
-    flex-basis: 25%;
+    flex-basis: 20%; 
+    padding: 0 5px;
     color: #555;
     font-size: 14px;
   }
   
   .pbt-cell:first-child {
-    flex-basis: 35%;
+    flex-basis: 30%; 
+    padding-left: 0;
   }
   
   .pbt-cell:last-child {
-     flex-basis: 20%;
+    padding-right: 0;
   }
 
   .pbt-align-right {
@@ -207,7 +215,6 @@
     font-weight: 700;
     color: #000;
   }
-
 {% endstylesheet %}
 
 {% schema %}
