@@ -1,6 +1,6 @@
 
 {%- if block.settings.show_block -%}
-<price-breakdown class="metal-config-wrapper" {{ block.shopify_attributes }}>
+<variant-value-updater data-id="metalConfig" class="metal-config-wrapper" {{ block.shopify_attributes }}>
 
     {% assign metal_config = product.selected_or_first_available_variant.metafields.custom.metal_configuration.value %}
     {% for metal in metal_config %}   
@@ -24,7 +24,7 @@
       </div>
      {% endfor %}
 
-  </price-breakdown >
+  </variant-value-updater >
 {%- endif -%}
 <script>
 </script>
