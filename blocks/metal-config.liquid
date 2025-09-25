@@ -1,24 +1,7 @@
-{% comment %}
-  ============================================================================
-  BLOCK: Metal Config
-  - Renders basic information about the product's metal composition.
-  - This is a starter template. Replace placeholders with your actual
-    product metafields or variant options.
-  ============================================================================
-{% endcomment %}
-{% comment %}
-  ============================================================================
-  BLOCK: Metal Config
-  - Renders basic information about the product's metal composition using a table layout.
-  ============================================================================
-{% endcomment %}
 
 {%- if block.settings.show_block -%}
   <div class="metal-config-wrapper" {{ block.shopify_attributes }}>
-    {%- comment %}
-      This data is now in a table. Replace the placeholder text with your
-      dynamic Liquid variables, like {{ product.metafields.custom.metal_type }}.
-    {% endcomment %}
+
      {%- assign metal = metaobjects['metal_configuration'] -%}
     <div class="metal-info-container">
       {{ metal }}
