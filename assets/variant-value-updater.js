@@ -22,7 +22,7 @@ export class PriceBreakdown extends Component {
 	onVariantUpdate(event) {
     const newHtml = event.detail?.data?.html;
 
-    const variantValueUpdaterEls = [...newHTML.getElementsByTagName('variant-value-updater')]
+    const variantValueUpdaterEls = [...newHtml.getElementsByTagName('variant-value-updater')]
     const newVariantHTMLForCurrentEl = variantValueUpdaterEls.filter(el => el.dataset['id'] === this.dataset['id'])
 
 
