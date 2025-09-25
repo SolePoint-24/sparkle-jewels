@@ -16,8 +16,9 @@
           "type": "collection_slide",
           "settings": {
             "collection": "rings",
-            "image_desktop": "shopify://shop_images/WhatsApp_Image_2025-09-25_at_14.06.49_053ca5c6.jpg",
-            "image_mobile": "shopify://shop_images/collection-showcase-bg.webp",
+            "image_desktop": "{{ block.settings.collection.metafields.custom.hero_desktop.value }}",
+            "image_tablet": "{{ block.settings.collection.metafields.custom.hero_tablet.value }}",
+            "image_mobile": "{{ block.settings.collection.metafields.custom.hero_mobile_image.value }}",
             "subheading": "",
             "heading": "",
             "text": "",
@@ -28,9 +29,10 @@
         "collection_slide_ERayxk": {
           "type": "collection_slide",
           "settings": {
-            "collection": "rings",
-            "image_desktop": "shopify://shop_images/hero-test-desktop.jpg",
-            "image_mobile": "shopify://shop_images/collection-showcase-bg.webp",
+            "collection": "bracelets",
+            "image_desktop": "{{ block.settings.collection.metafields.custom.hero_desktop.value }}",
+            "image_tablet": "{{ block.settings.collection.metafields.custom.hero_tablet.value }}",
+            "image_mobile": "{{ block.settings.collection.metafields.custom.hero_mobile_image.value }}",
             "subheading": "Shine Brighter",
             "heading": "Where Grace Meets Glamour",
             "text": "Timeless gold pieces designed to elevate every occasion.",
@@ -41,9 +43,10 @@
         "collection_slide_h3qKUF": {
           "type": "collection_slide",
           "settings": {
-            "collection": "rings",
-            "image_desktop": "shopify://shop_images/hero-test-desktop.jpg",
-            "image_mobile": "shopify://shop_images/collection-showcase-bg.webp",
+            "collection": "earrings",
+            "image_desktop": "{{ block.settings.collection.metafields.custom.hero_desktop.value }}",
+            "image_tablet": "{{ block.settings.collection.metafields.custom.hero_tablet.value }}",
+            "image_mobile": "{{ block.settings.collection.metafields.custom.hero_mobile_image.value }}",
             "subheading": "Shine Brighter",
             "heading": "Where Grace Meets Glamour",
             "text": "Timeless gold pieces designed to elevate every occasion.",
@@ -54,8 +57,10 @@
         "collection_slide_UCFrQY": {
           "type": "collection_slide",
           "settings": {
-            "collection": "rings",
-            "image_desktop": "shopify://shop_images/hero-test-desktop.jpg",
+            "collection": "necklaces",
+            "image_desktop": "{{ block.settings.collection.metafields.custom.hero_desktop.value }}",
+            "image_tablet": "{{ block.settings.collection.metafields.custom.hero_tablet.value }}",
+            "image_mobile": "{{ block.settings.collection.metafields.custom.hero_mobile_image.value }}",
             "subheading": "Shine Brighter",
             "heading": "Where Grace Meets Glamour",
             "text": "Timeless gold pieces designed to elevate every occasion.",
