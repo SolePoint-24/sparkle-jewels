@@ -4,23 +4,6 @@
   ============================================================================
 {% endcomment %}
 
-{% comment %}
-  ============================================================================
-  BLOCK: Price Config (Final Version with Dynamic Stones)
-  ============================================================================
-{% endcomment %}
-
-{% comment %}
-  ============================================================================
-  BLOCK: Price Config (Using Direct Reference for Stone Pricing)
-  ============================================================================
-{% endcomment %}
-
-{% comment %}
-  ============================================================================
-  BLOCK: Price Config (Corrected Path for Stone Pricing)
-  ============================================================================
-{% endcomment %}
 
 {%- if block.settings.show_block -%}
   {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
