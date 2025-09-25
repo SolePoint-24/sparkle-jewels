@@ -1,19 +1,10 @@
 {% comment %}
   ============================================================================
-  BLOCK: Price Config
-  - This block displays a detailed price breakdown for the product.
+  BLOCK: Price Config (Final Version)
   ============================================================================
 {% endcomment %}
 
 {%- if block.settings.show_block -%}
-  
-  {% comment %}
-    Step 1: Fetch the global pricing config object and the JSON string from it.
-    ASSUMPTION: The handle/key for your JSON field is 'rates'.
-  {% endcomment %}
-  {%- assign pricing_config = metaobjects.metal_pricing_config.first -%}
-  {%- assign rates_json_string = pricing_config.rates.value -%}
-      
   <price-breakdown class="price-config-wrapper" {{ block.shopify_attributes }}>
     <div class="price-breakdown-table">
       <div class="pbt-row pbt-header">
@@ -32,24 +23,12 @@
       {% for metal_item in metal_weights_list %}
         {%- assign final_metal_object = metal_item.metal_variant.value -%}
         
-        {% if final_metal_object and rates_json_string %}
+        {% if final_metal_object %}
           {% comment %}
-            Step 2: Manually parse the JSON string to find the rate.
-            This logic is fragile and depends on the exact JSON structure.
+            The rate is now read directly from the 'pricing' field on the metal object itself.
+            ASSUMPTION: The handle for your new pricing field is 'pricing'.
           {% endcomment %}
-          {%- assign metal_name_downcased = final_metal_object.display_name | downcase -%}
-          {%- assign rate = 0 -%}
-
-          {%- if metal_name_downcased contains 'gold' -%}
-            {%- assign temp_string = rates_json_string | split: '"Gold":"' | last -%}
-            {%- assign rate = temp_string | split: '"' | first | plus: 0 -%}
-          {%- elsif metal_name_downcased contains 'silver' -%}
-            {%- assign temp_string = rates_json_string | split: '"Silver":"' | last -%}
-            {%- assign rate = temp_string | split: '"' | first | plus: 0 -%}
-          {%- elsif metal_name_downcased contains 'platinum' -%}
-            {%- assign temp_string = rates_json_string | split: '"Platinum":"' | last -%}
-            {%- assign rate = temp_string | split: '"' | first | plus: 0 -%}
-          {%- endif -%}
+          {%- assign rate = final_metal_object.pricing | default: 0 -%}
 
           {%- assign weight = metal_item.metal_weight | default: 0 | times: 1.0 -%}
           {%- assign total_value = rate | times: weight -%}
@@ -136,7 +115,7 @@
   .price-breakdown-table {
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    overflow: hidden; /* Ensures the border-radius is respected by child elements */
+    overflow: hidden;
   }
 
   .pbt-row {
@@ -154,21 +133,21 @@
   .pbt-cell {
     display: flex;
     flex-direction: column;
-    flex-basis: 25%; /* Each column takes up 25% of the width */
+    flex-basis: 25%;
     color: #555;
     font-size: 14px;
   }
   
   .pbt-cell:first-child {
-    flex-basis: 35%; /* Make the first column wider */
+    flex-basis: 35%;
   }
   
   .pbt-cell:last-child {
-     flex-basis: 20%; /* Adjust last column */
+     flex-basis: 20%;
   }
 
   .pbt-align-right {
-    align-items: flex-end; /* Aligns text to the right for value columns */
+    align-items: flex-end;
     text-align: right;
   }
 
@@ -190,7 +169,7 @@
     font-weight: 600;
     font-size: 13px;
     letter-spacing: 0.05em;
-    flex-basis: 100% !important; /* Make title span full width */
+    flex-basis: 100% !important;
   }
   
   .pbt-main-text {
