@@ -762,29 +762,6 @@
                     "stone_config_XGR3N3"
                   ]
                 },
-                "accordion_row_xAWcUb": {
-                  "type": "_accordion-row",
-                  "name": "t:names.accordion_row",
-                  "settings": {
-                    "heading": "Price configuration",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "price_config_zypxTc": {
-                      "type": "price-config",
-                      "name": "Price_Configuration",
-                      "settings": {
-                        "show_block": true
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "price_config_zypxTc"
-                  ]
-                },
                 "accordion_row_VwqRzd": {
                   "type": "_accordion-row",
                   "name": "t:names.accordion_row",
@@ -807,6 +784,29 @@
                   },
                   "block_order": [
                     "metal_config_Ctkxh4"
+                  ]
+                },
+                "accordion_row_xAWcUb": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "Price configuration",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "price_config_zypxTc": {
+                      "type": "price-config",
+                      "name": "Price_Configuration",
+                      "settings": {
+                        "show_block": true
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "price_config_zypxTc"
                   ]
                 },
                 "accordion_row_JkddYP": {
@@ -837,8 +837,8 @@
               "block_order": [
                 "accordion_row_P46NdC",
                 "accordion_row_8QU8Dj",
-                "accordion_row_xAWcUb",
                 "accordion_row_VwqRzd",
+                "accordion_row_xAWcUb",
                 "accordion_row_JkddYP"
               ]
             }
