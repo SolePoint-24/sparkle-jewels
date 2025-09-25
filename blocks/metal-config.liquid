@@ -15,13 +15,11 @@
 
   <h3>Available Metal Options:</h3>
   
-  <ul>
-    {%- for metal_object in metal_config_object.metal_variant.value -%}
-      <li>
-        <strong>{{ metal_object.display_name }}</strong> - Purity: {{ metal_object.purity }}
-      </li>
-    {%- endfor -%}
-  </ul>
+ {% if metal_config_object.metal_variant %}
+  {% assign variant = metal_config.metal_variant.value %}
+  {{ variant.display_name }}
+  {{ variant.some_field }}
+{% endif %}
 
     <div class="metal-info-container">
       <table class="metal-info-table">
