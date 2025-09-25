@@ -2,7 +2,7 @@
 {%- if block.settings.show_block -%}
   <div class="metal-config-wrapper" {{ block.shopify_attributes }}>
 
-     {%- assign metal = metaobjects['metal_configuration'] -%}
+     {%- assign metal = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
     <div class="metal-info-container">
       {{ metal }}
       <table class="metal-info-table">
