@@ -16,7 +16,7 @@
   <h3>Available Metal Options:</h3>
   
  {% if metal_config_object.metal_variant %}
-  {% assign variant = metal_config.metal_variant.value %}
+  {% assign variant = metal_config_object.metal_variant.value %}
   {{ variant.display_name }}
   {{ variant.some_field }}
 {% endif %}
