@@ -288,6 +288,8 @@
       swiperInstances[swiperIndex] = new Swiper(slider, {
         slidesPerView: 2,
         spaceBetween: 12,
+        slidesPerGroup: 1,
+        watchOverflow: true, 
         breakpoints: {
           480: { slidesPerView: 3, spaceBetween: 12 },
           768: { slidesPerView: 2, spaceBetween: 12 },
@@ -361,7 +363,7 @@
   // **THE KEY CHANGE**: Listen for the theme's custom event and re-initialize the sliders
   // Note: The exact event name can vary. 'theme:variant:update' is a common convention
   // based on the `VariantUpdateEvent` class name. Check your theme's docs if this doesn't work.
-  document.addEventListener('theme:variant:update', initVariantSliders);
+  document.addEventListener('variant:update', initVariantSliders);
 
   // Clean up on page unload
   window.addEventListener('beforeunload', function() {
@@ -377,7 +379,7 @@
   .variant-picker {
     width: 100%;
     max-width: 100%;
-    overflow: hidden; /* CHANGED: Was 'hidden', caused nav buttons to be clipped */
+    overflow: visible;
     box-sizing: border-box;
   }
   /* ======== END: CORRECTED CSS ======== */
@@ -408,11 +410,12 @@
 
   .variant-slider__container {
     position: relative;
-    max-width: 550px;
+    max-width: 650px;
+    width: 100%;
     margin: 0 auto;
-    /* overflow is handled by variant-picker now */
+    
     box-sizing: border-box;
-    padding: 0 40px; /* Space for navigation buttons */
+    
   }
 
   .variant-slider-swiper {
