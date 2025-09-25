@@ -24,7 +24,7 @@
 
 {%- if block.settings.show_block -%}
   {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
-  {%- assign stone_configurations = product.selected_or_first_available_variant.metafields.custom.stone_configuration.value -%}
+  {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
 
   {%- assign total_metals_value = 0 -%}
   {%- assign total_stones_value = 0 -%}
