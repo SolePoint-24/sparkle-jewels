@@ -33,9 +33,9 @@
             "image_desktop": "{{ block.settings.collection.metafields.custom.hero_desktop.value }}",
             "image_tablet": "{{ block.settings.collection.metafields.custom.hero_tablet.value }}",
             "image_mobile": "{{ block.settings.collection.metafields.custom.hero_mobile_image.value }}",
-            "subheading": "Shine Brighter",
-            "heading": "Where Grace Meets Glamour",
-            "text": "Timeless gold pieces designed to elevate every occasion.",
+            "subheading": "",
+            "heading": "",
+            "text": "",
             "button_label": "Explore Gold Collection",
             "button_link": ""
           }
@@ -47,9 +47,9 @@
             "image_desktop": "{{ block.settings.collection.metafields.custom.hero_desktop.value }}",
             "image_tablet": "{{ block.settings.collection.metafields.custom.hero_tablet.value }}",
             "image_mobile": "{{ block.settings.collection.metafields.custom.hero_mobile_image.value }}",
-            "subheading": "Shine Brighter",
-            "heading": "Where Grace Meets Glamour",
-            "text": "Timeless gold pieces designed to elevate every occasion.",
+            "subheading": "",
+            "heading": "",
+            "text": "",
             "button_label": "Explore Gold Collection",
             "button_link": ""
           }
@@ -61,9 +61,9 @@
             "image_desktop": "{{ block.settings.collection.metafields.custom.hero_desktop.value }}",
             "image_tablet": "{{ block.settings.collection.metafields.custom.hero_tablet.value }}",
             "image_mobile": "{{ block.settings.collection.metafields.custom.hero_mobile_image.value }}",
-            "subheading": "Shine Brighter",
-            "heading": "Where Grace Meets Glamour",
-            "text": "Timeless gold pieces designed to elevate every occasion.",
+            "subheading": "",
+            "heading": "",
+            "text": "",
             "button_label": "Explore Gold Collection",
             "button_link": ""
           }
