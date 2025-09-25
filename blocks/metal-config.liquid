@@ -4,19 +4,17 @@
 
     {% assign metal_config = product.selected_or_first_available_variant.metafields.custom.metal_weights.value%}
     {% for metal in metal_config %}   
-      {% for variable in array %}
-        
-      
+      {% for metal_varient in metal.metal_variant.value %}
    <div class="metal-info-container">
       <table class="metal-info-table">
         <tbody>
           <tr>
             <td>Metal Type</td>
-            <td>{{ metal.display_name }}</td>
+            <td>{{ metal_varient.display_name }}</td>
           </tr>
           <tr>
             <td>Purity</td>
-            <td>{{ metal.purity }}</td>
+            <td>{{ metal_varient.purity }}</td>
           </tr>
           <tr>
             <td>Approx. Weight</td>
