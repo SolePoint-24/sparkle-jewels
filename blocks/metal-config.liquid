@@ -4,36 +4,7 @@
 
 {% assign metal_config = product.selected_or_first_available_variant.metafields.custom.metal_configuration.value %}
 
-{% if metal_config.metal_variant %}
-  {% assign metal_variants = metal_config.metal_variant.value %}
-  
-  {%- comment -%}
-    If your "metal_variant" field is a list of references (multiple entries allowed):
-  {%- endcomment -%}
-  {% if metal_variants.size > 0 %}
-    {% assign gold_variant = metal_variants[0] %}
-    {% assign silver_variant = metal_variants[1] %}
-
-    <script>
-      console.log("Gold Variant:", {{ gold_variant | json }});
-      console.log("Silver Variant:", {{ silver_variant | json }});
-    </script>
-
-    <table>
-      <tr>
-        <td>Gold Variant</td>
-        <td>{{ gold_variant.display_name }}</td>
-      </tr>
-      <tr>
-        <td>Silver Variant</td>
-        <td>{{ silver_variant.display_name }}</td>
-      </tr>
-    </table>
-  {% endif %}
-{% endif %}
-
-
-    {% comment %} <div class="metal-info-container">
+    <div class="metal-info-container">
       <table class="metal-info-table">
         <tbody>
           <tr>
@@ -50,7 +21,7 @@
           </tr>
         </tbody>
       </table>
-    </div> {% endcomment %}
+    </div>
 
   </div>
 {%- endif -%}
