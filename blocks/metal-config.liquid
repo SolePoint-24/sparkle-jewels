@@ -4,6 +4,9 @@
 
     {% assign metal_config = product.selected_or_first_available_variant.metafields.custom.metal_weights.value%}
     {% for metal in metal_config %}   
+      {% for variable in array %}
+        
+      
    <div class="metal-info-container">
       <table class="metal-info-table">
         <tbody>
@@ -22,6 +25,7 @@
         </tbody>
       </table>
       </div>
+      {% endfor %}
      {% endfor %}
 
   </variant-value-updater >
