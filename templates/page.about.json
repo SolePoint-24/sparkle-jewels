@@ -560,7 +560,7 @@
         }
       },
       "custom_css": [
-        "section {margin-bottom: 30px;}"
+        ".group-block-content {background-color: #e9e4e0;}"
       ],
       "name": "t:names.editorial",
       "settings": {
@@ -569,9 +569,9 @@
         "media_height": "60svh",
         "section_width": "full-width",
         "extend_media": true,
-        "color_scheme": "scheme-4",
+        "color_scheme": "scheme-1",
         "padding-block-start": 0,
-        "padding-block-end": 0
+        "padding-block-end": 45
       }
     }
   },
