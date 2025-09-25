@@ -5,13 +5,13 @@
     {% assign metal_config = product.selected_or_first_available_variant.metafields.custom.metal_configuration.value %}
     {% for metal in metal_config %}
      {% assign variable_name =  metal.metal_variant.value  %}
-    {% endfor %}
+   
     <div class="metal-info-container">
       <table class="metal-info-table">
         <tbody>
           <tr>
             <td>Metal Type</td>
-            <td>{{ variable_name }}</td>
+            <td>{{ }}</td>
           </tr>
           <tr>
             <td>Purity</td>
@@ -23,7 +23,8 @@
           </tr>
         </tbody>
       </table>
-    </div>
+      </div>
+     {% endfor %}
 
   </price-breakdown >
 {%- endif -%}
