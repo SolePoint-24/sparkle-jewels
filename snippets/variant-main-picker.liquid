@@ -272,7 +272,7 @@
 
 <!-- Include Swiper CSS and JS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js"></script>
 
 <!-- JavaScript for Swiper Carousel -->
 <script>
@@ -471,20 +471,23 @@
 
   .variant-slider__container {
     position: relative;
+    width: 100%;
     max-width: 100%;
     overflow: hidden;
+    box-sizing: border-box;
   }
 
   .variant-slider-swiper {
     width: 100%;
     padding: 40px 50px;
-    margin: 0 -50px;
+    margin: 0;
+    box-sizing: border-box;
   }
 
   @media (max-width: 768px) {
     .variant-slider-swiper {
       padding: 40px 35px;
-      margin: 0 -35px;
+      margin: 0;
     }
   }
 
@@ -594,11 +597,11 @@
   }
 
   .variant-slider__nav--prev {
-    left: 10px;
+    left: 16px;
   }
 
   .variant-slider__nav--next {
-    right: 10px;
+    right: 16px;
   }
 
   .variant-slider__nav svg {
@@ -647,12 +650,24 @@
     }
     
     .variant-slider__nav--prev {
-      left: 5px;
+      left: 12px;
     }
 
     .variant-slider__nav--next {
-      right: 5px;
+      right: 12px;
     }
+  }
+
+  /* Ensure no horizontal overflow */
+  .variant-picker {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .variant-picker * {
+    box-sizing: border-box;
   }
   
   /* Rest of the existing styles remain the same */
