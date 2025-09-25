@@ -8,28 +8,7 @@
 {%- if block.settings.show_block -%}
       
   <price-breakdown class="price-config-wrapper" {{ block.shopify_attributes }}>
-    {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
-
-{% for metal_item in metal_weights_list %}
-  
-  {% comment %}
-    Assign the final metaobject to its own variable for clarity.
-    This is the object that holds the 'display_name' and 'purity' fields.
-  {% endcomment %}
-  {%- assign final_metal_object = metal_item.metal_variant.value -%}
-  
-  {% if final_metal_object %}
-    <div> 
-      <p>Display Name: {{ final_metal_object.display_name }}</p>
-      <p>Purity: {{ final_metal_object.purity }}</p>
-    </div>
-    <hr>
-  {% endif %}
-  
-{% endfor %}
- 
     <div class="price-breakdown-table">
-      <!-- Header Row -->
       <div class="pbt-row pbt-header">
         <div class="pbt-cell">COMPONENT</div>
         <div class="pbt-cell">RATE</div>
@@ -37,23 +16,57 @@
         <div class="pbt-cell pbt-align-right">VALUE</div>
       </div>
 
-      <!-- Metals Group -->
+      {% comment %}
+      =======================================================
+      DYNAMIC METALS SECTION
+      =======================================================
+      {% endcomment %}
       <div class="pbt-row pbt-group-title">
         <div class="pbt-cell">METALS</div>
       </div>
-      <div class="pbt-row">
-        <div class="pbt-cell">
-          <span class="pbt-main-text">14K Rose Gold</span>
-        </div>
-        <div class="pbt-cell">₹6,592</div>
-        <div class="pbt-cell">2.97 g</div>
-        <div class="pbt-cell pbt-align-right">
-          <s class="pbt-strikethrough">₹19,578</s>
-          <span>₹18,599</span>
-        </div>
-      </div>
 
-      <!-- Stones Group -->
+      {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
+
+      {% for metal_item in metal_weights_list %}
+        {%- assign final_metal_object = metal_item.metal_variant.value -%}
+        
+        {% if final_metal_object %}
+          {% comment %}
+            Reads the 'rate_per_gram' from your metal variant metaobject.
+            Example: 6592 (for ₹6,592)
+          {% endcomment %}
+          {%- assign rate = final_metal_object.rate_per_gram | default: 0 -%}
+
+          {% comment %}
+            Reads the weight from the 'metal_item' object.
+            We multiply by 1.0 to ensure it's treated as a number.
+          {% endcomment %}
+          {%- assign weight = metal_item.metal_weight | default: 0 | times: 1.0 -%}
+
+          {% comment %}
+            Calculate the total value. The 'money' filter expects a value in cents,
+            so we multiply the final price by 100.
+          {% endcomment %}
+          {%- assign total_value = rate | times: weight -%}
+          {%- assign total_value_in_cents = total_value | times: 100 -%}
+          
+          <div class="pbt-row">
+            <div class="pbt-cell">
+              <span class="pbt-main-text">{{ final_metal_object.display_name }}</span>
+            </div>
+            <div class="pbt-cell">
+              {{ rate | times: 100 | money }}
+            </div>
+            <div class="pbt-cell">
+              {{ weight }} g
+            </div>
+            <div class="pbt-cell pbt-align-right">
+              <span>{{ total_value_in_cents | money }}</span>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
       <div class="pbt-row pbt-group-title">
         <div class="pbt-cell">STONES</div>
       </div>
@@ -65,34 +78,31 @@
         <div class="pbt-cell">-</div>
         <div class="pbt-cell">1.10 ct.w</div>
         <div class="pbt-cell pbt-align-right">
-           <s class="pbt-strikethrough">₹4,017</s>
+            <s class="pbt-strikethrough">₹4,017</s>
           <span>₹3,816</span>
         </div>
       </div>
       
-      <!-- Stones Value Row -->
       <div class="pbt-row pbt-summary-row">
         <div class="pbt-cell">STONES VALUE</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell pbt-align-right">
-           <s class="pbt-strikethrough">₹4,017</s>
+            <s class="pbt-strikethrough">₹4,017</s>
           <span>₹3,816</span>
         </div>
       </div>
       
-      <!-- Subtotal Row -->
       <div class="pbt-row pbt-summary-row">
         <div class="pbt-cell pbt-bold">SUBTOTAL</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell pbt-align-right">
-           <s class="pbt-strikethrough">₹29,994</s>
+            <s class="pbt-strikethrough">₹29,994</s>
           <span>₹28,494</span>
         </div>
       </div>
 
-      <!-- Grand Total Row -->
       <div class="pbt-row pbt-grand-total">
         <div class="pbt-cell">
           <span class="pbt-main-text pbt-bold">GRAND TOTAL</span>
