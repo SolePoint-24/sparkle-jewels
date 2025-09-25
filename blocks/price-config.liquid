@@ -10,7 +10,7 @@
   <price-breakdown class="price-config-wrapper" {{ block.shopify_attributes }}>
     {%- assign metal_weights_object = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
     {% for metal in metal_weights_object.metal_variant.value %}
-     {% assign variable_name = metal %}
+      <div> {{ metal | json }}</div>
     {% endfor %}
  
     <div class="price-breakdown-table">
