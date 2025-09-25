@@ -50,6 +50,24 @@
         "padding-block-end": 20
       }
     },
+    "custom_image_banner_section_JTQeRz": {
+      "type": "custom-image-banner-section",
+      "name": "Image Banner",
+      "settings": {
+        "image": "shopify://shop_images/collection-banner_default.jpg",
+        "section_height": 45,
+        "heading": "",
+        "text": "<h3><strong><br/>Discover the piece that doesn't just adorn you, but defines you. Welcome to the family. Welcome to Sparkle Jewels.<br/><br/></strong></h3>",
+        "button_label": "Shop Now",
+        "button_link": "",
+        "text_color": "#000000",
+        "overlay_opacity": 30,
+        "button_bg_color": "#333333",
+        "button_text_color": "#FFFFFF",
+        "heading_font_size": 40,
+        "text_font_size": 18
+      }
+    },
     "media_with_content_WDhyJT": {
       "type": "media-with-content",
       "blocks": {
@@ -608,6 +626,7 @@
   },
   "order": [
     "main",
+    "custom_image_banner_section_JTQeRz",
     "media_with_content_WDhyJT",
     "custom_image_banner_section_8riTL7",
     "media_with_content_pE8aY4",
