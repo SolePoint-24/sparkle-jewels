@@ -613,12 +613,25 @@
         "padding-block-start": 0,
         "padding-block-end": 22
       }
+    },
+    "newsletter_mJ7mxG": {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "background_image": "shopify://shop_images/Gemini_Generated_Image_4y8ctc4y8ctc4y8c.png",
+        "heading": "Join Our Newsletter",
+        "subheading": "",
+        "overlay_opacity": 0,
+        "success_message": "Thank you for subscribing!",
+        "color_scheme": ""
+      }
     }
   },
   "order": [
     "main",
     "media_with_content_WDhyJT",
     "media_with_content_pE8aY4",
-    "media_with_content_iJPW8A"
+    "media_with_content_iJPW8A",
+    "newsletter_mJ7mxG"
   ]
 }
