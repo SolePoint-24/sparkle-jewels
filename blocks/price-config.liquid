@@ -38,7 +38,7 @@
           {%- assign labour_category_object = metal_item.labour_category.value -%}
           {%- assign labour_percentage_value = labour_category_object.labour_percentage | default: 0 -%}
           {%- assign labour_percentage = labour_percentage_value | divided_by: 100.0 -%}
-          {%- assign metal_labour_cost = total_value | times: labour_percentage | times:rate -%}
+          {%- assign metal_labour_cost = total_value | times: labour_percentage -%}
           {%- assign total_making_charges = total_making_charges | plus: metal_labour_cost -%}
           
           <div class="pbt-row">
