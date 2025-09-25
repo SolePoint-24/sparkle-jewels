@@ -71,7 +71,7 @@
           {%- assign pricing_object = stone.stone_pricing.value -%}
           {%- assign stone_price_per_carat = pricing_object.pricing | default: 0 -%}
 
-          {%- assign total_weight = config_item.weight_carat | default: "uidveyubvefubefhebveuhbv" | times: 1.0 -%}
+          {%- assign total_weight = config_item.weight_carat | default: 0 | times: 1.0 -%}
           {%- assign total_stone_value_for_item = total_weight | times: stone_price_per_carat -%}
           {%- assign total_stones_value = total_stones_value | plus: total_stone_value_for_item -%}
 
