@@ -300,13 +300,12 @@
         keyboard: { enabled: true },
         grabCursor: true,
         loop: false,
-        // Ensure that slides are not centered to allow proper end-of-list alignment
         centeredSlides: false,
-        // Handle navigation state on events
         on: {
           init: function(swiper) {
             updateNavigationState(swiper, swiperIndex);
-            restoreCarouselPosition(swiper, swiperIndex); // Restore position on init
+            // On initialization, find the checked input and slide to it
+            slideToSelectedVariant(swiper);
           },
           slideChange: function(swiper) {
             updateNavigationState(swiper, swiperIndex);
@@ -317,8 +316,6 @@
         }
       });
     });
-
-    handleVariantSelection();
   }
 
   function updateNavigationState(swiper, swiperIndex) {
@@ -326,7 +323,6 @@
     const nextBtn = document.querySelector(`.swiper-button-next-${swiperIndex}`);
     
     if (prevBtn && nextBtn) {
-      // Use Swiper's internal state properties for reliability
       const isBeginning = swiper.isBeginning;
       const isEnd = swiper.isEnd;
 
@@ -338,43 +334,34 @@
     }
   }
 
-  function handleVariantSelection() {
-    const variantInputs = document.querySelectorAll('.variant-option--slider input[type="radio"]');
+  // NEW: Slides to the currently checked variant when the slider is initialized
+  function slideToSelectedVariant(swiper) {
+    if (!swiper || swiper.destroyed) return;
+
+    // Find the radio input that is currently checked inside this swiper instance
+    const selectedInput = swiper.el.querySelector('input[type="radio"]:checked');
     
-    variantInputs.forEach(input => {
-      // Use a 'click' listener as 'change' can sometimes behave inconsistently on page reloads
-      input.addEventListener(ThemeEvents.variantUpdate, function() {
-        const slide = this.closest('.swiper-slide');
-        const swiperContainer = slide.closest('.swiper');
-        const swiperIndex = swiperContainer.dataset.swiperIndex;
-        
-        if (slide) {
-          const slideIndex = Array.from(slide.parentElement.children).indexOf(slide);
-          // Store the intended slide index before the page reloads
-          sessionStorage.setItem(`variant-slider-${swiperIndex}`, slideIndex);
-        }
-      });
-    });
-  }
-  
-  function restoreCarouselPosition(swiper, swiperIndex) {
-    const storedPosition = sessionStorage.getItem(`variant-slider-${swiperIndex}`);
-    
-    if (storedPosition && swiper && !swiper.destroyed) {
-      const slideIndex = parseInt(storedPosition, 10);
-      if (!isNaN(slideIndex) && slideIndex < swiper.slides.length) {
-        // Slide to the selected variant without animation (immediate)
+    if (selectedInput) {
+      const selectedSlide = selectedInput.closest('.swiper-slide');
+      if (selectedSlide) {
+        const slideIndex = Array.from(selectedSlide.parentElement.children).indexOf(selectedSlide);
+        // Slide to the correct position without animation
         swiper.slideTo(slideIndex, 0);
-        swiper.update(); 
+        swiper.update(); // Ensure layout is correct after sliding
       }
     }
   }
 
-  // Run initialization on initial page load
+ 
   document.addEventListener('DOMContentLoaded', initVariantSliders);
   
-  // Also run initialization when a section is loaded or reloaded in the Shopify Theme Editor
+  // Run initialization when a section is loaded in the Shopify Theme Editor
   document.addEventListener('shopify:section:load', initVariantSliders);
+
+  // **THE KEY CHANGE**: Listen for the theme's custom event and re-initialize the sliders
+  // Note: The exact event name can vary. 'theme:variant:update' is a common convention
+  // based on the `VariantUpdateEvent` class name. Check your theme's docs if this doesn't work.
+  document.addEventListener('theme:variant:update', initVariantSliders);
 
   // Clean up on page unload
   window.addEventListener('beforeunload', function() {
