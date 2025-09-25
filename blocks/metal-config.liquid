@@ -5,7 +5,7 @@
     {% assign metal_config = product.selected_or_first_available_variant.metafields.custom.metal_weights.value%}
     {% for metal in metal_config %}   
       {%assign metal_variant = metal.metal_variant.value %}
-   <div class="metal-info-container">
+      <div class="metal-info-container">
       <table class="metal-info-table">
         <tbody>
           <tr>
