@@ -52,6 +52,7 @@
     },
     "custom_image_banner_section_JTQeRz": {
       "type": "custom-image-banner-section",
+      "disabled": true,
       "name": "Image Banner",
       "settings": {
         "image": "shopify://shop_images/generate-a-banner-image-to-showcase-diamond-jewelry-products-ensure-good-lighting-and-make-sure-the-background-is-a-light-color.png",
