@@ -343,7 +343,7 @@
     
     variantInputs.forEach(input => {
       // Use a 'click' listener as 'change' can sometimes behave inconsistently on page reloads
-      input.addEventListener('click', function() {
+      input.addEventListener(ThemeEvents.variantUpdate, function() {
         const slide = this.closest('.swiper-slide');
         const swiperContainer = slide.closest('.swiper');
         const swiperIndex = swiperContainer.dataset.swiperIndex;
