@@ -34,7 +34,9 @@
           {%- assign total_value = rate | times: weight -%}
           {%- assign total_metals_value = total_metals_value | plus: total_value -%}
 
-          {% comment %} --- NEW: Calculate Making Charges for this metal --- {% endcomment %}
+          {%- assign purity = final_metal_object.purity | default: 100 | times: 1.0 -%}
+          {%- assign rate_24k = rate | divided_by: purity | times: 100.0 -%}
+          {% comment %} Making Charges  {% endcomment %}
           {%- assign labour_category_object = metal_item.labour_category.value -%}
           {%- assign labour_percentage_value = labour_category_object.labour_percentage | default: 0 -%}
           {%- assign labour_percentage = labour_percentage_value | divided_by: 100.0 -%}
