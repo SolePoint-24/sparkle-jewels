@@ -68,7 +68,7 @@
             SIMPLIFIED LOGIC: Get the pricing object directly from the reference.
             Check that 'stone_pricing_reference' is the correct handle for your reference field.
           {% endcomment %}
-          {%- assign pricing_object = stone.stone_pricing_reference.value -%}
+          {%- assign pricing_object = stone.stone_pricing.value -%}
           {%- assign stone_price_per_carat = pricing_object.pricing | default: 0 -%}
 
           {%- assign total_weight = config_item.weight_carat | default: 0 | times: 1.0 -%}
