@@ -5,13 +5,12 @@
 {% endcomment %}
 
 {%- if block.settings.show_block -%}
-  {%- comment %} Fetch all product and variant metafields at the top {% endcomment %}
   {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
   {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
 
-  {%- comment %} Initialize totals for calculation {% endcomment %}
   {%- assign total_metals_value = 0 -%}
   {%- assign total_stones_value = 0 -%}
+  {%- assign total_making_charges = 0 -%}
 
   <price-breakdown class="price-config-wrapper" {{ block.shopify_attributes }}>
     <div class="price-breakdown-table">
@@ -34,15 +33,34 @@
           {%- assign weight = metal_item.metal_weight | default: 0 | times: 1.0 -%}
           {%- assign total_value = rate | times: weight -%}
           {%- assign total_metals_value = total_metals_value | plus: total_value -%}
+
+          {% comment %} --- NEW: Calculate Making Charges for this metal --- {% endcomment %}
+          {%- assign labour_category_object = metal_item.labour_category.value -%}
+          {%- assign labour_percentage_value = labour_category_object.labour_percentage | default: 0 -%}
+          {%- assign labour_percentage = labour_percentage_value | divided_by: 100.0 -%}
+          {%- assign metal_labour_cost = total_value | times: labour_percentage -%}
+          {%- assign total_making_charges = total_making_charges | plus: metal_labour_cost -%}
           
           <div class="pbt-row">
             <div class="pbt-cell"><span class="pbt-main-text">{{ final_metal_object.display_name }}</span></div>
-            <div class="pbt-cell">-</div> <div class="pbt-cell">{{ rate | times: 100 | money }}</div>
+            <div class="pbt-cell">-</div>
+            <div class="pbt-cell">{{ rate | times: 100 | money }}</div>
             <div class="pbt-cell">{{ weight }} g</div>
             <div class="pbt-cell pbt-align-right"><span>{{ total_value | times: 100 | money }}</span></div>
           </div>
         {% endif %}
       {% endfor %}
+
+      {% comment %} --- NEW: Display Total Making Charges --- {% endcomment %}
+      <div class="pbt-row pbt-summary-row">
+        <div class="pbt-cell">MAKING CHARGES</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right">
+          <span>{{ total_making_charges | times: 100 | money }}</span>
+        </div>
+      </div>
 
       <div class="pbt-row pbt-group-title">
         <div class="pbt-cell">STONES</div>
@@ -81,7 +99,8 @@
         </div>
       </div>
       
-      {%- assign subtotal = total_metals_value | plus: total_stones_value -%}
+      {% comment %} --- UPDATED: Subtotal now includes making charges --- {% endcomment %}
+      {%- assign subtotal = total_metals_value | plus: total_stones_value | plus: total_making_charges -%}
       
       <div class="pbt-row pbt-summary-row">
         <div class="pbt-cell pbt-bold">SUBTOTAL</div>
@@ -94,17 +113,7 @@
       </div>
 
       <div class="pbt-row pbt-grand-total">
-        <div class="pbt-cell">
-          <span class="pbt-main-text pbt-bold">GRAND TOTAL</span>
-          <span class="pbt-sub-text">(MRP Incl. of all taxes)</span>
         </div>
-        <div class="pbt-cell">-</div>
-        <div class="pbt-cell">-</div>
-        <div class="pbt-cell">-</div>
-        <div class="pbt-cell pbt-align-right pbt-final-price">
-          <span>₹29,349</span>
-        </div>
-      </div>
     </div>
   </price-breakdown>
 {%- endif -%}
