@@ -2,7 +2,7 @@ import { Component } from '@theme/component';
 import { ThemeEvents } from '@theme/events';
 import { morph } from '@theme/morph';
 
-export class PriceBreakdown extends Component {
+export class VariantValueUpdater extends Component {
 	#abortController = new AbortController();
 
 	connectedCallback() {
@@ -36,6 +36,6 @@ export class PriceBreakdown extends Component {
 }
 
 if (!customElements.get('variant-value-updater')) {
-  customElements.define('variant-value-updater', PriceBreakdown);
+  customElements.define('variant-value-updater', VariantValueUpdater);
 }
 
