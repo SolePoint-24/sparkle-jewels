@@ -26,7 +26,7 @@
       Step 3: Check the TYPE of the reference. The type name comes from
       your metaobject definition's key (e.g., 'gold_variant').
     {% endcomment %}
-    {%- case metal_variant_reference.type -%}
+    {%- case metal_variant_reference -%}
       {%- when 'gold_variant' -%}
         {% comment %} Now that we know it's a gold_variant, we can safely access its value and fields. {% endcomment %}
         {%- assign the_actual_object_gold = metal_variant_reference.value -%}
