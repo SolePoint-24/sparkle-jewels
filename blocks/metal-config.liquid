@@ -2,18 +2,38 @@
 {%- if block.settings.show_block -%}
   <div class="metal-config-wrapper" {{ block.shopify_attributes }}>
 
-     {% comment %} {%- assign metal = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%} {% endcomment %}
-   {% comment %}
-  Step 1: Get the main "Metal configuration" metaobject from the variant.
-{% endcomment %}
-{%- assign metal = product.selected_or_first_available_variant.metafields.custom.metal_configuration.metal_variant.type -%}
+{% assign metal_config = product.selected_or_first_available_variant.metafields.custom.metal_configuration.value %}
 
-{% comment %}
-  Step 2: Check if the main object and the list of variants exist to prevent errors.
-{% endcomment %}
+{% if metal_config.metal_variant %}
+  {% assign metal_variants = metal_config.metal_variant.value %}
+  
+  {%- comment -%}
+    If your "metal_variant" field is a list of references (multiple entries allowed):
+  {%- endcomment -%}
+  {% if metal_variants.size > 0 %}
+    {% assign gold_variant = metal_variants[0] %}
+    {% assign silver_variant = metal_variants[1] %}
+
+    <script>
+      console.log("Gold Variant:", {{ gold_variant | json }});
+      console.log("Silver Variant:", {{ silver_variant | json }});
+    </script>
+
+    <table>
+      <tr>
+        <td>Gold Variant</td>
+        <td>{{ gold_variant.display_name }}</td>
+      </tr>
+      <tr>
+        <td>Silver Variant</td>
+        <td>{{ silver_variant.display_name }}</td>
+      </tr>
+    </table>
+  {% endif %}
+{% endif %}
 
 
-    <div class="metal-info-container">
+    {% comment %} <div class="metal-info-container">
       <table class="metal-info-table">
         <tbody>
           <tr>
@@ -30,7 +50,7 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </div> {% endcomment %}
 
   </div>
 {%- endif -%}
