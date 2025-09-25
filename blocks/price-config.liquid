@@ -16,13 +16,15 @@
   ============================================================================
 {% endcomment %}
 
-{%- if block.settings.show_block -%}
+{% comment %}
+  ============================================================================
+  BLOCK: Price Config (Corrected Path for Stone Pricing)
+  ============================================================================
+{% endcomment %}
 
-  {% comment %}
-    We only need the product's metafields now. No need for a global price list.
-  {% endcomment %}
+{%- if block.settings.show_block -%}
   {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
-  {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
+  {%- assign stone_configurations = product.selected_or_first_available_variant.metafields.custom.stone_configuration.value -%}
 
   {%- assign total_metals_value = 0 -%}
   {%- assign total_stones_value = 0 -%}
@@ -61,24 +63,25 @@
         <div class="pbt-cell">STONES</div>
       </div>
 
-      {% for config_item in stone_configurations %}
-        {%- assign stone = config_item.stone.value -%}
-        {% if stone %}
+      {% for stone_item in stone_configurations %}
+        {% if stone_item %}
           {% comment %}
-            SIMPLIFIED LOGIC: Get the pricing object directly from the reference.
-            Check that 'stone_pricing_reference' is the correct handle for your reference field.
+            CORRECTED LOGIC:
+            1. 'stone_item' is the "Stone" object from the list.
+            2. 'stone_item.stone' is the reference field to "Stone pricing".
+            3. 'stone_item.stone.value' is the final "Stone pricing" object.
           {% endcomment %}
-          {%- assign pricing_object = stone.stone_pricing.value -%}
+          {%- assign pricing_object = stone_item.stone.value -%}
           {%- assign stone_price_per_carat = pricing_object.pricing | default: 0 -%}
 
-          {%- assign total_weight = config_item.weight_carat | default: 0 | times: 1.0 -%}
+          {%- assign total_weight = stone_item.weight_carat | default: 0 | times: 1.0 -%}
           {%- assign total_stone_value_for_item = total_weight | times: stone_price_per_carat -%}
           {%- assign total_stones_value = total_stones_value | plus: total_stone_value_for_item -%}
 
           <div class="pbt-row">
             <div class="pbt-cell">
-              <span class="pbt-main-text">{{ stone.display_name }}</span>
-              <span class="pbt-sub-text">x {{ config_item.number_of_stone }} ({{ config_item.stone_size }}mm)</span>
+              <span class="pbt-main-text">{{ stone_item.display_name }}</span>
+              <span class="pbt-sub-text">x {{ stone_item.number_of_stone }} ({{ stone_item.stone_size }}mm)</span>
             </div>
             <div class="pbt-cell">{{ stone_price_per_carat | times: 100 | money }}</div>
             <div class="pbt-cell">{{ total_weight }} ct.w</div>
@@ -110,16 +113,7 @@
       </div>
 
       <div class="pbt-row pbt-grand-total">
-        <div class="pbt-cell">
-          <span class="pbt-main-text pbt-bold">GRAND TOTAL</span>
-          <span class="pbt-sub-text">(MRP Incl. of all taxes)</span>
         </div>
-        <div class="pbt-cell">-</div>
-        <div class="pbt-cell">-</div>
-        <div class="pbt-cell pbt-align-right pbt-final-price">
-          <span>₹29,349</span>
-        </div>
-      </div>
     </div>
   </price-breakdown>
 {%- endif -%}
