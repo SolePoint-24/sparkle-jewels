@@ -5,56 +5,7 @@
   ============================================================================
 {% endcomment %}
 
-{% comment %}
-  ============================================================================
-  BLOCK: Price Config (DEBUGGING VERSION)
-  ============================================================================
-{% endcomment %}
-
 {%- if block.settings.show_block -%}
-  
-  {% comment %}
-  =======================================================
-  DEBUGGING OUTPUT - Check these values on your storefront
-  =======================================================
-  {% endcomment %}
-  <div style="background-color: #fff1f1; border: 2px solid #d9534f; padding: 15px; margin: 20px 0; color: #333;">
-    <h3 style="margin-top:0;">🕵️‍♂️ Debugging Info</h3>
-    
-    {%- assign pricing_config = metaobjects.metal_pricing_config.first -%}
-    <p><b>1. Pricing Config Object:</b> 
-      {% if pricing_config %}
-        ✅ Found.
-      {% else %}
-        ❌ NOT FOUND. Check handle 'metal_pricing_config' and ensure at least one entry exists.
-      {% endif %}
-    </p>
-
-    {%- assign rates_json_string = pricing_config.rates.value -%}
-    <p><b>2. Rates JSON String:</b> 
-      {% if rates_json_string != blank %}
-        ✅ Found: <code>{{ rates_json_string }}</code>
-      {% else %}
-        ❌ NOT FOUND. Check that your pricing object has a field with the handle 'rates' and it has a value.
-      {% endif %}
-    </p>
-
-    {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
-    <p><b>3. Variant's Metal Weights List:</b> 
-      {% if metal_weights_list.size > 0 %}
-        ✅ Found {{ metal_weights_list.size }} items.
-      {% else %}
-        ❌ NOT FOUND or is empty. Check variant metafield 'custom.metal_weights' and make sure it has entries for this specific variant.
-      {% endif %}
-    </p>
-  </div>
-
-
-  {% comment %}
-  =======================================================
-  ORIGINAL CODE STARTS HERE
-  =======================================================
-  {% endcomment %}
       
   <price-breakdown class="price-config-wrapper" {{ block.shopify_attributes }}>
     <div class="price-breakdown-table">
@@ -65,28 +16,37 @@
         <div class="pbt-cell pbt-align-right">VALUE</div>
       </div>
 
+      {% comment %}
+      =======================================================
+      DYNAMIC METALS SECTION
+      =======================================================
+      {% endcomment %}
       <div class="pbt-row pbt-group-title">
         <div class="pbt-cell">METALS</div>
       </div>
 
+      {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
+
       {% for metal_item in metal_weights_list %}
         {%- assign final_metal_object = metal_item.metal_variant.value -%}
         
-        {% if final_metal_object and rates_json_string %}
-          {%- assign metal_name_downcased = final_metal_object.display_name | downcase -%}
-          {%- assign rate = 0 -%}
-          {%- if metal_name_downcased contains 'gold' -%}
-            {%- assign temp_string = rates_json_string | split: '"Gold":"' | last -%}
-            {%- assign rate = temp_string | split: '"' | first | plus: 0 -%}
-          {%- elsif metal_name_downcased contains 'silver' -%}
-            {%- assign temp_string = rates_json_string | split: '"Silver":"' | last -%}
-            {%- assign rate = temp_string | split: '"' | first | plus: 0 -%}
-          {%- elsif metal_name_downcased contains 'platinum' -%}
-            {%- assign temp_string = rates_json_string | split: '"Platinum":"' | last -%}
-            {%- assign rate = temp_string | split: '"' | first | plus: 0 -%}
-          {%- endif -%}
+        {% if final_metal_object %}
+          {% comment %}
+            Reads the 'rate_per_gram' from your metal variant metaobject.
+            Example: 6592 (for ₹6,592)
+          {% endcomment %}
+          {%- assign rate = final_metal_object.rate_per_gram | default: 0 -%}
 
+          {% comment %}
+            Reads the weight from the 'metal_item' object.
+            We multiply by 1.0 to ensure it's treated as a number.
+          {% endcomment %}
           {%- assign weight = metal_item.metal_weight | default: 0 | times: 1.0 -%}
+
+          {% comment %}
+            Calculate the total value. The 'money' filter expects a value in cents,
+            so we multiply the final price by 100.
+          {% endcomment %}
           {%- assign total_value = rate | times: weight -%}
           {%- assign total_value_in_cents = total_value | times: 100 -%}
           
@@ -94,18 +54,67 @@
             <div class="pbt-cell">
               <span class="pbt-main-text">{{ final_metal_object.display_name }}</span>
             </div>
-            <div class="pbt-cell">{{ rate | times: 100 | money }}</div>
-            <div class="pbt-cell">{{ weight }} g</div>
-            <div class="pbt-cell pbt-align-right"><span>{{ total_value_in_cents | money }}</span></div>
+            <div class="pbt-cell">
+              {{ rate | times: 100 | money }}
+            </div>
+            <div class="pbt-cell">
+              {{ weight }} g
+            </div>
+            <div class="pbt-cell pbt-align-right">
+              <span>{{ total_value_in_cents | money }}</span>
+            </div>
           </div>
         {% endif %}
-      {% else %}
-        <div class="pbt-row">
-          <div class="pbt-cell" style="flex-basis: 100% !important; color: #d9534f;">DEBUG: The 'for' loop for metals did not run because the metal_weights_list is empty.</div>
-        </div>
       {% endfor %}
 
+      <div class="pbt-row pbt-group-title">
+        <div class="pbt-cell">STONES</div>
       </div>
+      <div class="pbt-row">
+        <div class="pbt-cell">
+          <span class="pbt-main-text">Cushion London Blue Topaz</span>
+          <span class="pbt-sub-text">x 1(6mm)</span>
+        </div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">1.10 ct.w</div>
+        <div class="pbt-cell pbt-align-right">
+            <s class="pbt-strikethrough">₹4,017</s>
+          <span>₹3,816</span>
+        </div>
+      </div>
+      
+      <div class="pbt-row pbt-summary-row">
+        <div class="pbt-cell">STONES VALUE</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right">
+            <s class="pbt-strikethrough">₹4,017</s>
+          <span>₹3,816</span>
+        </div>
+      </div>
+      
+      <div class="pbt-row pbt-summary-row">
+        <div class="pbt-cell pbt-bold">SUBTOTAL</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right">
+            <s class="pbt-strikethrough">₹29,994</s>
+          <span>₹28,494</span>
+        </div>
+      </div>
+
+      <div class="pbt-row pbt-grand-total">
+        <div class="pbt-cell">
+          <span class="pbt-main-text pbt-bold">GRAND TOTAL</span>
+          <span class="pbt-sub-text">(MRP Incl. of all taxes)</span>
+        </div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right pbt-final-price">
+          <span>₹29,349</span>
+        </div>
+      </div>
+    </div>
   </price-breakdown>
 {%- endif -%}
 
