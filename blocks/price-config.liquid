@@ -10,18 +10,20 @@
   ============================================================================
 {% endcomment %}
 
+{% comment %}
+  ============================================================================
+  BLOCK: Price Config (Using Direct Reference for Stone Pricing)
+  ============================================================================
+{% endcomment %}
+
 {%- if block.settings.show_block -%}
 
   {% comment %}
-    Step 1: Fetch all data sources at the beginning.
+    We only need the product's metafields now. No need for a global price list.
   {% endcomment %}
   {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
   {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
-  {%- assign all_stone_prices = metaobjects.stone_pricing.values -%}
 
-  {% comment %}
-    Step 2: Initialize variables to hold the total values.
-  {% endcomment %}
   {%- assign total_metals_value = 0 -%}
   {%- assign total_stones_value = 0 -%}
 
@@ -44,8 +46,6 @@
           {%- assign rate = final_metal_object.pricing | default: 0 -%}
           {%- assign weight = metal_item.metal_weight | default: 0 | times: 1.0 -%}
           {%- assign total_value = rate | times: weight -%}
-          
-          {% comment %} Add current metal value to the running total {% endcomment %}
           {%- assign total_metals_value = total_metals_value | plus: total_value -%}
           
           <div class="pbt-row">
@@ -64,18 +64,15 @@
       {% for config_item in stone_configurations %}
         {%- assign stone = config_item.stone.value -%}
         {% if stone %}
-          {%- assign stone_price_per_carat = 0 -%}
-          {%- for price_entry in all_stone_prices -%}
-            {%- if price_entry.shape_category == stone.stone_shape and price_entry.size_category == stone.stone_size and price_entry.quality_grade == stone.quality_grade -%}
-              {%- assign stone_price_per_carat = price_entry.pricing -%}
-              {%- break -%}
-            {%- endif -%}
-          {%- endfor -%}
+          {% comment %}
+            SIMPLIFIED LOGIC: Get the pricing object directly from the reference.
+            Check that 'stone_pricing_reference' is the correct handle for your reference field.
+          {% endcomment %}
+          {%- assign pricing_object = stone.stone_pricing_reference.value -%}
+          {%- assign stone_price_per_carat = pricing_object.pricing | default: 0 -%}
 
           {%- assign total_weight = config_item.weight_carat | default: 0 | times: 1.0 -%}
           {%- assign total_stone_value_for_item = total_weight | times: stone_price_per_carat -%}
-
-          {% comment %} Add current stone value to the running total {% endcomment %}
           {%- assign total_stones_value = total_stones_value | plus: total_stone_value_for_item -%}
 
           <div class="pbt-row">
