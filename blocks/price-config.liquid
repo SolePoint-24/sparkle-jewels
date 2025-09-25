@@ -12,7 +12,7 @@
     {% for metal in metal_weights_object %}
         {%- assign final_metal_object = metal_item.metal_variant.value -%}
 
-    {% endfor %}
+    
  
     <div class="price-breakdown-table">
       <!-- Header Row -->
@@ -91,6 +91,7 @@
         </div>
       </div>
     </div>
+    {% endfor %}
   </price-breakdown>
 {%- endif -%}
 
