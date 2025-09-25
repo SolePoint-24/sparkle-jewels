@@ -33,7 +33,7 @@ export class PriceBreakdown extends Component {
   }
 }
 
-if (!customElements.get('price-breakdown')) {
-  customElements.define('price-breakdown', PriceBreakdown);
+if (!customElements.get('variant-value-updater')) {
+  customElements.define('variant-value-updater', PriceBreakdown);
 }
 
