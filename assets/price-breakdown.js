@@ -22,10 +22,9 @@ export class PriceBreakdown extends Component {
 	onVariantUpdate(event) {
     const newHtml = event.detail?.data?.html;
 
+    // [...newHTML.getElementsByTagName('price-breakdown')].filter(el => el.dataset['id'] === this.dataset['id'])
     const newPriceBreakdown = newHtml.querySelector('price-breakdown');
 
-    console.log('this', this.dataset['id'])
-    console.log('Updating price breakdown')
     if (!newPriceBreakdown) {
       throw new Error('No new price breakdown found');
     }
