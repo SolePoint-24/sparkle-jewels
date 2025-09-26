@@ -143,6 +143,8 @@
     border-bottom: none;
   }
 
+  /* --- OLD STYLES (FOR 5 COLUMNS) --- */
+  /*
   .pbt-cell {
     display: flex;
     flex-direction: column;
@@ -154,6 +156,22 @@
   
   .pbt-cell:first-child {
     flex-basis: 35%; 
+    padding-left: 0;
+  }
+  */
+
+  /* --- NEW STYLES (FOR 4 COLUMNS) --- */
+  .pbt-cell {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 20%; /* Adjusted for the 3 equal columns */
+    padding: 0 5px;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .pbt-cell:first-child {
+    flex-basis: 40%; /* Gave more width to the Component column */
     padding-left: 0;
   }
   
@@ -205,8 +223,8 @@
   }
   
   .pbt-summary-row .pbt-cell {
-     padding-top: 15px;
-     padding-bottom: 15px;
+      padding-top: 15px;
+      padding-bottom: 15px;
   }
   
   .pbt-grand-total {
