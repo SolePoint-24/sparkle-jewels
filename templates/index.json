@@ -22,7 +22,9 @@
             "button_label": "Explore Gold Collection",
             "button_link": "",
             "button_pos_top": 65,
-            "button_pos_left": 10
+            "button_pos_left": 10,
+            "button_pos_top_mobile": 50,
+            "button_pos_left_mobile": 50
           }
         },
         "collection_slide_ERayxk": {
@@ -35,7 +37,9 @@
             "button_label": "Explore Gold Collection",
             "button_link": "",
             "button_pos_top": 65,
-            "button_pos_left": 10
+            "button_pos_left": 10,
+            "button_pos_top_mobile": 50,
+            "button_pos_left_mobile": 50
           }
         },
         "collection_slide_h3qKUF": {
@@ -48,7 +52,9 @@
             "button_label": "Explore Gold Collection",
             "button_link": "",
             "button_pos_top": 30,
-            "button_pos_left": 20
+            "button_pos_left": 20,
+            "button_pos_top_mobile": 50,
+            "button_pos_left_mobile": 50
           }
         },
         "collection_slide_UCFrQY": {
@@ -61,7 +67,9 @@
             "button_label": "Explore Gold Collection",
             "button_link": "",
             "button_pos_top": 65,
-            "button_pos_left": 10
+            "button_pos_left": 10,
+            "button_pos_top_mobile": 50,
+            "button_pos_left_mobile": 50
           }
         }
       },
@@ -73,7 +81,7 @@
       ],
       "name": "t:names.hero",
       "settings": {
-        "color_scheme": "scheme-6",
+        "color_scheme": "scheme-7",
         "autoplay": true,
         "autoplay_speed": 5000
       }
