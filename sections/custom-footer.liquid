@@ -322,12 +322,19 @@
           const expanded = btn.getAttribute("aria-expanded") === "true";
           btn.setAttribute("aria-expanded", !expanded);
 
+          // Find the icon within the button
+          const icon = btn.querySelector(".accordion-icon");
+
           const list = btn.nextElementSibling;
           if (list) {
             if (expanded) {
+              // If collapsing, hide the list and change icon to +
               list.hidden = true;
+              if (icon) icon.textContent = '+';
             } else {
+              // If expanding, show the list and change icon to -
               list.hidden = false;
+              if (icon) icon.textContent = '-';
             }
           }
         });
