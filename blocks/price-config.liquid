@@ -17,7 +17,6 @@
     <div class="price-breakdown-table">
       <div class="pbt-row pbt-header">
         <div class="pbt-cell">COMPONENT</div>
-        {% comment %} <div class="pbt-cell">QUALITY</div> {% endcomment %}
         <div class="pbt-cell">RATE</div>
         <div class="pbt-cell">WEIGHT</div>
         <div class="pbt-cell pbt-align-right">VALUE</div>
@@ -37,7 +36,6 @@
 
           {%- assign purity = final_metal_object.purity | default: 100 | times: 1.0 -%}
           {%- assign rate_24k = rate | divided_by: purity | times: 100.0 -%}
-          {% comment %} Making Charges  {% endcomment %}
           {%- assign labour_category_object = metal_item.labour_category.value -%}
           {%- assign labour_percentage_value = labour_category_object.labour_percentage | default: 0 -%}
           {%- assign labour_percentage = labour_percentage_value | divided_by: 100.0 -%}
@@ -46,7 +44,6 @@
           
           <div class="pbt-row">
             <div class="pbt-cell"><span class="pbt-main-text">{{ final_metal_object.display_name }}</span></div>
-            {% comment %} <div class="pbt-cell">-</div> {% endcomment %}
             <div class="pbt-cell">{{ rate | times: 100 | money }}</div>
             <div class="pbt-cell">{{ weight }} g</div>
             <div class="pbt-cell pbt-align-right"><span>{{ total_value | times: 100 | money }}</span></div>
@@ -54,10 +51,8 @@
         {% endif %}
       {% endfor %}
 
-      {% comment %} --- NEW: Display Total Making Charges --- {% endcomment %}
       <div class="pbt-row pbt-summary-row">
         <div class="pbt-cell">Making changes</div>
-        {% comment %} <div class="pbt-cell">-</div> {% endcomment %}
         <div class="pbt-cell">-</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell pbt-align-right">
@@ -82,7 +77,6 @@
               <span class="pbt-main-text">{{ pricing_object.shape_category }} {{ pricing_object.size_category }} {{ pricing_object.type }}</span>
               <span class="pbt-sub-text">x {{ stone_item.number_of_stone }} ({{ stone_item.stone_size }}mm)</span>
             </div>
-            {% comment %} <div class="pbt-cell">{{ pricing_object.quality_grade }}</div> {% endcomment %}
             <div class="pbt-cell">{{ stone_price_per_carat | times: 100 | money }}</div>
             <div class="pbt-cell">{{ total_weight }} ct.w</div>
             <div class="pbt-cell pbt-align-right">
@@ -92,21 +86,10 @@
         {% endif %}
       {% endfor %}
       
-      {% comment %} <div class="pbt-row pbt-summary-row">
-        <div class="pbt-cell">STONES VALUE</div>
-        <div class="pbt-cell">-</div>
-        <div class="pbt-cell">-</div>
-        <div class="pbt-cell">-</div>
-        <div class="pbt-cell pbt-align-right">
-          <span>{{ total_stones_value | times: 100 | money }}</span>
-        </div>
-      </div> {% endcomment %}
-      
       {%- assign subtotal = total_metals_value | plus: total_stones_value | plus: total_making_charges -%}
       
       <div class="pbt-row pbt-summary-row">
         <div class="pbt-cell pbt-bold">SUBTOTAL</div>
-        {% comment %} <div class="pbt-cell">-</div> {% endcomment %}
         <div class="pbt-cell">-</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell pbt-align-right">
@@ -143,24 +126,7 @@
     border-bottom: none;
   }
 
-  /* --- OLD STYLES (FOR 5 COLUMNS) --- */
-  /*
-  .pbt-cell {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 16%; 
-    padding: 0 5px;
-    color: #555;
-    font-size: 14px;
-  }
-  
-  .pbt-cell:first-child {
-    flex-basis: 35%; 
-    padding-left: 0;
-  }
-  */
 
-  /* --- NEW STYLES (FOR 4 COLUMNS) --- */
   .pbt-cell {
     display: flex;
     flex-direction: column;
