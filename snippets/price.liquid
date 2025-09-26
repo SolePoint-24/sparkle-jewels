@@ -62,6 +62,7 @@
       <span role="group">
         <span class="visually-hidden">{{ 'content.price_sale' | t }}&nbsp;</span>
         <span class="price">{{ price | default: '&nbsp;' }}</span>
+        <span>MRP incl. of all taxes</span>
       </span>
     {% else %}
       <span class="price">{{ price | default: '&nbsp;' }}</span>
@@ -71,6 +72,8 @@
       <span role="group">
         <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
         <span class="compare-at-price">{{- compare_at_price -}}</span>
+                <span>MRP incl. of all taxes</span>
+
       </span>
     {% endif %}
     {%- if selected_variant.unit_price and show_unit_price %}
