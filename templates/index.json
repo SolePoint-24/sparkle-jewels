@@ -19,15 +19,11 @@
             "image_desktop": "{{ block.settings.collection.metafields.custom.hero_desktop.value }}",
             "image_tablet": "{{ block.settings.collection.metafields.custom.hero_tablet.value }}",
             "image_mobile": "{{ block.settings.collection.metafields.custom.hero_mobile_image.value }}",
-            "subheading": "",
-            "heading": "",
-            "text": "",
             "button_label": "Explore Gold Collection",
             "button_link": "",
-            "enable_custom_button_position": false,
             "button_pos_top": 0,
-            "button_pos_right": 50,
-            "button_pos_bottom": 50
+            "button_pos_right": 0,
+            "button_pos_bottom": 0
           }
         },
         "collection_slide_ERayxk": {
@@ -37,12 +33,8 @@
             "image_desktop": "{{ block.settings.collection.metafields.custom.hero_desktop.value }}",
             "image_tablet": "{{ block.settings.collection.metafields.custom.hero_tablet.value }}",
             "image_mobile": "{{ block.settings.collection.metafields.custom.hero_mobile_image.value }}",
-            "subheading": "",
-            "heading": "",
-            "text": "",
             "button_label": "Explore Gold Collection",
-            "button_link": "",
-            "enable_custom_button_position": false
+            "button_link": ""
           }
         },
         "collection_slide_h3qKUF": {
@@ -52,12 +44,8 @@
             "image_desktop": "{{ block.settings.collection.metafields.custom.hero_desktop.value }}",
             "image_tablet": "{{ block.settings.collection.metafields.custom.hero_tablet.value }}",
             "image_mobile": "{{ block.settings.collection.metafields.custom.hero_mobile_image.value }}",
-            "subheading": "",
-            "heading": "",
-            "text": "",
             "button_label": "Explore Gold Collection",
-            "button_link": "",
-            "enable_custom_button_position": false
+            "button_link": ""
           }
         },
         "collection_slide_UCFrQY": {
@@ -67,12 +55,8 @@
             "image_desktop": "{{ block.settings.collection.metafields.custom.hero_desktop.value }}",
             "image_tablet": "{{ block.settings.collection.metafields.custom.hero_tablet.value }}",
             "image_mobile": "{{ block.settings.collection.metafields.custom.hero_mobile_image.value }}",
-            "subheading": "",
-            "heading": "",
-            "text": "",
             "button_label": "Explore Gold Collection",
-            "button_link": "",
-            "enable_custom_button_position": false
+            "button_link": ""
           }
         }
       },
