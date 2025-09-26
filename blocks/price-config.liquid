@@ -116,6 +116,7 @@
     border-radius: 8px;
     overflow: hidden;
     border-collapse: collapse; /* Cleaner borders */
+    table-layout: fixed; /* Force columns into a fixed layout */
   }
 
   .price-breakdown-table th,
@@ -125,6 +126,7 @@
     border-bottom: 1px solid #e0e0e0;
     font-size: 14px;
     color: #555;
+    word-break: break-word; /* Allow long words to wrap */
   }
   
   .price-breakdown-table tr:last-child td {
@@ -149,11 +151,11 @@
     text-align: right;
   }
   
-  /* Shrink last 3 columns to content width */
-  .price-breakdown-table th:not(:first-child),
-  .price-breakdown-table td:not(:first-child) {
-      width: 1%;
-  }
+  /* Set explicit widths for each column */
+  .price-breakdown-table th:nth-child(1), .price-breakdown-table td:nth-child(1) { width: 45%; } /* COMPONENT */
+  .price-breakdown-table th:nth-child(2), .price-breakdown-table td:nth-child(2) { width: 20%; } /* RATE */
+  .price-breakdown-table th:nth-child(3), .price-breakdown-table td:nth-child(3) { width: 15%; } /* WEIGHT */
+  .price-breakdown-table th:nth-child(4), .price-breakdown-table td:nth-child(4) { width: 20%; } /* VALUE */
 
 
   /* --- Group Title --- */
