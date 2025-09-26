@@ -425,16 +425,22 @@
     overflow: hidden; 
     min-width: 0;
   }
-  .variant-slider-swiper .swiper-wrapper {
-  display: flex;
-  align-items: stretch; /* Ensures slides have same height */
+ 
+
+/* 1. Hide the container by default */
+.variant-slider__container {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
 }
 
-.variant-slider-swiper .swiper-slide {
-  flex-shrink: 0; /* Prevents slides from shrinking to fit */
-  width: auto;    /* Let the slide's content determine its width initially */
+/* 2. Show it once Swiper is initialized and adds our class */
+.variant-slider__container.swiper-is-initialized {
+  opacity: 1;
+  visibility: visible;
 }
 
+/* --- END OF NEW RULES --- */
 
   .swiper-slide {
     height: auto;
