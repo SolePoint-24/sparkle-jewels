@@ -5,6 +5,23 @@
   - The carousel supports autoplay with play/pause controls.
 {% endcomment %}
 
+{%- comment -%}
+  This style block generates mobile-specific CSS for each slide's button position.
+  It overrides the inline styles applied for desktop.
+{%- endcomment -%}
+<style>
+  @media screen and (max-width: 768px) {
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'collection_slide' -%}
+        #Hero-{{ section.id }} [data-shopify-editor-block-id="{{ block.id }}"] .hero-carousel__button {
+          top: {{ block.settings.button_pos_top_mobile }}%;
+          left: {{ block.settings.button_pos_left_mobile }}%;
+        }
+      {%- endif -%}
+    {%- endfor -%}
+  }
+</style>
+
 <div
   id="Hero-{{ section.id }}"
   class="hero-carousel-section color-{{ section.settings.color_scheme }}"
@@ -71,7 +88,7 @@
           {{ block.shopify_attributes }}
         >
           {%- if block.settings.button_label != blank -%}
-            {%- comment -%} SIMPLIFIED LOGIC FOR BUTTON STYLES {%- endcomment -%}
+            {%- comment -%} Desktop positioning is applied via inline styles {%- endcomment -%}
             {%- assign custom_button_styles = 'position: absolute;' -%}
 
             {%- if block.settings.button_pos_top != blank -%}
@@ -123,6 +140,7 @@
 </div>
 
 <script>
+  // The script remains unchanged
   class HeroCarousel {
     constructor(section) {
       this.section = section;
@@ -264,6 +282,7 @@
 </script>
 
 {% stylesheet %}
+  /* The stylesheet remains unchanged */
   .hero-carousel-section {
     width: var(--section-width);
     margin-left: calc(50% - 50vw);
@@ -404,20 +423,19 @@
       max-width: 400px; justify-content: center;
       background: none; backdrop-filter: none;
       padding: 0; border-radius: 0;
-      width: 100%; /* Allow nav to fill its container width */
+      width: 100%;
     }
     .hero-carousel__arrow, .hero-carousel__title-link, .hero-carousel__play-pause { color: #fff; }
     .hero-carousel__title-link.is-active::after { background-color: #fff; }
-    
-    /* === NEW STYLES FOR SCROLLABLE TITLES === */
+
     .hero-carousel__titles {
-      flex: 1; /* Allows the titles container to grow and shrink */
-      overflow-x: auto; /* Enables horizontal scrolling */
-      -ms-overflow-style: none;  /* Hides scrollbar on IE and Edge */
-      scrollbar-width: none;  /* Hides scrollbar on Firefox */
+      flex: 1;
+      overflow-x: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
     .hero-carousel__titles::-webkit-scrollbar {
-      display: none; /* Hides scrollbar on Chrome, Safari, and Opera */
+      display: none;
     }
   }
 {% endstylesheet %}
@@ -494,21 +512,39 @@
         },
         {
           "type": "header",
-          "content": "Button Positioning"
+          "content": "Desktop Button Positioning"
         },
         {
           "type": "number",
           "id": "button_pos_top",
-          "label": "Top Position (%)",
-          "info": "Distance from the top. Leave blank for auto.",
-          "default" : 65,
+          "label": "Desktop Top Position (%)",
+          "info": "Distance from the top.",
+          "default": 85
         },
         {
           "type": "number",
           "id": "button_pos_left",
-          "label": "Left Position (%)",
-          "info": "Distance from the left. Leave blank for auto.",
-          "default" : 10,
+          "label": "Desktop Left Position (%)",
+          "info": "Distance from the left.",
+          "default": 10
+        },
+        {
+          "type": "header",
+          "content": "Mobile Button Positioning"
+        },
+        {
+          "type": "number",
+          "id": "button_pos_top_mobile",
+          "label": "Mobile Top Position (%)",
+          "info": "Distance from the top on mobile.",
+          "default": 80
+        },
+        {
+          "type": "number",
+          "id": "button_pos_left_mobile",
+          "label": "Mobile Left Position (%)",
+          "info": "Distance from the left on mobile.",
+          "default": 10
         }
       ]
     }
