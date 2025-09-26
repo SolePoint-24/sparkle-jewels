@@ -241,6 +241,25 @@
     font-weight: 700;
     color: #000;
   }
+    @media screen and (max-width: 755px) {
+    /* 1. Hide the second column (RATE) */
+    .pbt-row .pbt-cell:nth-child(2) {
+      display: none;
+    }
+
+    /* 2. Adjust the widths of the remaining columns */
+    .pbt-row .pbt-cell:nth-child(1) { /* COMPONENT */
+      flex-basis: 50%;
+    }
+
+    .pbt-row .pbt-cell:nth-child(3) { /* WEIGHT */
+      flex-basis: 25%;
+    }
+
+    .pbt-row .pbt-cell:nth-child(4) { /* VALUE */
+      flex-basis: 25%;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
