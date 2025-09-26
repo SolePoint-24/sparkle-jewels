@@ -71,17 +71,13 @@
           {{ block.shopify_attributes }}
         >
           {%- if block.settings.button_label != blank -%}
-            {%- comment -%} LOGIC TO BUILD CUSTOM BUTTON STYLES {%- endcomment -%}
+            {%- comment -%} SIMPLIFIED LOGIC FOR BUTTON STYLES {%- endcomment -%}
             {%- assign custom_button_styles = 'position: absolute;' -%}
+
             {%- if block.settings.button_pos_top != blank -%}
               {%- assign custom_button_styles = custom_button_styles | append: ' top: ' | append: block.settings.button_pos_top | append: '%;' -%}
             {%- endif -%}
-            {%- if block.settings.button_pos_right != blank -%}
-              {%- assign custom_button_styles = custom_button_styles | append: ' right: ' | append: block.settings.button_pos_right | append: '%;' -%}
-            {%- endif -%}
-            {%- if block.settings.button_pos_bottom != blank -%}
-              {%- assign custom_button_styles = custom_button_styles | append: ' bottom: ' | append: block.settings.button_pos_bottom | append: '%;' -%}
-            {%- endif -%}
+
             {%- if block.settings.button_pos_left != blank -%}
               {%- assign custom_button_styles = custom_button_styles | append: ' left: ' | append: block.settings.button_pos_left | append: '%;' -%}
             {%- endif -%}
@@ -330,24 +326,23 @@
 
   .hero-carousel__content-inner {
     position: absolute;
-    inset: 0; /* Changed: Makes container a full overlay */
+    inset: 0;
     opacity: 0;
     transition: opacity 0.6s ease 0.2s;
-    pointer-events: none; /* Changed: Container is not clickable */
+    pointer-events: none;
   }
 
   .hero-carousel__content-inner.is-active {
     opacity: 1;
-    pointer-events: auto; /* Allows children (button) to be clickable */
+    pointer-events: auto;
   }
 
   .hero-carousel__button {
-    max-height: 50px;
     background-color: transparent; border: 1px solid #000; color: #000;
     padding: 12px 28px; text-decoration: none;
     transition: background-color 0.3s, color 0.3s;
     font-size: 0.9rem;
-    pointer-events: auto; /* Ensures button is clickable */
+    pointer-events: auto;
   }
 
   .hero-carousel__button:hover { background-color: #000; color: #fff; }
@@ -493,25 +488,15 @@
           "type": "number",
           "id": "button_pos_top",
           "label": "Top Position (%)",
-          "info": "Leave blank for auto. Typically set either Top or Bottom."
-        },
-        {
-          "type": "number",
-          "id": "button_pos_right",
-          "label": "Right Position (%)",
-          "info": "Leave blank for auto. Typically set either Left or Right."
-        },
-        {
-          "type": "number",
-          "id": "button_pos_bottom",
-          "label": "Bottom Position (%)",
-          "info": "Leave blank for auto."
+          "info": "Distance from the top. Leave blank for auto.",
+          "default" : 65,
         },
         {
           "type": "number",
           "id": "button_pos_left",
           "label": "Left Position (%)",
-          "info": "Leave blank for auto."
+          "info": "Distance from the left. Leave blank for auto.",
+          "default" : 10,
         }
       ]
     }
