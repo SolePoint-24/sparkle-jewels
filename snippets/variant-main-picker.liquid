@@ -305,6 +305,7 @@
         centeredSlides: false,
         on: {
           init: function(swiper) {
+            swiper.el.closest('.variant-slider__container').classList.add('swiper-is-initialized');
             updateNavigationState(swiper, swiperIndex);
             // On initialization, find the checked input and slide to it
             slideToSelectedVariant(swiper);
