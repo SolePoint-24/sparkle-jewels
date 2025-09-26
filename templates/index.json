@@ -144,6 +144,58 @@
         "color_scheme": "scheme-1"
       }
     },
+    "marquee_usp_M37DPE": {
+      "type": "marquee-usp",
+      "blocks": {
+        "usp_item_bii6TN": {
+          "type": "usp_item",
+          "settings": {
+            "icon": "shopify://shop_images/BIS-Hallmark-Black.png",
+            "title": "BIS Hallmark"
+          }
+        },
+        "usp_item_KwWKKU": {
+          "type": "usp_item",
+          "settings": {
+            "icon": "shopify://shop_images/lifetime-exchnage-icon.png",
+            "title": "Lifetime Exchange"
+          }
+        },
+        "usp_item_ViFzn3": {
+          "type": "usp_item",
+          "settings": {
+            "icon": "shopify://shop_images/sparkle-jewels-logo-transparent.png",
+            "title": "Sparkle Certified"
+          }
+        },
+        "usp_item_qUUcJk": {
+          "type": "usp_item",
+          "settings": {
+            "icon": "shopify://shop_images/free-delivery.png",
+            "title": "Free Shipping"
+          }
+        },
+        "usp_item_PFPYaB": {
+          "type": "usp_item",
+          "settings": {
+            "icon": "shopify://shop_images/Ethical-Sourcing-icon.png",
+            "title": "Ethical Sourcing"
+          }
+        }
+      },
+      "block_order": [
+        "usp_item_bii6TN",
+        "usp_item_KwWKKU",
+        "usp_item_ViFzn3",
+        "usp_item_qUUcJk",
+        "usp_item_PFPYaB"
+      ],
+      "name": "Marquee USP",
+      "settings": {
+        "heading": "Why Choose Us",
+        "color_scheme": "scheme-4"
+      }
+    },
     "section_HAz3WV": {
       "type": "section",
       "blocks": {
@@ -647,6 +699,7 @@
         "text_xjedyB",
         "group_EmQmEz"
       ],
+      "disabled": true,
       "custom_css": [],
       "name": "t:names.multicolumn",
       "settings": {
@@ -1625,6 +1678,7 @@
     "hero_G7CAX9",
     "collection_list_3ejxRy",
     "collection_list_GyxPdP",
+    "marquee_usp_M37DPE",
     "section_HAz3WV",
     "custom_event_section_GxK8zR",
     "product_list_YidTcf",
