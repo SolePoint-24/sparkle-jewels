@@ -5,6 +5,8 @@
 {% endcomment %}
 
 {%- if block.settings.show_block -%}
+  
+
   <variant-value-updater class="price-config-wrapper" data-id="price-breakdown" {{ block.shopify_attributes }}>
     {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
     {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
@@ -15,6 +17,7 @@
     <div class="price-breakdown-table">
       <div class="pbt-row pbt-header">
         <div class="pbt-cell">COMPONENT</div>
+        {% comment %} <div class="pbt-cell">QUALITY</div> {% endcomment %}
         <div class="pbt-cell">RATE</div>
         <div class="pbt-cell">WEIGHT</div>
         <div class="pbt-cell pbt-align-right">VALUE</div>
@@ -34,28 +37,30 @@
 
           {%- assign purity = final_metal_object.purity | default: 100 | times: 1.0 -%}
           {%- assign rate_24k = rate | divided_by: purity | times: 100.0 -%}
-          {% comment %} Making Charges {% endcomment %}
+          {% comment %} Making Charges  {% endcomment %}
           {%- assign labour_category_object = metal_item.labour_category.value -%}
           {%- assign labour_percentage_value = labour_category_object.labour_percentage | default: 0 -%}
           {%- assign labour_percentage = labour_percentage_value | divided_by: 100.0 -%}
           {%- assign metal_labour_cost = weight | times: labour_percentage |times: rate_24k-%}
           {%- assign total_making_charges = total_making_charges | plus: metal_labour_cost -%}
-
+          
           <div class="pbt-row">
-            <div class="pbt-cell" data-label="COMPONENT"><span class="pbt-main-text">{{ final_metal_object.display_name }}</span></div>
-            <div class="pbt-cell" data-label="RATE">{{ rate | times: 100 | money }}</div>
-            <div class="pbt-cell" data-label="WEIGHT">{{ weight }} g</div>
-            <div class="pbt-cell pbt-align-right" data-label="VALUE"><span>{{ total_value | times: 100 | money }}</span></div>
+            <div class="pbt-cell"><span class="pbt-main-text">{{ final_metal_object.display_name }}</span></div>
+            {% comment %} <div class="pbt-cell">-</div> {% endcomment %}
+            <div class="pbt-cell">{{ rate | times: 100 | money }}</div>
+            <div class="pbt-cell">{{ weight }} g</div>
+            <div class="pbt-cell pbt-align-right"><span>{{ total_value | times: 100 | money }}</span></div>
           </div>
         {% endif %}
       {% endfor %}
 
       {% comment %} --- NEW: Display Total Making Charges --- {% endcomment %}
       <div class="pbt-row pbt-summary-row">
-        <div class="pbt-cell" data-label="COMPONENT">Making charges</div>
-        <div class="pbt-cell" data-label="RATE">-</div>
-        <div class="pbt-cell" data-label="WEIGHT">-</div>
-        <div class="pbt-cell pbt-align-right" data-label="VALUE">
+        <div class="pbt-cell">Making changes</div>
+        {% comment %} <div class="pbt-cell">-</div> {% endcomment %}
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right">
           <span>{{ total_making_charges | times: 100 | money }}</span>
         </div>
       </div>
@@ -73,26 +78,38 @@
           {%- assign total_stones_value = total_stones_value | plus: total_stone_value_for_item -%}
 
           <div class="pbt-row">
-            <div class="pbt-cell" data-label="COMPONENT">
+            <div class="pbt-cell">
               <span class="pbt-main-text">{{ pricing_object.shape_category }} {{ pricing_object.size_category }} {{ pricing_object.type }}</span>
               <span class="pbt-sub-text">x {{ stone_item.number_of_stone }} ({{ stone_item.stone_size }}mm)</span>
             </div>
-            <div class="pbt-cell" data-label="RATE">{{ stone_price_per_carat | times: 100 | money }}</div>
-            <div class="pbt-cell" data-label="WEIGHT">{{ total_weight }} ct.w</div>
-            <div class="pbt-cell pbt-align-right" data-label="VALUE">
+            {% comment %} <div class="pbt-cell">{{ pricing_object.quality_grade }}</div> {% endcomment %}
+            <div class="pbt-cell">{{ stone_price_per_carat | times: 100 | money }}</div>
+            <div class="pbt-cell">{{ total_weight }} ct.w</div>
+            <div class="pbt-cell pbt-align-right">
               <span>{{ total_stone_value_for_item | times: 100 | money }}</span>
             </div>
           </div>
         {% endif %}
       {% endfor %}
-
+      
+      {% comment %} <div class="pbt-row pbt-summary-row">
+        <div class="pbt-cell">STONES VALUE</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right">
+          <span>{{ total_stones_value | times: 100 | money }}</span>
+        </div>
+      </div> {% endcomment %}
+      
       {%- assign subtotal = total_metals_value | plus: total_stones_value | plus: total_making_charges -%}
-
+      
       <div class="pbt-row pbt-summary-row">
-        <div class="pbt-cell pbt-bold" data-label="COMPONENT">SUBTOTAL</div>
-        <div class="pbt-cell" data-label="RATE">-</div>
-        <div class="pbt-cell" data-label="WEIGHT">-</div>
-        <div class="pbt-cell pbt-align-right" data-label="VALUE">
+        <div class="pbt-cell pbt-bold">SUBTOTAL</div>
+        {% comment %} <div class="pbt-cell">-</div> {% endcomment %}
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right">
           <span style="font-size:18px"><strong>{{ subtotal | times: 100 | money }}</strong></span>
         </div>
       </div>
@@ -112,13 +129,11 @@
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     overflow: hidden;
-    max-width: 600px; /* Constrains the width on desktop */
-    margin: 0 auto; /* Centers the table */
   }
 
   .pbt-row {
     display: flex;
-    align-items: stretch; /* Changed from center to stretch */
+    align-items: center;
     border-bottom: 1px solid #e0e0e0;
     padding: 10px 15px;
     background-color: #fff;
@@ -128,22 +143,38 @@
     border-bottom: none;
   }
 
+  /* --- OLD STYLES (FOR 5 COLUMNS) --- */
+  /*
   .pbt-cell {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Vertically center content */
-    flex-basis: 20%;
-    padding: 5px;
+    flex-basis: 16%; 
+    padding: 0 5px;
     color: #555;
     font-size: 14px;
-    line-height: 1.4;
   }
-
+  
   .pbt-cell:first-child {
-    flex-basis: 40%;
+    flex-basis: 35%; 
     padding-left: 0;
   }
+  */
 
+  /* --- NEW STYLES (FOR 4 COLUMNS) --- */
+  .pbt-cell {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 20%; /* Adjusted for the 3 equal columns */
+    padding: 0 5px;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .pbt-cell:first-child {
+    flex-basis: 40%; /* Gave more width to the Component column */
+    padding-left: 0;
+  }
+  
   .pbt-cell:last-child {
     padding-right: 0;
   }
@@ -173,93 +204,42 @@
     letter-spacing: 0.05em;
     flex-basis: 100% !important;
   }
-
+  
   .pbt-main-text {
     font-size: 15px;
     color: #222;
   }
-
+  
   .pbt-sub-text {
     font-size: 12px;
     color: #777;
     margin-top: 2px;
   }
 
+  .pbt-strikethrough {
+    color: #888;
+    text-decoration: line-through;
+    font-size: 13px;
+  }
+  
   .pbt-summary-row .pbt-cell {
       padding-top: 15px;
       padding-bottom: 15px;
   }
-
+  
+  .pbt-grand-total {
+    background-color: #f8f8f8;
+    border-top: 1px solid #e0e0e0;
+  }
+  
   .pbt-bold {
     font-weight: 600;
   }
-
-  /* --- MOBILE RESPONSIVE STYLES --- */
-  @media screen and (max-width: 768px) {
-    .price-breakdown-table {
-        border-radius: 0;
-        border-left: none;
-        border-right: none;
-    }
-
-    .pbt-header {
-      display: none; /* Hide header on mobile */
-    }
-
-    .pbt-row {
-      flex-direction: column;
-      padding: 15px 0;
-    }
-    
-    .pbt-group-title {
-        padding: 10px 15px;
-    }
-
-    .pbt-cell {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      flex-basis: auto !important; /* Reset flex-basis */
-      width: 100%;
-      padding: 6px 15px;
-      text-align: right;
-    }
-
-    .pbt-cell:first-child {
-        padding-left: 15px;
-    }
-    
-    .pbt-cell:last-child {
-        padding-right: 15px;
-    }
-
-    .pbt-cell::before {
-      content: attr(data-label);
-      font-weight: 600;
-      color: #333;
-      text-align: left;
-      margin-right: 10px;
-    }
-
-    .pbt-cell[data-label="COMPONENT"] {
-        flex-direction: column;
-        align-items: flex-start;
-        padding-bottom: 10px;
-    }
-
-    .pbt-cell[data-label="COMPONENT"]::before {
-        display: none; /* No label needed for the primary info */
-    }
-
-    .pbt-align-right {
-        align-items: center;
-    }
-    
-    .pbt-summary-row .pbt-cell[data-label="COMPONENT"] {
-        flex-direction: row;
-        align-items: center;
-    }
+  
+  .pbt-final-price span {
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
   }
 {% endstylesheet %}
 
