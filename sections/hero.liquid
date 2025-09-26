@@ -14,8 +14,8 @@
     {%- for block in section.blocks -%}
       {%- if block.type == 'collection_slide' -%}
         #Hero-{{ section.id }} [data-shopify-editor-block-id="{{ block.id }}"] .hero-carousel__button {
-          top: {{ block.settings.button_pos_top_mobile }}%;
-          left: {{ block.settings.button_pos_left_mobile }}%;
+          top: {{ block.settings.button_pos_top_mobile }}% !important;
+          left: {{ block.settings.button_pos_left_mobile }}% !important;
         }
       {%- endif -%}
     {%- endfor -%}
