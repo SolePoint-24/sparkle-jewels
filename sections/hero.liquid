@@ -6,16 +6,27 @@
 {% endcomment %}
 
 {%- comment -%}
-  This style block generates mobile-specific CSS for each slide's button position.
-  It overrides the inline styles applied for desktop.
+  NEW: All positioning logic is now handled here.
+  This avoids conflicts with inline styles.
 {%- endcomment -%}
 <style>
+  /* --- Desktop Styles --- */
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'collection_slide' -%}
+      #Hero-{{ section.id }} [data-shopify-editor-block-id="{{ block.id }}"] .hero-carousel__button {
+        top: {{ block.settings.button_pos_top }}%;
+        left: {{ block.settings.button_pos_left }}%;
+      }
+    {%- endif -%}
+  {%- endfor -%}
+
+  /* --- Mobile Styles --- */
   @media screen and (max-width: 768px) {
     {%- for block in section.blocks -%}
       {%- if block.type == 'collection_slide' -%}
         #Hero-{{ section.id }} [data-shopify-editor-block-id="{{ block.id }}"] .hero-carousel__button {
-          top: {{ block.settings.button_pos_top_mobile }}% !important;
-          left: {{ block.settings.button_pos_left_mobile }}% !important;
+          top: {{ block.settings.button_pos_top_mobile }}%;
+          left: {{ block.settings.button_pos_left_mobile }}%;
         }
       {%- endif -%}
     {%- endfor -%}
@@ -88,18 +99,10 @@
           {{ block.shopify_attributes }}
         >
           {%- if block.settings.button_label != blank -%}
-            {%- comment -%} Desktop positioning is applied via inline styles {%- endcomment -%}
-            {%- assign custom_button_styles = 'position: absolute;' -%}
-
-            {%- if block.settings.button_pos_top != blank -%}
-              {%- assign custom_button_styles = custom_button_styles | append: ' top: ' | append: block.settings.button_pos_top | append: '%;' -%}
-            {%- endif -%}
-
-            {%- if block.settings.button_pos_left != blank -%}
-              {%- assign custom_button_styles = custom_button_styles | append: ' left: ' | append: block.settings.button_pos_left | append: '%;' -%}
-            {%- endif -%}
-
-            <a href="{{ block.settings.button_link | default: collection.url }}" class="button hero-carousel__button" style="{{ custom_button_styles }}">
+            {%- comment -%}
+              REMOVED: The liquid logic and inline style attribute for positioning are now gone from here.
+            {%- endcomment -%}
+            <a href="{{ block.settings.button_link | default: collection.url }}" class="button hero-carousel__button">
               {{ block.settings.button_label | escape }}
             </a>
           {%- endif -%}
@@ -282,7 +285,6 @@
 </script>
 
 {% stylesheet %}
-  /* The stylesheet remains unchanged */
   .hero-carousel-section {
     width: var(--section-width);
     margin-left: calc(50% - 50vw);
@@ -361,6 +363,7 @@
     padding: 12px 28px; text-decoration: none;
     transition: background-color 0.3s, color 0.3s;
     font-size: 0.9rem;
+    position: absolute; /* ADDED: Base positioning is now handled here */
   }
 
   .hero-carousel__button:hover { background-color: #000; color: #fff; }
@@ -385,7 +388,7 @@
   .hero-carousel__title-link {
     color: #fff; text-decoration: none; font-size: 1rem; opacity: 0.6;
     position: relative; transition: opacity 0.3s; padding-bottom: 5px;
-    white-space: nowrap; /* Ensures titles don't break onto new lines */
+    white-space: nowrap;
   }
   .hero-carousel__title-link:hover, .hero-carousel__title-link.is-active { opacity: 1; }
   .hero-carousel__title-link.is-active::after {
