@@ -1053,6 +1053,21 @@
       z-index: var(--facets-open-z-index);
     }
   }
+    .facets--horizontal .facets__panel[open] {
+    @media screen and (min-width: 750px) {
+      z-index: var(--facets-open-z-index);
+    }
+  }
+
+  /* PASTE THE NEW CODE HERE */
+  .facets-block-wrapper--vertical {
+    @media screen and (min-width: 750px) {
+      position: sticky;
+      top: 2rem;
+      max-height: calc(100vh - 4rem);
+      overflow-y: auto;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
