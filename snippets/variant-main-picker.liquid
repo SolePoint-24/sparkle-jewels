@@ -305,7 +305,9 @@
         centeredSlides: false,
         on: {
           init: function(swiper) {
+            // Add class to the container to make it visible
             swiper.el.closest('.variant-slider__container').classList.add('swiper-is-initialized');
+
             updateNavigationState(swiper, swiperIndex);
             // On initialization, find the checked input and slide to it
             slideToSelectedVariant(swiper);
@@ -337,7 +339,7 @@
     }
   }
 
-  // NEW: Slides to the currently checked variant when the slider is initialized
+  // Slides to the currently checked variant when the slider is initialized
   function slideToSelectedVariant(swiper) {
     if (!swiper || swiper.destroyed) return;
 
@@ -354,26 +356,15 @@
       }
     }
   }
-
  
   document.addEventListener('DOMContentLoaded', initVariantSliders);
   
   // Run initialization when a section is loaded in the Shopify Theme Editor
   document.addEventListener('shopify:section:load', initVariantSliders);
 
-  // **THE KEY CHANGE**: Listen for the theme's custom event and re-initialize the sliders
-  // Note: The exact event name can vary. 'theme:variant:update' is a common convention
-  // based on the `VariantUpdateEvent` class name. Check your theme's docs if this doesn't work.
+  // Listen for the theme's custom event and re-initialize the sliders
   document.addEventListener('variant:update', initVariantSliders);
 
-  // Clean up on page unload
-  window.addEventListener('beforeunload', function() {
-    Object.values(swiperInstances).forEach(swiper => {
-      if (swiper && !swiper.destroyed) {
-        swiper.destroy(true, true);
-      }
-    });
-  });
 </script>
 {% stylesheet %}
 
