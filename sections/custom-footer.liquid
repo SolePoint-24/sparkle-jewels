@@ -59,6 +59,11 @@
   .social-icon__link {
     color: var(--color-foreground);
     transition: transform 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
   }
 
   .social-icon__link:hover {
@@ -67,9 +72,9 @@
   }
 
   .social-icon__link svg {
-    width: 48px;
-    height: 48px;
-    fill: #0000; /* SVGs are designed with stroke, not fill */
+    width: 100%;
+    height: 100%;
+    fill: transparent; /* SVGs are designed with stroke, not fill */
     stroke: currentColor;
   }
 
