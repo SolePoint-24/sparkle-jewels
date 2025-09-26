@@ -92,7 +92,7 @@
         {% endif %}
       {% endfor %}
       
-      <div class="pbt-row pbt-summary-row">
+      {% comment %} <div class="pbt-row pbt-summary-row">
         <div class="pbt-cell">STONES VALUE</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell">-</div>
@@ -100,7 +100,7 @@
         <div class="pbt-cell pbt-align-right">
           <span>{{ total_stones_value | times: 100 | money }}</span>
         </div>
-      </div>
+      </div> {% endcomment %}
       
       {%- assign subtotal = total_metals_value | plus: total_stones_value | plus: total_making_charges -%}
       
