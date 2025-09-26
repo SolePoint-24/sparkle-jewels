@@ -143,41 +143,46 @@
     border-bottom: none;
   }
 
-   /* --- NEW STYLES (FOR 4 COLUMNS - USING MAX-WIDTH) --- */
- .pbt-cell {
- display: flex;
-flex-direction: column;
-padding: 0 5px;
-color: #555;
-font-size: 14px;
-}
+  /* --- OLD STYLES (FOR 5 COLUMNS) --- */
+  /*
+  .pbt-cell {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 16%; 
+    padding: 0 5px;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .pbt-cell:first-child {
+    flex-basis: 35%; 
+    padding-left: 0;
+  }
+  */
 
-/* Set a percentage-based width for responsiveness and a max-width to cap it. */
-.pbt-cell:nth-child(1) { /* COMPONENT */
- width: 40%;
- max-width: 250px; /* <-- DUMMY VALUE, change as needed */
- padding-left: 0;
-}
- .pbt-cell:nth-child(2) { /* RATE */
- width: 20%;
- max-width: 150px; /* <-- DUMMY VALUE, change as needed */
-}
+  /* --- NEW STYLES (FOR 4 COLUMNS) --- */
+  .pbt-cell {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 20%; /* Adjusted for the 3 equal columns */
+    padding: 0 5px;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .pbt-cell:first-child {
+    flex-basis: 40%; /* Gave more width to the Component column */
+    padding-left: 0;
+  }
+  
+  .pbt-cell:last-child {
+    padding-right: 0;
+  }
 
-.pbt-cell:nth-child(3) { /* WEIGHT */
-width: 20%;
- max-width: 150px; /* <-- DUMMY VALUE, change as needed */
-}
-
-.pbt-cell:nth-child(4) { /* VALUE */
-width: 20%;
-max-width: 180px; /* <-- DUMMY VALUE, change as needed */
-padding-right: 0;
- }
- 
- .pbt-align-right {
-align-items: flex-end;
-text-align: right;
-}
+  .pbt-align-right {
+    align-items: flex-end;
+    text-align: right;
+  }
 
   .pbt-header {
     background-color: #f8f8f8;
