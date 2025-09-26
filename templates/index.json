@@ -21,10 +21,10 @@
             "image_mobile": "{{ block.settings.collection.metafields.custom.hero_mobile_image.value }}",
             "button_label": "Explore Gold Collection",
             "button_link": "",
-            "button_pos_top": 0,
+            "button_pos_top": 65,
             "button_pos_right": 0,
             "button_pos_bottom": 20,
-            "button_pos_left": 30
+            "button_pos_left": 10
           }
         },
         "collection_slide_ERayxk": {
