@@ -17,7 +17,7 @@
     <div class="price-breakdown-table">
       <div class="pbt-row pbt-header">
         <div class="pbt-cell">COMPONENT</div>
-        <div class="pbt-cell">QUALITY</div>
+        {% comment %} <div class="pbt-cell">QUALITY</div> {% endcomment %}
         <div class="pbt-cell">RATE</div>
         <div class="pbt-cell">WEIGHT</div>
         <div class="pbt-cell pbt-align-right">VALUE</div>
@@ -46,7 +46,7 @@
           
           <div class="pbt-row">
             <div class="pbt-cell"><span class="pbt-main-text">{{ final_metal_object.display_name }}</span></div>
-            <div class="pbt-cell">-</div>
+            {% comment %} <div class="pbt-cell">-</div> {% endcomment %}
             <div class="pbt-cell">{{ rate | times: 100 | money }}</div>
             <div class="pbt-cell">{{ weight }} g</div>
             <div class="pbt-cell pbt-align-right"><span>{{ total_value | times: 100 | money }}</span></div>
@@ -57,7 +57,7 @@
       {% comment %} --- NEW: Display Total Making Charges --- {% endcomment %}
       <div class="pbt-row pbt-summary-row">
         <div class="pbt-cell">Making changes</div>
-        <div class="pbt-cell">-</div>
+        {% comment %} <div class="pbt-cell">-</div> {% endcomment %}
         <div class="pbt-cell">-</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell pbt-align-right">
