@@ -6,6 +6,8 @@
   - Uses blocks for each item in the marquee.
   - Each block has an icon and a title.
   - Includes a color scheme setting.
+  - Animation speed is adjustable.
+  - Duplicates content to ensure a seamless loop without gaps.
 {%- endcomment -%}
 
 <div class="marquee-usp-section color-{{ section.settings.color_scheme }}">
@@ -16,49 +18,32 @@
   </div>
 
   <div class="marquee-usp__wrapper">
-    <div class="marquee-usp__content">
-      {%- for block in section.blocks -%}
-        <div class="marquee-usp__item" {{ block.shopify_attributes }}>
-          <div class="marquee-usp__icon">
-            {%- if block.settings.icon != blank -%}
-              <img
-                src="{{ block.settings.icon | image_url: width: 100 }}"
-                alt="{{ block.settings.icon.alt | default: block.settings.title }}"
-                width="50"
-                height="{{ 50 | divided_by: block.settings.icon.aspect_ratio | round }}"
-                loading="lazy"
-              >
-            {%- else -%}
-              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-            {%- endif -%}
+    <div class="marquee-usp__scroller" style="animation-duration: {{ section.settings.animation_speed }}s;">
+      {%- comment -%}
+        The content is rendered 4 times to ensure the total width is
+        always greater than the viewport, preventing any gaps in the loop.
+      {%- endcomment -%}
+      {%- for i in (1..4) -%}
+        {%- for block in section.blocks -%}
+          <div class="marquee-usp__item" {% if forloop.parentloop.first %}{{ block.shopify_attributes }}{% endif %}>
+            <div class="marquee-usp__icon">
+              {%- if block.settings.icon != blank -%}
+                <img
+                  src="{{ block.settings.icon | image_url: width: 100 }}"
+                  alt="{{ block.settings.icon.alt | default: block.settings.title }}"
+                  width="50"
+                  height="{{ 50 | divided_by: block.settings.icon.aspect_ratio | round }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <div class="marquee-usp__title">
+              <p>{{ block.settings.title | escape }}</p>
+            </div>
           </div>
-          <div class="marquee-usp__title">
-            <p>{{ block.settings.title | escape }}</p>
-          </div>
-        </div>
-      {%- endfor -%}
-    </div>
-    <!-- The content is duplicated to create a seamless loop -->
-    <div class="marquee-usp__content" aria-hidden="true">
-       {%- for block in section.blocks -%}
-        <div class="marquee-usp__item">
-          <div class="marquee-usp__icon">
-            {%- if block.settings.icon != blank -%}
-              <img
-                src="{{ block.settings.icon | image_url: width: 100 }}"
-                alt="{{ block.settings.icon.alt | default: block.settings.title }}"
-                width="50"
-                height="{{ 50 | divided_by: block.settings.icon.aspect_ratio | round }}"
-                loading="lazy"
-              >
-            {%- else -%}
-              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-            {%- endif -%}
-          </div>
-          <div class="marquee-usp__title">
-            <p>{{ block.settings.title | escape }}</p>
-          </div>
-        </div>
+        {%- endfor -%}
       {%- endfor -%}
     </div>
   </div>
@@ -67,7 +52,6 @@
 {%- style -%}
   .marquee-usp-section {
     padding: 40px 0;
-    overflow: hidden; /* Hides the overflowing content */
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
@@ -75,26 +59,28 @@
   .marquee-usp__heading {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 35px !important;
+    margin-bottom: 40px;
   }
 
   .marquee-usp__wrapper {
+    overflow: hidden;
     display: flex;
-    white-space: nowrap; /* Prevents items from wrapping to the next line */
+    white-space: nowrap;
   }
 
-  .marquee-usp__content {
-    display: inline-block;
-    animation: scroll 20s linear infinite;
+  .marquee-usp__scroller {
+    display: flex;
+    flex-shrink: 0;
+    animation: scroll-marquee linear infinite;
   }
 
   /* Pause animation on hover for better user experience */
-  .marquee-usp__wrapper:hover .marquee-usp__content {
+  .marquee-usp__wrapper:hover .marquee-usp__scroller {
     animation-play-state: paused;
   }
 
   .marquee-usp__item {
-    display: inline-flex; /* Aligns icon and text */
+    display: flex; /* Changed to flex for better alignment */
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -114,12 +100,13 @@
   }
 
   /* The Keyframe animation for the scroll effect */
-  @keyframes scroll {
-    0% {
+  @keyframes scroll-marquee {
+    from {
       transform: translateX(0);
     }
-    100% {
-      transform: translateX(-100%);
+    to {
+      /* This translates the content by one-quarter of its total width, creating a perfect loop */
+      transform: translateX(-25%);
     }
   }
 
@@ -150,6 +137,17 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "background-1"
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "s",
+      "label": "Animation speed",
+      "info": "Slower speed is a higher number.",
+      "default": 30
     }
   ],
   "blocks": [
