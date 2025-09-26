@@ -23,7 +23,8 @@
             "button_link": "",
             "button_pos_top": 0,
             "button_pos_right": 0,
-            "button_pos_bottom": 0
+            "button_pos_bottom": 20,
+            "button_pos_left": 30
           }
         },
         "collection_slide_ERayxk": {
