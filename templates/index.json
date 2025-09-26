@@ -1181,6 +1181,79 @@
         "products_to_show": 8
       }
     },
+    "custom_testimonials_gjpyCb": {
+      "type": "custom-testimonials",
+      "blocks": {
+        "testimonial_rxChQL": {
+          "type": "testimonial",
+          "settings": {
+            "author_image": "shopify://shop_images/blog-1.webp",
+            "quote": "<p>Share a glowing review from one of your customers to build trust and social proof.</p>",
+            "author_name": "Jennifer Nguyen",
+            "author_title": "Attorney"
+          }
+        },
+        "testimonial_68GiTh": {
+          "type": "testimonial",
+          "settings": {
+            "author_image": "shopify://shop_images/blog-1.webp",
+            "quote": "<p>Share a glowing review from one of your customers to build trust and social proof.</p>",
+            "author_name": "Jennifer Nguyen",
+            "author_title": "Attorney"
+          }
+        },
+        "testimonial_U9BDaK": {
+          "type": "testimonial",
+          "settings": {
+            "author_image": "shopify://shop_images/blog-1.webp",
+            "quote": "<p>Share a glowing review from one of your customers to build trust and social proof.</p>",
+            "author_name": "Jennifer Nguyen",
+            "author_title": "Attorney"
+          }
+        },
+        "testimonial_FmpBKx": {
+          "type": "testimonial",
+          "settings": {
+            "author_image": "shopify://shop_images/blog-1.webp",
+            "quote": "<p>Share a glowing review from one of your customers to build trust and social proof.</p>",
+            "author_name": "Jennifer Nguyen",
+            "author_title": "Attorney"
+          }
+        },
+        "testimonial_B7r3Ux": {
+          "type": "testimonial",
+          "settings": {
+            "author_image": "shopify://shop_images/blog-1.webp",
+            "quote": "<p>Share a glowing review from one of your customers to build trust and social proof.</p>",
+            "author_name": "Jennifer Nguyen",
+            "author_title": "Attorney"
+          }
+        },
+        "testimonial_MD4X8A": {
+          "type": "testimonial",
+          "settings": {
+            "author_image": "shopify://shop_images/blog-1.webp",
+            "quote": "<p>Share a glowing review from one of your customers to build trust and social proof.</p>",
+            "author_name": "Jennifer Nguyen",
+            "author_title": "Attorney"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_rxChQL",
+        "testimonial_68GiTh",
+        "testimonial_U9BDaK",
+        "testimonial_FmpBKx",
+        "testimonial_B7r3Ux",
+        "testimonial_MD4X8A"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "sub_heading": "Our Customers",
+        "main_heading": "Voices Of Elegance",
+        "color_scheme": "scheme-1"
+      }
+    },
     "section_Vtakah": {
       "type": "section",
       "blocks": {
@@ -1545,47 +1618,6 @@
         "padding-block-end": 48
       }
     },
-    "17588892381f82e92f": {
-      "type": "_blocks",
-      "blocks": {
-        "judge_me_reviews_featured_carousel_fn7RGm": {
-          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "maxwidth": 1080
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_featured_carousel_fn7RGm"
-      ],
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "color_scheme": "",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "custom_latest_blogs_6XrNBx": {
       "type": "custom-latest-blogs",
       "blocks": {
@@ -1645,6 +1677,47 @@
         "success_message": "Thank you for subscribing!",
         "color_scheme": "scheme-f7e6b3d3-6ded-42f6-a5cc-b7d842e2f918"
       }
+    },
+    "17588893678708b821": {
+      "type": "_blocks",
+      "blocks": {
+        "judge_me_reviews_featured_carousel_i8F9UU": {
+          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1440
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_featured_carousel_i8F9UU"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
@@ -1658,9 +1731,10 @@
     "media_with_content_HP7Qpp",
     "collection_showcase_section_LcYmLk",
     "collection_showcase_section_CM9XwH",
+    "custom_testimonials_gjpyCb",
     "section_Vtakah",
-    "17588892381f82e92f",
     "custom_latest_blogs_6XrNBx",
-    "newsletter_EWWhJB"
+    "newsletter_EWWhJB",
+    "17588893678708b821"
   ]
 }
