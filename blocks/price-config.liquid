@@ -82,7 +82,7 @@
               <span class="pbt-main-text">{{ pricing_object.shape_category }} {{ pricing_object.size_category }} {{ pricing_object.type }}</span>
               <span class="pbt-sub-text">x {{ stone_item.number_of_stone }} ({{ stone_item.stone_size }}mm)</span>
             </div>
-            <div class="pbt-cell">{{ pricing_object.quality_grade }}</div>
+            {% comment %} <div class="pbt-cell">{{ pricing_object.quality_grade }}</div> {% endcomment %}
             <div class="pbt-cell">{{ stone_price_per_carat | times: 100 | money }}</div>
             <div class="pbt-cell">{{ total_weight }} ct.w</div>
             <div class="pbt-cell pbt-align-right">
@@ -106,7 +106,7 @@
       
       <div class="pbt-row pbt-summary-row">
         <div class="pbt-cell pbt-bold">SUBTOTAL</div>
-        <div class="pbt-cell">-</div>
+        {% comment %} <div class="pbt-cell">-</div> {% endcomment %}
         <div class="pbt-cell">-</div>
         <div class="pbt-cell">-</div>
         <div class="pbt-cell pbt-align-right">
