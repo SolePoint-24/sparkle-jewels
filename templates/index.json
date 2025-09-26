@@ -24,7 +24,8 @@
             "text": "",
             "button_label": "Explore Gold Collection",
             "button_link": "",
-            "enable_custom_button_position": false
+            "enable_custom_button_position": false,
+            "button_pos_top": 60
           }
         },
         "collection_slide_ERayxk": {
