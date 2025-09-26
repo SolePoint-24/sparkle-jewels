@@ -4,6 +4,7 @@
   - A new 'range' setting with id 'logo_width' has been added to the schema.
   - The CSS for '.footer__logo img' now uses this setting for 'max-width'.
   - The <img> tag for the logo now uses this setting for its 'width', 'height', and 'src' attributes.
+  - The accordion has been rebuilt for advanced CSS animations on the icon and dropdown menu.
 {%- endcomment -%}
 
 {%- style -%}
@@ -78,17 +79,71 @@
     text-align: center;
   }
 
-  .footer__menu-title {
-    font-size: 1.2rem;
+  /* --- NEW ACCORDION STYLES START --- */
+  .footer__accordion-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    color: inherit;
+    text-align: left;
+    font-size: 1.5rem;
     font-weight: 600;
-    margin: 0 0 15px 0;
-    letter-spacing: 0.05em;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .accordion-icon {
+    position: relative;
+    width: 16px;
+    height: 16px;
+  }
+
+  .accordion-icon__bar {
+    position: absolute;
+    background-color: currentColor;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .accordion-icon__bar--horizontal {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: translateY(-50%);
+  }
+
+  .accordion-icon__bar--vertical {
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+
+  /* When expanded, rotate the vertical bar to form a '-' sign */
+  .footer__accordion-toggle[aria-expanded="true"] .accordion-icon__bar--vertical {
+    transform: translateX(-50%) rotate(90deg);
   }
 
   .footer__menu-list {
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0 0 0 20px; /* Indent the list items */
+    text-align: left;
+    overflow: hidden;
+    max-height: 0; /* Initially collapsed */
+    opacity: 0;
+    transition: max-height 0.4s ease-out, opacity 0.3s ease-in, padding 0.4s ease-out;
+  }
+  
+  /* When open, expand the menu with animation */
+  .footer__menu-list.is-open {
+    max-height: 300px; /* A value larger than the menu's content */
+    opacity: 1;
+    padding: 10px 0 10px 20px;
   }
 
   .footer__menu-list a {
@@ -100,11 +155,12 @@
 
   .footer__menu-list a:hover {
     text-decoration: underline;
-  } 
+  }
+  /* --- NEW ACCORDION STYLES END --- */
 
   .copyright-banner {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     border-top: 1px solid #0c1c4f;
     padding: 15px;
@@ -127,40 +183,6 @@
     text-decoration: none;
   }
 
-  /* Accordion styles */
-  .footer__accordion-toggle {
-    width: 100%;
-    background: none;
-    border: none;
-    color: inherit;
-    text-align: left;
-    font-size: 1.5rem;
-    font-weight: 600;
-    padding: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  .accordion-icon {
-    /* The transition is no longer needed as we are not rotating the icon */
-    font-style: normal;
-    font-weight: bold; /* Makes the - and + look sharper */
-  }
-
-  .footer__accordion-toggle[aria-expanded="true"] .accordion-icon {
-    transition: transform 0.3s ease;
-    font-style: normal;
-    font-weight: bold;
-  }
-
-  .footer__menu-list {
-    list-style: none;
-    margin: 0;
-    text-align: left; /* This is the key change to align the text to the left */
-  }
-
   /* Desktop override – always show menus */
   @media screen and (min-width: 750px) {
     .footer__accordion-toggle {
@@ -171,6 +193,9 @@
     }
     .footer__menu-list {
       display: block !important;
+      max-height: none !important; /* Override animation properties */
+      opacity: 1 !important;
+      padding: 0;
     }
   }
 
@@ -182,20 +207,16 @@
       align-items: flex-start;
       gap: 50px;
     }
-
     .footer__left {
       flex: 1;
       text-align: left;
     }
-
     .footer__logo img {
       margin: 0;
     }
-    
     .footer__social-icons {
       justify-content: flex-start;
     }
-
     .footer__right {
       flex: 2;
       flex-direction: row;
@@ -220,7 +241,7 @@
       .copyright-banner {
     display: flex;
     flex-direction: column;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     border-top: 1px solid #0c1c4f;
     padding: 15px;
@@ -232,7 +253,6 @@
       font-size: 1rem;
       color: var(--color-foreground);
     }
-
   .dev-banner p {
     margin: 0;
     font-size: 1.2rem;
@@ -247,11 +267,6 @@
       {%- if section.settings.logo != blank -%}
         <div class="footer__logo">
           <a href="{{ routes.root_url }}">
-            {%- comment -%}
-              CORRECTION:
-              Calculate the width before using it in the image_url filter.
-              This fixes the broken image source issue.
-            {%- endcomment -%}
             {%- assign logo_retina_width = section.settings.logo_width | times: 2 -%}
             <img
               src="{{ section.settings.logo | image_url: width: logo_retina_width }}"
@@ -284,9 +299,6 @@
       </div>
     </div>
 
-    {%- comment -%}
-      NEW MENU LOGIC STARTS HERE
-    {%- endcomment -%}
     {%- assign footer_menu = linklists[section.settings.footer_menu] -%}
     {%- if footer_menu.links.size > 0 -%}
      <div class="footer__right">
@@ -294,10 +306,13 @@
           <div class="footer__menu-column">
             <button class="footer__accordion-toggle" aria-expanded="false">
               {{ link.title | escape }}
-              <span class="accordion-icon">+</span>
+              <span class="accordion-icon">
+                <span class="accordion-icon__bar accordion-icon__bar--horizontal"></span>
+                <span class="accordion-icon__bar accordion-icon__bar--vertical"></span>
+              </span>
             </button>
             {%- if link.links.size > 0 -%}
-              <ul class="footer__menu-list" hidden>
+              <ul class="footer__menu-list">
                 {%- for child_link in link.links -%}
                   <li>
                     <a href="{{ child_link.url }}">{{ child_link.title | escape }}</a>
@@ -308,11 +323,7 @@
           </div>
         {%- endfor -%}
       </div>
-
     {%- endif -%}
-    {%- comment -%}
-      NEW MENU LOGIC ENDS HERE
-    {%- endcomment -%}
   </div>
   <div class="copyright-banner">
     <div class="copyright">
@@ -321,31 +332,25 @@
     <div class="dev-banner">
       <p>Developed by <a href="https://solepoint.in/">Sole Point Tech Solutions</a></p>
     </div>
-    
   </div>
+
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const accordions = document.querySelectorAll(".footer__accordion-toggle");
 
       accordions.forEach((btn) => {
         btn.addEventListener("click", () => {
+          // Check screen width to disable accordion on desktop
+          if (window.innerWidth >= 750) {
+            return;
+          }
+
           const expanded = btn.getAttribute("aria-expanded") === "true";
           btn.setAttribute("aria-expanded", !expanded);
 
-          // Find the icon within the button
-          const icon = btn.querySelector(".accordion-icon");
-
           const list = btn.nextElementSibling;
           if (list) {
-            if (expanded) {
-              // If collapsing, hide the list and change icon to +
-              list.hidden = true;
-              if (icon) icon.textContent = '+';
-            } else {
-              // If expanding, show the list and change icon to -
-              list.hidden = false;
-              if (icon) icon.textContent = '-';
-            }
+            list.classList.toggle('is-open');
           }
         });
       });
