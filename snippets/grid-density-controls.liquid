@@ -72,9 +72,9 @@
           on:change="results-list/updateLayout"
           data-skip-node-update
         >
-        <span class="column-picker column-picker--zoom-out">
+        {% comment %} <span class="column-picker column-picker--zoom-out">
           {{- 'icon-grid-dense.svg' | inline_asset_content -}}
-        </span>
+        </span> {% endcomment %}
       </label>
     {% endif %}
   </fieldset>
