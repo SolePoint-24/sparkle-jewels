@@ -144,11 +144,20 @@
   }
 
   .accordion-icon {
-    transition: transform 0.3s ease;
+    /* The transition is no longer needed as we are not rotating the icon */
+    font-style: normal;
+    font-weight: bold; /* Makes the - and + look sharper */
   }
 
   .footer__accordion-toggle[aria-expanded="true"] .accordion-icon {
-    transform: rotate(45deg); /* turns + into x */
+    /* This rule is no longer needed */
+  }
+
+  .footer__menu-list {
+    list-style: none;
+    padding: 10px 0 10px 20px; /* Adds padding to indent the links and align them left */
+    margin: 0;
+    text-align: left; /* This is the key change to align the text to the left */
   }
 
   /* Desktop override – always show menus */
