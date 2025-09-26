@@ -5,6 +5,8 @@
 {% endcomment %}
 
 {%- if block.settings.show_block -%}
+  
+
   <variant-value-updater class="price-config-wrapper" data-id="price-breakdown" {{ block.shopify_attributes }}>
     {%- assign metal_weights_list = product.selected_or_first_available_variant.metafields.custom.metal_weights.value -%}
     {%- assign stone_configurations = product.metafields.custom.stone_configuration.value -%}
@@ -12,93 +14,106 @@
     {%- assign total_metals_value = 0 -%}
     {%- assign total_stones_value = 0 -%}
     {%- assign total_making_charges = 0 -%}
+    <div class="price-breakdown-table">
+      <div class="pbt-row pbt-header">
+        <div class="pbt-cell">COMPONENT</div>
+        {% comment %} <div class="pbt-cell">QUALITY</div> {% endcomment %}
+        <div class="pbt-cell">RATE</div>
+        <div class="pbt-cell">WEIGHT</div>
+        <div class="pbt-cell pbt-align-right">VALUE</div>
+      </div>
 
-    <table class="price-breakdown-table">
-      <thead>
-        <tr class="pbt-header">
-          <th>COMPONENT</th>
-          <th>RATE</th>
-          <th>WEIGHT</th>
-          <th class="pbt-align-right">VALUE</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="pbt-group-title">
-          <td colspan="4">METALS</td>
-        </tr>
+      <div class="pbt-row pbt-group-title">
+        <div class="pbt-cell">METALS</div>
+      </div>
 
-        {% for metal_item in metal_weights_list %}
-          {%- assign final_metal_object = metal_item.metal_variant.value -%}
-          {% if final_metal_object %}
-            {%- assign rate = final_metal_object.pricing | default: 0 -%}
-            {%- assign weight = metal_item.metal_weight | default: 0 | times: 1.0 -%}
-            {%- assign total_value = rate | times: weight -%}
-            {%- assign total_metals_value = total_metals_value | plus: total_value -%}
+      {% for metal_item in metal_weights_list %}
+        {%- assign final_metal_object = metal_item.metal_variant.value -%}
+        {% if final_metal_object %}
+          {%- assign rate = final_metal_object.pricing | default: 0 -%}
+          {%- assign weight = metal_item.metal_weight | default: 0 | times: 1.0 -%}
+          {%- assign total_value = rate | times: weight -%}
+          {%- assign total_metals_value = total_metals_value | plus: total_value -%}
 
-            {%- assign purity = final_metal_object.purity | default: 100 | times: 1.0 -%}
-            {%- assign rate_24k = rate | divided_by: purity | times: 100.0 -%}
-            
-            {%- assign labour_category_object = metal_item.labour_category.value -%}
-            {%- assign labour_percentage_value = labour_category_object.labour_percentage | default: 0 -%}
-            {%- assign labour_percentage = labour_percentage_value | divided_by: 100.0 -%}
-            {%- assign metal_labour_cost = weight | times: labour_percentage | times: rate_24k -%}
-            {%- assign total_making_charges = total_making_charges | plus: metal_labour_cost -%}
-            
-            <tr>
-              <td><span class="pbt-main-text">{{ final_metal_object.display_name }}</span></td>
-              <td>{{ rate | times: 100 | money }}</td>
-              <td>{{ weight }} g</td>
-              <td class="pbt-align-right"><span>{{ total_value | times: 100 | money }}</span></td>
-            </tr>
-          {% endif %}
-        {% endfor %}
+          {%- assign purity = final_metal_object.purity | default: 100 | times: 1.0 -%}
+          {%- assign rate_24k = rate | divided_by: purity | times: 100.0 -%}
+          {% comment %} Making Charges  {% endcomment %}
+          {%- assign labour_category_object = metal_item.labour_category.value -%}
+          {%- assign labour_percentage_value = labour_category_object.labour_percentage | default: 0 -%}
+          {%- assign labour_percentage = labour_percentage_value | divided_by: 100.0 -%}
+          {%- assign metal_labour_cost = weight | times: labour_percentage |times: rate_24k-%}
+          {%- assign total_making_charges = total_making_charges | plus: metal_labour_cost -%}
+          
+          <div class="pbt-row">
+            <div class="pbt-cell"><span class="pbt-main-text">{{ final_metal_object.display_name }}</span></div>
+            {% comment %} <div class="pbt-cell">-</div> {% endcomment %}
+            <div class="pbt-cell">{{ rate | times: 100 | money }}</div>
+            <div class="pbt-cell">{{ weight }} g</div>
+            <div class="pbt-cell pbt-align-right"><span>{{ total_value | times: 100 | money }}</span></div>
+          </div>
+        {% endif %}
+      {% endfor %}
 
-        <tr class="pbt-summary-row">
-          <td>Making Charges</td>
-          <td>-</td>
-          <td>-</td>
-          <td class="pbt-align-right">
-            <span>{{ total_making_charges | times: 100 | money }}</span>
-          </td>
-        </tr>
+      {% comment %} --- NEW: Display Total Making Charges --- {% endcomment %}
+      <div class="pbt-row pbt-summary-row">
+        <div class="pbt-cell">Making changes</div>
+        {% comment %} <div class="pbt-cell">-</div> {% endcomment %}
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right">
+          <span>{{ total_making_charges | times: 100 | money }}</span>
+        </div>
+      </div>
 
-        <tr class="pbt-group-title">
-          <td colspan="4">STONES</td>
-        </tr>
+      <div class="pbt-row pbt-group-title">
+        <div class="pbt-cell">STONES</div>
+      </div>
 
-        {% for stone_item in stone_configurations %}
-          {% if stone_item %}
-            {%- assign pricing_object = stone_item.stone.value -%}
-            {%- assign stone_price_per_carat = pricing_object.pricing | default: 0 -%}
-            {%- assign total_weight = stone_item.weight_carat | default: 0 | times: 1.0 -%}
-            {%- assign total_stone_value_for_item = total_weight | times: stone_price_per_carat -%}
-            {%- assign total_stones_value = total_stones_value | plus: total_stone_value_for_item -%}
+      {% for stone_item in stone_configurations %}
+        {% if stone_item %}
+          {%- assign pricing_object = stone_item.stone.value -%}
+          {%- assign stone_price_per_carat = pricing_object.pricing | default: 0 -%}
+          {%- assign total_weight = stone_item.weight_carat | default: 0 | times: 1.0 -%}
+          {%- assign total_stone_value_for_item = total_weight | times: stone_price_per_carat -%}
+          {%- assign total_stones_value = total_stones_value | plus: total_stone_value_for_item -%}
 
-            <tr>
-              <td>
-                <span class="pbt-main-text">{{ pricing_object.shape_category }} {{ pricing_object.size_category }} {{ pricing_object.type }}</span>
-                <span class="pbt-sub-text">x {{ stone_item.number_of_stone }} ({{ stone_item.stone_size }}mm)</span>
-              </td>
-              <td>{{ stone_price_per_carat | times: 100 | money }}</td>
-              <td>{{ total_weight }} ct.w</td>
-              <td class="pbt-align-right">
-                <span>{{ total_stone_value_for_item | times: 100 | money }}</span>
-              </td>
-            </tr>
-          {% endif %}
-        {% endfor %}
-      </tbody>
-      <tfoot>
-        {%- assign subtotal = total_metals_value | plus: total_stones_value | plus: total_making_charges -%}
-        <tr class="pbt-summary-row">
-          <td class="pbt-bold">SUBTOTAL</td>
-          <td colspan="2"></td>
-          <td class="pbt-align-right">
-            <span class="pbt-final-price"><strong>{{ subtotal | times: 100 | money }}</strong></span>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+          <div class="pbt-row">
+            <div class="pbt-cell">
+              <span class="pbt-main-text">{{ pricing_object.shape_category }} {{ pricing_object.size_category }} {{ pricing_object.type }}</span>
+              <span class="pbt-sub-text">x {{ stone_item.number_of_stone }} ({{ stone_item.stone_size }}mm)</span>
+            </div>
+            {% comment %} <div class="pbt-cell">{{ pricing_object.quality_grade }}</div> {% endcomment %}
+            <div class="pbt-cell">{{ stone_price_per_carat | times: 100 | money }}</div>
+            <div class="pbt-cell">{{ total_weight }} ct.w</div>
+            <div class="pbt-cell pbt-align-right">
+              <span>{{ total_stone_value_for_item | times: 100 | money }}</span>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+      
+      {% comment %} <div class="pbt-row pbt-summary-row">
+        <div class="pbt-cell">STONES VALUE</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right">
+          <span>{{ total_stones_value | times: 100 | money }}</span>
+        </div>
+      </div> {% endcomment %}
+      
+      {%- assign subtotal = total_metals_value | plus: total_stones_value | plus: total_making_charges -%}
+      
+      <div class="pbt-row pbt-summary-row">
+        <div class="pbt-cell pbt-bold">SUBTOTAL</div>
+        {% comment %} <div class="pbt-cell">-</div> {% endcomment %}
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell">-</div>
+        <div class="pbt-cell pbt-align-right">
+          <span style="font-size:18px"><strong>{{ subtotal | times: 100 | money }}</strong></span>
+        </div>
+      </div>
+    </div>
   </variant-value-updater>
 {%- endif -%}
 
@@ -111,93 +126,117 @@
   }
 
   .price-breakdown-table {
-    width: 100%;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     overflow: hidden;
-    border-collapse: collapse; /* Cleaner borders */
-    table-layout: fixed; /* Force columns into a fixed layout */
   }
 
-  .price-breakdown-table th,
-  .price-breakdown-table td {
-    padding: 12px 15px;
-    text-align: left;
+  .pbt-row {
+    display: flex;
+    align-items: center;
     border-bottom: 1px solid #e0e0e0;
-    font-size: 14px;
-    color: #555;
-    word-break: break-word; /* Allow long words to wrap */
-  }
-  
-  .price-breakdown-table tr:last-child td {
-      border-bottom: none;
-  }
-  
-  /* --- Table Header --- */
-  .pbt-header {
-      background-color: #f8f8f8;
+    padding: 10px 15px;
+    background-color: #fff;
   }
 
-  .pbt-header th {
+  .pbt-row:last-child {
+    border-bottom: none;
+  }
+
+  /* --- OLD STYLES (FOR 5 COLUMNS) --- */
+  /*
+  .pbt-cell {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 16%; 
+    padding: 0 5px;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .pbt-cell:first-child {
+    flex-basis: 35%; 
+    padding-left: 0;
+  }
+  */
+
+  /* --- NEW STYLES (FOR 4 COLUMNS) --- */
+  .pbt-cell {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 20%; /* Adjusted for the 3 equal columns */
+    padding: 0 5px;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .pbt-cell:first-child {
+    flex-basis: 40%; /* Gave more width to the Component column */
+    padding-left: 0;
+  }
+  
+  .pbt-cell:last-child {
+    padding-right: 0;
+  }
+
+  .pbt-align-right {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .pbt-header {
+    background-color: #f8f8f8;
     color: #333;
     font-weight: 600;
     font-size: 12px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
-  
-  /* --- Column Sizing & Alignment --- */
-  .pbt-align-right {
-    text-align: right;
-  }
-  
-  /* Set explicit widths for each column */
-  .price-breakdown-table th:nth-child(1), .price-breakdown-table td:nth-child(1) { width: 15%; } /* COMPONENT */
-  .price-breakdown-table th:nth-child(2), .price-breakdown-table td:nth-child(2) { width: 25%; } /* RATE */
-  .price-breakdown-table th:nth-child(3), .price-breakdown-table td:nth-child(3) { width: 25%; } /* WEIGHT */
-  .price-breakdown-table th:nth-child(4), .price-breakdown-table td:nth-child(4) { width: 25%; } /* VALUE */
 
-
-  /* --- Group Title --- */
-  .pbt-group-title td {
+  .pbt-group-title {
     background-color: #fdfaf4;
-    color: #d4a366;
+  }
+
+  .pbt-group-title .pbt-cell {
+    color: #d4a356;
     font-weight: 600;
     font-size: 13px;
     letter-spacing: 0.05em;
+    flex-basis: 100% !important;
   }
   
-  /* --- Text Styles --- */
   .pbt-main-text {
-    display: block;
     font-size: 15px;
     color: #222;
   }
   
   .pbt-sub-text {
-    display: block;
     font-size: 12px;
     color: #777;
     margin-top: 2px;
   }
 
-  /* --- Footer & Summary --- */
-  .pbt-summary-row td {
-    padding-top: 15px;
-    padding-bottom: 15px;
+  .pbt-strikethrough {
+    color: #888;
+    text-decoration: line-through;
+    font-size: 13px;
   }
   
-  tfoot .pbt-summary-row {
-      background-color: #f8f8f8;
-      border-top: 1px solid #e0e0e0;
+  .pbt-summary-row .pbt-cell {
+      padding-top: 15px;
+      padding-bottom: 15px;
+  }
+  
+  .pbt-grand-total {
+    background-color: #f8f8f8;
+    border-top: 1px solid #e0e0e0;
   }
   
   .pbt-bold {
     font-weight: 600;
-    color: #222;
   }
   
-  .pbt-final-price {
+  .pbt-final-price span {
     font-size: 18px;
     font-weight: 700;
     color: #000;
@@ -228,4 +267,3 @@
   ]
 }
 {% endschema %}
-
