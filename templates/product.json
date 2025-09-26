@@ -125,12 +125,6 @@
               },
               "blocks": {}
             },
-            "sku_block_HYMALL": {
-              "type": "sku-block",
-              "name": "sku",
-              "settings": {},
-              "blocks": {}
-            },
             "text_qyFipw": {
               "type": "text",
               "name": "t:names.text",
@@ -155,6 +149,12 @@
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
+              "blocks": {}
+            },
+            "sku_block_HYMALL": {
+              "type": "sku-block",
+              "name": "sku",
+              "settings": {},
               "blocks": {}
             },
             "variant_picker_R3rGDr": {
@@ -847,8 +847,8 @@
             "product_title_WE3K4w",
             "reviews",
             "price_a7krng",
-            "sku_block_HYMALL",
             "text_qyFipw",
+            "sku_block_HYMALL",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
             "delivery_date_rAwi84",
