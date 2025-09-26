@@ -6,14 +6,14 @@
 {% endcomment %}
 
 {%- comment -%}
-  NEW: All positioning logic is now handled here.
-  This avoids conflicts with inline styles.
+  This style block generates desktop and mobile CSS for each slide's button position.
+  It now uses a reliable class selector (.hero-content--{{ block.id }}) to target the button.
 {%- endcomment -%}
 <style>
   /* --- Desktop Styles --- */
   {%- for block in section.blocks -%}
     {%- if block.type == 'collection_slide' -%}
-      #Hero-{{ section.id }} [data-shopify-editor-block-id="{{ block.id }}"] .hero-carousel__button {
+      #Hero-{{ section.id }} .hero-content--{{ block.id }} .hero-carousel__button {
         top: {{ block.settings.button_pos_top }}%;
         left: {{ block.settings.button_pos_left }}%;
       }
@@ -24,7 +24,7 @@
   @media screen and (max-width: 768px) {
     {%- for block in section.blocks -%}
       {%- if block.type == 'collection_slide' -%}
-        #Hero-{{ section.id }} [data-shopify-editor-block-id="{{ block.id }}"] .hero-carousel__button {
+        #Hero-{{ section.id }} .hero-content--{{ block.id }} .hero-carousel__button {
           top: {{ block.settings.button_pos_top_mobile }}%;
           left: {{ block.settings.button_pos_left_mobile }}%;
         }
@@ -93,15 +93,14 @@
     {%- for block in section.blocks -%}
       {%- if block.type == 'collection_slide' -%}
         {%- assign collection = block.settings.collection -%}
+        {%- comment -%}
+          ADDED: A unique class "hero-content--{{ block.id }}" is now on this div.
+        {%- endcomment -%}
         <div
-          class="hero-carousel__content-inner{% if forloop.first %} is-active{% endif %}"
+          class="hero-carousel__content-inner hero-content--{{ block.id }}{% if forloop.first %} is-active{% endif %}"
           data-collection-handle="{{ collection.handle | default: block.id }}"
-          {{ block.shopify_attributes }}
         >
           {%- if block.settings.button_label != blank -%}
-            {%- comment -%}
-              REMOVED: The liquid logic and inline style attribute for positioning are now gone from here.
-            {%- endcomment -%}
             <a href="{{ block.settings.button_link | default: collection.url }}" class="button hero-carousel__button">
               {{ block.settings.button_label | escape }}
             </a>
@@ -363,7 +362,7 @@
     padding: 12px 28px; text-decoration: none;
     transition: background-color 0.3s, color 0.3s;
     font-size: 0.9rem;
-    position: absolute; /* ADDED: Base positioning is now handled here */
+    position: absolute;
   }
 
   .hero-carousel__button:hover { background-color: #000; color: #fff; }
@@ -522,7 +521,7 @@
           "id": "button_pos_top",
           "label": "Desktop Top Position (%)",
           "info": "Distance from the top.",
-          "default": 65
+          "default": 85
         },
         {
           "type": "number",
@@ -540,14 +539,14 @@
           "id": "button_pos_top_mobile",
           "label": "Mobile Top Position (%)",
           "info": "Distance from the top on mobile.",
-          "default": 50
+          "default": 80
         },
         {
           "type": "number",
           "id": "button_pos_left_mobile",
           "label": "Mobile Left Position (%)",
           "info": "Distance from the left on mobile.",
-          "default": 50
+          "default": 10
         }
       ]
     }
