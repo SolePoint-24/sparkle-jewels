@@ -1,460 +1,391 @@
 {% comment %}
- This section creates a full-screen hero banner with an interactive collection carousel.
- - Each slide has its own unique content (heading, text, button) and background image.
- - Supports different images for desktop, tablet, and mobile.
- - The carousel supports autoplay with play/pause controls.
+  This section creates a full-screen hero banner with an interactive collection carousel.
+  - Each slide has a unique background image and a customizable button.
+  - Supports different images for desktop, tablet, and mobile.
+  - The carousel supports autoplay with play/pause controls.
 {% endcomment %}
 
 <div
- id="Hero-{{ section.id }}"
- class="hero-carousel-section color-{{ section.settings.color_scheme }}"
- style="--section-height-desktop: {{ section.settings.section_height_desktop }}vh; --section-height-mobile: {{ section.settings.section_height_mobile }}vh;"
- data-section-id="{{ section.id }}"
- data-autoplay="{{ section.settings.autoplay }}"
- data-autoplay-speed="{{ section.settings.autoplay_speed }}"
+  id="Hero-{{ section.id }}"
+  class="hero-carousel-section color-{{ section.settings.color_scheme }}"
+  data-section-id="{{ section.id }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-autoplay-speed="{{ section.settings.autoplay_speed }}"
 >
- <div class="hero-carousel__media-container">
-  {%- for block in section.blocks -%}
-   {%- if block.type == 'collection_slide' -%}
-    {%- assign collection = block.settings.collection -%}
+  <div class="hero-carousel__media-container">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'collection_slide' -%}
+        {%- assign collection = block.settings.collection -%}
 
-    {%- assign fallback_image = collection.image | default: collection.products.first.featured_image -%}
-    {%- assign image_desktop = block.settings.image_desktop | default: fallback_image -%}
-    {%- assign image_tablet = block.settings.image_tablet | default: image_desktop -%}
-    {%- assign image_mobile = block.settings.image_mobile | default: image_tablet -%}
+        {%- assign fallback_image = collection.image | default: collection.products.first.featured_image -%}
+        {%- assign image_desktop = block.settings.image_desktop | default: fallback_image -%}
+        {%- assign image_tablet = block.settings.image_tablet | default: image_desktop -%}
+        {%- assign image_mobile = block.settings.image_mobile | default: image_tablet -%}
 
-    <div
-     class="hero-carousel__media-item{% if forloop.first %} is-active{% endif %}"
-     data-collection-handle="{{ collection.handle | default: block.id }}"
-    >
-     {% if image_desktop != blank %}
-      {%- assign loading_attr = 'lazy' -%}
-      {%- assign fetch_priority_attr = 'auto' -%}
-      {%- if forloop.first -%}
-       {%- assign loading_attr = 'eager' -%}
-       {%- assign fetch_priority_attr = 'high' -%}
+        <div
+          class="hero-carousel__media-item{% if forloop.first %} is-active{% endif %}"
+          data-collection-handle="{{ collection.handle | default: block.id }}"
+        >
+          {% if image_desktop != blank %}
+            {%- assign loading_attr = 'lazy' -%}
+            {%- assign fetch_priority_attr = 'auto' -%}
+            {%- if forloop.first -%}
+              {%- assign loading_attr = 'eager' -%}
+              {%- assign fetch_priority_attr = 'high' -%}
+            {%- endif -%}
+
+            <picture>
+              <source
+                media="(min-width: 1024px)"
+                srcset="{{ image_desktop | image_url: width: 3840 }}"
+              >
+              <source
+                media="(min-width: 768px)"
+                srcset="{{ image_tablet | image_url: width: 2048 }}"
+              >
+              <img
+                src="{{ image_mobile | image_url: width: 1534 }}"
+                alt="{{ image_desktop.alt | default: collection.title | escape }}"
+                loading="{{ loading_attr }}"
+                fetchpriority="{{ fetch_priority_attr }}"
+                width="{{ image_desktop.width }}"
+                height="{{ image_desktop.height }}"
+                class="full-height-image"
+              >
+            </picture>
+          {% else %}
+            <div class="placeholder-wrapper">{{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+          {% endif %}
+        </div>
       {%- endif -%}
-
-      <picture>
-       <source
-        media="(min-width: 1024px)"
-        srcset="{{ image_desktop | image_url: width: 3840 }}"
-       >
-       <source
-        media="(min-width: 768px)"
-        srcset="{{ image_tablet | image_url: width: 2048 }}"
-       >
-       <img
-        src="{{ image_mobile | image_url: width: 1534 }}"
-        alt="{{ image_desktop.alt | default: collection.title | escape }}"
-        loading="{{ loading_attr }}"
-        fetchpriority="{{ fetch_priority_attr }}"
-        width="{{ image_desktop.width }}"
-        height="{{ image_desktop.height }}"
-        class="full-height-image"
-       >
-      </picture>
-     {% else %}
-      <div class="placeholder-wrapper">{{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}</div>
-     {% endif %}
-    </div>
-   {%- endif -%}
-  {%- endfor -%}
- </div>
-
- <div class="hero-carousel__content-container">
-  {%- for block in section.blocks -%}
-   {%- if block.type == 'collection_slide' -%}
-    {%- assign collection = block.settings.collection -%}
-    <div
-     class="hero-carousel__content-inner{% if forloop.first %} is-active{% endif %}"
-     data-collection-handle="{{ collection.handle | default: block.id }}"
-     {{ block.shopify_attributes }}
-    >
-     {%- if block.settings.button_label != blank -%}
-            {%- comment -%} LOGIC TO BUILD CUSTOM BUTTON STYLES {%- endcomment -%}
-      {%- assign custom_button_styles = '' -%}
-      {%- if block.settings.enable_custom_button_position -%}
-              {%- assign custom_button_styles = 'position: absolute;' -%}
-              {%- if block.settings.button_pos_top != blank -%}
-                {%- assign custom_button_styles = custom_button_styles | append: ' top: ' | append: block.settings.button_pos_top | append: '%;' -%}
-              {%- endif -%}
-              {%- if block.settings.button_pos_right != blank -%}
-                {%- assign custom_button_styles = custom_button_styles | append: ' right: ' | append: block.settings.button_pos_right | append: '%;' -%}
-              {%- endif -%}
-              {%- if block.settings.button_pos_bottom != blank -%}
-                {%- assign custom_button_styles = custom_button_styles | append: ' bottom: ' | append: block.settings.button_pos_bottom | append: '%;' -%}
-              {%- endif -%}
-              {%- if block.settings.button_pos_left != blank -%}
-                {%- assign custom_button_styles = custom_button_styles | append: ' left: ' | append: block.settings.button_pos_left | append: '%;' -%}
-              {%- endif -%}
-      {%- endif -%}
-
-      <a href="{{ block.settings.button_link | default: collection.url }}" class="button hero-carousel__button" style="{{ custom_button_styles }}">
-       {{ block.settings.button_label | escape }}
-      </a>
-     {%- endif -%}
-    </div>
-   {%- endif -%}
-  {%- endfor -%}
- </div>
-
- {%- assign collection_slides = section.blocks | where: 'type', 'collection_slide' -%}
- {%- if collection_slides.size > 1 -%}
-  <div class="hero-carousel__nav-wrapper">
-   <div class="hero-carousel__nav">
-    <button type="button" class="hero-carousel__arrow hero-carousel__arrow--prev" aria-label="Previous slide">
-     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-     >
-      <path d="m15 18-6-6 6-6"/>
-     </svg>
-    </button>
-    <div class="hero-carousel__titles">
-     {%- for block in collection_slides -%}
-      {%- assign collection = block.settings.collection -%}
-      <a
-       href="{{ collection.url }}"
-       class="hero-carousel__title-link {% if forloop.first %}is-active{% endif %}"
-       data-collection-handle="{{ collection.handle | default: block.id }}"
-      >
-       {{ collection.title | default: 'Slide' }}
-      </a>
-     {%- endfor -%}
-    </div>
-    <button type="button" class="hero-carousel__arrow hero-carousel__arrow--next" aria-label="Next slide">
-     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-     >
-      <path d="m9 18 6-6-6-6"/>
-     </svg>
-    </button>
-    <button type="button" class="hero-carousel__play-pause" aria-label="Pause autoplay">
-     <svg
-      class="icon-pause"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-     >
-      <path d="M6 4h4v16H6z"/><path d="M14 4h4v16h-4z"/>
-     </svg>
-     <svg
-      class="icon-play"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-     >
-      <polygon points="6 3 20 12 6 21 6 3"/>
-     </svg>
-    </button>
-   </div>
+    {%- endfor -%}
   </div>
- {%- endif -%}
+
+  <div class="hero-carousel__content-container">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'collection_slide' -%}
+        {%- assign collection = block.settings.collection -%}
+        <div
+          class="hero-carousel__content-inner{% if forloop.first %} is-active{% endif %}"
+          data-collection-handle="{{ collection.handle | default: block.id }}"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.button_label != blank -%}
+            {%- comment -%} LOGIC TO BUILD CUSTOM BUTTON STYLES {%- endcomment -%}
+            {%- assign custom_button_styles = 'position: absolute;' -%}
+            {%- if block.settings.button_pos_top != blank -%}
+              {%- assign custom_button_styles = custom_button_styles | append: ' top: ' | append: block.settings.button_pos_top | append: '%;' -%}
+            {%- endif -%}
+            {%- if block.settings.button_pos_right != blank -%}
+              {%- assign custom_button_styles = custom_button_styles | append: ' right: ' | append: block.settings.button_pos_right | append: '%;' -%}
+            {%- endif -%}
+            {%- if block.settings.button_pos_bottom != blank -%}
+              {%- assign custom_button_styles = custom_button_styles | append: ' bottom: ' | append: block.settings.button_pos_bottom | append: '%;' -%}
+            {%- endif -%}
+            {%- if block.settings.button_pos_left != blank -%}
+              {%- assign custom_button_styles = custom_button_styles | append: ' left: ' | append: block.settings.button_pos_left | append: '%;' -%}
+            {%- endif -%}
+
+            <a href="{{ block.settings.button_link | default: collection.url }}" class="button hero-carousel__button" style="{{ custom_button_styles }}">
+              {{ block.settings.button_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- assign collection_slides = section.blocks | where: 'type', 'collection_slide' -%}
+  {%- if collection_slides.size > 1 -%}
+    <div class="hero-carousel__nav-wrapper">
+      <div class="hero-carousel__nav">
+        <button type="button" class="hero-carousel__arrow hero-carousel__arrow--prev" aria-label="Previous slide">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m15 18-6-6 6-6"/> </svg>
+        </button>
+        <div class="hero-carousel__titles">
+          {%- for block in collection_slides -%}
+            {%- assign collection = block.settings.collection -%}
+            <a
+              href="{{ collection.url }}"
+              class="hero-carousel__title-link {% if forloop.first %}is-active{% endif %}"
+              data-collection-handle="{{ collection.handle | default: block.id }}"
+            >
+              {{ collection.title | default: 'Slide' }}
+            </a>
+          {%- endfor -%}
+        </div>
+        <button type="button" class="hero-carousel__arrow hero-carousel__arrow--next" aria-label="Next slide">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m9 18 6-6-6-6"/> </svg>
+        </button>
+        <button type="button" class="hero-carousel__play-pause" aria-label="Pause autoplay">
+          <svg class="icon-pause" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M6 4h4v16H6z"/><path d="M14 4h4v16h-4z"/> </svg>
+          <svg class="icon-play" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <polygon points="6 3 20 12 6 21 6 3"/> </svg>
+        </button>
+      </div>
+    </div>
+  {%- endif -%}
 </div>
 
 <script>
- class HeroCarousel {
-  constructor(section) {
-   this.section = section;
-   this.nav = this.section.querySelector('.hero-carousel__nav-wrapper');
-   // No nav on single-slide carousels
-   if (!this.nav) {
-    this.updateSectionHeight();
-    window.addEventListener('resize', () => this.updateSectionHeight());
-    return;
-   }
+  class HeroCarousel {
+    constructor(section) {
+      this.section = section;
+      this.nav = this.section.querySelector('.hero-carousel__nav-wrapper');
+      // No nav on single-slide carousels
+      if (!this.nav) {
+        this.updateSectionHeight();
+        window.addEventListener('resize', () => this.updateSectionHeight());
+        return;
+      }
 
-   this.links = this.section.querySelectorAll('.hero-carousel__title-link');
-   this.images = this.section.querySelectorAll('.hero-carousel__media-item');
-   this.contents = this.section.querySelectorAll('.hero-carousel__content-inner');
-   this.prevButton = this.nav.querySelector('.hero-carousel__arrow--prev');
-   this.nextButton = this.nav.querySelector('.hero-carousel__arrow--next');
-   this.playPauseButton = this.nav.querySelector('.hero-carousel__play-pause');
-   this.isPaused = false;
-   this.autoplay = this.section.dataset.autoplay === 'true';
-   this.autoplaySpeed = parseInt(this.section.dataset.autoplaySpeed, 10);
-   this.interval = null;
-   this.currentIndex = 0;
+      this.links = this.section.querySelectorAll('.hero-carousel__title-link');
+      this.images = this.section.querySelectorAll('.hero-carousel__media-item');
+      this.contents = this.section.querySelectorAll('.hero-carousel__content-inner');
+      this.prevButton = this.nav.querySelector('.hero-carousel__arrow--prev');
+      this.nextButton = this.nav.querySelector('.hero-carousel__arrow--next');
+      this.playPauseButton = this.nav.querySelector('.hero-carousel__play-pause');
+      this.isPaused = false;
+      this.autoplay = this.section.dataset.autoplay === 'true';
+      this.autoplaySpeed = parseInt(this.section.dataset.autoplaySpeed, 10);
+      this.interval = null;
+      this.currentIndex = 0;
 
-   // Initialize height on load and resize
-   this.updateSectionHeight();
-   window.addEventListener('resize', () => this.updateSectionHeight());
-   const firstImage = this.images[0].querySelector('img');
-   if (firstImage && !firstImage.complete) {
-    firstImage.addEventListener('load', () => this.updateSectionHeight());
-   }
+      // Initialize height on load and resize
+      this.updateSectionHeight();
+      window.addEventListener('resize', () => this.updateSectionHeight());
+      const firstImage = this.images[0].querySelector('img');
+      if (firstImage && !firstImage.complete) {
+        firstImage.addEventListener('load', () => this.updateSectionHeight());
+      }
 
-   this.prevButton.addEventListener('click', this.prev.bind(this));
-   this.nextButton.addEventListener('click', this.next.bind(this));
+      this.prevButton.addEventListener('click', this.prev.bind(this));
+      this.nextButton.addEventListener('click', this.next.bind(this));
 
-   this.links.forEach((link, index) => {
-    link.addEventListener('click', (event) => {
-     event.preventDefault();
-     this.goTo(index);
-    });
-   });
+      this.links.forEach((link, index) => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          this.goTo(index);
+        });
+      });
 
-   if (this.autoplay) {
-    this.playPauseButton.addEventListener('click', this.togglePlayPause.bind(this));
-    this.section.addEventListener('mouseenter', () => this.pause());
-    this.section.addEventListener('mouseleave', () => this.play());
-    this.start();
-   } else {
-    this.playPauseButton.style.display = 'none';
-   }
+      if (this.autoplay) {
+        this.playPauseButton.addEventListener('click', this.togglePlayPause.bind(this));
+        this.section.addEventListener('mouseenter', () => this.pause());
+        this.section.addEventListener('mouseleave', () => this.play());
+        this.start();
+      } else {
+        this.playPauseButton.style.display = 'none';
+      }
+    }
+
+    // NEW FUNCTION TO SET HEIGHT
+    updateSectionHeight() {
+      const activeImage = this.section.querySelector('.hero-carousel__media-item.is-active img');
+      if (activeImage) {
+        // Use a small timeout to ensure image has rendered
+        setTimeout(() => {
+          const height = activeImage.offsetHeight;
+          if (height > 0) {
+            this.section.style.height = `${height}px`;
+          }
+        }, 50);
+      }
+    }
+
+    goTo(index) {
+      if (index === this.currentIndex || index < 0 || index >= this.links.length) return;
+      this.restartInterval();
+
+      this.links[this.currentIndex].classList.remove('is-active');
+      this.images[this.currentIndex].classList.remove('is-active');
+      this.contents[this.currentIndex].classList.remove('is-active');
+
+      this.links[index].classList.add('is-active');
+      this.images[index].classList.add('is-active');
+      this.contents[index].classList.add('is-active');
+
+      this.currentIndex = index;
+
+      // Update height every time the slide changes
+      this.updateSectionHeight();
+    }
+
+    next() {
+      const newIndex = (this.currentIndex + 1) % this.links.length;
+      this.goTo(newIndex);
+    }
+
+    prev() {
+      const newIndex = (this.currentIndex - 1 + this.links.length) % this.links.length;
+      this.goTo(newIndex);
+    }
+
+    start() {
+      this.isPaused = false;
+      this.playPauseButton.classList.remove('is-paused');
+      this.playPauseButton.setAttribute('aria-label', 'Pause autoplay');
+      this.interval = setInterval(() => this.next(), this.autoplaySpeed);
+    }
+
+    pause() {
+      if (this.interval) {
+        clearInterval(this.interval);
+        this.interval = null;
+      }
+    }
+
+    play() {
+      if (!this.isPaused && !this.interval) {
+        this.start();
+      }
+    }
+
+    togglePlayPause() {
+      this.isPaused = !this.isPaused;
+      if (this.isPaused) {
+        this.pause();
+        this.playPauseButton.classList.add('is-paused');
+        this.playPauseButton.setAttribute('aria-label', 'Play autoplay');
+      } else {
+        this.play();
+      }
+    }
+
+    restartInterval() {
+      if (this.autoplay && !this.isPaused) {
+        this.pause();
+        this.play();
+      }
+    }
   }
 
-  // NEW FUNCTION TO SET HEIGHT
-  updateSectionHeight() {
-   const activeImage = this.section.querySelector('.hero-carousel__media-item.is-active img');
-   if (activeImage) {
-    // Use a small timeout to ensure image has rendered
-    setTimeout(() => {
-     const height = activeImage.offsetHeight;
-     if (height > 0) {
-      this.section.style.height = `${height}px`;
-     }
-    }, 50);
-   }
-  }
-
-  goTo(index) {
-   if (index === this.currentIndex || index < 0 || index >= this.links.length) return;
-   this.restartInterval();
-
-   this.links[this.currentIndex].classList.remove('is-active');
-   this.images[this.currentIndex].classList.remove('is-active');
-   this.contents[this.currentIndex].classList.remove('is-active');
-
-   this.links[index].classList.add('is-active');
-   this.images[index].classList.add('is-active');
-   this.contents[index].classList.add('is-active');
-
-   this.currentIndex = index;
-
-   // Update height every time the slide changes
-   this.updateSectionHeight();
-  }
-
-  next() {
-   const newIndex = (this.currentIndex + 1) % this.links.length;
-   this.goTo(newIndex);
-  }
-
-  prev() {
-   const newIndex = (this.currentIndex - 1 + this.links.length) % this.links.length;
-   this.goTo(newIndex);
-  }
-
-  start() {
-   this.isPaused = false;
-   this.playPauseButton.classList.remove('is-paused');
-   this.playPauseButton.setAttribute('aria-label', 'Pause autoplay');
-   this.interval = setInterval(() => this.next(), this.autoplaySpeed);
-  }
-
-  pause() {
-   if (this.interval) {
-    clearInterval(this.interval);
-    this.interval = null;
-   }
-  }
-
-  play() {
-   if (!this.isPaused && !this.interval) {
-    this.start();
-   }
-  }
-
-  togglePlayPause() {
-   this.isPaused = !this.isPaused;
-   if (this.isPaused) {
-    this.pause();
-    this.playPauseButton.classList.add('is-paused');
-    this.playPauseButton.setAttribute('aria-label', 'Play autoplay');
-   } else {
-    this.play();
-   }
-  }
-
-  restartInterval() {
-   if (this.autoplay && !this.isPaused) {
-    this.pause();
-    this.play();
-   }
-  }
- }
-
- document.addEventListener('DOMContentLoaded', () => {
-  const heroCarouselSection = document.getElementById('Hero-{{ section.id }}');
-  if (heroCarouselSection) {
-   new HeroCarousel(heroCarouselSection);
-  }
- });
+  document.addEventListener('DOMContentLoaded', () => {
+    const heroCarouselSection = document.getElementById('Hero-{{ section.id }}');
+    if (heroCarouselSection) {
+      new HeroCarousel(heroCarouselSection);
+    }
+  });
 </script>
 
 {% stylesheet %}
- .hero-carousel-section {
-  width: var(--section-width);
-  margin-left: calc(50% - 50vw);
-  position: relative;
-  /* height property is now gone */
-  color: #000;
-  overflow: hidden;
- }
-
+  .hero-carousel-section {
+    width: var(--section-width);
+    margin-left: calc(50% - 50vw);
+    position: relative;
+    color: #000;
+    overflow: hidden;
+  }
 
   .hero-carousel__media-container {
-   position: absolute;
-   inset: 0;
-   z-index: 1;
-   background-color: #f0f0f0;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: #f0f0f0;
   }
 
   .hero-carousel__media-container::after {
-   content: '';
-   position: absolute;
-   inset: 0;
-   background: linear-gradient(to right, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%);
-   z-index: 2;
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%);
+    z-index: 2;
   }
 
   .hero-carousel__media-item {
-   width: 100%; height: 100%;
-   opacity: 0;
-   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-   position: absolute; inset: 0; z-index: 1;
+    width: 100%; height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    position: absolute; inset: 0; z-index: 1;
   }
 
   .full-height-image {
-  height: 100%; /* Make the image take 100% of its parent's height */
-  width: 100%; /* Make the image take 100% of its parent's width */
-  object-fit: cover; /* Crop the image to fill the container while maintaining aspect ratio */
-  display: block; /* Removes extra space below the image if it's inline */
- }
-  .hero-carousel__media-item.is-active {
-   opacity: 1; z-index: 2;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
   }
 
- .hero-carousel__media-item picture,
- .hero-carousel__media-item img,
- .hero-carousel__media-item .placeholder-svg {
-  display: block;
-  width: 100%;
-  height: auto; /* Changed from 100% */
-  /* object-fit and object-position are no longer needed */
- }
+  .hero-carousel__media-item.is-active {
+    opacity: 1; z-index: 2;
+  }
+
+  .hero-carousel__media-item picture,
+  .hero-carousel__media-item img,
+  .hero-carousel__media-item .placeholder-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
 
   .hero-carousel__media-item .placeholder-wrapper {
-   height: 100%;
-   display: flex; align-items: center; justify-content: center;
+    height: 100%;
+    display: flex; align-items: center; justify-content: center;
   }
 
   .hero-carousel__content-container {
-   position: relative; z-index: 3;
-  
-   width: 100%; padding: 0 5vw;
-   display: flex; align-items: center; height: 100%;
+    position: relative; z-index: 3;
+    width: 100%;
+    height: 100%;
   }
 
   .hero-carousel__content-inner {
-   bottom: 86px !important;
-   left:120px !important;
-   max-width: 550px; text-align: left;
-   display: flex; flex-direction: column; align-items: flex-start;
-   gap: 1rem; position: absolute; opacity: 0;
-   transform: translateY(20px);
-   transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
-   pointer-events: none;
+    position: absolute;
+    inset: 0; /* Changed: Makes container a full overlay */
+    opacity: 0;
+    transition: opacity 0.6s ease 0.2s;
+    pointer-events: none; /* Changed: Container is not clickable */
   }
 
   .hero-carousel__content-inner.is-active {
-   opacity: 1; transform: translateY(0); pointer-events: auto;
+    opacity: 1;
+    pointer-events: auto; /* Allows children (button) to be clickable */
   }
-  .hero-carousel__content-inner .button {
-   pointer-events: auto;
-  }
-
-  .hero-carousel__subheading { font-size: 1rem; margin: 0; letter-spacing: 0.05em; }
-  .hero-carousel__heading { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 500; line-height: 1.1; margin: 0; }
-  .hero-carousel__text { margin: 0; font-size: 1rem; max-width: 450px; line-height: 1.6; }
 
   .hero-carousel__button {
-   background-color: transparent; border: 1px solid #000; color: #000;
-   padding: 12px 28px; text-decoration: none;
-   transition: background-color 0.3s, color 0.3s;
-   margin-top: 1rem; font-size: 0.9rem;
+    background-color: transparent; border: 1px solid #000; color: #000;
+    padding: 12px 28px; text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 0.9rem;
+    pointer-events: auto; /* Ensures button is clickable */
   }
+
   .hero-carousel__button:hover { background-color: #000; color: #fff; }
 
   .hero-carousel__nav-wrapper {
-
-   position: absolute; bottom: 3rem; left: 0;
-   width: 100%; z-index: 4;
-   display: flex; justify-content: flex-end;
-   padding: 0 5vw; pointer-events: none;
+    position: absolute; bottom: 3rem; left: 0;
+    width: 100%; z-index: 4;
+    display: flex; justify-content: flex-end;
+    padding: 0 5vw; pointer-events: none;
   }
 
   .hero-carousel__nav {
-   display: flex; align-items: center;
-   gap: 1rem; pointer-events: auto;
-   /* === NEW STYLES FOR NAV BACKGROUND === */
-   background-color: rgba(0, 0, 0, 0.4);
-   backdrop-filter: blur(4px);
-   padding: 0.5rem 1rem;
-   border-radius: 5px;
+    display: flex; align-items: center;
+    gap: 1rem; pointer-events: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
   }
 
   .hero-carousel__titles { display: flex; gap: 1.5rem; }
   .hero-carousel__title-link {
-   color: #fff; /* Changed from #000 */
-      text-decoration: none; font-size: 1rem; opacity: 0.6;
-   position: relative; transition: opacity 0.3s; padding-bottom: 5px;
+    color: #fff; text-decoration: none; font-size: 1rem; opacity: 0.6;
+    position: relative; transition: opacity 0.3s; padding-bottom: 5px;
   }
   .hero-carousel__title-link:hover, .hero-carousel__title-link.is-active { opacity: 1; }
   .hero-carousel__title-link.is-active::after {
-   content: ''; position: absolute; bottom: 0; left: 0;
-   width: 100%; height: 1px;
-      background-color: #fff; /* Changed from #000 */
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 1px; background-color: #fff;
   }
 
   .hero-carousel__arrow, .hero-carousel__play-pause {
-   background: none; border: none; cursor: pointer; padding: 0.5rem;
-   color: #fff; /* Changed from #000 */
-      opacity: 0.7; transition: opacity 0.3s;
-   display: flex; align-items: center; justify-content: center;
-   flex-shrink: 0;
+    background: none; border: none; cursor: pointer; padding: 0.5rem;
+    color: #fff; opacity: 0.7; transition: opacity 0.3s;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
   }
   .hero-carousel__arrow svg, .hero-carousel__play-pause svg {
-   width: 20px; height: 20px;
+    width: 20px; height: 20px;
   }
   .hero-carousel__arrow:hover, .hero-carousel__play-pause:hover { opacity: 1; }
 
@@ -464,168 +395,131 @@
   .hero-carousel__play-pause.is-paused .icon-pause { display: none; }
 
   @media screen and (max-width: 768px) {
-   .hero-carousel-section { color: #fff; }
-   .hero-carousel__content-container {
-    justify-content: center;
-   }
-   .hero-carousel__media-container::after { background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%); }
-   .hero-carousel__content-inner {
-    text-align: center;
-    align-items: center;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) translateY(20px);
-    width: 90%;
-    max-width: 400px;
-   }
-   .hero-carousel__content-inner.is-active {
-    transform: translate(-50%, -50%) translateY(0);
-   }
-   .hero-carousel__button, .hero-carousel__button:hover { border-color: #fff; color: #fff; }
-   .hero-carousel__button:hover { background-color: #fff; color: #000; }
-   .hero-carousel__nav-wrapper {
-    bottom: 1rem; /* Reduced space at the bottom */
-    left: 50%; transform: translateX(-50%);
-    width: 100%; justify-content: center; padding: 0 1rem;
-   }
-   .hero-carousel__nav {
-    max-width: 400px; justify-content: center;
-    background: none; backdrop-filter: none;
-    padding: 0; border-radius: 0;
-   }
-   .hero-carousel__arrow, .hero-carousel__title-link, .hero-carousel__play-pause { color: #fff; }
-   .hero-carousel__title-link.is-active::after { background-color: #fff; }
+    .hero-carousel-section { color: #fff; }
+    .hero-carousel__media-container::after { background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%); }
+    .hero-carousel__button, .hero-carousel__button:hover { border-color: #fff; color: #fff; }
+    .hero-carousel__button:hover { background-color: #fff; color: #000; }
+    .hero-carousel__nav-wrapper {
+      bottom: 1rem;
+      left: 50%; transform: translateX(-50%);
+      width: 100%; justify-content: center; padding: 0 1rem;
+    }
+    .hero-carousel__nav {
+      max-width: 400px; justify-content: center;
+      background: none; backdrop-filter: none;
+      padding: 0; border-radius: 0;
+    }
+    .hero-carousel__arrow, .hero-carousel__title-link, .hero-carousel__play-pause { color: #fff; }
+    .hero-carousel__title-link.is-active::after { background-color: #fff; }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
- "name": "Hero Carousel",
- "tag": "section",
- "class": "section--full-width",
- "settings": [
-  {
-   "type": "color_scheme",
-   "id": "color_scheme",
-   "label": "Color Scheme",
-   "default": "scheme-1"
-  },
-
-  {
-   "type": "header",
-   "content": "Autoplay"
-  },
-  {
-   "type": "checkbox",
-   "id": "autoplay",
-   "label": "Enable Autoplay",
-   "default": true
-  },
-  {
-   "type": "range",
-   "id": "autoplay_speed",
-   "label": "Slide Duration",
-   "min": 3000,
-   "max": 9000,
-   "step": 500,
-   "unit": "ms",
-   "default": 5000
-  }
- ],
- "blocks": [
-  {
-   "type": "collection_slide",
-   "name": "Collection Slide",
-   "limit": 5,
-   "settings": [
+  "name": "Hero Carousel",
+  "tag": "section",
+  "class": "section--full-width",
+  "settings": [
     {
-     "type": "collection",
-     "id": "collection",
-     "label": "Collection"
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
     },
     {
-     "type": "image_picker",
-     "id": "image_desktop",
-     "label": "Desktop Background Image (reccomended size: w:1920 x h:650)"
+      "type": "header",
+      "content": "Autoplay"
     },
     {
-     "type": "image_picker",
-     "id": "image_tablet",
-     "label": "Tablet Background Image (reccomended size: w:768 x h:450)"
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable Autoplay",
+      "default": true
     },
     {
-     "type": "image_picker",
-     "id": "image_mobile",
-     "label": "Mobile Background Image (reccomended size: w:320 x h:520)"
-    },
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Slide Duration",
+      "min": 3000,
+      "max": 9000,
+      "step": 500,
+      "unit": "ms",
+      "default": 5000
+    }
+  ],
+  "blocks": [
     {
-     "type": "text",
-     "id": "subheading",
-     "label": "Subheading"
-    },
-    {
-     "type": "text",
-     "id": "heading",
-     "label": "Heading"
-    },
-    {
-     "type": "text",
-     "id": "text",
-     "label": "Text"
-    },
-    {
-     "type": "text",
-     "id": "button_label",
-     "label": "Button Label"
-    },
-    {
-     "type": "url",
-     "id": "button_link",
-     "label": "Button Link",
-     "info": "Optional. Defaults to the collection URL."
-    },
+      "type": "collection_slide",
+      "name": "Collection Slide",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_desktop",
+          "label": "Desktop Background Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_tablet",
+          "label": "Tablet Background Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile Background Image"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link",
+          "info": "Optional. Defaults to the collection URL."
+        },
         {
           "type": "header",
           "content": "Button Positioning"
         },
         {
-          "type": "checkbox",
-          "id": "enable_custom_button_position",
-          "label": "Enable Custom Button Positioning",
-          "default": false
-        },
-        {
           "type": "number",
           "id": "button_pos_top",
           "label": "Top Position (%)",
-          "info": "Leave blank to unset."
+          "info": "Leave blank for auto. Typically set either Top or Bottom."
         },
         {
           "type": "number",
           "id": "button_pos_right",
           "label": "Right Position (%)",
-          "info": "Leave blank to unset."
+          "info": "Leave blank for auto. Typically set either Left or Right."
         },
         {
           "type": "number",
           "id": "button_pos_bottom",
           "label": "Bottom Position (%)",
-          "info": "Leave blank to unset."
+          "info": "Leave blank for auto."
         },
         {
           "type": "number",
           "id": "button_pos_left",
           "label": "Left Position (%)",
-          "info": "Leave blank to unset."
+          "info": "Leave blank for auto."
         }
-   ]
-  }
- ],
- "presets": [
-  {
-   "name": "Hero Carousel",
-   "blocks": [{ "type": "collection_slide" }, { "type": "collection_slide" }, { "type": "collection_slide" }]
-  }
- ]
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Carousel",
+      "blocks": [{ "type": "collection_slide" }, { "type": "collection_slide" }, { "type": "collection_slide" }]
+    }
+  ]
 }
 {% endschema %}
