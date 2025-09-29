@@ -113,7 +113,8 @@
       for media in selected_product.media
         assign filename = media.src | split: '/' | last
         if filename contains formatted_color
-          assign filtered_media = filtered_media | push: media
+          assign media_to_add = selected_product.media | where: 'id', media.id
+          assign filtered_media = filtered_media | concat: media_to_add
         endif
       endfor
     endif
