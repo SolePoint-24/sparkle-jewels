@@ -64,7 +64,7 @@
         "text_color": "#000000b5",
         "overlay_opacity": 25,
         "button_bg_color": "#333333",
-        "button_text_color": "#FFFFFF",
+        "button_text_color": "#ffffff",
         "heading_font_size": 40,
         "text_font_size": 18
       }
@@ -77,7 +77,7 @@
           "static": true,
           "settings": {
             "media_type": "image",
-            "image": "shopify://shop_images/46_2.jpg",
+            "image": "shopify://shop_images/Luminous_Arc_Lab-Grown_Diamond_Earrings_no_colour-02.jpg",
             "link": "",
             "video_loop": true,
             "video_autoplay": false,
@@ -164,7 +164,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Welcome to Sparkle Jewels, where timeless tradition meets conscious innovation. Born in the heart of India, a land that has revered the art of adornment for centuries, our brand is built on a foundation of passion, precision, and a profound respect for the stories that jewelry tells. We are not just creators of fine jewelry; we are curators of moments, crafting exquisite pieces in gold and diamond that are destined to become a part of your legacy.</p><p>Our journey began with a simple yet powerful vision: to make the world's most desired gems accessible to all, without compromise. In a world of evolving values, we believe that true luxury lies in choice. It is this belief that drives our unique philosophy, offering you the very best of both worlds: the timeless allure of natural, earth-mined diamonds and the scintillating, sustainable brilliance of lab-grown diamonds.</p>",
+                    "text": "<p>At Sparkle Jewels, we believe jewellery should be as unique as the person wearing it. That’s why we don’t just sell jewellery — we help you create it.<br/><br/>Many of our customers bring us designs they love — from top brands, Pinterest, or their own imagination — and our expert in-house artisans bring those ideas to life with unmatched craftsmanship. From sketch to finish, we ensure every detail shines with perfection.<br/><br/>We also offer a curated design catalogue on our website, featuring elegant rings, earrings, pendants, bracelets, and bridal jewellery. Each piece can be made-to-order in your preferred diamond type (natural or lab-grown), stone size, and gold purity — giving you complete freedom to customise while choosing from our collection.<br/><br/>Unlike traditional jewellers, we carry zero inventory. This means no unnecessary costs, no middlemen, and no compromises. Instead, we source diamonds and precious materials directly from trusted suppliers, giving you luxury jewellery at the most competitive pricing.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -220,10 +220,10 @@
         "text": "",
         "button_label": "Shop Now",
         "button_link": "",
-        "text_color": "#FFFFFF",
+        "text_color": "#ffffff",
         "overlay_opacity": 0,
         "button_bg_color": "#333333",
-        "button_text_color": "#FFFFFF",
+        "button_text_color": "#ffffff",
         "heading_font_size": 40,
         "text_font_size": 18
       }
@@ -562,7 +562,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>At Sparkle Jewels, your trust is our most precious asset. We are committed to complete transparency and authenticity in everything we do.</p><ul><li><strong>Guaranteed Authenticity:</strong> Whether you choose a natural or a lab-grown diamond, every stone is certified by leading gemological institutes, assuring you of its quality, origin, and specifications.</li><li><strong>Exquisite Design:</strong> Our in-house design team blends contemporary aesthetics with classic elegance, creating designs that are both stunning today and cherished tomorrow.</li><li><strong>Unmatched Quality:</strong> We adhere to the highest standards of craftsmanship, ensuring that every piece is flawless and built to last a lifetime.</li><li><strong>An Exceptional Experience:</strong> From personalized consultations to our dedicated customer service, we strive to make your journey with us as brilliant as the jewelry you choose.</li></ul>",
+                    "text": "<ul><li>Custom jewellery made to match your exact design.</li><li>Choice of natural & lab-grown diamonds based on your preference.<br/></li><li>Exclusive design catalogues for ready-to-customise pieces.<br/></li><li>Expert in-house artisans with generations of craftsmanship.<br/></li><li>Direct sourcing for transparent & fair pricing.<br/></li><li>BIS Hallmarked gold for guaranteed purity.</li></ul>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
