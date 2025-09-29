@@ -82,23 +82,49 @@
 -%}
 
 {%- liquid
-  assign sorted_media = '' | split: ','
-  if selected_variant_media
-    assign sorted_media = sorted_media | concat: selected_product.media | where: 'id', selected_variant_media.id
 
-    for media in selected_product.media
-      if block_settings.hide_variants and variant_images contains media.src and sorted_media.size > 0
-        continue
-      endif
+  assign selected_metal_type = ''
+  assign has_metal_type_option = false
 
-      if media.id != selected_variant_media.id
-        assign found_media = selected_product.media | where: 'id', media.id
-        assign sorted_media = sorted_media | concat: found_media
-      endif
-    endfor
+  for option in selected_product.options_with_values
+    if option.name == 'Metal Type'
+      assign has_metal_type_option = true
+      assign selected_metal_type = option.selected_value
+      break
+    endif
+  endfor
+
+  assign filtered_media = '' | split: ','
+
+  if has_metal_type_option
+    assign extracted_color = ''
+
+    if selected_metal_type contains 'Rose Gold'
+      assign extracted_color = 'Rose Gold'
+    elsif selected_metal_type contains 'White Gold'
+      assign extracted_color = 'White Gold'
+    elsif selected_metal_type contains 'Yellow Gold'
+      assign extracted_color = 'Yellow Gold'
+    endif
+
+    if extracted_color != blank
+      assign formatted_color = extracted_color | downcase | replace: ' ', '_'
+
+      for media in selected_product.media
+        assign filename = media.src | split: '/' | last
+        if filename contains formatted_color
+          assign filtered_media = filtered_media | push: media
+        endif
+      endfor
+    endif
+  endif
+
+  if filtered_media.size > 0
+    assign sorted_media = filtered_media
   else
     assign sorted_media = selected_product.media
   endif
+
   assign has_image_drop = sorted_media | has: 'media_type', 'image'
 
   # Determine if we're in single column mode (carousel or grid with one column)
