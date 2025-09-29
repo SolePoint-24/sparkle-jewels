@@ -112,7 +112,7 @@
 
       for media in selected_product.media
         assign filename = media.src | split: '/' | last
-        if filename contains formatted_color
+        if filename contains formatted_color or filename contains 'no_colour' or filename contains 'no_color'
           assign media_to_add = selected_product.media | where: 'id', media.id
           assign filtered_media = filtered_media | concat: media_to_add
         endif
