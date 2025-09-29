@@ -1639,7 +1639,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Yes, we offer Lifetime Exchange and Buyback on all our jewellery (except customised/personalised orders and engraved pieces).</p>",
+                    "text": "<p>Yes, we do — but with certain conditions. Since custom jewellery is made specifically for you, the buyback/exchange value may vary and will be communicated clearly before you place the order.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
