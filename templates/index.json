@@ -1993,6 +1993,47 @@
               "block_order": [
                 "text_xX9UQp"
               ]
+            },
+            "accordion_row_c9R67A": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Why should I choose Sparkle Jewels over traditional jewellers?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_bb8Qqi": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>We offer zero inventory costs, direct sourcing, certified diamonds, transparent pricing, and complete customisation — giving you better quality and value compared to traditional jewellers.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_bb8Qqi"
+              ]
             }
           },
           "block_order": [
@@ -2011,7 +2052,8 @@
             "accordion_row_ryjakc",
             "accordion_row_Vkeymd",
             "accordion_row_6nfVDt",
-            "accordion_row_FN43w7"
+            "accordion_row_FN43w7",
+            "accordion_row_c9R67A"
           ]
         }
       },
