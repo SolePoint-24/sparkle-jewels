@@ -1345,7 +1345,7 @@
             "accordion_row_HUgeLV": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "Can I cancel or modify my order after it has been placed?",
+                "heading": "Do you make customised jewellery?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 60
@@ -1354,7 +1354,7 @@
                 "text_JCVekc": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Orders can be cancelled or modified within 24 hours of purchase. After this time, we may have already started processing your order and cannot guarantee changes. Please contact our support team as soon as possible for assistance.</p>",
+                    "text": "<p>Yes! Most of our customers share designs they love, and our expert artisans bring them to life. You can also choose from our design catalogues and customize them with your preferred diamond type, stone size, and gold purity.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -1384,7 +1384,7 @@
             "accordion_row_grM8pP": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "Are your diamonds certified?",
+                "heading": "Do you offer both natural and lab-grown diamonds?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -1393,7 +1393,7 @@
                 "text_pMPP3X": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Yes, all our diamonds are certified by internationally recognized gemological laboratories such as GIA, IGI, or HRD. Each certified diamond comes with an official grading report.</p>",
+                    "text": "<p>Yes, we work with both. You can choose natural diamonds or lab-grown diamonds depending on your preference and budget. Both options come with IGI/SGL certification.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -1424,7 +1424,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_dash_row",
               "settings": {
-                "heading": "Do you offer warranties or guarantees on your jewellery?",
+                "heading": "Are your products hallmarked and certified?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -1434,7 +1434,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>We provide a 1-year warranty on all jewellery items against manufacturing defects. This includes repair or replacement of defective products. Normal wear and tear or damage caused by accidents is not covered</p>",
+                    "text": "<p>Absolutely. All our jewellery comes with BIS Hallmarking for gold purity. Diamonds are certified by IGI or SGL, and we also provide a SPARKLE Certification for authenticity.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -1465,7 +1465,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_dash_row",
               "settings": {
-                "heading": "Can I resize my ring if the size is not right?",
+                "heading": "Where are you located? Can I visit your office?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -1475,7 +1475,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Yes, we offer one free resizing within 30 days of purchase. Additional resizing requests or resizing beyond this period may involve a small service fee.</p>",
+                    "text": "<p>We’re based in Ahmedabad, but we are an online-only jeweller. This helps us keep costs low and pass the savings directly to you.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -1506,7 +1506,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_dash_row",
               "settings": {
-                "heading": "How much does shipping cost?",
+                "heading": "How do I place an order for a customised design?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -1516,7 +1516,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Shipping is calculated based on your location and the items in your order. You will always know the shipping price before you purchase.</p>",
+                    "text": "<p>You can share your design with us via our website, WhatsApp, or email. Our team will create a CAD/3D render for approval. Once confirmed, we begin crafting your piece as per your chosen diamond type, gold purity, and size.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -1542,6 +1542,47 @@
               "block_order": [
                 "text_bKEB9A"
               ]
+            },
+            "accordion_row_akCEiP": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "What is the meaning of Market Value in Lifetime Buyback and Exchange?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_tnNQqr": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>“Market Value” refers to the current prevailing price of gold, diamonds, or gemstones at the time of exchange or buyback. Your buyback/exchange value will be calculated based on this rate.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_tnNQqr"
+              ]
             }
           },
           "block_order": [
@@ -1549,7 +1590,8 @@
             "accordion_row_grM8pP",
             "accordion_row_FjEbCz",
             "accordion_row_BNeBf7",
-            "accordion_row_3kqDL6"
+            "accordion_row_3kqDL6",
+            "accordion_row_akCEiP"
           ]
         }
       },
