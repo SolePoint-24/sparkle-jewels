@@ -1434,7 +1434,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Absolutely. All our jewellery comes with BIS Hallmarking for gold purity. Diamonds are certified by IGI or SGL, and we also provide a SPARKLE Certification for authenticity.</p>",
+                    "text": "<p>Yes, we do — but with certain conditions. Since custom jewellery is made specifically for you, the buyback/exchange value may vary and will be communicated clearly before you place the order.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
@@ -1583,6 +1583,88 @@
               "block_order": [
                 "text_tnNQqr"
               ]
+            },
+            "accordion_row_DV34fX": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Do you offer Lifetime Exchange and Buyback?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_wUeTkK": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Yes, we offer Lifetime Exchange and Buyback on all our jewellery (except customised/personalised orders and engraved pieces).</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_wUeTkK"
+              ]
+            },
+            "accordion_row_RLNazp": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Do you offer Lifetime Exchange and Buyback on Custom Orders?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_heRnq3": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Yes, we offer Lifetime Exchange and Buyback on all our jewellery (except customised/personalised orders and engraved pieces).</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_heRnq3"
+              ]
             }
           },
           "block_order": [
@@ -1591,7 +1673,9 @@
             "accordion_row_FjEbCz",
             "accordion_row_BNeBf7",
             "accordion_row_3kqDL6",
-            "accordion_row_akCEiP"
+            "accordion_row_akCEiP",
+            "accordion_row_DV34fX",
+            "accordion_row_RLNazp"
           ]
         }
       },
