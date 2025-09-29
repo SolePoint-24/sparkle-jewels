@@ -1952,6 +1952,47 @@
               "block_order": [
                 "text_ygHPw8"
               ]
+            },
+            "accordion_row_FN43w7": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "What payment options are available?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_xX9UQp": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>We accept all major debit/credit cards, net banking, UPI, and wallets. EMI options are also available for select banks and cards.<br/></p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_xX9UQp"
+              ]
             }
           },
           "block_order": [
@@ -1969,7 +2010,8 @@
             "accordion_row_xP33xG",
             "accordion_row_ryjakc",
             "accordion_row_Vkeymd",
-            "accordion_row_6nfVDt"
+            "accordion_row_6nfVDt",
+            "accordion_row_FN43w7"
           ]
         }
       },
