@@ -1911,6 +1911,47 @@
               "block_order": [
                 "text_TFMWRe"
               ]
+            },
+            "accordion_row_6nfVDt": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Do you ship internationally?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_ygHPw8": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Currently, we ship across India with free insured delivery. For international shipping requests, please contact our customer care team.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_ygHPw8"
+              ]
             }
           },
           "block_order": [
@@ -1927,7 +1968,8 @@
             "accordion_row_VXwzNJ",
             "accordion_row_xP33xG",
             "accordion_row_ryjakc",
-            "accordion_row_Vkeymd"
+            "accordion_row_Vkeymd",
+            "accordion_row_6nfVDt"
           ]
         }
       },
