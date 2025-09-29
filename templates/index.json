@@ -1665,6 +1665,47 @@
               "block_order": [
                 "text_heRnq3"
               ]
+            },
+            "accordion_row_XadQkf": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "I lost my invoice. Can I still return my item?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_QGJKnB": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Yes, we can verify your purchase through our records. However, having the invoice speeds up the return/exchange process.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_QGJKnB"
+              ]
             }
           },
           "block_order": [
@@ -1675,7 +1716,8 @@
             "accordion_row_3kqDL6",
             "accordion_row_akCEiP",
             "accordion_row_DV34fX",
-            "accordion_row_RLNazp"
+            "accordion_row_RLNazp",
+            "accordion_row_XadQkf"
           ]
         }
       },
