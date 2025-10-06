@@ -156,8 +156,8 @@
           "settings": {
             "icon": "shopify://shop_images/BIS-Hallmark-Black.png",
             "title": "BIS Hallmark",
-            "icon_width": 70,
-            "icon_height": 130
+            "icon_width": 200,
+            "icon_height": 200
           }
         },
         "usp_item_KwWKKU": {
