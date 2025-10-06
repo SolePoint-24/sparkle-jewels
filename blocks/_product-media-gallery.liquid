@@ -128,7 +128,7 @@
       endif 
 
       if text_to_check contains formatted_color or text_to_check contains 'no_colour' 
-        assign filtered_media = filtered_media | push: media 
+        assign filtered_media = filtered_media | concat: media 
       endif 
     endfor 
 
