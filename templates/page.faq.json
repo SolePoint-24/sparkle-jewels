@@ -17,27 +17,917 @@
           "name": "Title",
           "settings": {
             "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
             "type_preset": "h2",
-            "width": "100%"
-          }
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
         "page-content": {
           "type": "page-content",
-          "settings": {}
+          "settings": {},
+          "blocks": {}
         }
       },
       "block_order": [
         "heading",
         "page-content"
       ],
+      "disabled": true,
       "settings": {
+        "content_direction": "column",
         "gap": 32,
+        "color_scheme": "",
         "padding-block-start": 40,
         "padding-block-end": 80
+      }
+    },
+    "section_qNwgrg": {
+      "type": "section",
+      "blocks": {
+        "group_X9PUJ4": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "link": "",
+            "open_in_new_tab": false,
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 15,
+            "width": "fit-content",
+            "custom_width": 40,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "placeholder": "",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_96UBRK": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<h3>Frequently asked questions</h3>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-heading--family)",
+                "font_size": "2rem",
+                "line_height": "tight",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground-heading)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 16,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_description_gGpjxn": {
+              "type": "product-description",
+              "name": "t:names.product_description",
+              "settings": {
+                "text": "<h5>Welcome To Our Frequently Asked Questions (FAQs) Section! We Understand That You May Have Questions About Our Products, Services, Or Policies. And We’re Here To Provide You With All The Information You Need.<br/></h5>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_96UBRK",
+            "product_description_gGpjxn"
+          ]
+        },
+        "accordion_YDTJ44": {
+          "type": "accordion",
+          "name": "t:names.accordion",
+          "settings": {
+            "icon": "caret",
+            "dividers": true,
+            "type_preset": "h5",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_row_7fnJXC": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Do you make customised jewellery?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 60
+              },
+              "blocks": {
+                "text_CmxMjz": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Yes! Most of our customers share designs they love, and our expert artisans bring them to life. You can also choose from our design catalogues and customize them with your preferred diamond type, stone size, and gold purity.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_CmxMjz"
+              ]
+            },
+            "accordion_row_HykcRj": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Do you offer both natural and lab-grown diamonds?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_yc6YNi": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Yes, we work with both. You can choose natural diamonds or lab-grown diamonds depending on your preference and budget. Both options come with IGI/SGL certification.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_yc6YNi"
+              ]
+            },
+            "accordion_row_HM4KTy": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Are your products hallmarked and certified?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_N3TT7F": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Yes, we do — but with certain conditions. Since custom jewellery is made specifically for you, the buyback/exchange value may vary and will be communicated clearly before you place the order.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_N3TT7F"
+              ]
+            },
+            "accordion_row_CfAdKj": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Where are you located? Can I visit your office?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_DCiWJm": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>We’re based in Ahmedabad, but we are an online-only jeweller. This helps us keep costs low and pass the savings directly to you.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_DCiWJm"
+              ]
+            },
+            "accordion_row_W7Nhex": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "How do I place an order for a customised design?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_3e6hKy": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>You can share your design with us via our website, WhatsApp, or email. Our team will create a CAD/3D render for approval. Once confirmed, we begin crafting your piece as per your chosen diamond type, gold purity, and size.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_3e6hKy"
+              ]
+            },
+            "accordion_row_8fcRpe": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "What is the meaning of Market Value in Lifetime Buyback and Exchange?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_AbyxLA": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>“Market Value” refers to the current prevailing price of gold, diamonds, or gemstones at the time of exchange or buyback. Your buyback/exchange value will be calculated based on this rate.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_AbyxLA"
+              ]
+            },
+            "accordion_row_UD7TgD": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Do you offer Lifetime Exchange and Buyback?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_dAmVzh": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Yes, we offer Lifetime Exchange and Buyback on all our jewellery (except customised/personalised orders and engraved pieces).</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_dAmVzh"
+              ]
+            },
+            "accordion_row_cBUDNY": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Do you offer Lifetime Exchange and Buyback on Custom Orders?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_Ytr88a": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Yes, we do — but with certain conditions. Since custom jewellery is made specifically for you, the buyback/exchange value may vary and will be communicated clearly before you place the order.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_Ytr88a"
+              ]
+            },
+            "accordion_row_CUj4mz": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "I lost my invoice. Can I still return my item?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_ikcAr6": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Yes, we can verify your purchase through our records. However, having the invoice speeds up the return/exchange process.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_ikcAr6"
+              ]
+            },
+            "accordion_row_PRbRt6": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "What if I want to exchange or return my jewellery?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_cjCgzG": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>We offer a buyback and exchange policy. For exact details on timelines and conditions, please check our policies page or contact our team.<br/></p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_cjCgzG"
+              ]
+            },
+            "accordion_row_WmhXUM": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "What items are not returnable?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_GdUHLe": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Jewellery that’s worn, mishandled, modified, customised, or engraved cannot be returned. Please ensure items are returned in original condition.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_GdUHLe"
+              ]
+            },
+            "accordion_row_UqN8CL": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Do I need to pay for return shipping?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_GjV7Rq": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>No. Return shipping is free within 15 days of delivery.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_GjV7Rq"
+              ]
+            },
+            "accordion_row_KY4wKP": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "When will I get my refund?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_RKjd9b": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Refunds are processed within 10–15 working days after we receive and inspect your returned item.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_RKjd9b"
+              ]
+            },
+            "accordion_row_ixMi8r": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "How long does it take to receive my order?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_niXRNq": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Since all our jewellery is made-to-order, it usually takes 15-20 working days for crafting and certification. Shipping within India is free and insured.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_niXRNq"
+              ]
+            },
+            "accordion_row_LKpDKi": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Do you ship internationally?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_RULiEn": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Currently, we ship across India with free insured delivery. For international shipping requests, please contact our customer care team.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_RULiEn"
+              ]
+            },
+            "accordion_row_TqiMXJ": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "What payment options are available?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_6mh6cD": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>We accept all major debit/credit cards, net banking, UPI, and wallets. EMI options are also available for select banks and cards.<br/></p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_6mh6cD"
+              ]
+            },
+            "accordion_row_zQjcX6": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Why should I choose Sparkle Jewels over traditional jewellers?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_eqaH3N": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>We offer zero inventory costs, direct sourcing, certified diamonds, transparent pricing, and complete customisation — giving you better quality and value compared to traditional jewellers.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_eqaH3N"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_row_7fnJXC",
+            "accordion_row_HykcRj",
+            "accordion_row_HM4KTy",
+            "accordion_row_CfAdKj",
+            "accordion_row_W7Nhex",
+            "accordion_row_8fcRpe",
+            "accordion_row_UD7TgD",
+            "accordion_row_cBUDNY",
+            "accordion_row_CUj4mz",
+            "accordion_row_PRbRt6",
+            "accordion_row_WmhXUM",
+            "accordion_row_UqN8CL",
+            "accordion_row_KY4wKP",
+            "accordion_row_ixMi8r",
+            "accordion_row_LKpDKi",
+            "accordion_row_TqiMXJ",
+            "accordion_row_zQjcX6"
+          ]
+        }
+      },
+      "block_order": [
+        "group_X9PUJ4",
+        "accordion_YDTJ44"
+      ],
+      "name": "t:names.faq_section",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "flex-start",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-1",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 48,
+        "padding-block-end": 48
       }
     }
   },
   "order": [
-    "main"
+    "main",
+    "section_qNwgrg"
   ]
 }
