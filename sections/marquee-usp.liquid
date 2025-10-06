@@ -32,7 +32,7 @@
                   src="{{ block.settings.icon | image_url: width: 100 }}"
                   alt="{{ block.settings.icon.alt | default: block.settings.title }}"
                   width="50"
-                  height="{{ 50 | divided_by: block.settings.icon.aspect_ratio | round }}"
+                  height="50"
                   loading="lazy"
                 >
               {%- else -%}
