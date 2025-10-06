@@ -25,19 +25,14 @@
       {%- endcomment -%}
       {%- for i in (1..4) -%}
         {%- for block in section.blocks -%}
-          <div
-            class="marquee-usp__item"
-            {% if forloop.parentloop.first %}
-              {{- block.shopify_attributes -}}
-            {% endif %}
-          >
+          <div class="marquee-usp__item" {% if forloop.parentloop.first %}{{ block.shopify_attributes }}{% endif %}>
             <div class="marquee-usp__icon">
               {%- if block.settings.icon != blank -%}
                 <img
-                  src="{{ block.settings.icon | image_url: width: block.settings.icon_width }}"
+                  src="{{ block.settings.icon | image_url: width: 100 }}"
                   alt="{{ block.settings.icon.alt | default: block.settings.title }}"
-                  width="{{ block.settings.icon_width }}"
-                  height="{{ block.settings.icon_height }}"
+                  width="50"
+                  height="{{ 50 | divided_by: block.settings.icon.aspect_ratio | round }}"
                   loading="lazy"
                 >
               {%- else -%}
@@ -171,24 +166,6 @@
           "id": "title",
           "label": "Title",
           "default": "Feature Title"
-        },
-        {
-          "type": "range",
-          "id": "icon_width",
-          "label": "Icon Width (px)",
-          "min": 20,
-          "max": 200,
-          "step": 5,
-          "default": 50
-        },
-        {
-          "type": "range",
-          "id": "icon_height",
-          "label": "Icon Height (px)",
-          "min": 20,
-          "max": 200,
-          "step": 5,
-          "default": 50
         }
       ]
     }
