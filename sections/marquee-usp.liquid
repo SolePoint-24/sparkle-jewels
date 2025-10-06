@@ -29,12 +29,12 @@
             <div class="marquee-usp__icon">
               {%- if block.settings.icon != blank -%}
                 <img
-                  src="{{ block.settings.icon | image_url: width: 100 }}"
-                  alt="{{ block.settings.icon.alt | default: block.settings.title }}"
-                  width="50"
-                  height="{{ 50 | divided_by: block.settings.icon.aspect_ratio | round }}"
-                  loading="lazy"
-                >
+  src="{{ block.settings.icon | image_url: width: block.settings.icon_width }}"
+  alt="{{ block.settings.icon.alt | default: block.settings.title }}"
+  width="{{ block.settings.icon_width }}"
+  height="{{ block.settings.icon_height }}"
+  loading="lazy"
+/>
               {%- else -%}
                 {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
               {%- endif -%}
