@@ -119,6 +119,18 @@
       endfor
     endif
   endif
+  for media in product.media 
+    assign text_to_check = ''
+       if media.media_type == 'video' 
+        assign text_to_check = media.alt | downcase 
+      else 
+        assign text_to_check = media.src | split: '/' | last | downcase 
+      endif 
+
+      if text_to_check contains formatted_color or text_to_check contains 'no_colour' 
+        assign filtered_media = filtered_media | push: media 
+      endif 
+    endfor 
 
   if filtered_media.size > 0
     assign sorted_media = filtered_media
