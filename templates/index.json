@@ -198,7 +198,8 @@
       "settings": {
         "heading": "Why Choose Sparkle",
         "color_scheme": "scheme-4",
-        "animation_speed": 30
+        "animation_speed": 30,
+        "icon_size": 44
       }
     },
     "section_HAz3WV": {
