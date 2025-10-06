@@ -1,110 +1,123 @@
 {%- comment -%}
- SECTION: Marquee USP
+  SECTION: Marquee USP
+
+  This section creates a scrolling marquee of icons and text.
+  - Supports a main heading.
+  - Uses blocks for each item in the marquee.
+  - Each block has an icon and a title.
+  - Includes a color scheme setting.
+  - Animation speed is adjustable.
+  - Duplicates content to ensure a seamless loop without gaps.
 {%- endcomment -%}
 
 <div class="marquee-usp-section color-{{ section.settings.color_scheme }}">
- <div class="page-width">
-  {%- if section.settings.heading != blank -%}
-   <h2 class="marquee-usp__heading">{{ section.settings.heading | escape }}</h2>
-  {%- endif -%}
- </div>
-
- <div class="marquee-usp__wrapper">
-  <div class="marquee-usp__scroller" style="animation-duration: {{ section.settings.animation_speed }}s;">
-   {%- for i in (1..4) -%}
-    {%- for block in section.blocks -%}
-     <div
-      class="marquee-usp__item"
-      {% if forloop.parentloop.first %}
-       {{- block.shopify_attributes -}}
-      {% endif %}
-     >
-      <div class="marquee-usp__icon">
-       {%- if block.settings.icon != blank -%}
-        {%- comment -%} START: FIX - Create variables first to ensure a valid URL {%- endcomment -%}
-        {%- liquid
-         assign icon_width = block.settings.icon_width | default: 50
-         assign icon_height = block.settings.icon_height | default: 50
-        -%}
-        <img
-         src="{{ block.settings.icon | image_url: width: icon_width, height: icon_height, crop: 'center', scale: 2 }}"
-         alt="{{ block.settings.icon.alt | default: block.settings.title }}"
-         width="{{ icon_width }}"
-         height="{{ icon_height }}"
-         loading="lazy"
-         style="width: {{ icon_width }}px; height: {{ icon_height }}px;"
-        >
-        {%- comment -%} END: FIX {%- endcomment -%}
-       {%- else -%}
-        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-       {%- endif -%}
-      </div>
-      <div class="marquee-usp__title">
-       <p>{{ block.settings.title | escape }}</p>
-      </div>
-     </div>
-    {%- endfor -%}
-   {%- endfor -%}
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="marquee-usp__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
   </div>
- </div>
+
+  <div class="marquee-usp__wrapper">
+    <div class="marquee-usp__scroller" style="animation-duration: {{ section.settings.animation_speed }}s;">
+      {%- comment -%}
+        The content is rendered 4 times to ensure the total width is
+        always greater than the viewport, preventing any gaps in the loop.
+      {%- endcomment -%}
+      {%- for i in (1..4) -%}
+        {%- for block in section.blocks -%}
+          <div class="marquee-usp__item" {% if forloop.parentloop.first %}{{ block.shopify_attributes }}{% endif %}>
+            <div class="marquee-usp__icon">
+              {%- if block.settings.icon != blank -%}
+                <img
+                  src="{{ block.settings.icon | image_url: width: 100 }}"
+                  alt="{{ block.settings.icon.alt | default: block.settings.title }}"
+                  width="50"
+                  height="{{ 50 | divided_by: block.settings.icon.aspect_ratio | round }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <div class="marquee-usp__title">
+              <p>{{ block.settings.title | escape }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
 </div>
 
 {%- style -%}
- .marquee-usp-section {
-  padding: 40px 0;
-  background-color: var(--color-background);
-  color: var(--color-foreground);
- }
- .marquee-usp__heading {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 40px !important;
- }
- .marquee-usp__wrapper {
-  overflow: hidden;
-  display: flex;
-  white-space: nowrap;
- }
- .marquee-usp__scroller {
-  display: flex;
-  flex-shrink: 0;
-  animation: scroll-marquee linear infinite;
- }
- .marquee-usp__wrapper:hover .marquee-usp__scroller {
-  animation-play-state: paused;
- }
- .marquee-usp__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0 40px;
-  text-align: center;
- }
- .marquee-usp__icon img {
-  object-fit: contain; /* Prevents images from being cropped */
-  margin-bottom: 15px;
- }
- .marquee-usp__title {
-  font-size: 1.2rem;
-  font-weight: 600;
- }
- @keyframes scroll-marquee {
-  from {
-   transform: translateX(0);
+  .marquee-usp-section {
+    padding: 40px 0;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
   }
-  to {
-   transform: translateX(-25%);
-  }
- }
- @media screen and (max-width: 750px) {
+
   .marquee-usp__heading {
-   font-size: 2rem;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px !important;
   }
+
+  .marquee-usp__wrapper {
+    overflow: hidden;
+    display: flex;
+    white-space: nowrap;
+  }
+
+  .marquee-usp__scroller {
+    display: flex;
+    flex-shrink: 0;
+    animation: scroll-marquee linear infinite;
+  }
+
+  /* Pause animation on hover for better user experience */
+  .marquee-usp__wrapper:hover .marquee-usp__scroller {
+    animation-play-state: paused;
+  }
+
   .marquee-usp__item {
-   margin: 0 25px;
+    display: flex; /* Changed to flex for better alignment */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 40px; /* Space between items */
+    text-align: center;
   }
- }
+
+  .marquee-usp__icon img {
+    max-width: 50px;
+    height: auto;
+    margin-bottom: 15px;
+  }
+
+  .marquee-usp__title {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  /* The Keyframe animation for the scroll effect */
+  @keyframes scroll-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      /* This translates the content by one-quarter of its total width, creating a perfect loop */
+      transform: translateX(-25%);
+    }
+  }
+
+  @media screen and (max-width: 750px) {
+    .marquee-usp__heading {
+      font-size: 2rem;
+    }
+    .marquee-usp__item {
+      margin: 0 25px;
+    }
+  }
 {%- endstyle -%}
 
 {% schema %}
@@ -153,26 +166,6 @@
           "id": "title",
           "label": "Title",
           "default": "Feature Title"
-        },
-        {
-          "type": "range",
-          "id": "icon_width",
-          "min": 20,
-          "max": 150,
-          "step": 2,
-          "unit": "px",
-          "label": "Icon width",
-          "default": 50
-        },
-        {
-          "type": "range",
-          "id": "icon_height",
-          "min": 20,
-          "max": 150,
-          "step": 2,
-          "unit": "px",
-          "label": "Icon height",
-          "default": 50
         }
       ]
     }
@@ -191,3 +184,4 @@
   ]
 }
 {% endschema %}
+
