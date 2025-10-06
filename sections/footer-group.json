@@ -53,6 +53,9 @@
         "social_icon_nXTH34",
         "social_icon_qenPhK"
       ],
+      "custom_css": [
+        ".footer__title {font-size: 100px}"
+      ],
       "name": "Custom Footer",
       "settings": {
         "color_scheme": "scheme-4",
