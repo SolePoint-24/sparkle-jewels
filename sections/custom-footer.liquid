@@ -290,6 +290,11 @@
               loading="lazy"
             >
           </a>
+          {%- if section.settings.title != blank -%}
+        <div class="footer__title rte">
+          {{ section.settings.title }}
+        </div>
+      {%- endif -%}
         </div>
       {%- endif -%}
 
