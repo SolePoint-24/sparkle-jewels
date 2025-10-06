@@ -155,35 +155,45 @@
           "type": "usp_item",
           "settings": {
             "icon": "shopify://shop_images/BIS-Hallmark-Black.png",
-            "title": "BIS Hallmark"
+            "title": "BIS Hallmark",
+            "icon_width": 70,
+            "icon_height": 130
           }
         },
         "usp_item_KwWKKU": {
           "type": "usp_item",
           "settings": {
             "icon": "shopify://shop_images/lifetime-exchnage-icon.png",
-            "title": "Lifetime Exchange"
+            "title": "Lifetime Exchange",
+            "icon_width": 50,
+            "icon_height": 50
           }
         },
         "usp_item_ViFzn3": {
           "type": "usp_item",
           "settings": {
             "icon": "shopify://shop_images/sparkle-jewels-logo-transparent.png",
-            "title": "Sparkle Certified"
+            "title": "Sparkle Certified",
+            "icon_width": 50,
+            "icon_height": 50
           }
         },
         "usp_item_qUUcJk": {
           "type": "usp_item",
           "settings": {
             "icon": "shopify://shop_images/free-delivery.png",
-            "title": "Free Shipping"
+            "title": "Free Shipping",
+            "icon_width": 50,
+            "icon_height": 50
           }
         },
         "usp_item_PFPYaB": {
           "type": "usp_item",
           "settings": {
             "icon": "shopify://shop_images/Ethical-Sourcing-icon.png",
-            "title": "Ethical Sourcing"
+            "title": "Ethical Sourcing",
+            "icon_width": 50,
+            "icon_height": 50
           }
         }
       },
