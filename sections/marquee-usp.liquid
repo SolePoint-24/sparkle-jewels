@@ -94,6 +94,8 @@
  .marquee-usp__icon img {
     width: {{ section.settings.icon_size }}px;
     height: {{ section.settings.icon_size }}px;
+        object-fit: contain; /* The image will now fit inside the box */
+
   margin-bottom: 15px;
  }
   {%- comment -%} END: CSS CHANGE {%- endcomment -%}
