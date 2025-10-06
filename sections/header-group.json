@@ -31,14 +31,14 @@
         "announcement_mN6DTT": {
           "type": "announcement",
           "settings": {
-            "text": "TEST ANNOUMENT 1",
+            "text": "Enjoy Free Shipping, All Across India!",
             "link": ""
           }
         },
         "announcement_MDxKVk": {
           "type": "announcement",
           "settings": {
-            "text": "TEST ANNOUMENT 2",
+            "text": "For any queries, contact:",
             "link": ""
           }
         }
