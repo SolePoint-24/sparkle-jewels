@@ -75,7 +75,7 @@
     width: 100%;
     height: 100%;
     fill: currentColor; /* SVGs are designed with stroke, not fill */
-   
+
   }
 
   .footer__right {
@@ -290,13 +290,13 @@
               loading="lazy"
             >
           </a>
-          {%- if section.settings.title != blank -%}
-        <div class="footer__title rte">
-          {{ section.settings.title }}
         </div>
       {%- endif -%}
-        </div>
-      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+            <div class="footer__title rte">
+              {{ section.settings.title }}
+            </div>
+          {%- endif -%}
 
       {%- if section.settings.description != blank -%}
         <div class="footer__description rte">
@@ -307,7 +307,12 @@
       <div class="footer__social-icons">
         {%- for block in section.blocks -%}
           {%- if block.type == 'social_icon' -%}
-            <a href="{{ block.settings.link }}" class="social-icon__link" target="_blank" aria-label="{{ block.settings.aria_label | default: 'Social media link' | escape }}">
+            <a
+              href="{{ block.settings.link }}"
+              class="social-icon__link"
+              target="_blank"
+              aria-label="{{ block.settings.aria_label | default: 'Social media link' | escape }}"
+            >
               {{ block.settings.svg_code }}
             </a>
           {%- endif -%}
@@ -317,7 +322,7 @@
 
     {%- assign footer_menu = linklists[section.settings.footer_menu] -%}
     {%- if footer_menu.links.size > 0 -%}
-     <div class="footer__right">
+      <div class="footer__right">
         {%- for link in footer_menu.links -%}
           <div class="footer__menu-column">
             <button class="footer__accordion-toggle" aria-expanded="false">
@@ -342,27 +347,25 @@
     {%- endif -%}
   </div>
   <div class="copyright-banner">
-    <div class="copyright">
-      © {{ 'now' | date: "%Y" }} Sparkle Jewels
-    </div>
+    <div class="copyright">© {{ 'now' | date: '%Y' }} Sparkle Jewels</div>
     <div class="dev-banner">
       <p>Developed by <a href="https://solepoint.in/">Sole Point Tech Solutions</a></p>
     </div>
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const accordions = document.querySelectorAll(".footer__accordion-toggle");
+    document.addEventListener('DOMContentLoaded', function () {
+      const accordions = document.querySelectorAll('.footer__accordion-toggle');
 
       accordions.forEach((btn) => {
-        btn.addEventListener("click", () => {
+        btn.addEventListener('click', () => {
           // Check screen width to disable accordion on desktop
           if (window.innerWidth >= 750) {
             return;
           }
 
-          const expanded = btn.getAttribute("aria-expanded") === "true";
-          btn.setAttribute("aria-expanded", !expanded);
+          const expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', !expanded);
 
           const list = btn.nextElementSibling;
           if (list) {
@@ -372,9 +375,7 @@
       });
     });
   </script>
-
 </footer>
-
 
 {% schema %}
 {
