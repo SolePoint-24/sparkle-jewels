@@ -126,7 +126,7 @@
     assign sorted_media = selected_product.media
   endif
 
-  assign has_image_drop = sorted_media | has: 'media_type', 'image','video'
+  assign has_image_drop = sorted_media | has: 'media_type', 'image'
 
   # Determine if we're in single column mode (carousel or grid with one column)
   assign is_single_column = false
