@@ -1295,7 +1295,7 @@
               "type": "product-description",
               "name": "t:names.product_description",
               "settings": {
-                "text": "<h5>Welcome To Our Frequently Asked Questions (FAQs) Section! We Understand That You May Have Questions About Our Products, Services, Or Policies. And We’re Here To Provide You With All The Information You Need.<br/></h5>",
+                "text": "<p>Welcome to our frequently asked questions (faqs) section! We understand that you may have questions about our products, services, or policies. And we’re here to provide you with all the information you need.</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
