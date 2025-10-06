@@ -86,7 +86,7 @@
   assign selected_metal_type = ''
   assign has_metal_type_option = false
 
-  for option in selected_product.options_with_values
+  for option in product.options_with_values
     if option.name == 'Metal Type'
       assign has_metal_type_option = true
       assign selected_metal_type = option.selected_value
@@ -110,45 +110,52 @@
     if extracted_color != blank
       assign formatted_color = extracted_color | downcase | replace: ' ', '_'
 
-      for media in selected_product.media
-        assign filename = media.src | split: '/' | last
-        if filename contains formatted_color or filename contains 'no_colour' 
-          assign media_to_add = selected_product.media | where: 'id', media.id
+      for media in product.media
+        assign text_to_check = ''
+
+        if media.media_type == 'video'
+          assign text_to_check = media.alt | downcase
+        else
+          assign text_to_check = media.src | split: '/' | last | downcase
+        endif
+
+        if text_to_check contains formatted_color or text_to_check contains 'no_colour'
+          assign media_to_add = product.media | where: 'id', media.id
           assign filtered_media = filtered_media | concat: media_to_add
         endif
       endfor
     endif
   endif
-  for media in product.media 
-    assign text_to_check = ''
-       if media.media_type == 'video' 
-        assign text_to_check = media.alt | downcase 
-      else 
-        assign text_to_check = media.src | split: '/' | last | downcase 
-      endif 
-
-      if text_to_check contains formatted_color or text_to_check contains 'no_colour' 
-        assign filtered_media = filtered_media | concat: media 
-      endif 
-    endfor 
 
   if filtered_media.size > 0
     assign sorted_media = filtered_media
   else
-    assign sorted_media = selected_product.media
+    assign sorted_media = product.media
   endif
 
-  assign has_image_drop = sorted_media | has: 'media_type', 'image'
+  assign has_images = false
+  assign has_videos = false
+  for media in sorted_media
+    if media.media_type == 'image'
+      assign has_images = true
+    endif
+    if media.media_type == 'video'
+      assign has_videos = true
+    endif
+    if has_images and has_videos
+      break
+    endif
+  endfor
 
   # Determine if we're in single column mode (carousel or grid with one column)
   assign is_single_column = false
-  if block_settings.media_presentation == 'carousel' or sorted_media.size == 1 or block_settings.media_presentation == 'grid' and block_settings.media_columns == 'one'
+  if block.settings.media_presentation == 'carousel' or sorted_media.size == 1 or block.settings.media_presentation == 'grid' and block.settings.media_columns == 'one'
     assign is_single_column = true
   endif
 
   # Check if we need both sizes (for large first image in two-column grid)
   assign needs_both_sizes = false
-  if block_settings.media_presentation == 'grid' and block_settings.media_columns == 'two' and block_settings.large_first_image
+  if block.settings.media_presentation == 'grid' and block.settings.media_columns == 'two' and block.settings.large_first_image
     assign needs_both_sizes = true
   endif
 
