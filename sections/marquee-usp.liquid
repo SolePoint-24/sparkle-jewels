@@ -92,9 +92,10 @@
 
   {%- comment -%} START: CSS CHANGE - Set a fixed width and height from the new setting {%- endcomment -%}
  .marquee-usp__icon img {
-    width: 50px;
+    width: {{ section.settings.icon_size }}px;
     height: {{ section.settings.icon_size }}px;
-    margin-bottom: 15px;
+    object-fit: cover; /* Ensures non-square images fill the space without distortion */
+  margin-bottom: 15px;
  }
   {%- comment -%} END: CSS CHANGE {%- endcomment -%}
 
