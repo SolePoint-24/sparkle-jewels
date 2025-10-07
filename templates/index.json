@@ -2061,6 +2061,7 @@
         "group_iJFGGJ",
         "accordion_bktGAM"
       ],
+      "disabled": true,
       "name": "t:names.faq_section",
       "settings": {
         "content_direction": "row",
