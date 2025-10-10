@@ -857,13 +857,16 @@ if (!customElements.get('facet-status-component')) {
 }
 
 
-(function () {
+document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   if (!urlParams.has('sort_by')) {
     urlParams.set('sort_by', 'price-ascending');
-    window.location.replace(`${window.location.pathname}?${urlParams.toString()}`);
+    const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+    history.replaceState(null, '', newUrl);
+
+    // Then trigger your filtering function here
   }
-})();
+});
 
 /**
  * Default currency decimals used in most currenies
