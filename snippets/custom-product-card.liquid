@@ -112,7 +112,13 @@
           </fieldset>
         {%- endif -%}
 
-        <div class="product__vendor top-spacing">{{ collection.title }}</div>
+        <div class="product__vendor top-spacing">
+  {%- if collection -%}
+    {{ collection.title }}
+  {%- else -%}
+    {{ product.collections.first.title }}
+  {%- endif -%}
+</div>
         <h3 class="card__heading h5">
           <a href="{{ product_url }}" class="full-unstyled-link">
             {{ product.title }}
