@@ -858,10 +858,17 @@ if (!customElements.get('facet-status-component')) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  const Sorter = document.querySelector('#SortBy');
+  // Get the current URL's search parameters
+  const urlParams = new URLSearchParams(window.location.search);
 
-  if (Sorter && Sorter.value === 'price-ascending') {
-    Sorter.dispatchEvent(new Event('change'));
+  // Check if a 'sort_by' parameter is already in the URL
+  if (!urlParams.has('sort_by')) {
+    
+    // If it's NOT there, add our default sort preference
+    urlParams.set('sort_by', 'price-ascending');
+    
+    // Create the new URL and reload the page with it
+    window.location.href = `${window.location.pathname}?${urlParams.toString()}`;
   }
 });
 /**
