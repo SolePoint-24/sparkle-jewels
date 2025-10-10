@@ -858,14 +858,49 @@ if (!customElements.get('facet-status-component')) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
+  // --- START: NO-REFRESH DEFAULT SORT SCRIPT ---
+
+  // This selector targets the main wrapper element from your theme's code.
+  const productGridSectionSelector = `results-list[section-id*="__main"]`;
+  const productGridSection = document.querySelector(productGridSectionSelector);
+
+  // Exit if the main section isn't found
+  if (!productGridSection) {
+    return;
+  }
+
   const urlParams = new URLSearchParams(window.location.search);
+
+  // Run only if no 'sort_by' parameter exists in the URL
   if (!urlParams.has('sort_by')) {
     urlParams.set('sort_by', 'price-ascending');
-    const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
-    history.replaceState(null, '', newUrl);
 
-    // Then trigger your filtering function here
+    const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+    
+    // Add a class to prevent this from running multiple times
+    productGridSection.classList.add('loading-default-sort');
+
+    // 1. Fetch the new page content in the background
+    fetch(newUrl)
+      .then(response => response.text())
+      .then((responseText) => {
+        const html = new DOMParser().parseFromString(responseText, 'text/html');
+        const newProductGridSection = html.querySelector(productGridSectionSelector);
+        
+        if (newProductGridSection) {
+          // 2. Replace the current section content with the new sorted one
+          productGridSection.innerHTML = newProductGridSection.innerHTML;
+
+          // 3. Update the URL in the browser bar without reloading the page
+          history.pushState({ }, '', newUrl);
+        }
+      })
+      .finally(() => {
+        // Remove the loading class once done
+        productGridSection.classList.remove('loading-default-sort');
+      });
   }
+  // --- END: NO-REFRESH DEFAULT SORT SCRIPT ---
 });
 
 /**
