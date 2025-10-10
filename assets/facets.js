@@ -857,20 +857,14 @@ if (!customElements.get('facet-status-component')) {
 }
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Get the current URL's search parameters
+(function () {
   const urlParams = new URLSearchParams(window.location.search);
-
-  // Check if a 'sort_by' parameter is already in the URL
   if (!urlParams.has('sort_by')) {
-    
-    // If it's NOT there, add our default sort preference
     urlParams.set('sort_by', 'price-ascending');
-    
-    // Create the new URL and reload the page with it
-    window.location.href = `${window.location.pathname}?${urlParams.toString()}`;
+    window.location.replace(`${window.location.pathname}?${urlParams.toString()}`);
   }
-});
+})();
+
 /**
  * Default currency decimals used in most currenies
  * @constant {number}
