@@ -856,6 +856,14 @@ if (!customElements.get('facet-status-component')) {
   customElements.define('facet-status-component', FacetStatusComponent);
 }
 
+
+document.addEventListener('DOMContentLoaded', () => {
+  const Sorter = document.querySelector('#SortBy');
+
+  if (Sorter && Sorter.value === 'price-ascending') {
+    Sorter.dispatchEvent(new Event('change'));
+  }
+});
 /**
  * Default currency decimals used in most currenies
  * @constant {number}
