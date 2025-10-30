@@ -107,6 +107,12 @@
             "title": "Explore Jewelry by types"
           }
         },
+        "collection_hYR4hR": {
+          "type": "collection",
+          "settings": {
+            "collection": "rings"
+          }
+        },
         "collection_YL8rrV": {
           "type": "collection",
           "settings": {
@@ -124,20 +130,14 @@
           "settings": {
             "collection": "necklaces"
           }
-        },
-        "collection_hYR4hR": {
-          "type": "collection",
-          "settings": {
-            "collection": "rings"
-          }
         }
       },
       "block_order": [
         "title_8xCmiU",
+        "collection_hYR4hR",
         "collection_YL8rrV",
         "collection_RrhfYc",
-        "collection_6igG8m",
-        "collection_hYR4hR"
+        "collection_6igG8m"
       ],
       "name": "t:names.collections_carousel",
       "settings": {
