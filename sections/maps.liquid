@@ -39,11 +39,9 @@
           </p>
         {%- endif -%}
 
-        {%- if section.settings.phone_2 != blank -%}
-          <p class="map-section__contact">
-            {{ section.settings.phone_2 }}
-          </p>
-        {%- endif -%}
+        {%- comment -%}
+          Contact Info Line 2 has been removed.
+        {%- endcomment -%}
 
         {%- if section.blocks.size > 0 -%}
           <div class="map-section__socials">
@@ -241,13 +239,13 @@
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Mumbai"
+      "default": "Ahmedabad"
     },
     {
       "type": "richtext",
       "id": "address",
       "label": "Address",
-      "default": "<p><strong>M/s. Krini Furniture Pvt Ltd</strong><br/>Office No. 13 & 14, B Wing, 1st Floor, Sant Bhavan,<br/>Junction of Marve Road And B J Patel Road,<br/>Malad (West), Mumbai 400064.<br/>Maharashtra, India.</p>"
+      "default": "<p><strong>Sparkle Jewels</strong><br/>B-116, Sumel Business Park 6,<br/>Dudheshwar, Ahmedabad,<br/>Gujarat-380004</p>"
     },
     {
       "type": "text",
@@ -258,14 +256,8 @@
     {
       "type": "text",
       "id": "phone_1",
-      "label": "Contact Info Line 1",
-      "default": "For enquiries call or WhatsApp: +91-8591489667 / 662"
-    },
-    {
-      "type": "text",
-      "id": "phone_2",
-      "label": "Contact Info Line 2",
-      "default": "For Export Inquiries: +91-8591489671"
+      "label": "Contact Info",
+      "default": "+91 8980462440"
     },
     {
       "type": "header",
