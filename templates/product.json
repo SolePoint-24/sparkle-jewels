@@ -144,6 +144,12 @@
               },
               "blocks": {}
             },
+            "sku_whatsapp_msg_Bepn9b": {
+              "type": "sku-whatsapp-msg",
+              "name": "SKU WhatsApp Link",
+              "settings": {},
+              "blocks": {}
+            },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
@@ -823,6 +829,7 @@
             "price_a7krng",
             "sku_block_HYMALL",
             "variant_picker_R3rGDr",
+            "sku_whatsapp_msg_Bepn9b",
             "buy_buttons_eYQEYi",
             "delivery_date_rAwi84",
             "group_mPWi7V",
