@@ -28,15 +28,15 @@
         <hr class="map-section__divider">
 
         {%- if section.settings.email != blank -%}
-          <p class="map-section__contact">
-            <strong>Email:</strong> <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
-          </p>
+          <div class="map-section__contact rte">
+            <strong>Email:</strong> {{ section.settings.email }}
+          </div>
         {%- endif -%}
 
         {%- if section.settings.phone_1 != blank -%}
-          <p class="map-section__contact">
+          <div class="map-section__contact rte">
             {{ section.settings.phone_1 }}
-          </p>
+          </div>
         {%- endif -%}
 
         {%- comment -%}
@@ -248,16 +248,16 @@
       "default": "<p><strong>Sparkle Jewels</strong><br/>B-116, Sumel Business Park 6,<br/>Dudheshwar, Ahmedabad,<br/>Gujarat-380004</p>"
     },
     {
-      "type": "text",
+      "type": "richtext",
       "id": "email",
       "label": "Email",
-      "default": "info@krini.co.in"
+      "default": "<p><a href=\"mailto:info@krini.co.in\">info@krini.co.in</a></p>"
     },
     {
-      "type": "text",
+      "type": "richtext",
       "id": "phone_1",
       "label": "Contact Info",
-      "default": "+91 8980462440"
+      "default": "<p><a href=\"tel:+918980462440\">+91 8980462440</a></p>"
     },
     {
       "type": "header",
@@ -325,3 +325,4 @@
   ]
 }
 {% endschema %}
+
