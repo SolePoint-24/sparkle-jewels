@@ -1,15 +1,16 @@
 {%- comment -%}
-  Get settings from the Theme Editor
+  These values are now hardcoded since snippets cannot have settings.
 {%- endcomment -%}
-{%- assign phone_number = section.settings.phone_number -%}
-{%- assign message = section.settings.message | default: "Hi!" -%}
-{%- assign show_on_desktop = section.settings.show_on_desktop -%}
-{%- assign show_on_mobile = section.settings.show_on_mobile -%}
+{%- assign phone_number = '918980462440' -%}
+{%- assign message = "Hi! I have a question." -%}
+{%- assign show_on_desktop = true -%}
+{%- assign show_on_mobile = true -%}
+{%- assign enable_button = true -%}
 
 {%- comment -%}
   Only show the button if it's enabled and a phone number is set
 {%- endcomment -%}
-{%- if section.settings.enable_button and phone_number != blank -%}
+{%- if enable_button and phone_number != blank -%}
   {%- comment -%}
     Build the WhatsApp URL and encode the message
   {%- endcomment -%}
@@ -80,4 +81,5 @@
     </svg>
   </a>
 {%- endif -%}
+
 
