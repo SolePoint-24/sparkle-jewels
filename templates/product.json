@@ -277,7 +277,7 @@
                       "settings": {
                         "icon": "price_tag",
                         "image_upload": "shopify://shop_images/return-icon.png",
-                        "width": 24,
+                        "width": 40,
                         "link": "",
                         "open_in_new_tab": false
                       },
@@ -361,7 +361,7 @@
                       "settings": {
                         "icon": "price_tag",
                         "image_upload": "shopify://shop_images/bishallmark.png",
-                        "width": 24,
+                        "width": 40,
                         "link": "",
                         "open_in_new_tab": false
                       },
@@ -445,7 +445,7 @@
                       "settings": {
                         "icon": "price_tag",
                         "image_upload": "shopify://shop_images/sparkle-jewels-logo-transparent.png",
-                        "width": 24,
+                        "width": 40,
                         "link": "",
                         "open_in_new_tab": false
                       },
@@ -529,7 +529,7 @@
                       "settings": {
                         "icon": "price_tag",
                         "image_upload": "shopify://shop_images/free-delivery.png",
-                        "width": 24,
+                        "width": 40,
                         "link": "",
                         "open_in_new_tab": false
                       },
@@ -613,7 +613,7 @@
                       "settings": {
                         "icon": "price_tag",
                         "image_upload": "shopify://shop_images/lifetime-exchnage-icon.png",
-                        "width": 24,
+                        "width": 40,
                         "link": "",
                         "open_in_new_tab": false
                       },
