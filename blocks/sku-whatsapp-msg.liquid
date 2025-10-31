@@ -1,0 +1,23 @@
+<variant-value-updater data-id="sku">
+  <p>
+    {{ product.selected_or_first_available_variant.sku}}
+  </p>
+</variant-value-updater>
+
+{% schema %}
+{
+  "name": "sku",
+  "settings": [
+     {
+      "type": "paragraph",
+      "content": "This block shows sku."
+    }
+  ],
+  "presets": [
+    {
+      "name": "sku",
+      "category": "t:categories.custom"
+    }
+  ]
+}
+{% endschema %}
