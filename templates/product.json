@@ -360,7 +360,7 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "price_tag",
-                        "image_upload": "shopify://shop_images/BIS-Hallmark-Black.png",
+                        "image_upload": "shopify://shop_images/bishallmark.png",
                         "width": 24,
                         "link": "",
                         "open_in_new_tab": false
