@@ -3,7 +3,7 @@
 {%- endcomment -%}
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 {%- assign sku = current_variant.sku -%}
-{%- assign phone_number = "8980462440" -%}
+{%- assign phone_number = '8980462440' -%}
 
 <variant-value-updater data-id="sku">
   {%- comment -%}
@@ -11,46 +11,44 @@
     The phone number is now hardcoded.
   {%- endcomment -%}
   {%- if phone_number != blank and sku != blank -%}
-    
     {%- comment -%}
       1. Create the text message and store it in a variable.
     {%- endcomment -%}
     {%- capture whatsapp_message -%}
     Hey, I’d like to inquire about this {{ sku }} Could you please share more details?
     {%- endcapture -%}
-    
+
     {%- comment -%}
       2. URL-encode the message so it works in a link.
          This changes spaces to %20, etc.
     {%- endcomment -%}
     {%- assign encoded_message = whatsapp_message | url_encode -%}
-    
+
     {%- comment -%}
       3. Build the final WhatsApp URL.
     {%- endcomment -%}
-    {%- assign whatsapp_url = "https://wa.me/" | append: phone_number | append: "?text=" | append: encoded_message -%}
+    {%- assign whatsapp_url = 'https://wa.me/' | append: phone_number | append: '?text=' | append: encoded_message -%}
 
     {%- comment -%}
       4. Wrap the SKU in an <a> tag with the new URL.
          target="_blank" opens it in a new tab.
     {%- endcomment -%}
-    <a href="{{ whatsapp_url }} style="text-align: center; padding: 10px;" 
-       target="_blank" 
-       rel="noopener" 
-       aria-label="Inquire about SKU {{ sku }} on WhatsApp"
-       style="text-decoration: underline; cursor: pointer;">
-      <p>
-       Know more about this product
-      </p>
+    <a
+      href="{{ whatsapp_url }} "
+      style="text-align: center; padding: 10px;"
+      target="_blank"
+      rel="noopener"
+      aria-label="Inquire about SKU {{ sku }} on WhatsApp"
+      style="text-decoration: underline; cursor: pointer;"
+    >
+      <p>Know more about this product</p>
     </a>
-    
+
   {%- elsif sku != blank -%}
     {%- comment -%}
       If there is no phone number set, just show the SKU as plain text.
     {%- endcomment -%}
-    <p>
-      SKU: {{ sku }}
-    </p>
+    <p>SKU: {{ sku }}</p>
   {%- endif -%}
 </variant-value-updater>
 
@@ -66,4 +64,3 @@
   ]
 }
 {% endschema %}
-
