@@ -108,7 +108,7 @@
               "settings": {
                 "show_sale_price_first": true,
                 "show_installments": true,
-                "show_tax_info": false,
+                "show_tax_info": true,
                 "type_preset": "h3",
                 "width": "100%",
                 "alignment": "left",
@@ -360,8 +360,8 @@
                       "name": "t:names.icon",
                       "settings": {
                         "icon": "price_tag",
-                        "image_upload": "shopify://shop_images/BIS-Hallmark-Black.svg",
-                        "width": 24,
+                        "image_upload": "shopify://shop_images/BIS-Hallmark-Black.png",
+                        "width": 40,
                         "link": "",
                         "open_in_new_tab": false
                       },
