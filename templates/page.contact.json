@@ -147,17 +147,16 @@
         "padding-block-end": 70
       }
     },
-    "maps_f7qarD": {
+    "maps_VHCTbL": {
       "type": "maps",
       "name": "Map with Address",
       "settings": {
         "color_scheme": "",
         "heading": "OUR ADDRESS",
-        "subheading": "Mumbai",
-        "address": "<p><strong>M/s. Krini Furniture Pvt Ltd</strong><br/>Office No. 13 & 14, B Wing, 1st Floor, Sant Bhavan,<br/>Junction of Marve Road And B J Patel Road,<br/>Malad (West), Mumbai 400064.<br/>Maharashtra, India.</p>",
+        "subheading": "Ahmedabad",
+        "address": "<p><strong>Sparkle Jewels</strong><br/>B-116, Sumel Business Park 6,<br/>Dudheshwar, Ahmedabad,<br/>Gujarat-380004</p>",
         "email": "info@krini.co.in",
-        "phone_1": "For enquiries call or WhatsApp: +91-8591489667",
-        "phone_2": "",
+        "phone_1": "+91 8980462440",
         "map_embed_code": "",
         "height_desktop": 500,
         "height_mobile": 350
@@ -167,6 +166,6 @@
   "order": [
     "main",
     "form",
-    "maps_f7qarD"
+    "maps_VHCTbL"
   ]
 }
