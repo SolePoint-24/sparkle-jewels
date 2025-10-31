@@ -155,8 +155,8 @@
         "heading": "OUR ADDRESS",
         "subheading": "Ahmedabad",
         "address": "<p><strong>Sparkle Jewels</strong><br/>B-116, Sumel Business Park 6,<br/>Dudheshwar, Ahmedabad,<br/>Gujarat-380004</p>",
-        "email": "info@krini.co.in",
-        "phone_1": "+91 8980462440",
+        "email": "<p><a href=\"mailto:info@krini.co.in\" title=\"mailto:info@krini.co.in\">info@krini.co.in</a></p>",
+        "phone_1": "<p>Call /Whatsapp on : +91 8980462440</p>",
         "map_embed_code": "",
         "height_desktop": 500,
         "height_mobile": 350
