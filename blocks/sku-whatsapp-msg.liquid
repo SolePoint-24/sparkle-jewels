@@ -5,6 +5,23 @@
 {%- assign sku = current_variant.sku -%}
 {%- assign phone_number = '918980462440' -%}
 
+<style>
+  .sku-whatsapp-link {
+    display: inline-block; /* Allows padding and text-align to work */
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    color: #333; /* Base text color */
+    text-decoration: none; /* No underline by default */
+    transition: color 0.2s ease; /* Smooth color change */
+  }
+
+  .sku-whatsapp-link:hover {
+    color: #000; /* A little darker on hover */
+    text-decoration: underline; /* Underline on hover */
+  }
+</style>
+
 <variant-value-updater data-id="sku">
   {%- comment -%}
     Only create the link if the variant has a SKU.
@@ -31,17 +48,16 @@
 
     {%- comment -%}
       4. Wrap the SKU in an <a> tag with the new URL.
-         target="_blank" opens it in a new tab.
+         This now uses the CSS class instead of inline styles.
     {%- endcomment -%}
     <a
-      href="{{ whatsapp_url }} "
-      style="text-align: center; padding: 10px;"
+      href="{{ whatsapp_url }}"
+      class="sku-whatsapp-link"
       target="_blank"
       rel="noopener"
       aria-label="Inquire about SKU {{ sku }} on WhatsApp"
-      style="text-decoration: underline; cursor: pointer;"
     >
-      <p>Know more about this product</p>
+      Know more about this product
     </a>
 
   {%- elsif sku != blank -%}
@@ -64,3 +80,4 @@
   ]
 }
 {% endschema %}
+
