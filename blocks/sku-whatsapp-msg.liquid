@@ -6,6 +6,11 @@
 {%- assign phone_number = '918980462440' -%}
 
 <style>
+  /* This new wrapper class will center the link */
+  .sku-whatsapp-wrapper {
+    text-align: center;
+  }
+
   .sku-whatsapp-link {
     display: inline-block; /* Allows padding and text-align to work */
     text-align: center;
@@ -23,33 +28,53 @@
 </style>
 
 <variant-value-updater data-id="sku">
-
+  {%- comment -%}
+    Only create the link if the variant has a SKU.
+    The phone number is now hardcoded.
+  {%- endcomment -%}
   {%- if phone_number != blank and sku != blank -%}
-
+    {%- comment -%}
+      1. Create the text message and store it in a variable.
+    {%- endcomment -%}
     {%- capture whatsapp_message -%}
     Hey, I’d like to inquire about this {{ sku }} Could you please share more details?
     {%- endcapture -%}
 
+    {%- comment -%}
+      2. URL-encode the message so it works in a link.
+         This changes spaces to %20, etc.
+    {%- endcomment -%}
     {%- assign encoded_message = whatsapp_message | url_encode -%}
 
-
+    {%- comment -%}
+      3. Build the final WhatsApp URL.
+    {%- endcomment -%}
     {%- assign whatsapp_url = 'https://wa.me/' | append: phone_number | append: '?text=' | append: encoded_message -%}
 
-    <a
-      href="{{ whatsapp_url }}"
-      class="sku-whatsapp-link"
-      target="_blank"
-      rel="noopener"
-      aria-label="Inquire about SKU {{ sku }} on WhatsApp"
-    >
-      Know more about this product
-    </a>
+    {%- comment -%}
+      4. Wrap the SKU in an <a> tag with the new URL.
+         This now uses the CSS class instead of inline styles.
+    {%- endcomment -%}
+    
+    <!-- This wrapper div applies the text-align: center -->
+    <div class="sku-whatsapp-wrapper">
+      <a
+        href="{{ whatsapp_url }}"
+        class="sku-whatsapp-link"
+        target="_blank"
+        rel="noopener"
+        aria-label="Inquire about SKU {{ sku }} on WhatsApp"
+      >
+        Know more about this product
+      </a>
+    </div>
 
   {%- elsif sku != blank -%}
     {%- comment -%}
       If there is no phone number set, just show the SKU as plain text.
+      I've centered this too for consistency.
     {%- endcomment -%}
-    <p>SKU: {{ sku }}</p>
+    <p style="text-align: center;">SKU: {{ sku }}</p>
   {%- endif -%}
 </variant-value-updater>
 
@@ -65,3 +90,4 @@
   ]
 }
 {% endschema %}
+
