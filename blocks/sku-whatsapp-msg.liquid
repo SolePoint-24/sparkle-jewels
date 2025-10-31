@@ -4,6 +4,7 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 {%- assign sku = current_variant.sku -%}
 {%- assign phone_number = '918980462440' -%}
+{%- assign product_title = product.title -%}
 
 <style>
   /* This new wrapper class will center the link */
@@ -37,7 +38,7 @@
       1. Create the text message and store it in a variable.
     {%- endcomment -%}
     {%- capture whatsapp_message -%}
-    i want more details on {{ sku }} Could you please share more details?
+    I want more details on {{ sku }} 
     {%- endcapture -%}
 
     {%- comment -%}
