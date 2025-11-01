@@ -59,7 +59,6 @@
         },
         "collection_slide_ydfNDE": {
           "type": "collection_slide",
-          "disabled": true,
           "settings": {
             "collection": "bracelets",
             "image_desktop": "shopify://shop_images/Sparkle_jewels_banner.png",
