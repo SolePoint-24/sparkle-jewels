@@ -57,6 +57,19 @@
             "button_pos_left_mobile": 25
           }
         },
+        "collection_slide_ydfNDE": {
+          "type": "collection_slide",
+          "settings": {
+            "collection": "bracelets",
+            "image_desktop": "shopify://shop_images/Sparkle_jewels_banner.png",
+            "button_label": "",
+            "button_link": "",
+            "button_pos_top": 85,
+            "button_pos_left": 10,
+            "button_pos_top_mobile": 50,
+            "button_pos_left_mobile": 25
+          }
+        },
         "collection_slide_UCFrQY": {
           "type": "collection_slide",
           "settings": {
@@ -77,6 +90,7 @@
         "collection_slide_Uq6qFi",
         "collection_slide_ERayxk",
         "collection_slide_h3qKUF",
+        "collection_slide_ydfNDE",
         "collection_slide_UCFrQY"
       ],
       "name": "t:names.hero",
