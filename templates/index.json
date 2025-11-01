@@ -63,6 +63,8 @@
           "settings": {
             "collection": "bracelets",
             "image_desktop": "shopify://shop_images/Sparkle_jewels_banner.png",
+            "image_tablet": "shopify://shop_images/Sparkle_jewels_banner-tablet.jpg",
+            "image_mobile": "shopify://shop_images/Sparkle_jewels_banner-mobile.jpg",
             "button_label": "",
             "button_link": "",
             "button_pos_top": 85,
