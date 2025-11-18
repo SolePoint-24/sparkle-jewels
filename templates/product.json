@@ -821,6 +821,19 @@
                 "accordion_row_xAWcUb",
                 "accordion_row_JkddYP"
               ]
+            },
+            "social_share_txGebt": {
+              "type": "social-share",
+              "name": "Social Share",
+              "settings": {
+                "title": "Share:",
+                "share_facebook": true,
+                "share_X": true,
+                "share_pinterest": true,
+                "share_whatsapp": true,
+                "share_linkedin": true
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -833,7 +846,8 @@
             "buy_buttons_eYQEYi",
             "delivery_date_rAwi84",
             "group_mPWi7V",
-            "accordion_Yd4U4w"
+            "accordion_Yd4U4w",
+            "social_share_txGebt"
           ]
         }
       },
