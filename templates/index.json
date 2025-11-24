@@ -12,6 +12,21 @@
     "hero_G7CAX9": {
       "type": "hero",
       "blocks": {
+        "collection_slide_7tG6Kx": {
+          "type": "collection_slide",
+          "settings": {
+            "collection": "engagement-rings-1",
+            "image_desktop": "shopify://shop_images/RING_BANNER_1.jpg",
+            "image_tablet": "shopify://shop_images/RING_BANNER.jpg",
+            "image_mobile": "shopify://shop_images/14_6bdf5c58-cf5e-49d9-a931-8c622230b8c4.jpg",
+            "button_label": "",
+            "button_link": "",
+            "button_pos_top": 85,
+            "button_pos_left": 10,
+            "button_pos_top_mobile": 50,
+            "button_pos_left_mobile": 25
+          }
+        },
         "collection_slide_Uq6qFi": {
           "type": "collection_slide",
           "settings": {
@@ -89,6 +104,7 @@
         }
       },
       "block_order": [
+        "collection_slide_7tG6Kx",
         "collection_slide_Uq6qFi",
         "collection_slide_ERayxk",
         "collection_slide_h3qKUF",
