@@ -201,7 +201,7 @@
           "type": "usp_item",
           "settings": {
             "icon": "shopify://shop_images/sparkle-jewels-logo-transparent.png",
-            "title": "Sparkle Certified"
+            "title": "Sparkè Certified"
           }
         },
         "usp_item_qUUcJk": {
@@ -228,7 +228,7 @@
       ],
       "name": "Marquee USP",
       "settings": {
-        "heading": "Why Choose Sparkle",
+        "heading": "Why Choose Sparkèl",
         "color_scheme": "scheme-4",
         "animation_speed": 30
       }
