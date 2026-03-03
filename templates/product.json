@@ -455,7 +455,7 @@
                       "type": "text",
                       "name": "t:names.text",
                       "settings": {
-                        "text": "<p>Sparkle Certified</p>",
+                        "text": "<p>SPARKèL Certified</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "center",
