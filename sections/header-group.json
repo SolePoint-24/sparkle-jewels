@@ -158,7 +158,7 @@
       "settings": {
         "logo_tagline": "SPARKèL",
         "tagline_font_size": 24,
-        "tagline_font_size_mobile": 16,
+        "tagline_font_size_mobile": 20,
         "logo_position": "left",
         "menu_position": "center",
         "menu_row": "top",
@@ -174,7 +174,7 @@
         "localization_row": "top",
         "section_width": "page-width",
         "section_height": "compact",
-        "enable_sticky_header": "scroll-up",
+        "enable_sticky_header": "always",
         "divider_width": 1,
         "divider_size": "page-width",
         "border_width": 1,
