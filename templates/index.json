@@ -1213,6 +1213,23 @@
         "products_to_show": 8
       }
     },
+    "collection_showcase_section_yinTBE": {
+      "type": "collection-showcase-section",
+      "name": "Custom Collection Showcase",
+      "settings": {
+        "subtitle": "Everyday Elegance",
+        "heading": "Wear the confidence in your Routine",
+        "promo_image": "shopify://shop_images/fashionable-young-woman.jpg",
+        "promo_subtitle": "EVERYDAY RADIANCE",
+        "promo_title": "Meets|Brilliance",
+        "promo_button_text": "Discover Now",
+        "promo_button_link": "shopify://collections/everyday-elegance",
+        "collection": "everyday-elegance",
+        "products_per_view": 3,
+        "products_to_slide": 2,
+        "products_to_show": 8
+      }
+    },
     "17588893678708b821": {
       "type": "_blocks",
       "blocks": {
@@ -2621,6 +2638,7 @@
     "media_with_content_HP7Qpp",
     "collection_showcase_section_LcYmLk",
     "collection_showcase_section_CM9XwH",
+    "collection_showcase_section_yinTBE",
     "17588893678708b821",
     "section_Vtakah",
     "section_kDbFpW",
