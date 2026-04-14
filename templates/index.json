@@ -1230,6 +1230,23 @@
         "products_to_show": 8
       }
     },
+    "collection_showcase_section_BKbkRH": {
+      "type": "collection-showcase-section",
+      "name": "Custom Collection Showcase",
+      "settings": {
+        "subtitle": "Studs",
+        "heading": "Radiance and Reliance",
+        "promo_image": "shopify://shop_images/Swan_Embrace_Oval_Cut_Diamond_Studs_white_gold-05.jpg",
+        "promo_subtitle": "Solitaire Studs",
+        "promo_title": "Handcrafted | Studs",
+        "promo_button_text": "Discover Now",
+        "promo_button_link": "shopify://collections/studs",
+        "collection": "studs",
+        "products_per_view": 3,
+        "products_to_slide": 2,
+        "products_to_show": 8
+      }
+    },
     "17588893678708b821": {
       "type": "_blocks",
       "blocks": {
@@ -2639,6 +2656,7 @@
     "collection_showcase_section_LcYmLk",
     "collection_showcase_section_CM9XwH",
     "collection_showcase_section_yinTBE",
+    "collection_showcase_section_BKbkRH",
     "17588893678708b821",
     "section_Vtakah",
     "section_kDbFpW",
