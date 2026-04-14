@@ -4505,3 +4505,21 @@ box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* strong shadow */
   }
 
 }
+@media screen and (max-width: 749px) {
+
+  .card__heading {
+    font-size: 12px !important;
+  }
+
+  .price {
+    font-size: 12px !important;
+  }
+
+}
+@media screen and (max-width: 749px) {
+
+  .slider-mobile-gutter .slider__slide {
+    width: 50% !important;
+  }
+
+}
