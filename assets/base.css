@@ -4486,3 +4486,22 @@ box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* strong shadow */
 }
 
 /* === END: Definitive Custom Product Card Styles v3 === */
+/* MOBILE: Show 2 products in slider (Dawn-based themes) */
+@media screen and (max-width: 749px) {
+
+  .slider.slider--mobile {
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+
+  .slider.slider--mobile .slider__slide {
+    width: 50% !important;
+    max-width: 50% !important;
+  }
+
+  /* Fix spacing */
+  .slider.slider--mobile .grid__item {
+    padding: 5px;
+  }
+
+}
