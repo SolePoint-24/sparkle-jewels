@@ -4486,40 +4486,26 @@ box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* strong shadow */
 }
 
 /* === END: Definitive Custom Product Card Styles v3 === */
-/* MOBILE: Show 2 products in slider (Dawn-based themes) */
+/* FORCE 2 PRODUCTS PER ROW ON MOBILE (Override Dawn slider) */
 @media screen and (max-width: 749px) {
 
-  .slider.slider--mobile {
-    display: flex !important;
-    flex-wrap: wrap !important;
+  /* Disable slider */
+  .slider--mobile {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+    overflow: hidden !important;
   }
 
-  .slider.slider--mobile .slider__slide {
-    width: 50% !important;
-    max-width: 50% !important;
+  /* Fix each product */
+  .slider--mobile .slider__slide {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
-  /* Fix spacing */
-  .slider.slider--mobile .grid__item {
-    padding: 5px;
-  }
-
-}
-@media screen and (max-width: 749px) {
-
-  .card__heading {
-    font-size: 12px !important;
-  }
-
-  .price {
-    font-size: 12px !important;
-  }
-
-}
-@media screen and (max-width: 749px) {
-
-  .slider-mobile-gutter .slider__slide {
-    width: 50% !important;
+  /* Remove transform from slider JS */
+  .slider--mobile {
+    transform: none !important;
   }
 
 }
