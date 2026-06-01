@@ -153,10 +153,11 @@
         }
       },
       "custom_css": [
-        ".header__row {height: 100px;}"
+        ".header__row {height: 100px;}",
+        ".logo__tagline {font-family: \"Kenao\", sans-serif !important;}"
       ],
       "settings": {
-        "logo_tagline": "SPARKèL",
+        "logo_tagline": "JHEVAR",
         "tagline_font_size": 24,
         "tagline_font_size_mobile": 20,
         "logo_position": "left",
