@@ -4484,5 +4484,12 @@ box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* strong shadow */
   font-weight: normal;
   text-decoration: line-through;
 }
-
+@font-face {
+  font-family: 'Kenao';
+  src: url('https://cdn.shopify.com/s/files/1/0664/9456/2387/files/Kenao.woff2?v=1780302159') format('woff2'),
+       url('https://cdn.shopify.com/s/files/1/0664/9456/2387/files/Kenao.woff?v=1780301938') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 /* === END: Definitive Custom Product Card Styles v3 === */
