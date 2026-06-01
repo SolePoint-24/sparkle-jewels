@@ -75,7 +75,7 @@
         "collection_slide_ydfNDE": {
           "type": "collection_slide",
           "settings": {
-            "collection": "bracelets",
+            "collection": "necklaces",
             "image_desktop": "shopify://shop_images/Sparkle_jewels_banner_413db837-d52a-4a9d-8c5a-d97bc259e262.png",
             "image_tablet": "shopify://shop_images/Sparkle_jewels_banner-tablet.jpg",
             "image_mobile": "shopify://shop_images/Sparkle_jewels_banner-mobile.jpg",
@@ -90,7 +90,7 @@
         "collection_slide_UCFrQY": {
           "type": "collection_slide",
           "settings": {
-            "collection": "necklaces",
+            "collection": "layered-necklaces",
             "image_desktop": "{{ block.settings.collection.metafields.custom.hero_desktop.value }}",
             "image_tablet": "{{ block.settings.collection.metafields.custom.hero_tablet.value }}",
             "image_mobile": "{{ block.settings.collection.metafields.custom.hero_mobile_image.value }}",
