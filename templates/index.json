@@ -201,7 +201,7 @@
           "type": "usp_item",
           "settings": {
             "icon": "shopify://shop_images/sparkle-jewels-logo-transparent.png",
-            "title": "SPARKèL Certified"
+            "title": "JHEVAR Certified"
           }
         },
         "usp_item_qUUcJk": {
@@ -228,7 +228,7 @@
       ],
       "name": "Marquee USP",
       "settings": {
-        "heading": "Why Choose Sparkèl",
+        "heading": "Why Choose JHEVAR",
         "color_scheme": "scheme-4",
         "animation_speed": 30
       }
