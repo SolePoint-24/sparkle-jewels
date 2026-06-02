@@ -1,6 +1,38 @@
+{% doc %}
+  @prompt
+    Add a custom CSS block to the Custom Footer section that does the following: 1) Declares a @font-face rule with font-family named 'Kenao Serif Sans' and src url pointing to 'https://cdn.shopify.com/s/files/1/0664/9456/2387/files/Kenao.woff2?v=1780302159' in woff2 format. 2) Applies font-family: 'Kenao Serif Sans', serif to the Custom Footer section's title element.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  @font-face {
+    font-family: 'Kenao Serif Sans';
+    src: url('https://cdn.shopify.com/s/files/1/0664/9456/2387/files/Kenao.woff2?v=1780302159') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  .ai-custom-css-{{ ai_gen_id }} .footer__title {
+    font-family: 'Kenao Serif Sans', serif;
+  }
+{% endstyle %}
+
+<div class="ai-custom-css-{{ ai_gen_id }}" {{ block.shopify_attributes }}></div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Custom CSS",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "This block applies custom CSS to the Custom Footer section. It loads the Kenao Serif Sans font and applies it to footer titles."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom CSS"
+    }
+  ]
+}
 {% endschema %}
