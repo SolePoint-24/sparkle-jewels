@@ -54,7 +54,7 @@
         "social_icon_qenPhK"
       ],
       "custom_css": [
-        ".footer__title {font-size: 100px;}"
+        ".footer__title {font-size: 100px; font-family: \"Kenao\", sans-serif !important;}"
       ],
       "name": "Custom Footer",
       "settings": {
