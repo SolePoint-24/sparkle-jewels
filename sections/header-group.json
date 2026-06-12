@@ -156,7 +156,7 @@
       },
       "custom_css": [
         ".header__row {height: 100px;}",
-        ".logo__tagline {font-family: \"Kenao\", sans-serif !important; color: #111111 !important; opacity: 1 !important; font-weight: 600 !important; font-size: 30px; text-align: center; padding-left: 0px;}"
+        ".logo__tagline {font-family: \"Kenao\", sans-serif !important; color: #111111 !important; opacity: 1 !important; font-weight: 500 !important; font-size: 30px; text-align: center; padding-left: 0px;}"
       ],
       "settings": {
         "logo_tagline": "Jhevar",
