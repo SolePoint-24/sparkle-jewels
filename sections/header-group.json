@@ -159,7 +159,7 @@
         ".logo__tagline {font-family: \"Kenao\", sans-serif !important; color: #111111 !important; opacity: 1 !important; font-weight: 550 !important; font-size: 30px; text-align: center; padding-left: 0px;}"
       ],
       "settings": {
-        "logo_tagline": "JHEVAR",
+        "logo_tagline": "Jhevar",
         "tagline_font_size": 24,
         "tagline_font_size_mobile": 20,
         "logo_position": "left",
