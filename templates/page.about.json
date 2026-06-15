@@ -77,7 +77,6 @@
           "static": true,
           "settings": {
             "media_type": "image",
-            "image": "shopify://shop_images/Luminous_Arc_Lab-Grown_Diamond_Earrings_no_colour-02.jpg",
             "link": "",
             "video_loop": true,
             "video_autoplay": false,
@@ -138,7 +137,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<h2><strong>About Sparkle Jewels: The Art of Brilliance, The Heart of India</strong></h2>",
+                    "text": "<h2><strong>About Jhevar: The Art of Brilliance, The Heart of India</strong></h2>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -164,7 +163,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>At Sparkle Jewels, we believe jewellery should be as unique as the person wearing it. That’s why we don’t just sell jewellery — we help you create it.<br/><br/>Many of our customers bring us designs they love — from top brands, Pinterest, or their own imagination — and our expert in-house artisans bring those ideas to life with unmatched craftsmanship. From sketch to finish, we ensure every detail shines with perfection.<br/><br/>We also offer a curated design catalogue on our website, featuring elegant rings, earrings, pendants, bracelets, and bridal jewellery. Each piece can be made-to-order in your preferred diamond type (natural or lab-grown), stone size, and gold purity — giving you complete freedom to customise while choosing from our collection.<br/><br/>Unlike traditional jewellers, we carry zero inventory. This means no unnecessary costs, no middlemen, and no compromises. Instead, we source diamonds and precious materials directly from trusted suppliers, giving you luxury jewellery at the most competitive pricing.</p>",
+                    "text": "<p>Jhevar is a Brand of Sparkle Jewels, We believe jewellery should be as unique as the person wearing it. That’s why we don’t just sell jewellery — we help you create it.<br/><br/>Many of our customers bring us designs they love — from top brands, Pinterest, or their own imagination — and our expert in-house artisans bring those ideas to life with unmatched craftsmanship. From sketch to finish, we ensure every detail shines with perfection.<br/><br/>We also offer a curated design catalogue on our website, featuring elegant rings, earrings, pendants, bracelets, and bridal jewellery. Each piece can be made-to-order in your preferred diamond type (natural or lab-grown), stone size, and gold purity — giving you complete freedom to customise while choosing from our collection.<br/><br/>Unlike traditional jewellers, we carry zero inventory. This means no unnecessary costs, no middlemen, and no compromises. Instead, we source diamonds and precious materials directly from trusted suppliers, giving you luxury jewellery at the most competitive pricing.</p>",
                     "width": "100%",
                     "max_width": "none",
                     "alignment": "left",
