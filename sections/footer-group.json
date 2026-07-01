@@ -54,7 +54,7 @@
         "social_icon_qenPhK"
       ],
       "custom_css": [
-        ".footer__title {font-size: 100px;}"
+        ".footer__title {font-size: 75px;}"
       ],
       "name": "Custom Footer",
       "settings": {
