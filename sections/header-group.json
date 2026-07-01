@@ -114,9 +114,9 @@
           "type": "_header-logo",
           "static": true,
           "settings": {
-            "hide_logo_on_home_page": false,
-            "custom_height": 55,
-            "custom_height_mobile": 70,
+            "hide_logo_on_home_page": true,
+            "custom_height": 40,
+            "custom_height_mobile": 40,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -158,7 +158,7 @@
         ".logo__tagline {font-family: \"Kenao\", sans-serif !important; color: #111111 !important; opacity: 1 !important; font-weight: 500 !important; font-size: 30px; text-align: center; padding-left: 0px;}"
       ],
       "settings": {
-        "logo_tagline": "Jhevar",
+        "logo_tagline": "JHEVAR",
         "tagline_font_size": 24,
         "tagline_font_size_mobile": 20,
         "logo_position": "left",
