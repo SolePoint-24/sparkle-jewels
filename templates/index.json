@@ -240,7 +240,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<h2>Why Choose Sparkle</h2>",
+            "text": "<h2>Why Choose Jhevar</h2>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -526,7 +526,7 @@
                   "type": "text",
                   "name": "Heading",
                   "settings": {
-                    "text": "<p>Sparkle Certified</p>",
+                    "text": "<p>Jhevar Certified</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
@@ -2064,7 +2064,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_dash_row",
               "settings": {
-                "heading": "Why should I choose Sparkle Jewels over traditional jewellers?",
+                "heading": "Why should I choose Jhevar over traditional jewellers?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
